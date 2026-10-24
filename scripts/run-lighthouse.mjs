@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import lighthouse from 'lighthouse';
 import http from 'http';
+import net from 'net';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -58,23 +59,37 @@ async function startStaticServer(port = 54321) {
   return server;
 }
 
+async function getFreePort() {
+  return new Promise((resolve, reject) => {
+    const srv = net.createServer();
+    srv.listen(0, '127.0.0.1', () => {
+      const address = srv.address();
+      const port = typeof address === 'object' && address ? address.port : 9333;
+      srv.close(() => resolve(port));
+    });
+    srv.on('error', reject);
+  });
+}
+
 async function runLighthouseAudit() {
   console.log('⚡ =======================================================');
   console.log('   AUDITORÍA GOOGLE LIGHTHOUSE - ÓPTICA ALEMANIA');
   console.log('=======================================================\n');
 
-  const server = await startStaticServer(54321);
+  const serverPort = await getFreePort();
+  const server = await startStaticServer(serverPort);
+  const debugPort = await getFreePort();
 
   const browser = await chromium.launch({
-    args: ['--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox'],
+    args: [`--remote-debugging-port=${debugPort}`, '--no-sandbox', '--disable-setuid-sandbox'],
   });
 
-  const url = 'http://127.0.0.1:54321/';
+  const url = `http://127.0.0.1:${serverPort}/`;
 
   try {
     console.log('📱 Evaluando categoría Mobile...');
     const mobile = await lighthouse(url, {
-      port: 9222,
+      port: debugPort,
       output: 'json',
       formFactor: 'mobile',
       throttlingMethod: 'simulate',
@@ -82,9 +97,25 @@ async function runLighthouseAudit() {
 
     console.log('💻 Evaluando categoría Desktop...');
     const desktop = await lighthouse(url, {
-      port: 9222,
+      port: debugPort,
       output: 'json',
-      formFactor: 'desktop',
+    }, {
+      extends: 'lighthouse:default',
+      settings: {
+        formFactor: 'desktop',
+        screenEmulation: {
+          mobile: false,
+          width: 1350,
+          height: 940,
+          deviceScaleFactor: 1,
+          disabled: false,
+        },
+        throttling: {
+          rttMs: 40,
+          throughputKbps: 10 * 1024,
+          cpuSlowdownMultiplier: 1,
+        },
+      },
     });
 
     const mobileScores = {

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import Analytics from '../components/Analytics.astro';
 import { siteConfig } from '../data/siteConfig';
 
 interface Props {
@@ -171,5 +172,6 @@ const schemaGraph = {
     <main id="main-content">
       <slot />
     </main>
+    <Analytics />
   </body>
 </html>
