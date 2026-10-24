@@ -1,0 +1,127 @@
+import { chromium } from 'playwright';
+import lighthouse from 'lighthouse';
+import http from 'http';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '..');
+const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
+
+const mimeTypes = {
+  '.html': 'text/html; charset=UTF-8',
+  '.txt': 'text/plain; charset=UTF-8',
+  '.xml': 'application/xml; charset=UTF-8',
+  '.json': 'application/json; charset=UTF-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
+  '.css': 'text/css; charset=UTF-8',
+  '.js': 'text/javascript; charset=UTF-8',
+  '.mjs': 'text/javascript; charset=UTF-8',
+  '.webp': 'image/webp',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+};
+
+async function startStaticServer(port = 54321) {
+  if (!fs.existsSync(DIST_DIR)) {
+    throw new Error(`Directory ${DIST_DIR} does not exist. Run "pnpm build" first.`);
+  }
+
+  const server = http.createServer((req, res) => {
+    let reqPath = req.url.split('?')[0];
+    if (reqPath.endsWith('/')) reqPath += 'index.html';
+    let filePath = path.join(DIST_DIR, reqPath);
+    if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) filePath += '.html';
+    if (!fs.existsSync(filePath) && fs.existsSync(path.join(filePath, 'index.html'))) {
+      filePath = path.join(filePath, 'index.html');
+    }
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      const ext = path.extname(filePath);
+      res.writeHead(200, {
+        'Content-Type': mimeTypes[ext] || 'application/octet-stream',
+        'Cache-Control': 'no-cache',
+      });
+      fs.createReadStream(filePath).pipe(res);
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('404 Not Found');
+    }
+  });
+
+  await new Promise((resolve) => server.listen(port, resolve));
+  console.log(`🚀 Servidor estático para Lighthouse en: http://127.0.0.1:${port}`);
+  return server;
+}
+
+async function runLighthouseAudit() {
+  console.log('⚡ =======================================================');
+  console.log('   AUDITORÍA GOOGLE LIGHTHOUSE - ÓPTICA ALEMANIA');
+  console.log('=======================================================\n');
+
+  const server = await startStaticServer(54321);
+
+  const browser = await chromium.launch({
+    args: ['--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox'],
+  });
+
+  const url = 'http://127.0.0.1:54321/';
+
+  try {
+    console.log('📱 Evaluando categoría Mobile...');
+    const mobile = await lighthouse(url, {
+      port: 9222,
+      output: 'json',
+      formFactor: 'mobile',
+      throttlingMethod: 'simulate',
+    });
+
+    console.log('💻 Evaluando categoría Desktop...');
+    const desktop = await lighthouse(url, {
+      port: 9222,
+      output: 'json',
+      formFactor: 'desktop',
+    });
+
+    const mobileScores = {
+      Performance: Math.round(mobile.lhr.categories.performance.score * 100),
+      Accessibility: Math.round(mobile.lhr.categories.accessibility.score * 100),
+      BestPractices: Math.round(mobile.lhr.categories['best-practices'].score * 100),
+      SEO: Math.round(mobile.lhr.categories.seo.score * 100),
+    };
+
+    const desktopScores = {
+      Performance: Math.round(desktop.lhr.categories.performance.score * 100),
+      Accessibility: Math.round(desktop.lhr.categories.accessibility.score * 100),
+      BestPractices: Math.round(desktop.lhr.categories['best-practices'].score * 100),
+      SEO: Math.round(desktop.lhr.categories.seo.score * 100),
+    };
+
+    console.log('\n📊 RESULTADOS OBTENIDOS:');
+    console.log('📱 MOBILE:', mobileScores);
+    console.log('💻 DESKTOP:', desktopScores);
+
+    const minScore = 90;
+    const allPassed =
+      Object.values(mobileScores).every((s) => s >= minScore) &&
+      Object.values(desktopScores).every((s) => s >= minScore);
+
+    if (allPassed) {
+      console.log('\n🏆 ¡CERTIFICACIÓN LIGHTHOUSE APROBADA EXITOSAMENTE! (>= 90/100 en todas las categorías)');
+    } else {
+      console.warn('\n⚠️ Algunas métricas requieren optimización para alcanzar el estándar.');
+    }
+  } finally {
+    await browser.close();
+    server.close();
+  }
+}
+
+runLighthouseAudit().catch((err) => {
+  console.error('Fatal Lighthouse error:', err);
+  process.exit(1);
+});
