@@ -1,0 +1,136 @@
+---
+import { siteConfig } from '../data/siteConfig';
+import { buildWhatsAppLink } from '../utils/whatsapp';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '#inicio' } = Astro.props;
+const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-white/70 backdrop-blur-md border-b border-brand-border/40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Brand Logo -->
+      <a href="#inicio" class="flex flex-col group transition-transform duration-200" aria-label="Óptica Alemania - Inicio">
+        <span class="font-display text-2xl sm:text-3xl font-normal text-brand-heading tracking-tight leading-none group-hover:text-brand-primary transition-colors">
+          Óptica Alemania
+        </span>
+        <span class="font-sans text-[9px] sm:text-[10px] tracking-[0.28em] text-brand-body uppercase mt-1">
+          Villavicencio
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
+        {siteConfig.nav.map((item) => {
+          const isActive = item.href === currentPath || item.active;
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "relative py-2 text-sm font-medium transition-colors duration-200",
+                isActive 
+                  ? "text-brand-primary font-semibold" 
+                  : "text-brand-heading/85 hover:text-brand-primary"
+              ]}
+            >
+              {item.label}
+              {isActive && (
+                <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-primary rounded-full" />
+              )}
+            </a>
+          );
+        })}
+      </nav>
+
+      <!-- Action Button & Mobile Controls -->
+      <div class="flex items-center gap-3">
+        <!-- WhatsApp CTA Button -->
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-primary hover:bg-brand-bright text-white text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200"
+        >
+          <!-- WhatsApp SVG Icon -->
+          <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.183 0 5.769-2.587 5.77-5.766.001-3.187-2.575-5.77-5.77-5.77v.004zm3.392 8.244c-.144.405-.837.774-1.17.824-.311.045-.698.059-1.146-.086-.3-.097-.683-.234-1.173-.446-2.072-.897-3.417-2.986-3.522-3.125-.104-.139-.838-1.116-.838-2.128 0-1.012.529-1.509.718-1.716.19-.207.414-.259.553-.259.138 0 .277.002.398.007.127.006.299-.048.467.356.173.414.59 1.434.641 1.538.052.103.086.224.017.362-.069.139-.104.225-.207.346-.104.121-.218.27-.311.363-.104.103-.213.216-.092.424.121.207.538.887 1.155 1.436.794.707 1.464.925 1.672 1.029.208.103.329.086.45-.052.12-.139.518-.604.657-.811.138-.207.276-.173.466-.103.19.069 1.21.57 1.417.674.208.103.346.155.398.241.052.086.052.5-.092.905z"/>
+          </svg>
+          <span class="hidden sm:inline">Solicitar atención</span>
+          <span class="sm:hidden">Atención</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button
+          type="button"
+          id="mobile-menu-button"
+          class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-brand-heading hover:bg-brand-cool/80 transition-colors"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Abrir menú de navegación"
+        >
+          <svg class="w-6 h-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" id="hamburger-icon"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" class="hidden" id="close-icon"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer / Dropdown -->
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-brand-border bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-xl">
+    {siteConfig.nav.map((item) => (
+      <a
+        href={item.href}
+        class="block px-3 py-2.5 rounded-lg text-base font-medium text-brand-heading hover:bg-brand-cool hover:text-brand-primary transition-colors"
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  if (button && menu && hamburgerIcon && closeIcon) {
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('hidden');
+      hamburgerIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+
+    const links = menu.querySelectorAll('a');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      });
+    });
+  }
+
+  // Header scroll appearance
+  window.addEventListener('scroll', () => {
+    if (!header) return;
+    if (window.scrollY > 20) {
+      header.classList.add('bg-white/95', 'shadow-xs');
+      header.classList.remove('bg-white/70');
+    } else {
+      header.classList.remove('bg-white/95', 'shadow-xs');
+      header.classList.add('bg-white/70');
+    }
+  }, { passive: true });
+</script>
