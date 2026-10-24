@@ -1,0 +1,42 @@
+---
+// PLAYBOOK Fase 7: Despachador Centralizado de Eventos para GTM / GA4 / Meta Pixel
+---
+
+<script is:inline>
+  document.addEventListener('click', (event) => {
+    const origin = event.target;
+    if (!(origin instanceof Element)) return;
+
+    const target = origin.closest('[data-event]');
+    if (!(target instanceof HTMLElement)) return;
+
+    const ctaType = target.dataset.event;
+    const location = target.dataset.eventLocation;
+    const label = target.textContent?.trim();
+    const destination = target instanceof HTMLAnchorElement ? target.href : '';
+
+    const detail = {
+      event: ctaType,
+      location,
+      label,
+      destination,
+    };
+
+    window.dispatchEvent(new CustomEvent('optica:event', { detail }));
+
+    // Buffer en dataLayer con nombre de evento unificado para GTM/GA4
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cta_click',
+      cta_type: ctaType,
+      location,
+      label,
+      destination,
+    });
+
+    // Carga inmediata de GTM si el usuario interactuó antes del temporizador
+    if (typeof window._loadGTM === 'function') {
+      window._loadGTM();
+    }
+  });
+</script>

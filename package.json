@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test": "node scripts/test-landing.mjs",
+    "test:visual": "node scripts/compare-screenshots.mjs",
+    "test:lighthouse": "node scripts/run-lighthouse.mjs"
   },
   "keywords": [],
   "author": "",

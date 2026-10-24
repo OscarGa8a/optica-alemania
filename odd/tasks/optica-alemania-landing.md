@@ -1,7 +1,7 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/optica-alemania-landing
+Branch: feat/section-hero
 Delivery Strategy: ask-on-risk
-Test Runner: pnpm build && node scripts/test-landing.mjs
+Test Runner: pnpm build && pnpm test && pnpm test:visual
 
 ## Specs
 S1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -21,17 +21,23 @@ S14: Sección 8 — Nuestra Trayectoria (src/components/HistorySection.astro).
 S15: Sección 9 — Contacto y Citas (src/components/ContactSection.astro).
 S16: Sección 10 — Footer Institucional (src/components/Footer.astro).
 S17: Certificación visual Playwright: 0 errores de consola, 0 404s, 0 scroll horizontal en 1440x900 y 390x844.
+S18: Integración de estándares de ingeniería desde oscar-dev-projects (PLAYBOOK.md, compare-screenshots.mjs, run-lighthouse.mjs, _headers, vercel.json, robots.txt con crawlers de IA, llms.txt y llms-full.txt, aislamiento de staging en doble capa y Analytics.astro).
 
 ## Tasks
-- T1 [S3]: Andamiaje canónico (Astro + Tailwind v4 + dependencias base) | Route: inline | Status: done | Commit: a1f6be0
-- T2 [S4]: Configuración de Design Tokens en global.css (@theme) | Route: inline | Status: done | Commit: a1f6be0
-- T3 [S5]: Capa de datos centralizada siteConfig.ts y whatsapp.ts | Route: inline | Status: done | Commit: a1f6be0
-- T4 [S6]: Layout base (Layout.astro) y Navbar responsivo (Navbar.astro) | Route: inline | Status: done | Commit: a1f6be0
-- T5 [S7]: Implementación Sección 1 — Hero (Hero.astro) y montaje en index.astro | Route: inline | Status: done | Commit: a1f6be0
-- T6 [S17]: Harness de verificación Playwright (scripts/test-landing.mjs) y certificación visual del Hero | Route: inline | Status: done | Commit: a1f6be0
-- T7 [S7,S8]: Puerta de aprobación con el usuario y preparación Sección 2 | Route: inline | Status: in-progress | Commit: pending
+- T1 [S3]: Andamiaje canónico (Astro + Tailwind v4 + dependencias base) | Route: inline | Status: done | Commit: b170f8e (PR #1)
+- T2 [S4]: Configuración de Design Tokens en global.css (@theme) | Route: inline | Status: done | Commit: b170f8e (PR #1)
+- T3 [S5]: Capa de datos centralizada siteConfig.ts y whatsapp.ts | Route: inline | Status: done | Commit: b170f8e (PR #1)
+- T4 [S6]: Layout base (Layout.astro) y Navbar responsivo (Navbar.astro) adaptativo con scroll | Route: inline | Status: done | Commit: 13c3c2b (PR #2)
+- T5 [S7]: Implementación Sección 1 — Hero (Hero.astro) con bleed editorial desktop y vertical mobile | Route: inline | Status: done | Commit: 13c3c2b (PR #2)
+- T6 [S17]: Harness de verificación Playwright (scripts/test-landing.mjs) y certificación visual del Hero (0 errores, 0 404s, 0 overflow) | Route: inline | Status: done | Commit: 13c3c2b (PR #2)
+- T8 [S18]: Incorporación de PLAYBOOK.md, scripts de comparativa visual side-by-side y auditoría Lighthouse, infraestructura de cabeceras, AI-SEO y Analytics | Route: inline | Status: done | Commit: pending
+- T7 [S7,S8]: Puerta de aprobación con el usuario y preparación Sección 2 — Quiénes Somos | Route: inline | Status: in-progress | Commit: pending
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
 L2: "si rey, empecemos por favor"
-L3: Andamiaje completado, dependencias instaladas, tokens semánticos definidos, Navbar y Hero implementados, harness Playwright verificado 100% pasando en Desktop y Mobile. Commit a1f6be0.
+L3: Andamiaje completado y fusionado en main vía PR #1. Sincronizado localmente.
+L4: "hecho rey, sinceroniza main y continua verificando el hero con playw y mira que visualmente este igual lo hehco contra los mockups"
+L5: Sección 1 (Hero) y Navbar completamente verificados. Navbar con transparencia inicial y adaptación en scroll; Hero con Instrument Serif + Inter, fondos fotográficos full-bleed, degradados editoriales, CTA WhatsApp y link secundario. Playwright test 100% aprobado (1440x900 y 390x844: 0 errores de consola, 0 404s, 0 overflow). Capturas generadas y auditadas contra mockups. Commit: 13c3c2b, PR #2 abierto.
+L6: "rey hay una cosas que quizas se me olvidod ecirte y quizas tuviste que hacerlas de cero para el tema de playw y quizas otras cosas mas que lleguemos a necesitar en este concept demo como algunos scripts y demas, por eso quiero que vayas al repositirio que se llama oscar-dev-projects y copies de alla lo que necesitemos por favor, tanto para el concept demo como para lo que menciona el documento PLAYBOOK.md que esta alla por favor, primero revisa bien rey y pasa lo que necesites antes de continuar"
+L7: Incorporado docs/PLAYBOOK.md, scripts/compare-screenshots.mjs (generador de composiciones side-by-side con Sharp), scripts/run-lighthouse.mjs (auditoría Google Lighthouse automatizada), favicon.svg vectorizado, cabeceras de seguridad y caché (_headers, vercel.json), robots.txt completo para crawlers de IA (GPTBot, ClaudeBot, etc.), especificación llms.txt y llms-full.txt (llmstxt.org), arquitectura de aislamiento de staging en doble capa y Analytics.astro con deferred GTM/GA4. Suite completa de build, Playwright y comparativa visual ejecutada y aprobada 100%.

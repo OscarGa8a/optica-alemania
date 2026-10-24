@@ -10,16 +10,25 @@ const { currentPath = '#inicio' } = Astro.props;
 const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-white/70 backdrop-blur-md border-b border-brand-border/40">
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-transparent border-b border-transparent"
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       
       <!-- Brand Logo -->
       <a href="#inicio" class="flex flex-col group transition-transform duration-200" aria-label="Óptica Alemania - Inicio">
-        <span class="font-display text-2xl sm:text-3xl font-normal text-brand-heading tracking-tight leading-none group-hover:text-brand-primary transition-colors">
+        <span
+          id="brand-logo-text"
+          class="font-display text-2xl sm:text-3xl font-normal text-white lg:text-brand-heading tracking-tight leading-none group-hover:text-brand-primary transition-colors"
+        >
           Óptica Alemania
         </span>
-        <span class="font-sans text-[9px] sm:text-[10px] tracking-[0.28em] text-brand-body uppercase mt-1">
+        <span
+          id="brand-logo-sub"
+          class="font-sans text-[9px] sm:text-[10px] tracking-[0.28em] text-white/85 lg:text-brand-body uppercase mt-1 transition-colors"
+        >
           Villavicencio
         </span>
       </a>
@@ -49,26 +58,26 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
 
       <!-- Action Button & Mobile Controls -->
       <div class="flex items-center gap-3">
-        <!-- WhatsApp CTA Button -->
+        <!-- WhatsApp CTA Button: Outlined in mobile at top, filled solid in desktop and on scroll -->
         <a
+          id="navbar-cta-btn"
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-brand-primary hover:bg-brand-bright text-white text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200"
+          class="inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/80 text-white bg-white/10 backdrop-blur-xs lg:border-transparent lg:bg-brand-primary lg:text-white lg:hover:bg-brand-bright text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200"
         >
           <!-- WhatsApp SVG Icon -->
           <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.183 0 5.769-2.587 5.77-5.766.001-3.187-2.575-5.77-5.77-5.77v.004zm3.392 8.244c-.144.405-.837.774-1.17.824-.311.045-.698.059-1.146-.086-.3-.097-.683-.234-1.173-.446-2.072-.897-3.417-2.986-3.522-3.125-.104-.139-.838-1.116-.838-2.128 0-1.012.529-1.509.718-1.716.19-.207.414-.259.553-.259.138 0 .277.002.398.007.127.006.299-.048.467.356.173.414.59 1.434.641 1.538.052.103.086.224.017.362-.069.139-.104.225-.207.346-.104.121-.218.27-.311.363-.104.103-.213.216-.092.424.121.207.538.887 1.155 1.436.794.707 1.464.925 1.672 1.029.208.103.329.086.45-.052.12-.139.518-.604.657-.811.138-.207.276-.173.466-.103.19.069 1.21.57 1.417.674.208.103.346.155.398.241.052.086.052.5-.092.905z"/>
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
           </svg>
-          <span class="hidden sm:inline">Solicitar atención</span>
-          <span class="sm:hidden">Atención</span>
+          <span>Solicitar atención</span>
         </a>
 
         <!-- Mobile Menu Toggle Button -->
         <button
           type="button"
           id="mobile-menu-button"
-          class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-brand-heading hover:bg-brand-cool/80 transition-colors"
+          class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-white hover:bg-white/15 transition-colors"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Abrir menú de navegación"
@@ -101,6 +110,9 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
   const menu = document.getElementById('mobile-menu');
   const hamburgerIcon = document.getElementById('hamburger-icon');
   const closeIcon = document.getElementById('close-icon');
+  const brandLogoText = document.getElementById('brand-logo-text');
+  const brandLogoSub = document.getElementById('brand-logo-sub');
+  const navbarCtaBtn = document.getElementById('navbar-cta-btn');
 
   if (button && menu && hamburgerIcon && closeIcon) {
     button.addEventListener('click', () => {
@@ -123,14 +135,43 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
   }
 
   // Header scroll appearance
-  window.addEventListener('scroll', () => {
+  function updateHeaderState() {
     if (!header) return;
-    if (window.scrollY > 20) {
-      header.classList.add('bg-white/95', 'shadow-xs');
-      header.classList.remove('bg-white/70');
+    const isScrolled = window.scrollY > 20;
+
+    if (isScrolled) {
+      header.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-xs', 'border-brand-border/40');
+      header.classList.remove('bg-transparent', 'border-transparent');
+      
+      // Update mobile colors for white background
+      brandLogoText?.classList.remove('text-white');
+      brandLogoText?.classList.add('text-brand-heading');
+      brandLogoSub?.classList.remove('text-white/85');
+      brandLogoSub?.classList.add('text-brand-body');
+      
+      button?.classList.remove('text-white', 'hover:bg-white/15');
+      button?.classList.add('text-brand-heading', 'hover:bg-brand-cool/80');
+
+      navbarCtaBtn?.classList.remove('border-white/80', 'text-white', 'bg-white/10');
+      navbarCtaBtn?.classList.add('border-transparent', 'bg-brand-primary', 'text-white');
     } else {
-      header.classList.remove('bg-white/95', 'shadow-xs');
-      header.classList.add('bg-white/70');
+      header.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-xs', 'border-brand-border/40');
+      header.classList.add('bg-transparent', 'border-transparent');
+
+      // Restore mobile colors for transparent over hero background
+      brandLogoText?.classList.add('text-white');
+      brandLogoText?.classList.remove('text-brand-heading');
+      brandLogoSub?.classList.add('text-white/85');
+      brandLogoSub?.classList.remove('text-brand-body');
+
+      button?.classList.add('text-white', 'hover:bg-white/15');
+      button?.classList.remove('text-brand-heading', 'hover:bg-brand-cool/80');
+
+      navbarCtaBtn?.classList.add('border-white/80', 'text-white', 'bg-white/10');
+      navbarCtaBtn?.classList.remove('border-transparent', 'bg-brand-primary');
     }
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+  updateHeaderState();
 </script>

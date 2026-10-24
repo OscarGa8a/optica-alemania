@@ -6,21 +6,95 @@ import { siteConfig } from '../data/siteConfig';
 interface Props {
   title?: string;
   description?: string;
+  robots?: string;
+  gtmId?: string;
 }
 
 const {
   title = `${siteConfig.name} — ${siteConfig.tagline}`,
   description = siteConfig.description,
+  robots,
+  gtmId = import.meta.env.PUBLIC_GTM_ID,
 } = Astro.props;
+
+// PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || '';
+const publicEnv = import.meta.env.PUBLIC_ENV || '';
+const publicNoindex = import.meta.env.PUBLIC_NOINDEX;
+
+const isStagingDomain = siteUrl.includes('oscardev.co') || siteUrl.includes('pages.dev') || siteUrl.includes('vercel.app');
+const isStagingEnv = publicEnv === 'staging' || publicEnv === 'preview' || publicEnv === 'development';
+const isExplicitNoindex = publicNoindex === 'true' || publicNoindex === true;
+const isStaging = isStagingDomain || isStagingEnv || isExplicitNoindex;
+
+const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+const resolvedRobots = robots || defaultRobots;
+
+// PLAYBOOK Fase 4: Schema.org Multigrafo @graph
+const schemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Optician",
+      "@id": "https://opticaalemania.co/#optician",
+      "name": siteConfig.name,
+      "legalName": siteConfig.legalName,
+      "url": "https://opticaalemania.co",
+      "telephone": siteConfig.contact.phoneTel,
+      "priceRange": "$$",
+      "image": "https://opticaalemania.co/images/home/1_home_desktop_image.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": siteConfig.contact.address,
+        "addressLocality": siteConfig.contact.city,
+        "addressRegion": siteConfig.contact.department,
+        "addressCountry": "CO"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 4.1420,
+        "longitude": -73.6266
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:30",
+          "closes": "18:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday"],
+          "opens": "08:30",
+          "closes": "15:00"
+        }
+      ],
+      "sameAs": [
+        siteConfig.social.instagram,
+        siteConfig.social.facebook
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://opticaalemania.co/#website",
+      "url": "https://opticaalemania.co",
+      "name": siteConfig.name,
+      "inLanguage": "es-CO"
+    }
+  ]
+};
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Robots & Staging Isolation (Capa 1) -->
+    <meta name="robots" content={resolvedRobots} />
 
     <!-- SEO Meta Tags -->
     <title>{title}</title>
@@ -29,8 +103,68 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CO" />
+    <meta property="og:url" content="https://opticaalemania.co" />
+    <meta property="og:site_name" content={siteConfig.name} />
 
-    <!-- Google Fonts Preconnect if needed, though we use Fontsource locally -->
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
+      <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION} />
+    )}
+
+    <!-- Schema.org JSON-LD Multigrafo -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+
+    <!-- PLAYBOOK Fase 4: Salvaguarda Dinámica en Runtime (Capa 2) -->
+    <script is:inline>
+      (function() {
+        try {
+          var host = window.location.hostname;
+          var isStagingHost = host.includes('oscardev.co') || host.endsWith('.pages.dev') || host.endsWith('.vercel.app');
+          var isProdHost = host === 'opticaalemania.co' || host === 'www.opticaalemania.co';
+          if (isStagingHost && !isProdHost) {
+            var meta = document.querySelector('meta[name="robots"]');
+            if (meta) {
+              meta.setAttribute('content', 'noindex, nofollow');
+            } else {
+              var m = document.createElement('meta');
+              m.name = 'robots';
+              m.content = 'noindex, nofollow';
+              document.head.appendChild(m);
+            }
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
+    {gtmId && (
+      <script is:inline define:vars={{ gtmId }}>
+        window.dataLayer = window.dataLayer || [];
+        window._loadGTM = function() {
+          if (window._gtmLoaded) return;
+          window._gtmLoaded = true;
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer',gtmId);
+        };
+
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function() { setTimeout(window._loadGTM, 2500); });
+        } else {
+          setTimeout(window._loadGTM, 3000);
+        }
+
+        ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
+          window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
+        });
+      </script>
+    )}
   </head>
   <body class="bg-brand-surface text-brand-body antialiased selection:bg-brand-blue-soft selection:text-brand-primary">
     <Navbar />
