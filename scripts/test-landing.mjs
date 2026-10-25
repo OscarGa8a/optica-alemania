@@ -73,6 +73,7 @@ async function run() {
       heroScreenshot: '1_hero_desktop_actual.png',
       aboutScreenshot: '2_quienes_somos_desktop_actual.png',
       servicesScreenshot: '3_servicios_desktop_actual.png',
+      techScreenshot: '4_tecnologia_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -81,6 +82,7 @@ async function run() {
       heroScreenshot: '1_hero_mobile_actual.png',
       aboutScreenshot: '2_quienes_somos_mobile_actual.png',
       servicesScreenshot: '3_servicios_mobile_actual.png',
+      techScreenshot: '4_tecnologia_mobile_actual.png',
     },
   ];
 
@@ -260,6 +262,77 @@ async function run() {
       const servicesShotPath = path.join(SCREENSHOTS_DIR, vp.servicesScreenshot);
       await servicesSection.screenshot({ path: servicesShotPath });
       console.log(`📸 [${vp.name}] Servicios screenshot saved: ${path.relative(ROOT_DIR, servicesShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 4 — Tecnología en Acción verification
+    const techSection = page.locator('#tecnologia');
+    const techCount = await techSection.count();
+    if (techCount === 0) {
+      console.error(`❌ [${vp.name}] Section #tecnologia not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #tecnologia exists`);
+
+      // Verify heading text
+      const headingText = await techSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('La tecnología detrás')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'La tecnología detrás', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'La tecnología detrás'`);
+      }
+
+      // Verify 2 technology showcase articles
+      const techArticles = techSection.locator('article');
+      const articlesCount = await techArticles.count();
+      if (articlesCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 technology articles, got: ${articlesCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 technology showcase items verified`);
+      }
+
+      // Verify showcase images loaded properly
+      const techImages = techSection.locator('article img');
+      const imgCount = await techImages.count();
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await techImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          console.error(`❌ [${vp.name}] Tech image ${i + 1} failed to load!`);
+          failed = true;
+        }
+      }
+      console.log(`✅ [${vp.name}] Tech images loaded successfully`);
+
+      // Verify CTA links
+      const ctas = techSection.locator('a[data-event="procedure_click"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 procedure CTA links, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 procedure CTA links verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await techSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const techShotPath = path.join(SCREENSHOTS_DIR, vp.techScreenshot);
+      await techSection.screenshot({ path: techShotPath });
+      console.log(`📸 [${vp.name}] Tecnología screenshot saved: ${path.relative(ROOT_DIR, techShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

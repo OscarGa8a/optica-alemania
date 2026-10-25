@@ -1,5 +1,5 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/section-servicios
+Branch: feat/section-tecnologia
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual
 
@@ -23,7 +23,7 @@ S16: Sección 10 — Footer Institucional (src/components/Footer.astro).
 S17: Certificación visual Playwright: 0 errores de consola, 0 404s, 0 scroll horizontal en 1440x900 y 390x844.
 S18: Integración de estándares de ingeniería desde oscar-dev-projects (PLAYBOOK.md, compare-screenshots.mjs, run-lighthouse.mjs, _headers, vercel.json, robots.txt con crawlers de IA, llms.txt y llms-full.txt, aislamiento de staging en doble capa y Analytics.astro).
 S19: Evaluación y optimización del Hero con las herramientas del Playbook: imágenes WebP (-95.4% de peso), dimensiones explícitas (CLS 0), atributos data-event de analítica, coincidencia de etiquetas accesibles WCAG 2.2 y certificación Google Lighthouse (Desktop 100/100/100/100, Mobile 95/100/100/100).
-S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Paso 1 (Implementación visual) y Paso 3 (Comparativas side-by-side con Playwright/Sharp). Omitir Paso 2 (Lighthouse) hasta tener imágenes finales definitivas. Omitir Paso 4 (Pull Request) completamente hasta solicitud explícita.
+S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Paso 1 (Implementación visual) y Paso 3 (Comparativas side-by-side con Playwright/Sharp). Omitir Paso 2-B (Lighthouse) hasta tener imágenes finales definitivas. Omitir Paso 4 (Pull Request) completamente hasta solicitud explícita.
 
 ## Tasks
 - T1 [S3]: Andamiaje canónico (Astro + Tailwind v4 + dependencias base) | Route: inline | Status: done | Commit: b170f8e (PR #1)
@@ -38,7 +38,9 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T10 [S8]: Implementación y certificación Sección 2 — Quiénes Somos (AboutSection.astro) con layout responsivo, WebP picture, data-event, Playwright y Lighthouse (Mobile: 98/100/100/100, Desktop: 100/100/100/100) | Route: inline | Status: done | Commit: 56fad3e (PR #4)
 - T11 [S8,S9]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: done | Commit: 56fad3e
 - T12 [S9,S17,S20]: Implementación visual Sección 3 — Nuestros Servicios (ServicesSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: 2ff31a3
-- T13 [S9,S10]: Puerta de aprobación visual Sección 3 con el usuario y preparación Sección 4 — Tecnología | Route: inline | Status: in-progress | Commit: pending
+- T13 [S9,S10]: Puerta de aprobación visual Sección 3 con el usuario | Route: inline | Status: done | Commit: d82971c
+- T14 [S10,S17,S20]: Implementación visual Sección 4 — Tecnología en Acción (TechSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: pending
+- T15 [S10,S11]: Puerta de aprobación visual Sección 4 con el usuario y preparación Sección 5 — Nuestro Espacio | Route: inline | Status: in-progress | Commit: pending
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -65,6 +67,28 @@ L11: Sección 2 — Quiénes Somos (src/components/AboutSection.astro) implement
 - Playwright test: 0 errores de consola, 0 404s, 0 overflow horizontal.
 - Comparativas side-by-side generadas y auditadas (docs/screenshots/2_quienes_somos_desktop_comparison.png y docs/screenshots/2_quienes_somos_mobile_comparison.png).
 - Google Lighthouse: Desktop 100/100/100/100, Mobile 98/100/100/100 (Perf 98, A11y 100, BP 100, SEO 100).
+L12: "sigue a la seccion tres rey, pero no hagas ligthpuse todavia, eso al final cuando tengamos las imagenes finales, solo lo visual mi rey, y las comparativas. osea 1 y 3, no hacer 2 todavia y mucho menos hacer 4, no entiendo porque hiciste pr si no te lo pedi"
+L13: Implementación de la Sección 3 — Nuestros Servicios (src/components/ServicesSection.astro) siguiendo estrictamente el alcance solicitado (Pasos 1 y 3, sin Lighthouse y sin PR):
+- Maquetación y tokens de diseño: Eyebrow en azul primario #1464D9 con tracking [0.18em], titular H2 en Instrument Serif con quiebre exacto ("Atención visual" en #182D53 y "para cada necesidad." en cursiva azul #1464D9), y descripción editorial.
+- Tarjeta destacada izquierda: Fotografía clínica con foróptero (public/images/home/3_nuestros_servicios_image1.webp) con radio de 24px, sutil borde y sombra clínica.
+- Lista interactiva de servicios: 4 ítems con numeración Instrument Serif (01, 02, 03, 04 en #8CA4C7), miniaturas fotográficas redondeadas con microinteracción hover zoom, títulos, descripciones y botón circular #EBF2FC con flecha de acción vinculado directamente a WhatsApp contextual.
+- Enlace inferior de sección: "Ver todos nuestros servicios →" con subrayado elegante en azul primario #1464D9.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/3_servicios_desktop_comparison.png y 3_servicios_mobile_comparison.png).
+- Lighthouse omitido completamente (Paso 2 pausado hasta imágenes finales).
+- Pull Request omitido completamente (Paso 4 pausado por directiva explícita). Commit: 2ff31a3.
+L14: "bueno, ya mergee los prs que hiciste, para que sincronices main y continues, y respecto a 2, la idea es que hagas A que es playw pero no B que es ligthouse"
+L15: Sincronizado main (97946a3 con PR #4) y rebasada la rama sobre main. Creada la rama local `feat/section-tecnologia`. Implementada la Sección 4 — Tecnología en Acción (src/components/TechSection.astro) siguiendo la directiva del usuario: Paso 1 (Visual) y Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side), sin Paso 2-B (Lighthouse) y sin Paso 4 (Pull Request):
+- Fondo gradiente navy corporativo (#0C2D54 via #092548 a #072040) con asset oficial de ojo (`eye.webp`) en blend screen superior derecho.
+- Encabezado editorial: Eyebrow "TECNOLOGÍA EN ACCIÓN" en #6BA6E8 con tracking [0.18em], título H2 en Instrument Serif ("La tecnología detrás" blanco y "de cada evaluación." en azul acero cursiva #7FAEE8), y descripción contextual.
+- Dos ítems destacados en disposición escalonada (zigzag):
+  - 01: Evaluación retinal con Volk iNview (video preview card con badge 0:28 y botón circular translúcido con icono play a la izquierda; textos e indicador 01 a la derecha en desktop).
+  - 02: Test de Farnsworth D-15 (textos e indicador 02 a la izquierda; video preview card con badge 0:32 a la derecha en desktop).
+  - En mobile, ambas tarjetas mantienen orden vertical natural (video preview arriba, texto debajo) con 0 overflow horizontal.
+- Atributos semánticos data-event="video_preview_click" y data-event="procedure_click".
+- Playwright test: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp: 4_tecnologia_desktop_comparison.png y 4_tecnologia_mobile_comparison.png.
+- Paso 2-B (Lighthouse) y Paso 4 (PR) omitidos estrictamente.
 L12: "sigue a la seccion tres rey, pero no hagas ligthpuse todavia, eso al final cuando tengamos las imagenes finales, solo lo visual mi rey, y las comparativas. osea 1 y 3, no hacer 2 todavia y mucho menos hacer 4, no entiendo porque hiciste pr si no te lo pedi"
 L13: Implementación de la Sección 3 — Nuestros Servicios (src/components/ServicesSection.astro) siguiendo estrictamente el alcance solicitado (Pasos 1 y 3, sin Lighthouse y sin PR):
 - Maquetación y tokens de diseño: Eyebrow en azul primario #1464D9 con tracking [0.18em], titular H2 en Instrument Serif con quiebre exacto ("Atención visual" en #182D53 y "para cada necesidad." en cursiva azul #1464D9), y descripción editorial.

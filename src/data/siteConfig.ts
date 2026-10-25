@@ -37,6 +37,20 @@ export interface ServiceItem {
   whatsappMessage: string;
 }
 
+export interface TechnologyItem {
+  id: string;
+  number: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  duration: string;
+  image: string;
+  alt: string;
+  actionText: string;
+  actionHref: string;
+  whatsappMessage: string;
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -51,6 +65,7 @@ export interface SiteConfig {
   socialProof: SocialProof;
   nav: NavItem[];
   services: ServiceItem[];
+  technologies: TechnologyItem[];
 }
 
 export const siteConfig: SiteConfig = {
@@ -128,6 +143,34 @@ export const siteConfig: SiteConfig = {
       image: "/images/home/3_nuestros_servicios_image6.webp",
       alt: "Evaluación biomicroscópica con luz azul para diagnóstico de ojo seco",
       whatsappMessage: "Hola, deseo consultar sobre el examen y tratamiento para ojo seco en Óptica Alemania.",
+    },
+  ],
+  technologies: [
+    {
+      id: "volk-inview",
+      number: "01",
+      titlePart1: "Evaluación retinal",
+      titlePart2: "con Volk iNview",
+      description: "Utilizamos tecnología de imagen avanzada para obtener una vista detallada de la retina y apoyar el diagnóstico de tu salud visual.",
+      duration: "0:28",
+      image: "/images/home/4_tecnologia_accion_image1.webp",
+      alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
+      actionText: "Conocer procedimiento",
+      actionHref: "#procedimientos",
+      whatsappMessage: "Hola, me gustaría conocer más sobre la evaluación retinal con Volk iNview en Óptica Alemania.",
+    },
+    {
+      id: "farnsworth-d15",
+      number: "02",
+      titlePart1: "Test de",
+      titlePart2: "Farnsworth D-15",
+      description: "Evaluamos tu visión cromática mediante una prueba especializada que detecta alteraciones en la percepción de los colores.",
+      duration: "0:32",
+      image: "/images/home/4_tecnologia_accion_image2.webp",
+      alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
+      actionText: "Conocer procedimiento",
+      actionHref: "#procedimientos",
+      whatsappMessage: "Hola, deseo información sobre el test de visión cromática Farnsworth D-15 en Óptica Alemania.",
     },
   ],
 };
