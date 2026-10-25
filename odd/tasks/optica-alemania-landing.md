@@ -47,7 +47,7 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T18 [S13,S17,S20]: Implementación visual Sección 7 — Monturas y Estilo (FramesSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 7cb642d
 - T19 [S14,S17,S20]: Implementación visual Sección 8 — Nuestra Trayectoria (TrajectorySection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 60b6f52
 - T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 65a6ebc
-- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: pending
+- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 39393a8
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
