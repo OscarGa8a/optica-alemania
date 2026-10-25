@@ -67,6 +67,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_mobile_comparison.png'),
   },
+  {
+    id: '6_visual_infantil',
+    name: 'Sección 6 — Salud Visual Infantil',
+    mockupDesktop: path.join(DOCS_HOME, '6_visual_infantil_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '6_visual_infantil_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '6_visual_infantil_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '6_visual_infantil_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '6_visual_infantil_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '6_visual_infantil_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(

@@ -1,0 +1,132 @@
+---
+// Sección 6 — Salud Visual Infantil
+// Óptica Alemania Villavicencio
+import { siteConfig } from '../data/siteConfig';
+import { buildWhatsAppLink } from '../utils/whatsapp';
+
+const { kidsVision } = siteConfig;
+const whatsappKidsUrl = buildWhatsAppLink(
+  kidsVision.whatsappMessage,
+  siteConfig.contact.whatsappNumber
+);
+---
+
+<section
+  id="infantil"
+  class="relative bg-[#F4FAFE] text-[#52617B] py-16 sm:py-20 lg:py-24 scroll-mt-20 overflow-hidden"
+>
+  <!-- Atmospheric soft ambient clinic lighting -->
+  <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[500px] bg-[#E8F3FD]/60 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-[-10%] left-[-5%] w-[500px] h-[450px] bg-[#EAF2FC]/50 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.22fr] gap-8 lg:gap-14 xl:gap-20 items-center">
+      
+      <!-- Left Column (Desktop): Eyebrow, Title, Description, Desktop CTAs -->
+      <div class="flex flex-col items-start">
+        <!-- Eyebrow -->
+        <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#1464D9]">
+          {kidsVision.eyebrow}
+        </span>
+
+        <!-- Section Title: 3 lines in Instrument Serif with editorial color contrast -->
+        <h2 class="font-display text-[2.75rem] sm:text-5xl lg:text-[4rem] xl:text-[4.65rem] text-[#182D53] leading-[1.02] tracking-tight mt-3 sm:mt-4">
+          <span class="block font-normal">{kidsVision.titlePart1}</span>
+          <span class="block italic font-normal text-[#1464D9]">{kidsVision.titlePart2}</span>
+          <span class="block italic font-normal text-[#1464D9]">{kidsVision.titlePart3}</span>
+        </h2>
+
+        <!-- Context Description -->
+        <p class="text-[14.5px] sm:text-base lg:text-lg text-[#52617B] leading-relaxed mt-4 sm:mt-6 max-w-[340px] sm:max-w-lg">
+          {kidsVision.description}
+        </p>
+
+        <!-- Desktop Action Container -->
+        <div class="hidden lg:flex flex-col items-start gap-4 mt-7 sm:mt-8">
+          <a
+            href={whatsappKidsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="whatsapp_cta"
+            data-event-location="kids_vision"
+            aria-label="Consultar por atención visual infantil en Óptica Alemania vía WhatsApp"
+            class="inline-flex items-center gap-2 text-[#1464D9] hover:text-[#0f4eb0] font-medium text-base transition-colors border-b border-[#1464D9] pb-0.5 group"
+          >
+            <span>{kidsVision.ctaText}</span>
+            <svg
+              class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+
+          <p class="text-xs sm:text-sm text-[#6B7C96]">
+            {kidsVision.noteText}
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Video Preview Card & Mobile Bottom CTAs -->
+      <div class="flex flex-col">
+        <!-- Interactive Video Card -->
+        <div class="relative rounded-[24px] sm:rounded-[28px] lg:rounded-[36px] overflow-hidden shadow-xs border border-white/80 aspect-[1.28/1] sm:aspect-[1.3/1] lg:aspect-[1.32/1] w-full group">
+          <picture>
+            <source srcset="/images/home/6_visual_infantil_image.webp" type="image/webp" />
+            <img
+              src="/images/home/6_visual_infantil_image.png"
+              alt={kidsVision.image.alt}
+              width={kidsVision.image.width}
+              height={kidsVision.image.height}
+              class="w-full h-full object-cover object-[35%_center] group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+
+          <!-- Centered Play Button -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/85 backdrop-blur-xs flex items-center justify-center text-[#182D53] shadow-lg group-hover:scale-110 group-hover:bg-white transition-all duration-300">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-[#182D53] translate-x-0.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Video Duration Badge -->
+          <div class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-black/80 backdrop-blur-xs text-white text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-md">
+            {kidsVision.videoDuration}
+          </div>
+        </div>
+
+        <!-- Mobile Action Container (placed below video card matching mobile mockup) -->
+        <div class="lg:hidden flex flex-col items-start gap-3 mt-6 sm:mt-7">
+          <a
+            href={whatsappKidsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="whatsapp_cta"
+            data-event-location="kids_vision"
+            aria-label="Consultar por atención visual infantil en Óptica Alemania vía WhatsApp"
+            class="inline-flex items-center gap-2 text-[#1464D9] hover:text-[#0f4eb0] font-medium text-base transition-colors border-b border-[#1464D9] pb-0.5 group"
+          >
+            <span>{kidsVision.ctaText}</span>
+            <svg
+              class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+
+          <p class="text-xs sm:text-sm text-[#6B7C96]">
+            {kidsVision.noteText}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

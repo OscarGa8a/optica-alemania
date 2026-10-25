@@ -72,6 +72,19 @@ export interface SpaceSectionConfig {
   };
 }
 
+export interface KidsVisionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  titlePart3: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  noteText: string;
+  videoDuration: string;
+  image: SpaceImage;
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -88,6 +101,7 @@ export interface SiteConfig {
   services: ServiceItem[];
   technologies: TechnologyItem[];
   space: SpaceSectionConfig;
+  kidsVision: KidsVisionConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -221,6 +235,23 @@ export const siteConfig: SiteConfig = {
         width: 632,
         height: 296,
       },
+    },
+  },
+  kidsVision: {
+    eyebrow: "SALUD VISUAL INFANTIL",
+    titlePart1: "Su visión merece",
+    titlePart2: "atención desde",
+    titlePart3: "pequeños.",
+    description: "Acompañamos el cuidado visual de los niños mediante evaluaciones que ayudan a identificar posibles dificultades visuales desde edades tempranas.",
+    ctaText: "Consultar atención infantil",
+    whatsappMessage: "Hola, me gustaría consultar por la atención visual infantil y agendar una cita en Óptica Alemania.",
+    noteText: "Consulta también por el certificado visual escolar.",
+    videoDuration: "3:50",
+    image: {
+      src: "/images/home/6_visual_infantil_image.webp",
+      alt: "Especialista de Óptica Alemania realizando examen optométrico pediátrico con lámpara de hendidura a niña paciente",
+      width: 1672,
+      height: 941,
     },
   },
 };

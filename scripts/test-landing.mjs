@@ -75,6 +75,7 @@ async function run() {
       servicesScreenshot: '3_servicios_desktop_actual.png',
       techScreenshot: '4_tecnologia_desktop_actual.png',
       spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
+      kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -85,6 +86,7 @@ async function run() {
       servicesScreenshot: '3_servicios_mobile_actual.png',
       techScreenshot: '4_tecnologia_mobile_actual.png',
       spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
+      kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
     },
   ];
 
@@ -401,6 +403,65 @@ async function run() {
       const spaceShotPath = path.join(SCREENSHOTS_DIR, vp.spaceScreenshot);
       await spaceSection.screenshot({ path: spaceShotPath });
       console.log(`📸 [${vp.name}] Nuestro Espacio screenshot saved: ${path.relative(ROOT_DIR, spaceShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 6 — Salud Visual Infantil verification
+    const kidsSection = page.locator('#infantil');
+    const kidsCount = await kidsSection.count();
+    if (kidsCount === 0) {
+      console.error(`❌ [${vp.name}] Section #infantil not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #infantil exists`);
+
+      // Verify heading text
+      const headingText = await kidsSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Su visión merece')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Su visión merece', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Su visión merece'`);
+      }
+
+      // Verify image loaded properly
+      const kidsImage = kidsSection.locator('img');
+      const naturalWidth = await kidsImage.evaluate((img) => img.naturalWidth);
+      if (!naturalWidth || naturalWidth === 0) {
+        console.error(`❌ [${vp.name}] Kids vision image failed to load!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Kids vision image loaded successfully (naturalWidth: ${naturalWidth}px)`);
+      }
+
+      // Verify CTA link
+      const ctas = kidsSection.locator('a[data-event="whatsapp_cta"][data-event-location="kids_vision"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected kids vision CTA link, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Kids vision CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await kidsSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const kidsShotPath = path.join(SCREENSHOTS_DIR, vp.kidsVisionScreenshot);
+      await kidsSection.screenshot({ path: kidsShotPath });
+      console.log(`📸 [${vp.name}] Salud Visual Infantil screenshot saved: ${path.relative(ROOT_DIR, kidsShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {
