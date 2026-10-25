@@ -37,7 +37,7 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T7 [S7,S8]: Puerta de aprobación con el usuario y preparación Sección 2 — Quiénes Somos | Route: inline | Status: done | Commit: 385f698 (PR #3)
 - T10 [S8]: Implementación y certificación Sección 2 — Quiénes Somos (AboutSection.astro) con layout responsivo, WebP picture, data-event, Playwright y Lighthouse (Mobile: 98/100/100/100, Desktop: 100/100/100/100) | Route: inline | Status: done | Commit: 56fad3e (PR #4)
 - T11 [S8,S9]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: done | Commit: 56fad3e
-- T12 [S9,S17,S20]: Implementación visual Sección 3 — Nuestros Servicios (ServicesSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: pending
+- T12 [S9,S17,S20]: Implementación visual Sección 3 — Nuestros Servicios (ServicesSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: 2ff31a3
 - T13 [S9,S10]: Puerta de aprobación visual Sección 3 con el usuario y preparación Sección 4 — Tecnología | Route: inline | Status: in-progress | Commit: pending
 
 ## Log
