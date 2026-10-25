@@ -66,8 +66,20 @@ async function run() {
   const browser = await chromium.launch({ headless: true });
 
   const viewports = [
-    { name: 'desktop', width: 1440, height: 900, screenshot: '1_hero_desktop_actual.png' },
-    { name: 'mobile', width: 390, height: 844, screenshot: '1_hero_mobile_actual.png' },
+    {
+      name: 'desktop',
+      width: 1440,
+      height: 900,
+      heroScreenshot: '1_hero_desktop_actual.png',
+      aboutScreenshot: '2_quienes_somos_desktop_actual.png',
+    },
+    {
+      name: 'mobile',
+      width: 390,
+      height: 844,
+      heroScreenshot: '1_hero_mobile_actual.png',
+      aboutScreenshot: '2_quienes_somos_mobile_actual.png',
+    },
   ];
 
   for (const vp of viewports) {
@@ -94,7 +106,7 @@ async function run() {
 
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
 
-    // Assertions
+    // Global assertions
     if (consoleErrors.length > 0) {
       console.error(`❌ [${vp.name}] Console Errors detected:`, consoleErrors);
       failed = true;
@@ -115,16 +127,76 @@ async function run() {
 
     if (hasHorizontalOverflow) {
       const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
-      console.error(`❌ [${vp.name}] Horizontal overflow detected! scrollWidth=${scrollWidth} > innerWidth=${vp.width}`);
+      console.error(
+        `❌ [${vp.name}] Horizontal overflow detected! scrollWidth=${scrollWidth} > innerWidth=${vp.width}`
+      );
       failed = true;
     } else {
       console.log(`✅ [${vp.name}] 0 horizontal overflow`);
     }
 
-    // Take screenshot
-    const shotPath = path.join(SCREENSHOTS_DIR, vp.screenshot);
-    await page.screenshot({ path: shotPath, fullPage: false });
-    console.log(`📸 [${vp.name}] Screenshot saved to: ${shotPath}`);
+    // Section 1 — Hero screenshot & verification
+    const heroShotPath = path.join(SCREENSHOTS_DIR, vp.heroScreenshot);
+    await page.screenshot({ path: heroShotPath, fullPage: false });
+    console.log(`📸 [${vp.name}] Hero screenshot saved: ${path.relative(ROOT_DIR, heroShotPath)}`);
+
+    // Section 2 — Quiénes Somos verification
+    const aboutSection = page.locator('#nosotros');
+    const aboutCount = await aboutSection.count();
+    if (aboutCount === 0) {
+      console.error(`❌ [${vp.name}] Section #nosotros not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #nosotros exists`);
+
+      // Verify heading text
+      const headingText = await aboutSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Quiénes somos')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Quiénes somos', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Quiénes somos'`);
+      }
+
+      // Verify image rendered properly
+      const imgNaturalWidth = await aboutSection.locator('img').evaluate((img) => img.naturalWidth);
+      if (!imgNaturalWidth || imgNaturalWidth === 0) {
+        console.error(`❌ [${vp.name}] About section image failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] About image loaded (naturalWidth: ${imgNaturalWidth}px)`);
+      }
+
+      // Verify CTA link
+      const cta = aboutSection.locator('a[data-event="history_click"]');
+      const ctaHref = await cta.getAttribute('href');
+      if (ctaHref !== '#trayectoria') {
+        console.error(`❌ [${vp.name}] Expected CTA href='#trayectoria', got: '${ctaHref}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] CTA link verified (href: ${ctaHref}, data-event: history_click)`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header obscuring it
+      await aboutSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300); // Allow any smooth scroll/render to settle
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const aboutShotPath = path.join(SCREENSHOTS_DIR, vp.aboutScreenshot);
+      await aboutSection.screenshot({ path: aboutShotPath });
+      console.log(`📸 [${vp.name}] Quiénes Somos screenshot saved: ${path.relative(ROOT_DIR, aboutShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
 
     await page.close();
   }
@@ -136,7 +208,7 @@ async function run() {
     console.error('\n❌ Playwright verification failed.');
     process.exit(1);
   } else {
-    console.log('\n🎉 Playwright verification PASSED for all viewports!');
+    console.log('\n🎉 Playwright verification PASSED for all viewports and sections!');
     process.exit(0);
   }
 }

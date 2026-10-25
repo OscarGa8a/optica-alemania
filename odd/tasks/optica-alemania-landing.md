@@ -1,5 +1,5 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/hero-refinement
+Branch: feat/section-quienes-somos
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual && pnpm test:lighthouse
 
@@ -11,7 +11,7 @@ S4: Design Tokens en Tailwind v4 (@theme): tokens semánticos corporativos (#146
 S5: Capa de datos centralizada: src/data/siteConfig.ts (teléfonos de Villavicencio, horarios, dirección, navegación, contenidos) y src/utils/whatsapp.ts.
 S6: Base Layout y Header/Navbar responsivo con logotipo y botón de atención.
 S7: Sección 1 — Hero (src/components/Hero.astro) ajustado fielmente a 1_home_desktop.png y 1_home_mobile.png.
-S8: Sección 2 — Quiénes Somos (src/components/AboutSection.astro) con imágenes y layout fiel.
+S8: Sección 2 — Quiénes Somos (src/components/AboutSection.astro) con imágenes y layout fiel a 2_quienes_somos_desktop.png y 2_quienes_somos_mobile.png.
 S9: Sección 3 — Nuestros Servicios (src/components/ServicesSection.astro).
 S10: Sección 4 — Tecnología en Acción (src/components/TechSection.astro).
 S11: Sección 5 — Nuestro Espacio (src/components/SpaceSection.astro).
@@ -32,8 +32,10 @@ S19: Evaluación y optimización del Hero con las herramientas del Playbook: im�
 - T5 [S7]: Implementación Sección 1 — Hero (Hero.astro) con bleed editorial desktop y vertical mobile | Route: inline | Status: done | Commit: 13c3c2b (PR #2)
 - T6 [S17]: Harness de verificación Playwright (scripts/test-landing.mjs) y certificación visual del Hero (0 errores, 0 404s, 0 overflow) | Route: inline | Status: done | Commit: 13c3c2b (PR #2)
 - T8 [S18]: Incorporación de PLAYBOOK.md, scripts de comparativa visual side-by-side y auditoría Lighthouse, infraestructura de cabeceras, AI-SEO y Analytics | Route: inline | Status: done | Commit: 60a8eed (PR #2)
-- T9 [S19]: Optimización integral del Hero (WebP picture, dimensiones CLS=0, data-event GTM, certificación Lighthouse 100/100/100/100) | Route: inline | Status: done | Commit: pending
-- T7 [S7,S8]: Puerta de aprobación con el usuario y preparación Sección 2 — Quiénes Somos | Route: inline | Status: in-progress | Commit: pending
+- T9 [S19]: Optimización integral del Hero (WebP picture, dimensiones CLS=0, data-event GTM, certificación Lighthouse 100/100/100/100) | Route: inline | Status: done | Commit: 385f698 (PR #3)
+- T7 [S7,S8]: Puerta de aprobación con el usuario y preparación Sección 2 — Quiénes Somos | Route: inline | Status: done | Commit: 385f698 (PR #3)
+- T10 [S8]: Implementación y certificación Sección 2 — Quiénes Somos (AboutSection.astro) con layout responsivo, WebP picture, data-event, Playwright y Lighthouse (Mobile: 98/100/100/100, Desktop: 100/100/100/100) | Route: inline | Status: done | Commit: 56fad3e (PR #4)
+- T11 [S8,S9]: Puerta de aprobación Sección 2 con el usuario y preparación Sección 3 — Servicios | Route: inline | Status: in-progress | Commit: pending
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -50,4 +52,13 @@ L9: Sincronizado main (cfe48de). Evaluación integral del Hero ejecutada contra 
 - Atributos semánticos data-event="whatsapp_cta", data-event-location="hero_primary" / "header_cta" y data-event="services_scroll" conectados con Analytics.astro para medición Zero-TBT.
 - Corrección de accesibilidad WCAG 2.5.3 (Label in Name) y contraste WCAG 2.2 AA.
 - Auditoría Google Lighthouse superada con éxito rotundo: Desktop: 100/100/100/100 (Perf 100, A11y 100, BP 100, SEO 100), Mobile: 95/100/100/100 (Perf 95, A11y 100, BP 100, SEO 100).
-- Suite de Playwright y comparativa visual Sharp 100% aprobadas.
+- Suite de Playwright y comparativa visual Sharp 100% aprobadas. Commit: 385f698 (PR #3).
+L10: "pasemos a la siguiente seccion rey"
+L11: Sección 2 — Quiénes Somos (src/components/AboutSection.astro) implementada y certificada:
+- Optimización de imagen a WebP (public/images/home/2_quienes_somos_image.webp: 80KB vs 1.6MB original, -95% reducción).
+- Implementación de layout dual responsive con display: contents: en desktop split 50/50 con imagen a sangre izquierda y contenido a la derecha; en mobile flujo vertical exacto al mockup (texto -> imagen full-bleed -> CTA inferior).
+- Tipografía editorial navy #182D53, eyebrow con línea decorativa, subtitle con quiebre exacto en "Detrás de cada mirada,", y CTA "Conoce nuestra historia" con flecha extendida y subrayado contiguo.
+- Atributos semánticos data-event="history_click" y data-event-location="about_section" para Analytics Zero-TBT.
+- Playwright test: 0 errores de consola, 0 404s, 0 overflow horizontal.
+- Comparativas side-by-side generadas y auditadas (docs/screenshots/2_quienes_somos_desktop_comparison.png y docs/screenshots/2_quienes_somos_mobile_comparison.png).
+- Google Lighthouse: Desktop 100/100/100/100, Mobile 98/100/100/100 (Perf 98, A11y 100, BP 100, SEO 100).
