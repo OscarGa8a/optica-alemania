@@ -42,7 +42,7 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T13 [S9,S10]: Puerta de aprobación visual Sección 3 con el usuario | Route: inline | Status: done | Commit: d82971c
 - T14 [S10,S17,S20]: Implementación visual Sección 4 — Tecnología en Acción (TechSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: f73f3d1
 - T15 [S9,S10]: Apertura de Pull Request #5 agrupando Secciones 3 y 4 por solicitud explícita del usuario | Route: inline | Status: done | Commit: c4b1dd2 (PR #5)
-- T16 [S11,S17,S20]: Implementación visual Sección 5 — Nuestro Espacio (SpaceSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: pending
+- T16 [S11,S17,S20]: Implementación visual Sección 5 — Nuestro Espacio (SpaceSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: 4e0cc51
 - T17 [S11,S12]: Puerta de aprobación visual Sección 5 con el usuario y preparación Sección 6 — Salud Visual Infantil | Route: inline | Status: in-progress | Commit: pending
 
 ## Log
