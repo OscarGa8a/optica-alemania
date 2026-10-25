@@ -57,6 +57,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '4_tecnologia_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '4_tecnologia_mobile_comparison.png'),
   },
+  {
+    id: '5_nuestro_espacio',
+    name: 'Sección 5 — Nuestro Espacio',
+    mockupDesktop: path.join(DOCS_HOME, '5_nuestro_espacio_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '5_nuestro_espacio_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '5_nuestro_espacio_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(

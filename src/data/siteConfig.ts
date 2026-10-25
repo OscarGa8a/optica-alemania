@@ -51,6 +51,27 @@ export interface TechnologyItem {
   whatsappMessage: string;
 }
 
+export interface SpaceImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+export interface SpaceSectionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  ctaText: string;
+  ctaHref: string;
+  images: {
+    main: SpaceImage;
+    shelves: SpaceImage;
+    clinic: SpaceImage;
+  };
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -66,6 +87,7 @@ export interface SiteConfig {
   nav: NavItem[];
   services: ServiceItem[];
   technologies: TechnologyItem[];
+  space: SpaceSectionConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -173,4 +195,32 @@ export const siteConfig: SiteConfig = {
       whatsappMessage: "Hola, deseo información sobre el test de visión cromática Farnsworth D-15 en Óptica Alemania.",
     },
   ],
+  space: {
+    eyebrow: "NUESTRO ESPACIO",
+    titlePart1: "Conoce el lugar donde",
+    titlePart2: "cuidamos tu visión.",
+    description: "Descubre nuestras instalaciones, los espacios de atención y el entorno donde nuestro equipo trabaja por tu bienestar visual.",
+    ctaText: "Conoce más de nosotros",
+    ctaHref: "#nosotros",
+    images: {
+      main: {
+        src: "/images/home/5_nuestro_espacio_image1.webp",
+        alt: "Recepción y sala de espera moderna de Óptica Alemania en Villavicencio",
+        width: 1028,
+        height: 624,
+      },
+      shelves: {
+        src: "/images/home/5_nuestro_espacio_image2.webp",
+        alt: "Exhibidores iluminados con monturas oftálmicas y gafas de sol en Óptica Alemania",
+        width: 632,
+        height: 296,
+      },
+      clinic: {
+        src: "/images/home/5_nuestro_espacio_image3.webp",
+        alt: "Consultorio optométrico equipado con lámpara de hendidura y monitor de diagnóstico visual",
+        width: 632,
+        height: 296,
+      },
+    },
+  },
 };

@@ -1,0 +1,117 @@
+---
+// Sección 5 — Nuestro Espacio
+// Óptica Alemania Villavicencio
+import { siteConfig } from '../data/siteConfig';
+
+const { space } = siteConfig;
+---
+
+<section
+  id="espacio"
+  class="relative bg-[#F4F8FE] text-[#52617B] py-16 sm:py-20 lg:py-24 scroll-mt-20 overflow-hidden"
+>
+  <!-- Atmospheric soft ambient clinic lighting matching mockup organic contours -->
+  <div class="absolute top-[-10%] right-[-5%] w-[650px] h-[550px] bg-[#E5EEFA]/60 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-[15%] left-[-10%] w-[550px] h-[450px] bg-[#EAF2FC]/50 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
+    <!-- Header: Editorial Heading and Lead Context -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-end">
+      <!-- Left Column: Eyebrow + Display Title -->
+      <div class="lg:col-span-7 flex flex-col">
+        <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#1464D9]">
+          {space.eyebrow}
+        </span>
+        <h2 class="font-display text-[2.5rem] sm:text-5xl lg:text-[3.75rem] xl:text-[4.25rem] text-[#182D53] leading-[1.04] mt-3 sm:mt-4">
+          <span class="block font-normal">{space.titlePart1}</span>
+          <span class="block italic font-normal text-[#1464D9]">{space.titlePart2}</span>
+        </h2>
+      </div>
+
+      <!-- Right Column: Description + Desktop Link -->
+      <div class="lg:col-span-5 flex flex-col justify-end lg:pb-1">
+        <p class="text-[13px] sm:text-base lg:text-lg text-[#52617B] leading-[1.6] max-w-xl">
+          {space.description}
+        </p>
+
+        <!-- Desktop Action Link -->
+        <div class="hidden lg:block mt-5 sm:mt-6">
+          <a
+            href={space.ctaHref}
+            data-event="space_about_click"
+            class="inline-flex items-center gap-2 text-[#1464D9] hover:text-[#0f4eb0] font-medium text-base transition-colors border-b border-[#1464D9] pb-0.5 group"
+          >
+            <span>{space.ctaText}</span>
+            <svg
+              class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asymmetric Bento Photo Grid -->
+    <div class="mt-10 sm:mt-12 lg:mt-14 grid grid-cols-1 lg:grid-cols-[1.626fr_1fr] gap-5 sm:gap-6 lg:gap-7 items-stretch">
+      <!-- Main Featured Image (Reception / Lounge) -->
+      <div class="relative rounded-[24px] lg:rounded-[32px] overflow-hidden shadow-xs border border-white/80 aspect-[1028/624] lg:aspect-auto lg:h-full group">
+        <img
+          src={space.images.main.src}
+          alt={space.images.main.alt}
+          width={space.images.main.width}
+          height={space.images.main.height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Secondary Stacked Column (Frames Display & Clinical Space) -->
+      <div class="grid grid-cols-1 gap-5 sm:gap-6 lg:gap-7 h-full">
+        <div class="relative rounded-[24px] lg:rounded-[32px] overflow-hidden shadow-xs border border-white/80 aspect-[632/296] group">
+          <img
+            src={space.images.shelves.src}
+            alt={space.images.shelves.alt}
+            width={space.images.shelves.width}
+            height={space.images.shelves.height}
+            class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="relative rounded-[24px] lg:rounded-[32px] overflow-hidden shadow-xs border border-white/80 aspect-[632/296] group">
+          <img
+            src={space.images.clinic.src}
+            alt={space.images.clinic.alt}
+            width={space.images.clinic.width}
+            height={space.images.clinic.height}
+            class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Action Link (placed below the image stack matching mobile mockup) -->
+    <div class="lg:hidden mt-7 sm:mt-8">
+      <a
+        href={space.ctaHref}
+        data-event="space_about_click"
+        class="inline-flex items-center gap-2 text-[#1464D9] hover:text-[#0f4eb0] font-medium text-base transition-colors border-b border-[#1464D9] pb-0.5 group"
+      >
+        <span>{space.ctaText}</span>
+        <svg
+          class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -74,6 +74,7 @@ async function run() {
       aboutScreenshot: '2_quienes_somos_desktop_actual.png',
       servicesScreenshot: '3_servicios_desktop_actual.png',
       techScreenshot: '4_tecnologia_desktop_actual.png',
+      spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -83,6 +84,7 @@ async function run() {
       aboutScreenshot: '2_quienes_somos_mobile_actual.png',
       servicesScreenshot: '3_servicios_mobile_actual.png',
       techScreenshot: '4_tecnologia_mobile_actual.png',
+      spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
     },
   ];
 
@@ -333,6 +335,72 @@ async function run() {
       const techShotPath = path.join(SCREENSHOTS_DIR, vp.techScreenshot);
       await techSection.screenshot({ path: techShotPath });
       console.log(`📸 [${vp.name}] Tecnología screenshot saved: ${path.relative(ROOT_DIR, techShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 5 — Nuestro Espacio verification
+    const spaceSection = page.locator('#espacio');
+    const spaceCount = await spaceSection.count();
+    if (spaceCount === 0) {
+      console.error(`❌ [${vp.name}] Section #espacio not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #espacio exists`);
+
+      // Verify heading text
+      const headingText = await spaceSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Conoce el lugar donde')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Conoce el lugar donde', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Conoce el lugar donde'`);
+      }
+
+      // Verify 3 showcase images loaded properly
+      const spaceImages = spaceSection.locator('img');
+      const imgCount = await spaceImages.count();
+      if (imgCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 space images, got: ${imgCount}`);
+        failed = true;
+      } else {
+        for (let i = 0; i < imgCount; i++) {
+          const naturalWidth = await spaceImages.nth(i).evaluate((img) => img.naturalWidth);
+          if (!naturalWidth || naturalWidth === 0) {
+            console.error(`❌ [${vp.name}] Space image ${i + 1} failed to load!`);
+            failed = true;
+          }
+        }
+        console.log(`✅ [${vp.name}] 3 space images loaded successfully`);
+      }
+
+      // Verify CTA links
+      const ctas = spaceSection.locator('a[data-event="space_about_click"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected space CTA link, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Space CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await spaceSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const spaceShotPath = path.join(SCREENSHOTS_DIR, vp.spaceScreenshot);
+      await spaceSection.screenshot({ path: spaceShotPath });
+      console.log(`📸 [${vp.name}] Nuestro Espacio screenshot saved: ${path.relative(ROOT_DIR, spaceShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {
