@@ -1,0 +1,84 @@
+---
+// Sección 2 — Quiénes Somos
+// Óptica Alemania Villavicencio
+---
+
+<section id="nosotros" class="relative bg-[#F4F7FC] text-[#52617B] scroll-mt-24 overflow-hidden">
+  <div class="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[640px] xl:min-h-[720px] items-stretch">
+    <!-- Desktop Left Column / Mobile Middle: Photographic Composition -->
+    <div class="order-2 lg:order-1 relative w-full h-[360px] sm:h-[460px] lg:h-full min-h-[340px] lg:min-h-[640px] overflow-hidden">
+      <picture>
+        <source srcset="/images/home/2_quienes_somos_image.webp" type="image/webp" />
+        <img
+          src="/images/home/2_quienes_somos_image.png"
+          alt="Optómetra de Óptica Alemania realizando valoración visual y ajustando montura a paciente en consultorio"
+          class="w-full h-full object-cover object-center"
+          width="1206"
+          height="941"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </div>
+
+    <!-- Desktop Right Column / Mobile Split via display:contents -->
+    <div class="contents lg:flex lg:flex-col lg:justify-center lg:order-2 lg:pl-16 xl:pl-24 lg:pr-12 xl:pr-20 lg:py-20 xl:py-24">
+      <!-- Text content: Eyebrow, Heading, Subtitle, Paragraphs -->
+      <div class="order-1 px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 lg:p-0">
+        <!-- Eyebrow with decorative rule -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-[#182D53]">
+            CONOCE ÓPTICA ALEMANIA
+          </span>
+          <span class="w-14 sm:w-20 h-[1.5px] bg-[#9bb0ce]" aria-hidden="true"></span>
+        </div>
+
+        <!-- Section Heading: Semibold, deep navy, editorial scale -->
+        <h2 class="text-4xl sm:text-5xl lg:text-[3.75rem] font-semibold text-[#182D53] tracking-[-0.03em] leading-[1.08] mt-4 sm:mt-6">
+          Quiénes somos
+        </h2>
+
+        <!-- Lead Subtitle -->
+        <p class="text-xl sm:text-2xl lg:text-[1.85rem] font-medium text-[#182D53] leading-[1.3] tracking-[-0.015em] mt-5 sm:mt-6">
+          <span class="block">Detrás de cada mirada,</span>
+          <span class="block">hay personas que cuidan de ti.</span>
+        </p>
+
+        <!-- Body copy -->
+        <div class="mt-5 sm:mt-7 space-y-4 sm:space-y-5 text-base sm:text-[1.0625rem] text-[#52617B] leading-[1.75] font-normal max-w-xl">
+          <p>
+            En Óptica Alemania creemos en la importancia de una atención cercana y humana. Escuchamos a cada persona, entendemos sus necesidades y la acompañamos en cada paso para encontrar la mejor solución visual.
+          </p>
+          <p>
+            Combinamos experiencia, tecnología y un enfoque personalizado para cuidar de tu salud visual y contribuir a tu bienestar en cada etapa de la vida.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Link CTA -->
+      <div class="order-3 px-6 pt-6 pb-12 sm:px-10 sm:pt-8 sm:pb-16 lg:p-0 lg:mt-10">
+        <a
+          href="#trayectoria"
+          data-event="history_click"
+          data-event-location="about_section"
+          class="group inline-flex items-center gap-3.5 pr-3 pb-2 border-b-[1.5px] border-[#182D53] text-[#182D53] hover:text-[#1464D9] hover:border-[#1464D9] transition-colors font-medium text-base sm:text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1464D9] focus-visible:ring-offset-2"
+        >
+          <span>Conoce nuestra historia</span>
+          <svg
+            class="w-6 h-4 transition-transform duration-200 group-hover:translate-x-1"
+            viewBox="0 0 24 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M1 8h21" />
+            <path d="m15 2 6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -93,16 +93,21 @@ async function runLighthouseAudit() {
       output: 'json',
       formFactor: 'mobile',
       throttlingMethod: 'simulate',
+      disableStorageReset: true,
+      logLevel: 'error',
     });
 
     console.log('💻 Evaluando categoría Desktop...');
     const desktop = await lighthouse(url, {
       port: debugPort,
       output: 'json',
+      disableStorageReset: true,
+      logLevel: 'error',
     }, {
       extends: 'lighthouse:default',
       settings: {
         formFactor: 'desktop',
+        disableStorageReset: true,
         screenEmulation: {
           mobile: false,
           width: 1350,
