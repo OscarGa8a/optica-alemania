@@ -97,6 +97,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '8_nuestra_trayectoria_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '8_nuestra_trayectoria_mobile_comparison.png'),
   },
+  {
+    id: '9_contacto',
+    name: 'Sección 9 — Contacto y Ubicación',
+    mockupDesktop: path.join(DOCS_HOME, '9_contacto_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '9_contacto_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '9_contacto_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '9_contacto_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '9_contacto_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '9_contacto_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(

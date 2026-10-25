@@ -78,6 +78,7 @@ async function run() {
       kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
       framesScreenshot: '7_monturas_desktop_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_desktop_actual.png',
+      contactScreenshot: '9_contacto_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -91,6 +92,7 @@ async function run() {
       kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
       framesScreenshot: '7_monturas_mobile_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_mobile_actual.png',
+      contactScreenshot: '9_contacto_mobile_actual.png',
     },
   ];
 
@@ -600,6 +602,73 @@ async function run() {
       const trajectoryShotPath = path.join(SCREENSHOTS_DIR, vp.trajectoryScreenshot);
       await trajectorySection.screenshot({ path: trajectoryShotPath });
       console.log(`📸 [${vp.name}] Trayectoria screenshot saved: ${path.relative(ROOT_DIR, trajectoryShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 9 — Contacto y Ubicación verification
+    const contactSection = page.locator('#contacto');
+    const contactCount = await contactSection.count();
+    if (contactCount === 0) {
+      console.error(`❌ [${vp.name}] Section #contacto not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #contacto exists`);
+
+      // Verify heading text
+      const headingText = await contactSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Nos vemos')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Nos vemos', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Nos vemos'`);
+      }
+
+      // Verify images loaded properly
+      const images = contactSection.locator('img');
+      const imgCount = await images.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await images.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded || imgCount === 0) {
+        console.error(`❌ [${vp.name}] One or more contact images failed to load! (found ${imgCount})`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All contact images loaded successfully (${imgCount} images checked)`);
+      }
+
+      // Verify WhatsApp button link
+      const whatsappBtn = contactSection.locator('a[data-event="whatsapp_cta"][data-event-location="contact_section"]');
+      const btnCount = await whatsappBtn.count();
+      if (btnCount === 0) {
+        console.error(`❌ [${vp.name}] WhatsApp CTA button not found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] WhatsApp CTA button verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await contactSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const contactShotPath = path.join(SCREENSHOTS_DIR, vp.contactScreenshot);
+      await contactSection.screenshot({ path: contactShotPath });
+      console.log(`📸 [${vp.name}] Contacto screenshot saved: ${path.relative(ROOT_DIR, contactShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

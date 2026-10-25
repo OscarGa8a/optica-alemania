@@ -1,5 +1,5 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/section-espacio
+Branch: feat/section-contacto
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual
 PR: pending
@@ -43,7 +43,11 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T14 [S10,S17,S20]: Implementación visual Sección 4 — Tecnología en Acción (TechSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: f73f3d1
 - T15 [S9,S10]: Apertura de Pull Request #5 agrupando Secciones 3 y 4 por solicitud explícita del usuario | Route: inline | Status: done | Commit: c4b1dd2 (PR #5)
 - T16 [S11,S17,S20]: Implementación visual Sección 5 — Nuestro Espacio (SpaceSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: 4e0cc51
-- T17 [S11,S12]: Puerta de aprobación visual Sección 5 con el usuario y preparación Sección 6 — Salud Visual Infantil | Route: inline | Status: in-progress | Commit: pending
+- T17 [S12,S17,S20]: Implementación visual Sección 6 — Salud Visual Infantil (KidsVisionSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: d3235ef
+- T18 [S13,S17,S20]: Implementación visual Sección 7 — Monturas y Estilo (FramesSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 7cb642d
+- T19 [S14,S17,S20]: Implementación visual Sección 8 — Nuestra Trayectoria (TrajectorySection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 60b6f52
+- T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: pending
+- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) | Route: inline | Status: pending | Commit: pending
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -123,4 +127,13 @@ L25: Creada rama local `feat/section-trayectoria`. Implementada la Sección 8 �
 - Layout responsivo con diferenciación editorial: en desktop (>= md) disposición fluida en dos filas (3 + 2 organizaciones centradas) con divisores verticales sutiles e interacción hover scale; en mobile (< md) cuadrícula 2x2 en tarjetas blancas redondeadas con sombra sutil y tarjeta full-width inferior para Copalma.
 - Tipografía editorial Instrument Serif ("Relaciones que" en navy #182D53 y "construyen confianza." en azul #1464D9 cursiva) con eyebrow y línea de acento horizontal en desktop.
 - Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
-- Comparativas side-by-side generadas con Sharp (docs/screenshots/8_nuestra_trayectoria_desktop_comparison.png y 8_nuestra_trayectoria_mobile_comparison.png) y auditadas visualmente contra mockups.
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/8_nuestra_trayectoria_desktop_comparison.png y 8_nuestra_trayectoria_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 60b6f52.
+L26: "continua rey"
+L27: Creada rama local `feat/section-contacto`. Implementada la Sección 9 — Contacto y Ubicación (src/components/ContactSection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado en src/data/siteConfig.ts (`ContactSectionConfig`) con dirección, teléfonos, horarios de atención, cuenta de Instagram y enlaces interactivos.
+- Composición responsive:
+  - Desktop: columna izquierda con encabezado editorial ("Nos vemos" en navy #182D53 y "en el consultorio." en azul #1464D9 cursiva), 4 ítems de contacto con iconos SVG y botón primario de WhatsApp con flecha; columna derecha con tarjeta de mapa interactivo de Google Maps (crop WebP 92KB) y tarjeta de video de recorrido "CÓMO LLEGAR" con thumbnail de fachada iluminada y botón de acción.
+  - Mobile: fila de 4 ítems de contacto como iconos circulares y texto compacto, botón de WhatsApp full-width centrado, mapa interactivo y tarjeta de video vertical adaptada sin desborde.
+  - Fondo fotográfico difuminado con degradado suave en desktop según el mockup.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/9_contacto_desktop_comparison.png y 9_contacto_mobile_comparison.png) y auditadas contra mockups.

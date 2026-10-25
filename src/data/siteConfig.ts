@@ -116,6 +116,23 @@ export interface TrajectoryConfig {
   organizations: TrajectoryOrganization[];
 }
 
+export interface ContactSectionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  whatsappMessage: string;
+  mapImage: SpaceImage;
+  facadeImage: SpaceImage;
+  routeVideo: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    actionTextMobile: string;
+    videoUrl: string;
+  };
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -135,6 +152,7 @@ export interface SiteConfig {
   kidsVision: KidsVisionConfig;
   frames: FramesConfig;
   trajectory: TrajectoryConfig;
+  contactSection: ContactSectionConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -387,5 +405,31 @@ export const siteConfig: SiteConfig = {
         },
       },
     ],
+  },
+  contactSection: {
+    eyebrow: "CONTACTO Y UBICACIÓN",
+    titlePart1: "Nos vemos",
+    titlePart2: "en Barzal.",
+    description: "Visítanos en el sector de Barzal Bajo, Villavicencio. Estamos aquí para ayudarte a encontrar la atención visual que necesitas.",
+    whatsappMessage: "Hola, me gustaría agendar una cita y consultar información de ubicación en Óptica Alemania Barzal.",
+    mapImage: {
+      src: "/images/home/9_contacto_map.webp",
+      alt: "Mapa interactivo de ubicación de Óptica Alemania en el sector Barzal Bajo, Villavicencio",
+      width: 1656,
+      height: 811,
+    },
+    facadeImage: {
+      src: "/images/home/9_contacto_image.webp",
+      alt: "Fachada exterior iluminada de la sede Óptica Alemania en Barzal Bajo, Villavicencio",
+      width: 1672,
+      height: 941,
+    },
+    routeVideo: {
+      eyebrow: "CÓMO LLEGAR",
+      title: "Descubre el recorrido hasta nuestra óptica.",
+      description: "Te mostramos el camino paso a paso para que llegues sin complicaciones.",
+      actionTextMobile: "Ver video del recorrido",
+      videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Bajo+Villavicencio+Meta",
+    },
   },
 };
