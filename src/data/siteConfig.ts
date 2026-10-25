@@ -27,6 +27,16 @@ export interface SocialProof {
   sourceLabel: string;
 }
 
+export interface ServiceItem {
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  whatsappMessage: string;
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -40,6 +50,7 @@ export interface SiteConfig {
   };
   socialProof: SocialProof;
   nav: NavItem[];
+  services: ServiceItem[];
 }
 
 export const siteConfig: SiteConfig = {
@@ -80,5 +91,43 @@ export const siteConfig: SiteConfig = {
     { label: "Procedimientos", href: "#procedimientos" },
     { label: "Monturas", href: "#monturas" },
     { label: "Contacto", href: "#contacto" },
+  ],
+  services: [
+    {
+      id: "optometria",
+      number: "01",
+      title: "Consulta de optometría especializada",
+      description: "Evaluación completa de tu salud visual con tecnología avanzada.",
+      image: "/images/home/3_nuestros_servicios_image2.webp",
+      alt: "Equipo de foróptero para consulta de optometría especializada en Óptica Alemania",
+      whatsappMessage: "Hola, me gustaría agendar una consulta de optometría especializada en Óptica Alemania.",
+    },
+    {
+      id: "lentes-contacto",
+      number: "02",
+      title: "Adaptación de lentes de contacto",
+      description: "Asesoría y adaptación personalizada según tus necesidades visuales.",
+      image: "/images/home/3_nuestros_servicios_image3.webp",
+      alt: "Lente de contacto para adaptación clínica personalizada",
+      whatsappMessage: "Hola, deseo información sobre la adaptación de lentes de contacto en Óptica Alemania.",
+    },
+    {
+      id: "presion-intraocular",
+      number: "03",
+      title: "Toma de presión intraocular",
+      description: "Evaluación preventiva para el cuidado de la salud de tus ojos.",
+      image: "/images/home/3_nuestros_servicios_image4.webp",
+      alt: "Examen de tonometría y toma de presión intraocular para prevención de glaucoma",
+      whatsappMessage: "Hola, me interesa agendar una toma de presión intraocular en Óptica Alemania.",
+    },
+    {
+      id: "ojo-seco",
+      number: "04",
+      title: "Test de ojo seco",
+      description: "Diagnóstico especializado para detectar y tratar la sequedad ocular.",
+      image: "/images/home/3_nuestros_servicios_image6.webp",
+      alt: "Evaluación biomicroscópica con luz azul para diagnóstico de ojo seco",
+      whatsappMessage: "Hola, deseo consultar sobre el examen y tratamiento para ojo seco en Óptica Alemania.",
+    },
   ],
 };
