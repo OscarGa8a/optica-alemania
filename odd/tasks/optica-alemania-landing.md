@@ -1,8 +1,8 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/section-footer
+Branch: main
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual
-PR: https://github.com/OscarGa8a/optica-alemania/pull/6
+PR: https://github.com/OscarGa8a/optica-alemania/pull/6 (merged)
 
 ## Specs
 S1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -150,3 +150,5 @@ L29: Creada rama local `feat/section-footer`. Implementada la Sección 10 — Fo
 - Comparativas side-by-side generadas con Sharp (docs/screenshots/10_footer_desktop_comparison.png y 10_footer_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 39393a8.
 L30: "si rey, haz pr por favor"
 L31: Rama `feat/section-footer` empujada al repositorio remoto y Pull Request #6 creado exitosamente: https://github.com/OscarGa8a/optica-alemania/pull/6. Agrupa la implementación y certificación de las Secciones 5 a 10 con 0 errores en Playwright y comparativas visuales side-by-side completas.
+L32: "mergeado rey. sincroniza main por favor"
+L33: Sincronizada la rama `main` local con `origin/main` (commit merge `0d492a0`). Las 10 secciones de la landing page para Óptica Alemania están completamente integradas, probadas con Playwright y certificadas visualmente en main.
