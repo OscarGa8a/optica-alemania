@@ -1,0 +1,122 @@
+---
+// Sección 7 — Monturas y Estilo
+// Óptica Alemania Villavicencio
+import { siteConfig } from '../data/siteConfig';
+import { buildWhatsAppLink } from '../utils/whatsapp';
+
+const { frames } = siteConfig;
+const whatsappFramesUrl = buildWhatsAppLink(
+  frames.whatsappMessage,
+  siteConfig.contact.whatsappNumber
+);
+---
+
+<section
+  id="monturas"
+  class="relative bg-[#F4FAFE] text-[#52617B] py-14 sm:py-16 lg:py-20 scroll-mt-20 overflow-hidden"
+>
+  <!-- Atmospheric soft ambient clinic lighting -->
+  <div class="absolute top-[-10%] left-[-5%] w-[600px] h-[500px] bg-[#E8F3FD]/60 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[450px] bg-[#EAF2FC]/50 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-[1380px] mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
+    
+    <!-- Section Header: Title & Context -->
+    <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-16 items-end mb-10 sm:mb-12 lg:mb-14">
+      
+      <!-- Left Column: Eyebrow & Title -->
+      <div>
+        <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#1464D9]">
+          {frames.eyebrow}
+        </span>
+        <h2 class="font-display text-[2.75rem] sm:text-5xl lg:text-[4.2rem] xl:text-[4.85rem] text-[#182D53] leading-[1.02] tracking-tight mt-3 sm:mt-4">
+          <span class="block font-normal">{frames.titlePart1}</span>
+          <span class="block italic font-normal text-[#1464D9]">{frames.titlePart2}</span>
+        </h2>
+      </div>
+
+      <!-- Right Column: Description & Action Link -->
+      <div class="flex flex-col items-start gap-4 lg:pb-2">
+        <p class="text-[14.5px] sm:text-base lg:text-lg text-[#52617B] leading-relaxed max-w-lg">
+          {frames.description}
+        </p>
+
+        <a
+          href={whatsappFramesUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-event="whatsapp_cta"
+          data-event-location="frames_header"
+          aria-label="Explorar catálogo de monturas de Óptica Alemania en WhatsApp"
+          class="inline-flex items-center gap-2 text-[#1464D9] hover:text-[#0f4eb0] font-medium text-base transition-colors border-b border-[#1464D9] pb-0.5 group"
+        >
+          <span>{frames.ctaText}</span>
+          <svg
+            class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Cards Grid: Mujer, Hombre, Niños -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {frames.categories.map((category) => {
+        const categoryUrl = buildWhatsAppLink(
+          category.whatsappMessage,
+          siteConfig.contact.whatsappNumber
+        );
+
+        return (
+          <a
+            href={categoryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="frame_category_click"
+            data-event-category={category.id}
+            aria-label={`Explorar colección de monturas para ${category.title} en WhatsApp`}
+            class="group relative rounded-[24px] sm:rounded-[28px] lg:rounded-[32px] overflow-hidden shadow-xs border border-white/80 aspect-[1.8/1] sm:aspect-[1.95/1] md:aspect-[540/615] bg-[#EAF2FC] block"
+          >
+            <!-- Card Image -->
+            <img
+              src={category.image.src}
+              alt={category.image.alt}
+              width={category.image.width}
+              height={category.image.height}
+              class="w-full h-full object-cover object-[center_45%] md:object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+              loading="lazy"
+              decoding="async"
+            />
+
+            <!-- Editorial Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none" aria-hidden="true"></div>
+
+            <!-- Card Bottom Bar: Title & Circular Action -->
+            <div class="absolute inset-x-0 bottom-0 p-6 sm:p-7 lg:p-9 flex flex-col justify-end pointer-events-none">
+              <div class="flex items-end justify-between border-b border-transparent md:border-white/60 pb-0 md:pb-3.5 w-full">
+                <span class="font-display text-3xl sm:text-4xl lg:text-[2.85rem] text-white font-normal leading-none tracking-tight">
+                  {category.title}
+                </span>
+
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-white/80 flex items-center justify-center text-white shrink-0 group-hover:bg-white group-hover:text-[#182D53] group-hover:border-white transition-all duration-300 shadow-sm">
+                  <svg
+                    class="w-5 h-5 stroke-current stroke-2 fill-none group-hover:translate-x-0.5 transition-transform duration-200"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

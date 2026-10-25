@@ -74,6 +74,12 @@ async function run() {
       aboutScreenshot: '2_quienes_somos_desktop_actual.png',
       servicesScreenshot: '3_servicios_desktop_actual.png',
       techScreenshot: '4_tecnologia_desktop_actual.png',
+      spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
+      kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
+      framesScreenshot: '7_monturas_desktop_actual.png',
+      trajectoryScreenshot: '8_nuestra_trayectoria_desktop_actual.png',
+      contactScreenshot: '9_contacto_desktop_actual.png',
+      footerScreenshot: '10_footer_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -83,6 +89,12 @@ async function run() {
       aboutScreenshot: '2_quienes_somos_mobile_actual.png',
       servicesScreenshot: '3_servicios_mobile_actual.png',
       techScreenshot: '4_tecnologia_mobile_actual.png',
+      spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
+      kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
+      framesScreenshot: '7_monturas_mobile_actual.png',
+      trajectoryScreenshot: '8_nuestra_trayectoria_mobile_actual.png',
+      contactScreenshot: '9_contacto_mobile_actual.png',
+      footerScreenshot: '10_footer_mobile_actual.png',
     },
   ];
 
@@ -333,6 +345,402 @@ async function run() {
       const techShotPath = path.join(SCREENSHOTS_DIR, vp.techScreenshot);
       await techSection.screenshot({ path: techShotPath });
       console.log(`📸 [${vp.name}] Tecnología screenshot saved: ${path.relative(ROOT_DIR, techShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 5 — Nuestro Espacio verification
+    const spaceSection = page.locator('#espacio');
+    const spaceCount = await spaceSection.count();
+    if (spaceCount === 0) {
+      console.error(`❌ [${vp.name}] Section #espacio not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #espacio exists`);
+
+      // Verify heading text
+      const headingText = await spaceSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Conoce el lugar donde')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Conoce el lugar donde', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Conoce el lugar donde'`);
+      }
+
+      // Verify 3 showcase images loaded properly
+      const spaceImages = spaceSection.locator('img');
+      const imgCount = await spaceImages.count();
+      if (imgCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 space images, got: ${imgCount}`);
+        failed = true;
+      } else {
+        for (let i = 0; i < imgCount; i++) {
+          const naturalWidth = await spaceImages.nth(i).evaluate((img) => img.naturalWidth);
+          if (!naturalWidth || naturalWidth === 0) {
+            console.error(`❌ [${vp.name}] Space image ${i + 1} failed to load!`);
+            failed = true;
+          }
+        }
+        console.log(`✅ [${vp.name}] 3 space images loaded successfully`);
+      }
+
+      // Verify CTA links
+      const ctas = spaceSection.locator('a[data-event="space_about_click"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected space CTA link, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Space CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await spaceSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const spaceShotPath = path.join(SCREENSHOTS_DIR, vp.spaceScreenshot);
+      await spaceSection.screenshot({ path: spaceShotPath });
+      console.log(`📸 [${vp.name}] Nuestro Espacio screenshot saved: ${path.relative(ROOT_DIR, spaceShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 6 — Salud Visual Infantil verification
+    const kidsSection = page.locator('#infantil');
+    const kidsCount = await kidsSection.count();
+    if (kidsCount === 0) {
+      console.error(`❌ [${vp.name}] Section #infantil not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #infantil exists`);
+
+      // Verify heading text
+      const headingText = await kidsSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Su visión merece')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Su visión merece', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Su visión merece'`);
+      }
+
+      // Verify image loaded properly
+      const kidsImage = kidsSection.locator('img');
+      const naturalWidth = await kidsImage.evaluate((img) => img.naturalWidth);
+      if (!naturalWidth || naturalWidth === 0) {
+        console.error(`❌ [${vp.name}] Kids vision image failed to load!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Kids vision image loaded successfully (naturalWidth: ${naturalWidth}px)`);
+      }
+
+      // Verify CTA link
+      const ctas = kidsSection.locator('a[data-event="whatsapp_cta"][data-event-location="kids_vision"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected kids vision CTA link, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Kids vision CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await kidsSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const kidsShotPath = path.join(SCREENSHOTS_DIR, vp.kidsVisionScreenshot);
+      await kidsSection.screenshot({ path: kidsShotPath });
+      console.log(`📸 [${vp.name}] Salud Visual Infantil screenshot saved: ${path.relative(ROOT_DIR, kidsShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 7 — Monturas y Estilo verification
+    const framesSection = page.locator('#monturas');
+    const framesCount = await framesSection.count();
+    if (framesCount === 0) {
+      console.error(`❌ [${vp.name}] Section #monturas not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #monturas exists`);
+
+      // Verify heading text
+      const headingText = await framesSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Una montura que')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Una montura que', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Una montura que'`);
+      }
+
+      // Verify 3 categories exist
+      const categoryLinks = framesSection.locator('a[data-event="frame_category_click"]');
+      const catCount = await categoryLinks.count();
+      if (catCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 frame categories, got: ${catCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 3 frame categories verified (Mujer, Hombre, Niños)`);
+      }
+
+      // Verify images loaded properly
+      const categoryImages = framesSection.locator('img');
+      const imgCount = await categoryImages.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await categoryImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded) {
+        console.error(`❌ [${vp.name}] One or more frame category images failed to load!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All frame category images loaded successfully`);
+      }
+
+      // Verify header CTA link
+      const headerCta = framesSection.locator('a[data-event="whatsapp_cta"][data-event-location="frames_header"]');
+      const headerCtaCount = await headerCta.count();
+      if (headerCtaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected frames header CTA link, got: ${headerCtaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Frames header CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await framesSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const framesShotPath = path.join(SCREENSHOTS_DIR, vp.framesScreenshot);
+      await framesSection.screenshot({ path: framesShotPath });
+      console.log(`📸 [${vp.name}] Monturas screenshot saved: ${path.relative(ROOT_DIR, framesShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 8 — Nuestra Trayectoria verification
+    const trajectorySection = page.locator('#trayectoria');
+    const trajectoryCount = await trajectorySection.count();
+    if (trajectoryCount === 0) {
+      console.error(`❌ [${vp.name}] Section #trayectoria not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #trayectoria exists`);
+
+      // Verify heading text
+      const headingText = await trajectorySection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Relaciones que')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Relaciones que', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Relaciones que'`);
+      }
+
+      // Verify organization logos loaded properly
+      const orgImages = trajectorySection.locator('img');
+      const imgCount = await orgImages.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await orgImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded || imgCount === 0) {
+        console.error(`❌ [${vp.name}] One or more organization logos failed to load! (found ${imgCount})`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All organization logos loaded successfully (${imgCount} images checked)`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await trajectorySection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const trajectoryShotPath = path.join(SCREENSHOTS_DIR, vp.trajectoryScreenshot);
+      await trajectorySection.screenshot({ path: trajectoryShotPath });
+      console.log(`📸 [${vp.name}] Trayectoria screenshot saved: ${path.relative(ROOT_DIR, trajectoryShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 9 — Contacto y Ubicación verification
+    const contactSection = page.locator('#contacto');
+    const contactCount = await contactSection.count();
+    if (contactCount === 0) {
+      console.error(`❌ [${vp.name}] Section #contacto not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #contacto exists`);
+
+      // Verify heading text
+      const headingText = await contactSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Nos vemos')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Nos vemos', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Nos vemos'`);
+      }
+
+      // Verify images loaded properly
+      const images = contactSection.locator('img');
+      const imgCount = await images.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await images.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded || imgCount === 0) {
+        console.error(`❌ [${vp.name}] One or more contact images failed to load! (found ${imgCount})`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All contact images loaded successfully (${imgCount} images checked)`);
+      }
+
+      // Verify WhatsApp button link
+      const whatsappBtn = contactSection.locator('a[data-event="whatsapp_cta"][data-event-location="contact_section"]');
+      const btnCount = await whatsappBtn.count();
+      if (btnCount === 0) {
+        console.error(`❌ [${vp.name}] WhatsApp CTA button not found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] WhatsApp CTA button verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await contactSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const contactShotPath = path.join(SCREENSHOTS_DIR, vp.contactScreenshot);
+      await contactSection.screenshot({ path: contactShotPath });
+      console.log(`📸 [${vp.name}] Contacto screenshot saved: ${path.relative(ROOT_DIR, contactShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 10 — Footer Institucional verification
+    const footerElement = page.locator('#footer');
+    const footerCount = await footerElement.count();
+    if (footerCount === 0) {
+      console.error(`❌ [${vp.name}] Section #footer not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #footer exists`);
+
+      // Verify footer logo loaded properly
+      const footerLogo = footerElement.locator('img[src*="10_footer_logo"]');
+      const logoWidth = await footerLogo.first().evaluate((img) => img.naturalWidth);
+      if (!logoWidth || logoWidth === 0) {
+        console.error(`❌ [${vp.name}] Footer logo failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer logo loaded successfully (naturalWidth: ${logoWidth}px)`);
+      }
+
+      // Verify watermark image loaded properly
+      const watermarkImg = footerElement.locator('img[src*="footer_eye_watermark"]');
+      const watermarkWidth = await watermarkImg.first().evaluate((img) => img.naturalWidth);
+      if (!watermarkWidth || watermarkWidth === 0) {
+        console.error(`❌ [${vp.name}] Footer watermark image failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer watermark loaded successfully (naturalWidth: ${watermarkWidth}px)`);
+      }
+
+      // Verify navigation links
+      const navLinks = footerElement.locator('a[data-event="footer_nav_click"]');
+      const navCount = await navLinks.count();
+      if (navCount === 0) {
+        console.error(`❌ [${vp.name}] No footer nav links found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer nav links verified (${navCount} links found)`);
+      }
+
+      // Verify social/whatsapp links
+      const whatsappLink = footerElement.locator('a[data-event="footer_whatsapp_click"]');
+      const whatsappCount = await whatsappLink.count();
+      if (whatsappCount === 0) {
+        console.error(`❌ [${vp.name}] Footer WhatsApp link not found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer WhatsApp link verified`);
+      }
+
+      // Scroll into view and screenshot the footer
+      await footerElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const footerShotPath = path.join(SCREENSHOTS_DIR, vp.footerScreenshot);
+      await footerElement.screenshot({ path: footerShotPath });
+      console.log(`📸 [${vp.name}] Footer screenshot saved: ${path.relative(ROOT_DIR, footerShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

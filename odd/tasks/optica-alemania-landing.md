@@ -1,8 +1,8 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/section-tecnologia
+Branch: feat/section-footer
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual
-PR: https://github.com/OscarGa8a/optica-alemania/pull/5
+PR: https://github.com/OscarGa8a/optica-alemania/pull/6
 
 ## Specs
 S1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -42,7 +42,13 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T13 [S9,S10]: Puerta de aprobación visual Sección 3 con el usuario | Route: inline | Status: done | Commit: d82971c
 - T14 [S10,S17,S20]: Implementación visual Sección 4 — Tecnología en Acción (TechSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: f73f3d1
 - T15 [S9,S10]: Apertura de Pull Request #5 agrupando Secciones 3 y 4 por solicitud explícita del usuario | Route: inline | Status: done | Commit: c4b1dd2 (PR #5)
-- T16 [S10,S11]: Puerta de aprobación con el usuario y preparación Sección 5 — Nuestro Espacio | Route: inline | Status: in-progress | Commit: pending
+- T16 [S11,S17,S20]: Implementación visual Sección 5 — Nuestro Espacio (SpaceSection.astro) con Playwright test (0 errores, 0 404s, 0 overflow) y comparativas side-by-side con Sharp (sin Lighthouse ni PR según directiva) | Route: inline | Status: done | Commit: 4e0cc51
+- T17 [S12,S17,S20]: Implementación visual Sección 6 — Salud Visual Infantil (KidsVisionSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: d3235ef
+- T18 [S13,S17,S20]: Implementación visual Sección 7 — Monturas y Estilo (FramesSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 7cb642d
+- T19 [S14,S17,S20]: Implementación visual Sección 8 — Nuestra Trayectoria (TrajectorySection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 60b6f52
+- T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 65a6ebc
+- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 39393a8
+- T22 [S11-S16]: Apertura de Pull Request #6 agrupando Secciones 5, 6, 7, 8, 9 y 10 por solicitud explícita del usuario | Route: inline | Status: done | Commit: 1b123fb (PR #6)
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -93,13 +99,54 @@ L15: Sincronizado main (97946a3 con PR #4) y rebasada la rama sobre main. Creada
 - Paso 2-B (Lighthouse) y Paso 4 (PR) omitidos estrictamente.
 L16: "no espera rey, crea pr por favor"
 L17: Rama `feat/section-tecnologia` empujada al repositorio remoto y Pull Request #5 creado exitosamente: https://github.com/OscarGa8a/optica-alemania/pull/5. Agrupa la implementación y certificación técnica de la Sección 3 (Nuestros Servicios) y Sección 4 (Tecnología en Acción) con 0 errores de Playwright y comparativas visuales side-by-side integradas.
-L12: "sigue a la seccion tres rey, pero no hagas ligthpuse todavia, eso al final cuando tengamos las imagenes finales, solo lo visual mi rey, y las comparativas. osea 1 y 3, no hacer 2 todavia y mucho menos hacer 4, no entiendo porque hiciste pr si no te lo pedi"
-L13: Implementación de la Sección 3 — Nuestros Servicios (src/components/ServicesSection.astro) siguiendo estrictamente el alcance solicitado (Pasos 1 y 3, sin Lighthouse y sin PR):
-- Maquetación y tokens de diseño: Eyebrow en azul primario #1464D9 con tracking [0.18em], titular H2 en Instrument Serif con quiebre exacto ("Atención visual" en #182D53 y "para cada necesidad." en cursiva azul #1464D9), y descripción editorial.
-- Tarjeta destacada izquierda: Fotografía clínica con foróptero (public/images/home/3_nuestros_servicios_image1.webp) con radio de 24px, sutil borde y sombra clínica.
-- Lista interactiva de servicios: 4 ítems con numeración Instrument Serif (01, 02, 03, 04 en #8CA4C7), miniaturas fotográficas redondeadas con microinteracción hover zoom, títulos, descripciones y botón circular #EBF2FC con flecha de acción vinculado directamente a WhatsApp contextual.
-- Enlace inferior de sección: "Ver todos nuestros servicios →" con subrayado elegante en azul primario #1464D9.
+L18: "perfecto rey. ahora vamos a aeguir con las secciones del home. analiza donde se quedo y continuemos cada seccion usando la skill concept demo"
+L19: Creada rama local `feat/section-espacio`. Corregido bug de semver de Corepack en package.json (11.22.0 estricto). Implementada la Sección 5 — Nuestro Espacio (src/components/SpaceSection.astro) siguiendo la directiva del usuario: Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR).
+- Composición fotográfica Bento asimétrica: fotografía clínica amplia de recepción/lounge a la izquierda (1028x624) y dos tarjetas apiladas a la derecha (632x296 cada una: exhibidores iluminados de monturas y consultorio optométrico).
+- Tipografía editorial Instrument Serif con quiebre exacto ("Conoce el lugar donde" en navy #182D53 y "cuidamos tu visión." en azul cursiva #1464D9), eyebrow "NUESTRO ESPACIO", descripción fluida y enlace de acción "Conoce más de nosotros →" (en cabecera para desktop, al pie de las imágenes en mobile).
+- Fondo sutil #F4F8FE con iluminación ambiental suave para balance cromático.
+- Playwright verification: 0 errores de consola, 0 404s, 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas y auditadas contra mockups (docs/screenshots/5_nuestro_espacio_desktop_comparison.png y 5_nuestro_espacio_mobile_comparison.png).
+L20: "so rey siguoente seccion y validas con playw y ajustas si es doferrnte a los mockups" / "continua rey"
+L21: Creada rama local `feat/section-infantil`. Implementada la Sección 6 — Salud Visual Infantil (src/components/KidsVisionSection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Optimización de imagen clínica a WebP (public/images/home/6_visual_infantil_image.webp: 117KB vs 1.9MB PNG original, -93.8% reducción).
+- Tarjeta de video interactiva con ratio responsivo adaptado (aspect-[1.28/1] sm:aspect-[1.3/1] lg:aspect-[1.32/1] con object-[35%_center] para enfocar perfectamente al niño y la especialista según el mockup), botón de reproducción central traslúcido y badge de duración 3:50.
+- Titular editorial en Instrument Serif ("Su visión merece" en navy #182D53 y "atención desde pequeños." en azul #1464D9 cursiva) con leading e interlineado ajustado.
+- Enlace de conversión directa a WhatsApp con data-event="whatsapp_cta" y data-event-location="kids_vision" junto al texto de consulta escolar.
 - Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
-- Comparativas side-by-side generadas con Sharp (docs/screenshots/3_servicios_desktop_comparison.png y 3_servicios_mobile_comparison.png).
-- Lighthouse omitido completamente (Paso 2 pausado hasta imágenes finales).
-- Pull Request omitido completamente (Paso 4 pausado por directiva explícita).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/6_visual_infantil_desktop_comparison.png y 6_visual_infantil_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: d3235ef.
+L22: "si dale" / "continua rey"
+L23: Creada rama local `feat/section-monturas`. Implementada la Sección 7 — Monturas y Estilo (src/components/FramesSection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado estricto en src/data/siteConfig.ts (`FramesConfig`, `FrameCategory`) con 3 colecciones: Mujer, Hombre y Niños con enlaces individualizados a WhatsApp y tracking Zero-TBT (`data-event="frame_category_click"`).
+- Grid editorial asimétrico responsivo: 3 columnas en desktop con ratio nativo 540x615 (`md:aspect-[540/615]`) y stack vertical fluido en mobile (`aspect-[1.8/1] sm:aspect-[1.95/1]`).
+- Calibración de encuadre en mobile con `object-[center_45%]` para preservar los rostros, sonrisas, monturas y detalles de las 3 fotografías sin corte visual.
+- Tipografía editorial Instrument Serif ("Una montura que" en navy #182D53 y "va contigo." en azul #1464D9 cursiva) y etiquetas de tarjeta con botones circulares de acción e indicador de acento horizontal en desktop.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/7_monturas_desktop_comparison.png y 7_monturas_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 7cb642d.
+L24: "continua rey"
+L25: Creada rama local `feat/section-trayectoria`. Implementada la Sección 8 — Nuestra Trayectoria (src/components/TrajectorySection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado en src/data/siteConfig.ts (`TrajectoryConfig`, `TrajectoryOrganization`) con 5 aliados corporativos (Palmeras Carabao S.A., Itaú, Inversiones Crismasol S.A.S., Entrepalmas, Copalma).
+- Layout responsivo con diferenciación editorial: en desktop (>= md) disposición fluida en dos filas (3 + 2 organizaciones centradas) con divisores verticales sutiles e interacción hover scale; en mobile (< md) cuadrícula 2x2 en tarjetas blancas redondeadas con sombra sutil y tarjeta full-width inferior para Copalma.
+- Tipografía editorial Instrument Serif ("Relaciones que" en navy #182D53 y "construyen confianza." en azul #1464D9 cursiva) con eyebrow y línea de acento horizontal en desktop.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/8_nuestra_trayectoria_desktop_comparison.png y 8_nuestra_trayectoria_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 60b6f52.
+L26: "continua rey"
+L27: Creada rama local `feat/section-contacto`. Implementada la Sección 9 — Contacto y Ubicación (src/components/ContactSection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado en src/data/siteConfig.ts (`ContactSectionConfig`) con dirección, teléfonos, horarios de atención, cuenta de Instagram y enlaces interactivos.
+- Composición responsive:
+  - Desktop: columna izquierda con encabezado editorial ("Nos vemos" en navy #182D53 y "en el consultorio." en azul #1464D9 cursiva), 4 ítems de contacto con iconos SVG y botón primario de WhatsApp con flecha; columna derecha con tarjeta de mapa interactivo de Google Maps (crop WebP 92KB) y tarjeta de video de recorrido "CÓMO LLEGAR" con thumbnail de fachada iluminada y botón de acción.
+  - Mobile: fila de 4 ítems de contacto como iconos circulares y texto compacto, botón de WhatsApp full-width centrado, mapa interactivo y tarjeta de video vertical adaptada sin desborde.
+  - Fondo fotográfico difuminado con degradado suave en desktop según el mockup.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/9_contacto_desktop_comparison.png y 9_contacto_mobile_comparison.png) y auditadas contra mockups. Commit: 65a6ebc.
+L28: "siguiente seccion rey"
+L29: Creada rama local `feat/section-footer`. Implementada la Sección 10 — Footer Institucional (src/components/Footer.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Assets oficiales: extraído logotipo oficial transparente `10_footer_logo.webp` (47 KB) y watermark del símbolo del ojo `footer_eye_watermark.webp` (123 KB con canal alfa).
+- Configuración y tipado en src/data/siteConfig.ts (`FooterConfig`, `FooterLink`) con enlaces de navegación, canales de contacto, redes sociales, y links legales.
+- Layout y tokens de diseño:
+  - Desktop: ola SVG suave de transición desde la sección superior (#FAFBFD), grid de 3 columnas con divisores verticales translúcidos, logo de marca, tagline editorial, enlaces con hover interactivo, datos de contacto con badges circulares azul clínicos (#0E3364), y botones de redes sociales.
+  - Mobile: lista de navegación estilo acordeón nativo con divisores horizontales y flechas chevron (>), datos de contacto y barra legal separada.
+  - Watermark de fondo con el símbolo de ojo de Óptica Alemania adaptado a desktop y mobile.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/10_footer_desktop_comparison.png y 10_footer_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 39393a8.
+L30: "si rey, haz pr por favor"
+L31: Rama `feat/section-footer` empujada al repositorio remoto y Pull Request #6 creado exitosamente: https://github.com/OscarGa8a/optica-alemania/pull/6. Agrupa la implementación y certificación de las Secciones 5 a 10 con 0 errores en Playwright y comparativas visuales side-by-side completas.
