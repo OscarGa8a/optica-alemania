@@ -117,3 +117,10 @@ L23: Creada rama local `feat/section-monturas`. Implementada la Sección 7 — M
 - Tipografía editorial Instrument Serif ("Una montura que" en navy #182D53 y "va contigo." en azul #1464D9 cursiva) y etiquetas de tarjeta con botones circulares de acción e indicador de acento horizontal en desktop.
 - Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
 - Comparativas side-by-side generadas con Sharp (docs/screenshots/7_monturas_desktop_comparison.png y 7_monturas_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 7cb642d.
+L24: "continua rey"
+L25: Creada rama local `feat/section-trayectoria`. Implementada la Sección 8 — Nuestra Trayectoria (src/components/TrajectorySection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado en src/data/siteConfig.ts (`TrajectoryConfig`, `TrajectoryOrganization`) con 5 aliados corporativos (Palmeras Carabao S.A., Itaú, Inversiones Crismasol S.A.S., Entrepalmas, Copalma).
+- Layout responsivo con diferenciación editorial: en desktop (>= md) disposición fluida en dos filas (3 + 2 organizaciones centradas) con divisores verticales sutiles e interacción hover scale; en mobile (< md) cuadrícula 2x2 en tarjetas blancas redondeadas con sombra sutil y tarjeta full-width inferior para Copalma.
+- Tipografía editorial Instrument Serif ("Relaciones que" en navy #182D53 y "construyen confianza." en azul #1464D9 cursiva) con eyebrow y línea de acento horizontal en desktop.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/8_nuestra_trayectoria_desktop_comparison.png y 8_nuestra_trayectoria_mobile_comparison.png) y auditadas visualmente contra mockups.

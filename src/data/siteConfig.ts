@@ -102,6 +102,20 @@ export interface FramesConfig {
   categories: FrameCategory[];
 }
 
+export interface TrajectoryOrganization {
+  id: string;
+  name: string;
+  image: SpaceImage;
+}
+
+export interface TrajectoryConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  organizations: TrajectoryOrganization[];
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -120,6 +134,7 @@ export interface SiteConfig {
   space: SpaceSectionConfig;
   kidsVision: KidsVisionConfig;
   frames: FramesConfig;
+  trajectory: TrajectoryConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -312,6 +327,64 @@ export const siteConfig: SiteConfig = {
           height: 615,
         },
         whatsappMessage: "Hola, me gustaría conocer la colección de monturas infantiles en Óptica Alemania.",
+      },
+    ],
+  },
+  trajectory: {
+    eyebrow: "NUESTRA TRAYECTORIA",
+    titlePart1: "Relaciones que",
+    titlePart2: "construyen confianza.",
+    description: "Conoce algunas de las organizaciones que han formado parte de nuestra trayectoria.",
+    organizations: [
+      {
+        id: "palmeras-carabao",
+        name: "Palmeras Carabao S.A.",
+        image: {
+          src: "/images/home/8_nuestra_trayectoria_image2.webp",
+          alt: "Logotipo de Palmeras Carabao S.A., aliado corporativo de Óptica Alemania",
+          width: 1152,
+          height: 448,
+        },
+      },
+      {
+        id: "itau",
+        name: "Itaú",
+        image: {
+          src: "/images/home/8_nuestra_trayectoria_image3.webp",
+          alt: "Logotipo de Banco Itaú, organización aliada en la trayectoria de Óptica Alemania",
+          width: 484,
+          height: 480,
+        },
+      },
+      {
+        id: "inversiones-crismasol",
+        name: "Inversiones Crismasol S.A.S.",
+        image: {
+          src: "/images/home/8_nuestra_trayectoria_image4.webp",
+          alt: "Logotipo de Inversiones Crismasol S.A.S., aliado institucional de Óptica Alemania",
+          width: 1234,
+          height: 422,
+        },
+      },
+      {
+        id: "entrepalmas",
+        name: "Entrepalmas",
+        image: {
+          src: "/images/home/8_nuestra_trayectoria_image5.webp",
+          alt: "Logotipo de Entrepalmas, empresa aliada de Óptica Alemania",
+          width: 1192,
+          height: 382,
+        },
+      },
+      {
+        id: "copalma",
+        name: "Copalma",
+        image: {
+          src: "/images/home/8_nuestra_trayectoria_image1.webp",
+          alt: "Logotipo de Copalma, aliado corporativo en la trayectoria de Óptica Alemania",
+          width: 1062,
+          height: 398,
+        },
       },
     ],
   },

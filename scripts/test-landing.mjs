@@ -77,6 +77,7 @@ async function run() {
       spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
       framesScreenshot: '7_monturas_desktop_actual.png',
+      trajectoryScreenshot: '8_nuestra_trayectoria_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -89,6 +90,7 @@ async function run() {
       spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
       framesScreenshot: '7_monturas_mobile_actual.png',
+      trajectoryScreenshot: '8_nuestra_trayectoria_mobile_actual.png',
     },
   ];
 
@@ -541,6 +543,63 @@ async function run() {
       const framesShotPath = path.join(SCREENSHOTS_DIR, vp.framesScreenshot);
       await framesSection.screenshot({ path: framesShotPath });
       console.log(`📸 [${vp.name}] Monturas screenshot saved: ${path.relative(ROOT_DIR, framesShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 8 — Nuestra Trayectoria verification
+    const trajectorySection = page.locator('#trayectoria');
+    const trajectoryCount = await trajectorySection.count();
+    if (trajectoryCount === 0) {
+      console.error(`❌ [${vp.name}] Section #trayectoria not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #trayectoria exists`);
+
+      // Verify heading text
+      const headingText = await trajectorySection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Relaciones que')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Relaciones que', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Relaciones que'`);
+      }
+
+      // Verify organization logos loaded properly
+      const orgImages = trajectorySection.locator('img');
+      const imgCount = await orgImages.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await orgImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded || imgCount === 0) {
+        console.error(`❌ [${vp.name}] One or more organization logos failed to load! (found ${imgCount})`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All organization logos loaded successfully (${imgCount} images checked)`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await trajectorySection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const trajectoryShotPath = path.join(SCREENSHOTS_DIR, vp.trajectoryScreenshot);
+      await trajectorySection.screenshot({ path: trajectoryShotPath });
+      console.log(`📸 [${vp.name}] Trayectoria screenshot saved: ${path.relative(ROOT_DIR, trajectoryShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {
