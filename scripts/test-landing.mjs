@@ -79,6 +79,7 @@ async function run() {
       framesScreenshot: '7_monturas_desktop_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_desktop_actual.png',
       contactScreenshot: '9_contacto_desktop_actual.png',
+      footerScreenshot: '10_footer_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -93,6 +94,7 @@ async function run() {
       framesScreenshot: '7_monturas_mobile_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_mobile_actual.png',
       contactScreenshot: '9_contacto_mobile_actual.png',
+      footerScreenshot: '10_footer_mobile_actual.png',
     },
   ];
 
@@ -669,6 +671,76 @@ async function run() {
       const contactShotPath = path.join(SCREENSHOTS_DIR, vp.contactScreenshot);
       await contactSection.screenshot({ path: contactShotPath });
       console.log(`📸 [${vp.name}] Contacto screenshot saved: ${path.relative(ROOT_DIR, contactShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 10 — Footer Institucional verification
+    const footerElement = page.locator('#footer');
+    const footerCount = await footerElement.count();
+    if (footerCount === 0) {
+      console.error(`❌ [${vp.name}] Section #footer not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #footer exists`);
+
+      // Verify footer logo loaded properly
+      const footerLogo = footerElement.locator('img[src*="10_footer_logo"]');
+      const logoWidth = await footerLogo.first().evaluate((img) => img.naturalWidth);
+      if (!logoWidth || logoWidth === 0) {
+        console.error(`❌ [${vp.name}] Footer logo failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer logo loaded successfully (naturalWidth: ${logoWidth}px)`);
+      }
+
+      // Verify watermark image loaded properly
+      const watermarkImg = footerElement.locator('img[src*="footer_eye_watermark"]');
+      const watermarkWidth = await watermarkImg.first().evaluate((img) => img.naturalWidth);
+      if (!watermarkWidth || watermarkWidth === 0) {
+        console.error(`❌ [${vp.name}] Footer watermark image failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer watermark loaded successfully (naturalWidth: ${watermarkWidth}px)`);
+      }
+
+      // Verify navigation links
+      const navLinks = footerElement.locator('a[data-event="footer_nav_click"]');
+      const navCount = await navLinks.count();
+      if (navCount === 0) {
+        console.error(`❌ [${vp.name}] No footer nav links found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer nav links verified (${navCount} links found)`);
+      }
+
+      // Verify social/whatsapp links
+      const whatsappLink = footerElement.locator('a[data-event="footer_whatsapp_click"]');
+      const whatsappCount = await whatsappLink.count();
+      if (whatsappCount === 0) {
+        console.error(`❌ [${vp.name}] Footer WhatsApp link not found!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Footer WhatsApp link verified`);
+      }
+
+      // Scroll into view and screenshot the footer
+      await footerElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const footerShotPath = path.join(SCREENSHOTS_DIR, vp.footerScreenshot);
+      await footerElement.screenshot({ path: footerShotPath });
+      console.log(`📸 [${vp.name}] Footer screenshot saved: ${path.relative(ROOT_DIR, footerShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

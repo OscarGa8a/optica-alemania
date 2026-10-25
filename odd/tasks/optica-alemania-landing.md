@@ -1,5 +1,5 @@
 # Feature: Óptica Alemania — Concept Demo Landing Page
-Branch: feat/section-contacto
+Branch: feat/section-footer
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && pnpm test && pnpm test:visual
 PR: pending
@@ -47,7 +47,7 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T18 [S13,S17,S20]: Implementación visual Sección 7 — Monturas y Estilo (FramesSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 7cb642d
 - T19 [S14,S17,S20]: Implementación visual Sección 8 — Nuestra Trayectoria (TrajectorySection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 60b6f52
 - T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 65a6ebc
-- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) | Route: inline | Status: pending | Commit: pending
+- T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: pending
 
 ## Log
 L1: "buen dia mi rey, hoy vamos a trabajar en este proyecto en astro + tailwind, aun no esta inicializado y tienes las secciones e informacion en docs/ quiero que leas la skill concept-demo para que entiendas de que trata todo lo que vamos a hacer"
@@ -136,4 +136,14 @@ L27: Creada rama local `feat/section-contacto`. Implementada la Sección 9 — C
   - Mobile: fila de 4 ítems de contacto como iconos circulares y texto compacto, botón de WhatsApp full-width centrado, mapa interactivo y tarjeta de video vertical adaptada sin desborde.
   - Fondo fotográfico difuminado con degradado suave en desktop según el mockup.
 - Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
-- Comparativas side-by-side generadas con Sharp (docs/screenshots/9_contacto_desktop_comparison.png y 9_contacto_mobile_comparison.png) y auditadas contra mockups.
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/9_contacto_desktop_comparison.png y 9_contacto_mobile_comparison.png) y auditadas contra mockups. Commit: 65a6ebc.
+L28: "siguiente seccion rey"
+L29: Creada rama local `feat/section-footer`. Implementada la Sección 10 — Footer Institucional (src/components/Footer.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Assets oficiales: extraído logotipo oficial transparente `10_footer_logo.webp` (47 KB) y watermark del símbolo del ojo `footer_eye_watermark.webp` (123 KB con canal alfa).
+- Configuración y tipado en src/data/siteConfig.ts (`FooterConfig`, `FooterLink`) con enlaces de navegación, canales de contacto, redes sociales, y links legales.
+- Layout y tokens de diseño:
+  - Desktop: ola SVG suave de transición desde la sección superior (#FAFBFD), grid de 3 columnas con divisores verticales translúcidos, logo de marca, tagline editorial, enlaces con hover interactivo, datos de contacto con badges circulares azul clínicos (#0E3364), y botones de redes sociales.
+  - Mobile: lista de navegación estilo acordeón nativo con divisores horizontales y flechas chevron (>), datos de contacto y barra legal separada.
+  - Watermark de fondo con el símbolo de ojo de Óptica Alemania adaptado a desktop y mobile.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/10_footer_desktop_comparison.png y 10_footer_mobile_comparison.png) y auditadas visualmente contra mockups.

@@ -107,6 +107,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '9_contacto_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '9_contacto_mobile_comparison.png'),
   },
+  {
+    id: '10_footer',
+    name: 'Sección 10 — Footer Institucional',
+    mockupDesktop: path.join(DOCS_HOME, '10_footer_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '10_footer_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '10_footer_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '10_footer_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '10_footer_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '10_footer_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(

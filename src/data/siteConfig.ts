@@ -133,6 +133,30 @@ export interface ContactSectionConfig {
   };
 }
 
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterConfig {
+  logo: SpaceImage;
+  tagline: string;
+  exploreTitle: string;
+  navLinks: FooterLink[];
+  contactTitle: string;
+  address: {
+    line1: string;
+    line2: string;
+  };
+  phones: string;
+  instagramHandle: string;
+  instagramUrl: string;
+  whatsappUrl: string;
+  copyright: string;
+  rights: string;
+  legalLinks: FooterLink[];
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -153,6 +177,7 @@ export interface SiteConfig {
   frames: FramesConfig;
   trajectory: TrajectoryConfig;
   contactSection: ContactSectionConfig;
+  footer: FooterConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -431,5 +456,38 @@ export const siteConfig: SiteConfig = {
       actionTextMobile: "Ver video del recorrido",
       videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Bajo+Villavicencio+Meta",
     },
+  },
+  footer: {
+    logo: {
+      src: "/images/home/10_footer_logo.webp",
+      alt: "Óptica Alemania - Villavicencio",
+      width: 808,
+      height: 242,
+    },
+    tagline: "Experiencia y atención para el cuidado de tu salud visual.",
+    exploreTitle: "EXPLORA",
+    navLinks: [
+      { label: "Inicio", href: "#inicio" },
+      { label: "Nosotros", href: "#nosotros" },
+      { label: "Servicios", href: "#servicios" },
+      { label: "Procedimientos", href: "#tecnologia" },
+      { label: "Monturas", href: "#monturas" },
+      { label: "Contacto", href: "#contacto" },
+    ],
+    contactTitle: "CONTACTO",
+    address: {
+      line1: "Calle 35 #34-36,",
+      line2: "Barzal Bajo, Villavicencio, Meta.",
+    },
+    phones: "311 201 7302  |  322 712 8828",
+    instagramHandle: "@opticaalemania",
+    instagramUrl: "https://www.instagram.com/opticaalemania/",
+    whatsappUrl: "https://wa.me/573112017302?text=Hola,%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios%20en%20%C3%93ptica%20Alemania.",
+    copyright: "© 2026 Óptica Alemania Villavicencio.",
+    rights: "Todos los derechos reservados.",
+    legalLinks: [
+      { label: "Política de privacidad", href: "#privacidad" },
+      { label: "Tratamiento de datos personales", href: "#tratamiento-datos" },
+    ],
   },
 };
