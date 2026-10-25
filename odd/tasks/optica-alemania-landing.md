@@ -46,7 +46,7 @@ S20: Directiva del usuario para Sección 3 en adelante: ejecutar únicamente Pas
 - T17 [S12,S17,S20]: Implementación visual Sección 6 — Salud Visual Infantil (KidsVisionSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: d3235ef
 - T18 [S13,S17,S20]: Implementación visual Sección 7 — Monturas y Estilo (FramesSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 7cb642d
 - T19 [S14,S17,S20]: Implementación visual Sección 8 — Nuestra Trayectoria (TrajectorySection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 60b6f52
-- T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: pending
+- T20 [S15,S17,S20]: Implementación visual Sección 9 — Contacto y Ubicación (ContactSection.astro) con Playwright test y comparativas side-by-side con Sharp | Route: inline | Status: done | Commit: 65a6ebc
 - T21 [S16,S17,S20]: Implementación visual Sección 10 — Footer Institucional (Footer.astro) | Route: inline | Status: pending | Commit: pending
 
 ## Log
