@@ -72,6 +72,8 @@ async function run() {
       height: 900,
       heroScreenshot: '1_hero_desktop_actual.png',
       aboutScreenshot: '2_quienes_somos_desktop_actual.png',
+      servicesScreenshot: '3_servicios_desktop_actual.png',
+      techScreenshot: '4_tecnologia_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -79,6 +81,8 @@ async function run() {
       height: 844,
       heroScreenshot: '1_hero_mobile_actual.png',
       aboutScreenshot: '2_quienes_somos_mobile_actual.png',
+      servicesScreenshot: '3_servicios_mobile_actual.png',
+      techScreenshot: '4_tecnologia_mobile_actual.png',
     },
   ];
 
@@ -190,6 +194,145 @@ async function run() {
       const aboutShotPath = path.join(SCREENSHOTS_DIR, vp.aboutScreenshot);
       await aboutSection.screenshot({ path: aboutShotPath });
       console.log(`📸 [${vp.name}] Quiénes Somos screenshot saved: ${path.relative(ROOT_DIR, aboutShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 3 — Nuestros Servicios verification
+    const servicesSection = page.locator('#servicios');
+    const servicesCount = await servicesSection.count();
+    if (servicesCount === 0) {
+      console.error(`❌ [${vp.name}] Section #servicios not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #servicios exists`);
+
+      // Verify heading text
+      const headingText = await servicesSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Atención visual')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Atención visual', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Atención visual'`);
+      }
+
+      // Verify services list items count (4 services)
+      const serviceCards = servicesSection.locator('a[data-event="service_click"]');
+      const cardsCount = await serviceCards.count();
+      if (cardsCount !== 4) {
+        console.error(`❌ [${vp.name}] Expected 4 service items, got: ${cardsCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 4 service items verified`);
+      }
+
+      // Verify featured image
+      const featuredImgWidth = await servicesSection.locator('img').first().evaluate((img) => img.naturalWidth);
+      if (!featuredImgWidth || featuredImgWidth === 0) {
+        console.error(`❌ [${vp.name}] Featured image failed to load or has 0 naturalWidth!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Services featured image loaded (naturalWidth: ${featuredImgWidth}px)`);
+      }
+
+      // Verify CTA link
+      const cta = servicesSection.locator('a[data-event="services_all_click"]');
+      const ctaHref = await cta.getAttribute('href');
+      if (ctaHref !== '#contacto') {
+        console.error(`❌ [${vp.name}] Expected CTA href='#contacto', got: '${ctaHref}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Services CTA link verified (href: ${ctaHref})`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await servicesSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const servicesShotPath = path.join(SCREENSHOTS_DIR, vp.servicesScreenshot);
+      await servicesSection.screenshot({ path: servicesShotPath });
+      console.log(`📸 [${vp.name}] Servicios screenshot saved: ${path.relative(ROOT_DIR, servicesShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 4 — Tecnología en Acción verification
+    const techSection = page.locator('#tecnologia');
+    const techCount = await techSection.count();
+    if (techCount === 0) {
+      console.error(`❌ [${vp.name}] Section #tecnologia not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #tecnologia exists`);
+
+      // Verify heading text
+      const headingText = await techSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('La tecnología detrás')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'La tecnología detrás', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'La tecnología detrás'`);
+      }
+
+      // Verify 2 technology showcase articles
+      const techArticles = techSection.locator('article');
+      const articlesCount = await techArticles.count();
+      if (articlesCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 technology articles, got: ${articlesCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 technology showcase items verified`);
+      }
+
+      // Verify showcase images loaded properly
+      const techImages = techSection.locator('article img');
+      const imgCount = await techImages.count();
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await techImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          console.error(`❌ [${vp.name}] Tech image ${i + 1} failed to load!`);
+          failed = true;
+        }
+      }
+      console.log(`✅ [${vp.name}] Tech images loaded successfully`);
+
+      // Verify CTA links
+      const ctas = techSection.locator('a[data-event="procedure_click"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 procedure CTA links, got: ${ctaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 procedure CTA links verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await techSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const techShotPath = path.join(SCREENSHOTS_DIR, vp.techScreenshot);
+      await techSection.screenshot({ path: techShotPath });
+      console.log(`📸 [${vp.name}] Tecnología screenshot saved: ${path.relative(ROOT_DIR, techShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

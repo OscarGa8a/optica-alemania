@@ -47,6 +47,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '3_servicios_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '3_servicios_mobile_comparison.png'),
   },
+  {
+    id: '4_tecnologia',
+    name: 'Sección 4 — Tecnología en Acción',
+    mockupDesktop: path.join(DOCS_HOME, '4_tecnologia_accion_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '4_tecnologia_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '4_tecnologia_accion_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '4_tecnologia_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '4_tecnologia_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '4_tecnologia_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(
