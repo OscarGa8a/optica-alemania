@@ -109,3 +109,11 @@ L21: Creada rama local `feat/section-infantil`. Implementada la Sección 6 — S
 - Enlace de conversión directa a WhatsApp con data-event="whatsapp_cta" y data-event-location="kids_vision" junto al texto de consulta escolar.
 - Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
 - Comparativas side-by-side generadas con Sharp (docs/screenshots/6_visual_infantil_desktop_comparison.png y 6_visual_infantil_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: d3235ef.
+L22: "si dale" / "continua rey"
+L23: Creada rama local `feat/section-monturas`. Implementada la Sección 7 — Monturas y Estilo (src/components/FramesSection.astro) siguiendo la directiva de Paso 1 (Visual) + Paso 2-A (Playwright) + Paso 3 (Comparativas side-by-side con Sharp), sin Paso 2-B (Lighthouse) y sin Paso 4 (PR):
+- Configuración y tipado estricto en src/data/siteConfig.ts (`FramesConfig`, `FrameCategory`) con 3 colecciones: Mujer, Hombre y Niños con enlaces individualizados a WhatsApp y tracking Zero-TBT (`data-event="frame_category_click"`).
+- Grid editorial asimétrico responsivo: 3 columnas en desktop con ratio nativo 540x615 (`md:aspect-[540/615]`) y stack vertical fluido en mobile (`aspect-[1.8/1] sm:aspect-[1.95/1]`).
+- Calibración de encuadre en mobile con `object-[center_45%]` para preservar los rostros, sonrisas, monturas y detalles de las 3 fotografías sin corte visual.
+- Tipografía editorial Instrument Serif ("Una montura que" en navy #182D53 y "va contigo." en azul #1464D9 cursiva) y etiquetas de tarjeta con botones circulares de acción e indicador de acento horizontal en desktop.
+- Verificación Playwright: 0 errores de consola, 0 recursos rotos (404), 0 overflow horizontal en Desktop (1440x900) y Mobile (390x844).
+- Comparativas side-by-side generadas con Sharp (docs/screenshots/7_monturas_desktop_comparison.png y 7_monturas_mobile_comparison.png) y auditadas visualmente contra mockups. Commit: 7cb642d.
