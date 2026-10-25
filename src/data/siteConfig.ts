@@ -85,6 +85,23 @@ export interface KidsVisionConfig {
   image: SpaceImage;
 }
 
+export interface FrameCategory {
+  id: string;
+  title: string;
+  image: SpaceImage;
+  whatsappMessage: string;
+}
+
+export interface FramesConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  categories: FrameCategory[];
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -102,6 +119,7 @@ export interface SiteConfig {
   technologies: TechnologyItem[];
   space: SpaceSectionConfig;
   kidsVision: KidsVisionConfig;
+  frames: FramesConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -253,5 +271,48 @@ export const siteConfig: SiteConfig = {
       width: 1672,
       height: 941,
     },
+  },
+  frames: {
+    eyebrow: "MONTURAS Y ESTILO",
+    titlePart1: "Una montura que",
+    titlePart2: "va contigo.",
+    description: "Descubre opciones de monturas para mujer, hombre y niños, con diferentes estilos y diseños para encontrar el que mejor se adapte a ti.",
+    ctaText: "Explorar monturas",
+    whatsappMessage: "Hola, me gustaría explorar las opciones de monturas y estilos disponibles en Óptica Alemania.",
+    categories: [
+      {
+        id: "mujer",
+        title: "Mujer",
+        image: {
+          src: "/images/home/7_monturas_image1.webp",
+          alt: "Colección de monturas oftálmicas y de diseño para mujer en Óptica Alemania",
+          width: 540,
+          height: 615,
+        },
+        whatsappMessage: "Hola, me gustaría conocer la colección de monturas para mujer en Óptica Alemania.",
+      },
+      {
+        id: "hombre",
+        title: "Hombre",
+        image: {
+          src: "/images/home/7_monturas_image2.webp",
+          alt: "Colección de monturas oftálmicas modernas y elegantes para hombre en Óptica Alemania",
+          width: 540,
+          height: 615,
+        },
+        whatsappMessage: "Hola, me gustaría conocer la colección de monturas para hombre en Óptica Alemania.",
+      },
+      {
+        id: "ninos",
+        title: "Niños",
+        image: {
+          src: "/images/home/7_monturas_image3.webp",
+          alt: "Colección de monturas oftálmicas resistentes, cómodas y ligeras para niños en Óptica Alemania",
+          width: 540,
+          height: 615,
+        },
+        whatsappMessage: "Hola, me gustaría conocer la colección de monturas infantiles en Óptica Alemania.",
+      },
+    ],
   },
 };

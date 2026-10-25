@@ -77,6 +77,16 @@ const SECTIONS = [
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '6_visual_infantil_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '6_visual_infantil_mobile_comparison.png'),
   },
+  {
+    id: '7_monturas',
+    name: 'Sección 7 — Monturas y Estilo',
+    mockupDesktop: path.join(DOCS_HOME, '7_monturas_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '7_monturas_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_HOME, '7_monturas_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '7_monturas_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '7_monturas_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '7_monturas_mobile_comparison.png'),
+  },
 ];
 
 async function createSideBySide(

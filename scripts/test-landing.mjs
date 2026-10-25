@@ -76,6 +76,7 @@ async function run() {
       techScreenshot: '4_tecnologia_desktop_actual.png',
       spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
+      framesScreenshot: '7_monturas_desktop_actual.png',
     },
     {
       name: 'mobile',
@@ -87,6 +88,7 @@ async function run() {
       techScreenshot: '4_tecnologia_mobile_actual.png',
       spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
+      framesScreenshot: '7_monturas_mobile_actual.png',
     },
   ];
 
@@ -462,6 +464,83 @@ async function run() {
       const kidsShotPath = path.join(SCREENSHOTS_DIR, vp.kidsVisionScreenshot);
       await kidsSection.screenshot({ path: kidsShotPath });
       console.log(`📸 [${vp.name}] Salud Visual Infantil screenshot saved: ${path.relative(ROOT_DIR, kidsShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 7 — Monturas y Estilo verification
+    const framesSection = page.locator('#monturas');
+    const framesCount = await framesSection.count();
+    if (framesCount === 0) {
+      console.error(`❌ [${vp.name}] Section #monturas not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #monturas exists`);
+
+      // Verify heading text
+      const headingText = await framesSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Una montura que')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Una montura que', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Una montura que'`);
+      }
+
+      // Verify 3 categories exist
+      const categoryLinks = framesSection.locator('a[data-event="frame_category_click"]');
+      const catCount = await categoryLinks.count();
+      if (catCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 frame categories, got: ${catCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 3 frame categories verified (Mujer, Hombre, Niños)`);
+      }
+
+      // Verify images loaded properly
+      const categoryImages = framesSection.locator('img');
+      const imgCount = await categoryImages.count();
+      let allLoaded = true;
+      for (let i = 0; i < imgCount; i++) {
+        const naturalWidth = await categoryImages.nth(i).evaluate((img) => img.naturalWidth);
+        if (!naturalWidth || naturalWidth === 0) {
+          allLoaded = false;
+          break;
+        }
+      }
+      if (!allLoaded) {
+        console.error(`❌ [${vp.name}] One or more frame category images failed to load!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All frame category images loaded successfully`);
+      }
+
+      // Verify header CTA link
+      const headerCta = framesSection.locator('a[data-event="whatsapp_cta"][data-event-location="frames_header"]');
+      const headerCtaCount = await headerCta.count();
+      if (headerCtaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected frames header CTA link, got: ${headerCtaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Frames header CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await framesSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const framesShotPath = path.join(SCREENSHOTS_DIR, vp.framesScreenshot);
+      await framesSection.screenshot({ path: framesShotPath });
+      console.log(`📸 [${vp.name}] Monturas screenshot saved: ${path.relative(ROOT_DIR, framesShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {
