@@ -179,6 +179,74 @@ async function run() {
       console.log(`📸 [${vp.name}] Hero screenshot saved: ${path.relative(ROOT_DIR, screenshotPath)}`);
     }
 
+    // 5. Section 2 — Explora nuestros servicios Verification
+    const overviewElement = page.locator('#explora-servicios');
+    const overviewExists = (await overviewElement.count()) > 0;
+    if (!overviewExists) {
+      console.error(`❌ [${vp.name}] Section #explora-servicios does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #explora-servicios exists`);
+
+      const rawH2 = await overviewElement.locator('h2').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
+      if (!h2Text.includes('Encuentra la atención') || !h2Text.includes('que buscas')) {
+        console.error(`❌ [${vp.name}] H2 title text mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Encuentra la atención que buscas'`);
+      }
+
+      // Check 3 cards exist
+      const cards = overviewElement.locator('a[data-event="service_pillar_click"]');
+      const cardsCount = await cards.count();
+      if (cardsCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 service cards, found: ${cardsCount}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] 3 service cards found`);
+      }
+
+      // On desktop, check images are loaded
+      if (vp.name === 'desktop') {
+        const cardImgs = overviewElement.locator('img[src*="2_overview_image"]');
+        const imgCount = await cardImgs.count();
+        if (imgCount !== 3) {
+          console.error(`❌ [${vp.name}] Expected 3 card images, found: ${imgCount}`);
+          hasErrors = true;
+        } else {
+          for (let i = 0; i < 3; i++) {
+            const isLoaded = await cardImgs.nth(i).evaluate((img) => img.complete && img.naturalWidth > 0);
+            if (!isLoaded) {
+              console.error(`❌ [${vp.name}] Card image ${i + 1} failed to load`);
+              hasErrors = true;
+            }
+          }
+          console.log(`✅ [${vp.name}] All 3 card images loaded successfully`);
+        }
+      }
+
+      // Screenshot of Section 2
+      const overviewScreenshotPath = path.join(SCREENSHOTS_DIR, `2_overview_${vp.name}_actual.png`);
+      if (vp.name === 'mobile') {
+        // Temporarily hide sticky header during element screenshot to avoid overlap
+        await page.evaluate(() => {
+          const header = document.querySelector('header');
+          if (header) header.style.display = 'none';
+        });
+      }
+      await overviewElement.screenshot({
+        path: overviewScreenshotPath,
+      });
+      if (vp.name === 'mobile') {
+        await page.evaluate(() => {
+          const header = document.querySelector('header');
+          if (header) header.style.display = '';
+        });
+      }
+      console.log(`📸 [${vp.name}] Overview screenshot saved: ${path.relative(ROOT_DIR, overviewScreenshotPath)}`);
+    }
+
     await page.close();
   }
 

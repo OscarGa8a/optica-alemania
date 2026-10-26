@@ -26,10 +26,24 @@ const SECTIONS = [
     actualMobile: path.join(SCREENSHOTS_DIR, '1_hero_mobile_actual.png'),
     desktopComparisonOut: path.join(SCREENSHOTS_DIR, '1_hero_desktop_comparison.png'),
     mobileComparisonOut: path.join(SCREENSHOTS_DIR, '1_hero_mobile_comparison.png'),
+    desktopHeight: 810,
+    mobileHeight: 844,
+  },
+  {
+    id: '2_overview',
+    name: 'Sección 2 — Explora nuestros servicios',
+    mockupDesktop: path.join(DOCS_SERVICES, '2_nuestros_servicios_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '2_overview_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_SERVICES, '2_nuestros_servicios_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '2_overview_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '2_overview_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '2_overview_mobile_comparison.png'),
+    desktopHeight: 710,
+    mobileHeight: 640,
   },
 ];
 
-async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false) {
+async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false, customHeight = null) {
   if (!fs.existsSync(mockupPath)) {
     console.warn(`⚠️ Mockup not found: ${path.relative(ROOT_DIR, mockupPath)}`);
     return false;
@@ -43,7 +57,7 @@ async function createSideBySide(mockupPath, actualPath, outputPath, title, isMob
   const actualMeta = await sharp(actualPath).metadata();
 
   const targetWidth = isMobile ? 390 : 1440;
-  const targetHeight = isMobile ? 844 : 810;
+  const targetHeight = customHeight || (isMobile ? 844 : 810);
 
   // Resize both to identical dimensions for clean 1:1 side-by-side comparison
   const resizedMockup = await sharp(mockupPath)
@@ -119,7 +133,8 @@ async function run() {
       section.actualDesktop,
       section.desktopComparisonOut,
       `${section.name} — Desktop (1440px)`,
-      false
+      false,
+      section.desktopHeight
     );
 
     // Mobile comparison
@@ -128,7 +143,8 @@ async function run() {
       section.actualMobile,
       section.mobileComparisonOut,
       `${section.name} — Mobile (390px)`,
-      true
+      true,
+      section.mobileHeight
     );
   }
 

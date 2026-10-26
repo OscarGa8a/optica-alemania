@@ -172,8 +172,30 @@ export interface ServicesHeroConfig {
   };
 }
 
+export interface ServiceOverviewCard {
+  number: string;
+  titlePart1: string;
+  titlePart2?: string;
+  description: string;
+  linkText: string;
+  href: string;
+  image: SpaceImage & {
+    positionClass?: string;
+  };
+}
+
+export interface ServicesOverviewConfig {
+  id: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2: string;
+  description: string;
+  cards: ServiceOverviewCard[];
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
+  overview: ServicesOverviewConfig;
 }
 
 export interface SiteConfig {
@@ -534,6 +556,60 @@ export const siteConfig: SiteConfig = {
           height: 1192,
         },
       },
+    },
+    overview: {
+      id: "explora-servicios",
+      eyebrow: "EXPLORA NUESTROS SERVICIOS",
+      titleLine1: "Encuentra la atención",
+      titleLine2: "que buscas.",
+      description: "Conoce nuestros servicios de optometría y evaluaciones visuales especializadas para el cuidado de tu salud visual.",
+      cards: [
+        {
+          number: "01",
+          titlePart1: "Atención",
+          titlePart2: "visual",
+          description: "Consulta de optometría especializada y adaptación de lentes de contacto.",
+          linkText: "Ver servicios",
+          href: "#atencion-visual",
+          image: {
+            src: "/images/services/2_overview_image1.webp",
+            alt: "Gafas oftálmicas sobre mesa de consulta en Óptica Alemania",
+            width: 1200,
+            height: 800,
+            positionClass: "object-[72%_center]",
+          },
+        },
+        {
+          number: "02",
+          titlePart1: "Evaluaciones",
+          titlePart2: "especializadas",
+          description: "Pruebas visuales específicas para un diagnóstico más completo de tu salud visual.",
+          linkText: "Ver servicios",
+          href: "#evaluaciones-especializadas",
+          image: {
+            src: "/images/services/2_overview_image2.webp",
+            alt: "Foróptero y equipos de diagnóstico optométrico especializado",
+            width: 1200,
+            height: 800,
+            positionClass: "object-[82%_center]",
+          },
+        },
+        {
+          number: "03",
+          titlePart1: "Urgencias",
+          titlePart2: "oculares",
+          description: "Información sobre la atención disponible para determinadas molestias o consulta por orientación.",
+          linkText: "Ver servicios",
+          href: "#urgencias-oculares",
+          image: {
+            src: "/images/services/2_overview_image3.webp",
+            alt: "Señalización y puerta de atención en consultorio de Óptica Alemania",
+            width: 1200,
+            height: 800,
+            positionClass: "object-[88%_center]",
+          },
+        },
+      ],
     },
   },
 };
