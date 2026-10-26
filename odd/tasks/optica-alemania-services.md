@@ -24,7 +24,7 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T2 [S4]: Capa de datos centralizada siteConfig.ts para Servicios | Route: inline | Status: done | Commit: 86ba379
 - T3 [S5,S14]: Implementación y certificación Sección 1 — Hero de Servicios (ServicesHero.astro) con Playwright y comparativa Sharp | Route: inline | Status: done | Commit: 86ba379
 - T4 [S5]: Puerta de aprobación Sección 1 con el usuario | Route: inline | Status: done | Commit: 86ba379
-- T5 [S6,S14]: Implementación y certificación Sección 2 — Explora nuestros servicios (ServicesOverview.astro) | Route: inline | Status: done | Commit: pending
+- T5 [S6,S14]: Implementación y certificación Sección 2 — Explora nuestros servicios (ServicesOverview.astro) | Route: inline | Status: done | Commit: 9befe87
 - T6 [S6]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: in-progress | Commit: -
 - T7 [S7,S14]: Implementación y certificación Sección 3 — Atención visual a tu medida (VisualCareDetail.astro) | Route: inline | Status: pending | Commit: -
 - T8 [S7]: Puerta de aprobación Sección 3 con el usuario | Route: inline | Status: pending | Commit: -
