@@ -16,14 +16,14 @@ S9: "Ruta y Navegación: Página /procedimientos (src/pages/procedimientos.astro
 S10: "Certificación Visual Playwright: Script de prueba automatizado (scripts/test-procedimientos.mjs) y comparador visual side-by-side (scripts/compare-procedimientos.mjs) verificando 0 errores de consola, 0 404s y 0 scroll horizontal en 1440px y 390px."
 
 ## Tasks
-- T1 [S2,S4,S5,S6,S7]: Optimización y staging de imágenes WebP/PNG en public/images/procedimientos/ | Route: inline | Status: completed | Commit: pending
-- T2 [S4]: Sección 1 — Hero Procedimientos (ProcedimientosHero.astro) | Route: inline | Status: completed | Commit: pending
-- T3 [S5]: Sección 2 — Volk InView (ProcedimientosVolk.astro) | Route: inline | Status: completed | Commit: pending
-- T4 [S6]: Sección 3 — Farnsworth D-15 (ProcedimientosFarnsworth.astro) | Route: inline | Status: completed | Commit: pending
-- T5 [S7]: Sección 4 — Galería Nuestro Trabajo (ProcedimientosGallery.astro) | Route: inline | Status: completed | Commit: pending
-- T6 [S8]: Sección 5 — Banner Contacto CTA (ProcedimientosCta.astro) | Route: inline | Status: completed | Commit: pending
-- T7 [S9]: Página /procedimientos (src/pages/procedimientos.astro) y actualización de Navbar.astro / Footer.astro | Route: inline | Status: completed | Commit: pending
-- T8 [S10]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-procedimientos.mjs, scripts/compare-procedimientos.mjs) | Route: inline | Status: completed | Commit: pending
+- T1 [S2,S4,S5,S6,S7]: Optimización y staging de imágenes WebP/PNG en public/images/procedimientos/ | Route: inline | Status: completed | Commit: e501002
+- T2 [S4]: Sección 1 — Hero Procedimientos (ProcedimientosHero.astro) | Route: inline | Status: completed | Commit: e501002
+- T3 [S5]: Sección 2 — Volk InView (ProcedimientosVolk.astro) | Route: inline | Status: completed | Commit: e501002
+- T4 [S6]: Sección 3 — Farnsworth D-15 (ProcedimientosFarnsworth.astro) | Route: inline | Status: completed | Commit: e501002
+- T5 [S7]: Sección 4 — Galería Nuestro Trabajo (ProcedimientosGallery.astro) | Route: inline | Status: completed | Commit: e501002
+- T6 [S8]: Sección 5 — Banner Contacto CTA (ProcedimientosCta.astro) | Route: inline | Status: completed | Commit: e501002
+- T7 [S9]: Página /procedimientos (src/pages/procedimientos.astro) y actualización de Navbar.astro / Footer.astro | Route: inline | Status: completed | Commit: e501002
+- T8 [S10]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-procedimientos.mjs, scripts/compare-procedimientos.mjs) | Route: inline | Status: completed | Commit: e501002
 
 ## Log
 L1: "perfecto rey, ahora hagamos la pagina de procedimientos creo que se llama, analiza antes de empezar rey"
