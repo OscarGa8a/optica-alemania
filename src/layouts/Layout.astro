@@ -9,6 +9,8 @@ interface Props {
   description?: string;
   robots?: string;
   gtmId?: string;
+  currentPath?: string;
+  headerTheme?: 'dark-hero' | 'light';
 }
 
 const {
@@ -16,6 +18,8 @@ const {
   description = siteConfig.description,
   robots,
   gtmId = import.meta.env.PUBLIC_GTM_ID,
+  currentPath = '#inicio',
+  headerTheme = 'dark-hero',
 } = Astro.props;
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
@@ -168,7 +172,7 @@ const schemaGraph = {
     )}
   </head>
   <body class="bg-brand-surface text-brand-body antialiased selection:bg-brand-blue-soft selection:text-brand-primary">
-    <Navbar />
+    <Navbar currentPath={currentPath} theme={headerTheme} />
     <main id="main-content">
       <slot />
     </main>

@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "node scripts/test-landing.mjs",
+    "test:nosotros": "node scripts/test-nosotros.mjs",
     "test:visual": "node scripts/compare-screenshots.mjs",
+    "test:visual:about": "node scripts/compare-about.mjs",
     "test:lighthouse": "node scripts/run-lighthouse.mjs"
   },
   "keywords": [],

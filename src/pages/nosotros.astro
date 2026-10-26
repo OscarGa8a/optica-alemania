@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AboutHero from '../components/about/AboutHero.astro';
+import AboutTrajectory from '../components/about/AboutTrajectory.astro';
+import AboutPurpose from '../components/about/AboutPurpose.astro';
+import AboutTeam from '../components/about/AboutTeam.astro';
+import AboutSpaces from '../components/about/AboutSpaces.astro';
+import AboutCta from '../components/about/AboutCta.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/siteConfig';
+
+const pageTitle = `Sobre Nosotros — ${siteConfig.name}`;
+const pageDescription = "Conoce nuestra historia, equipo y espacios en Villavicencio. Más de 28 años dedicados al cuidado de la salud visual con calidez y tecnología.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/nosotros"
+  headerTheme="light"
+>
+  <AboutHero />
+  <AboutTrajectory />
+  <AboutPurpose />
+  <AboutTeam />
+  <AboutSpaces />
+  <AboutCta />
+  <Footer currentPath="/nosotros" />
+</Layout>
