@@ -11,7 +11,8 @@ const { currentPath = '#inicio', theme = 'dark-hero' } = Astro.props;
 const isLight = theme === 'light';
 const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
 const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
-const isSubpage = isNosotros || isContacto;
+const isProcedimientos = currentPath === '/procedimientos' || currentPath === 'procedimientos';
+const isSubpage = isNosotros || isContacto || isProcedimientos;
 const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
 
 const navItems = siteConfig.nav.map((item) => {
@@ -22,6 +23,8 @@ const navItems = siteConfig.nav.map((item) => {
     isActive = item.href === '#nosotros' || item.href === '/nosotros';
   } else if (isContacto) {
     isActive = item.href === '#contacto' || item.href === '/contacto';
+  } else if (isProcedimientos) {
+    isActive = item.href === '#procedimientos' || item.href === '/procedimientos';
   } else {
     isActive = item.href === currentPath || item.active;
   }
@@ -31,6 +34,8 @@ const navItems = siteConfig.nav.map((item) => {
       href = '/nosotros';
     } else if (item.href === '#contacto' || item.href === '/contacto') {
       href = '/contacto';
+    } else if (item.href === '#procedimientos' || item.href === '/procedimientos') {
+      href = '/procedimientos';
     } else if (item.href.startsWith('#')) {
       href = `/${item.href}`;
     }
@@ -39,6 +44,8 @@ const navItems = siteConfig.nav.map((item) => {
       href = '/nosotros';
     } else if (item.href === '#contacto') {
       href = '/contacto';
+    } else if (item.href === '#procedimientos') {
+      href = '/procedimientos';
     }
   }
 

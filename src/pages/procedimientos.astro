@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProcedimientosHero from '../components/procedimientos/ProcedimientosHero.astro';
+import ProcedimientosVolk from '../components/procedimientos/ProcedimientosVolk.astro';
+import ProcedimientosFarnsworth from '../components/procedimientos/ProcedimientosFarnsworth.astro';
+import ProcedimientosGallery from '../components/procedimientos/ProcedimientosGallery.astro';
+import ProcedimientosCta from '../components/procedimientos/ProcedimientosCta.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/siteConfig';
+
+const pageTitle = `Procedimientos — ${siteConfig.name} | Villavicencio`;
+const pageDescription = "Descubre cómo realizamos nuestras evaluaciones visuales paso a paso en Óptica Alemania Villavicencio: tecnología Volk InView, Test de Farnsworth D-15 y atención especializada.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/procedimientos"
+  headerTheme="light"
+>
+  <main id="main-content">
+    <ProcedimientosHero />
+    <ProcedimientosVolk />
+    <ProcedimientosFarnsworth />
+    <ProcedimientosGallery />
+    <ProcedimientosCta />
+  </main>
+  <Footer currentPath="/procedimientos" />
+</Layout>
