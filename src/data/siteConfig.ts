@@ -157,6 +157,25 @@ export interface FooterConfig {
   legalLinks: FooterLink[];
 }
 
+export interface ServicesHeroConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  titleHighlight: string;
+  description: string;
+  exploreText: string;
+  exploreHref: string;
+  ctaWhatsAppText: string;
+  images: {
+    desktop: SpaceImage;
+    mobile: SpaceImage;
+  };
+}
+
+export interface ServicesPageConfig {
+  hero: ServicesHeroConfig;
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -178,6 +197,7 @@ export interface SiteConfig {
   trajectory: TrajectoryConfig;
   contactSection: ContactSectionConfig;
   footer: FooterConfig;
+  servicesPage: ServicesPageConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -212,12 +232,12 @@ export const siteConfig: SiteConfig = {
     sourceLabel: "Google · 38 reseñas",
   },
   nav: [
-    { label: "Inicio", href: "#inicio", active: true },
-    { label: "Nosotros", href: "#nosotros" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "Procedimientos", href: "#procedimientos" },
-    { label: "Monturas", href: "#monturas" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Inicio", href: "/" },
+    { label: "Nosotros", href: "/#nosotros" },
+    { label: "Servicios", href: "/servicios" },
+    { label: "Procedimientos", href: "/#procedimientos" },
+    { label: "Monturas", href: "/#monturas" },
+    { label: "Contacto", href: "/#contacto" },
   ],
   services: [
     {
@@ -489,5 +509,31 @@ export const siteConfig: SiteConfig = {
       { label: "Política de privacidad", href: "#privacidad" },
       { label: "Tratamiento de datos personales", href: "#tratamiento-datos" },
     ],
+  },
+  servicesPage: {
+    hero: {
+      eyebrow: "NUESTROS SERVICIOS",
+      titlePart1: "Servicios de",
+      titlePart2: "optometría",
+      titleHighlight: "en Villavicencio.",
+      description: "Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas para el cuidado de tu salud visual.",
+      exploreText: "Explorar servicios",
+      exploreHref: "#explora-servicios",
+      ctaWhatsAppText: "Escríbenos por WhatsApp",
+      images: {
+        desktop: {
+          src: "/images/services/1_hero_desktop_image.webp",
+          alt: "Optómetra realizando examen visual con equipo de precisión en Óptica Alemania Villavicencio",
+          width: 1672,
+          height: 941,
+        },
+        mobile: {
+          src: "/images/services/1_hero_mobile_image.webp",
+          alt: "Optómetra realizando examen visual en Óptica Alemania",
+          width: 941,
+          height: 1192,
+        },
+      },
+    },
   },
 };
