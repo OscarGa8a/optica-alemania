@@ -155,21 +155,25 @@ async function run() {
       }
 
       // 4. Capture section screenshots
-      const sections = [
-        { id: '#inicio', file: vp.heroScreenshot, label: 'Hero Contacto' },
-        { id: '#ubicacion', file: vp.ubicacionScreenshot, label: 'Ubicación y Recorrido' },
-      ];
+      // Hero Contacto (including site header as in mockup)
+      const heroEl = page.locator('#inicio');
+      if (await heroEl.count() > 0) {
+        const heroBox = await heroEl.boundingBox();
+        const heroHeight = Math.round(heroBox ? (heroBox.y + heroBox.height) : 680);
+        await page.screenshot({
+          path: path.join(SCREENSHOTS_DIR, vp.heroScreenshot),
+          clip: { x: 0, y: 0, width: vp.width, height: heroHeight },
+        });
+        console.log(`📸 [${vp.name}] Captured: Hero Contacto (with header) -> ${vp.heroScreenshot}`);
+      }
 
-      for (const sec of sections) {
-        const el = page.locator(sec.id);
-        if (await el.count() > 0) {
-          await el.screenshot({
-            path: path.join(SCREENSHOTS_DIR, sec.file),
-          });
-          console.log(`📸 [${vp.name}] Captured: ${sec.label} -> ${sec.file}`);
-        } else {
-          console.warn(`⚠️ [${vp.name}] Section locator not found: ${sec.id}`);
-        }
+      // Ubicación y Recorrido
+      const ubicacionEl = page.locator('#ubicacion');
+      if (await ubicacionEl.count() > 0) {
+        await ubicacionEl.screenshot({
+          path: path.join(SCREENSHOTS_DIR, vp.ubicacionScreenshot),
+        });
+        console.log(`📸 [${vp.name}] Captured: Ubicación y Recorrido -> ${vp.ubicacionScreenshot}`);
       }
 
       // 5. Capture full page screenshot

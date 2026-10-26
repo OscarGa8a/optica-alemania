@@ -25,3 +25,4 @@ L2: ODD task file inicializado con 5 tareas planificadas. Procediendo con T1 (op
 L3: T1 a T5 completadas exitosamente. Todas las secciones visuales implementadas con estándares de PLAYBOOK.md y responsive en 1440px y 390px.
 L4: Ejecución de suite de certificación Playwright (`pnpm test:contacto` y `pnpm test:nosotros`) certificando: 0 errores de consola, 0 peticiones 404/fallidas y 0 scroll horizontal. Comparativas visuales Sharp side-by-side generadas en `docs/screenshots/contact/`.
 L5: Commit 2ef8b8f consolidando la implementación completa y suites de prueba de la página Contacto.
+L6: Verificación forense y ajuste visual con Playwright contra mockups: se incorporó en ContactLocation.astro el botón principal de conversión 'Contactar por WhatsApp', la cuadrícula responsiva de 4 columnas en mobile para los datos de contacto (Dirección, Teléfonos, Horarios, Instagram), y la sincronización del header en la captura del hero. Certificación 100% limpia.
