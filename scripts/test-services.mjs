@@ -453,6 +453,78 @@ async function run() {
       console.log(`📸 [${vp.name}] Specialized Tests screenshot saved: ${path.relative(ROOT_DIR, specTestsScreenshotPath)}`);
     }
 
+    // 8. Section 5 — 03 / Urgencias oculares Verification
+    const emergenciesElement = page.locator('#urgencias-oculares');
+    const emergenciesExists = (await emergenciesElement.count()) > 0;
+    if (!emergenciesExists) {
+      console.error(`❌ [${vp.name}] Section #urgencias-oculares does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #urgencias-oculares exists`);
+
+      // Check H2 Title
+      const rawH2 = await emergenciesElement.locator('h2').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
+      if (!h2Text.includes('¿Necesitas atención') || !h2Text.includes('molestia ocular?')) {
+        console.error(`❌ [${vp.name}] Urgencias H2 mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains '¿Necesitas atención por una molestia ocular?'`);
+      }
+
+      // Check Description
+      const descText = (await emergenciesElement.locator('p').first().textContent() || '').replace(/\s+/g, ' ');
+      if (!descText.includes('Consulta con nuestro equipo qué situaciones podemos atender')) {
+        console.error(`❌ [${vp.name}] Urgencias description mismatch: ${descText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Description verified`);
+      }
+
+      // Check CTA link
+      const ctaLink = emergenciesElement.locator('a[href*="wa.me"]');
+      const ctaCount = await ctaLink.count();
+      if (ctaCount < 1) {
+        console.error(`❌ [${vp.name}] No WhatsApp CTA button found in #urgencias-oculares`);
+        hasErrors = true;
+      } else {
+        const href = await ctaLink.first().getAttribute('href');
+        if (!href || !href.includes('wa.me/573112017302')) {
+          console.error(`❌ [${vp.name}] Urgencias CTA href is invalid: ${href}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] WhatsApp CTA button verified`);
+        }
+      }
+
+      // Check Medical Urgency Disclaimer
+      const fullText = await emergenciesElement.textContent();
+      if (!fullText.includes('Ante síntomas o lesiones oculares graves') || !fullText.includes('servicio de urgencias médicas')) {
+        console.error(`❌ [${vp.name}] Medical disclaimer notice text mismatch`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Medical disclaimer notice verified`);
+      }
+
+      // Screenshot of Section 5
+      const emergenciesScreenshotPath = path.join(SCREENSHOTS_DIR, `5_urgencias_oculares_${vp.name}_actual.png`);
+      await emergenciesElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      // Temporarily hide sticky header during element screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await emergenciesElement.screenshot({
+        path: emergenciesScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] Urgencias Oculares screenshot saved: ${path.relative(ROOT_DIR, emergenciesScreenshotPath)}`);
+    }
+
     await page.close();
   }
 

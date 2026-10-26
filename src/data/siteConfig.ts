@@ -243,11 +243,30 @@ export interface SpecializedTestsConfig {
   techBanner: TechnologyBannerConfig;
 }
 
+export interface EyeEmergenciesNoticeConfig {
+  icon: 'eye' | 'info';
+  boldText: string;
+  regularText: string;
+}
+
+export interface EyeEmergenciesConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  titleHighlight: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  notice: EyeEmergenciesNoticeConfig;
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
   visualCare: VisualCareConfig;
   specializedTests: SpecializedTestsConfig;
+  eyeEmergencies: EyeEmergenciesConfig;
 }
 
 export interface SiteConfig {
@@ -757,6 +776,21 @@ export const siteConfig: SiteConfig = {
       techBanner: {
         eyebrow: "TECNOLOGÍA PARA UNA ATENCIÓN MÁS COMPLETA",
         description: "Utilizamos equipos especializados que nos permiten realizar evaluaciones con mayor precisión y obtener información detallada sobre tu salud visual.",
+      },
+    },
+    eyeEmergencies: {
+      id: "urgencias-oculares",
+      eyebrow: "03 / URGENCIAS OCULARES",
+      titlePart1: "¿Necesitas atención",
+      titlePart2: "por una",
+      titleHighlight: "molestia ocular?",
+      description: "Consulta con nuestro equipo qué situaciones podemos atender y la disponibilidad de nuestros servicios.",
+      ctaText: "Consultar disponibilidad",
+      whatsappMessage: "Hola, me comunico por una molestia ocular y quisiera consultar su disponibilidad de atención.",
+      notice: {
+        icon: "eye",
+        boldText: "Ante síntomas o lesiones oculares graves,",
+        regularText: "acude directamente a un servicio de urgencias médicas.",
       },
     },
   },
