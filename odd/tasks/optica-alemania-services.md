@@ -26,7 +26,7 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T4 [S5]: Puerta de aprobación Sección 1 con el usuario | Route: inline | Status: done | Commit: 86ba379
 - T5 [S6,S14]: Implementación y certificación Sección 2 — Explora nuestros servicios (ServicesOverview.astro) | Route: inline | Status: done | Commit: 9befe87
 - T6 [S6]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: done | Commit: 9befe87
-- T7 [S7,S14]: Implementación y certificación Sección 3 — Atención visual a tu medida (VisualCareDetail.astro) | Route: inline | Status: done | Commit: pending
+- T7 [S7,S14]: Implementación y certificación Sección 3 — Atención visual a tu medida (VisualCareDetail.astro) | Route: inline | Status: done | Commit: e242726
 - T8 [S7]: Puerta de aprobación Sección 3 con el usuario | Route: inline | Status: in-progress | Commit: -
 - T9 [S8,S14]: Implementación y certificación Sección 4 — Evaluaciones especializadas (SpecializedTests.astro) | Route: inline | Status: pending | Commit: -
 - T10 [S8]: Puerta de aprobación Sección 4 con el usuario | Route: inline | Status: pending | Commit: -
