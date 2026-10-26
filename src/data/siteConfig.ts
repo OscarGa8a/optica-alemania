@@ -215,10 +215,39 @@ export interface VisualCareConfig {
   items: VisualCareServiceItem[];
 }
 
+export interface SpecializedTestItem {
+  number: string;
+  title: string;
+  description: string;
+  whatsappMessage: string;
+  procedureLink?: {
+    text: string;
+    href: string;
+  };
+}
+
+export interface TechnologyBannerConfig {
+  eyebrow: string;
+  description: string;
+}
+
+export interface SpecializedTestsConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2?: string;
+  titleHighlight: string;
+  description: string;
+  tests: SpecializedTestItem[];
+  image: SpaceImage;
+  techBanner: TechnologyBannerConfig;
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
   visualCare: VisualCareConfig;
+  specializedTests: SpecializedTestsConfig;
 }
 
 export interface SiteConfig {
@@ -672,6 +701,63 @@ export const siteConfig: SiteConfig = {
           reverse: true,
         },
       ],
+    },
+    specializedTests: {
+      id: "evaluaciones-especializadas",
+      eyebrow: "02 / EVALUACIONES ESPECIALIZADAS",
+      titlePart1: "Conoce nuestras evaluaciones",
+      titleHighlight: "especializadas.",
+      description: "Contamos con diferentes pruebas y equipos para evaluar aspectos específicos de tu salud visual y ofrecerte una atención acorde con tus necesidades.",
+      tests: [
+        {
+          number: "01",
+          title: "Toma de presión intraocular.",
+          description: "Medición de la presión dentro del ojo, como parte de la evaluación de tu salud visual.",
+          whatsappMessage: "Hola, me interesa agendar una toma de presión intraocular en Óptica Alemania.",
+        },
+        {
+          number: "02",
+          title: "Test de ojo seco.",
+          description: "Evaluación de aspectos relacionados con la película lagrimal y la superficie ocular.",
+          whatsappMessage: "Hola, deseo consultar sobre el examen y tratamiento para ojo seco en Óptica Alemania.",
+        },
+        {
+          number: "03",
+          title: "Test de Ishihara / Farnsworth D-15.",
+          description: "Pruebas que permiten evaluar la percepción de los colores y la visión cromática.",
+          whatsappMessage: "Hola, deseo información sobre el test de visión cromática (Ishihara / Farnsworth D-15) en Óptica Alemania.",
+          procedureLink: {
+            text: "Conoce cómo realizamos esta prueba",
+            href: "#procedimientos",
+          },
+        },
+        {
+          number: "04",
+          title: "Examen digital por retroiluminación.",
+          description: "Evaluación que permite observar estructuras oculares mediante tecnología de iluminación especializada.",
+          whatsappMessage: "Hola, deseo consultar sobre el examen digital por retroiluminación en Óptica Alemania.",
+        },
+        {
+          number: "05",
+          title: "Retinofotografía.",
+          description: "Captura de imágenes de la retina mediante equipos especializados para un análisis más detallado de la salud visual.",
+          whatsappMessage: "Hola, me gustaría agendar una evaluación de retinofotografía en Óptica Alemania.",
+          procedureLink: {
+            text: "Conoce cómo realizamos esta prueba",
+            href: "#procedimientos",
+          },
+        },
+      ],
+      image: {
+        src: "/images/services/4_evaluaciones_especializadas_image.webp",
+        alt: "Optómetra realizando examen y evaluación retinal con equipo Volk InView en Óptica Alemania",
+        width: 1400,
+        height: 933,
+      },
+      techBanner: {
+        eyebrow: "TECNOLOGÍA PARA UNA ATENCIÓN MÁS COMPLETA",
+        description: "Utilizamos equipos especializados que nos permiten realizar evaluaciones con mayor precisión y obtener información detallada sobre tu salud visual.",
+      },
     },
   },
 };

@@ -361,6 +361,98 @@ async function run() {
       console.log(`📸 [${vp.name}] Visual Care screenshot saved: ${path.relative(ROOT_DIR, visualCareScreenshotPath)}`);
     }
 
+    // 7. Section 4 — 02 / Evaluaciones especializadas Verification
+    const specTestsElement = page.locator('#evaluaciones-especializadas');
+    const specTestsExists = (await specTestsElement.count()) > 0;
+    if (!specTestsExists) {
+      console.error(`❌ [${vp.name}] Section #evaluaciones-especializadas does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #evaluaciones-especializadas exists`);
+
+      const rawH2 = await specTestsElement.locator('h2').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
+      if (!h2Text.includes('Conoce nuestras') || !h2Text.includes('evaluaciones') || !h2Text.includes('especializadas')) {
+        console.error(`❌ [${vp.name}] H2 title text mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Conoce nuestras evaluaciones especializadas'`);
+      }
+
+      // Check all 5 test items exist
+      const testLinks = specTestsElement.locator('a[data-event="specialized_test_click"]');
+      const testCount = await testLinks.count();
+      if (testCount !== 5) {
+        console.error(`❌ [${vp.name}] Expected 5 specialized tests, found: ${testCount}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] 5 specialized test items found`);
+      }
+
+      // Check test titles
+      const h3s = specTestsElement.locator('h3');
+      const h3Count = await h3s.count();
+      if (h3Count < 5) {
+        console.error(`❌ [${vp.name}] Expected at least 5 h3 titles, found: ${h3Count}`);
+        hasErrors = true;
+      } else {
+        const expectedTests = [
+          'Toma de presión intraocular',
+          'Test de ojo seco',
+          'Test de Ishihara / Farnsworth D-15',
+          'Examen digital por retroiluminación',
+          'Retinofotografía',
+        ];
+        for (let i = 0; i < expectedTests.length; i++) {
+          const text = (await h3s.nth(i).textContent() || '').replace(/\s+/g, ' ');
+          if (!text.includes(expectedTests[i])) {
+            console.error(`❌ [${vp.name}] Test ${i + 1} mismatch: ${text}`);
+            hasErrors = true;
+          }
+        }
+        console.log(`✅ [${vp.name}] All 5 test titles verified`);
+      }
+
+      // Check image is loaded
+      const specImg = vp.name === 'desktop'
+        ? specTestsElement.locator('.hidden.lg\\:block img[src*="4_evaluaciones_especializadas_image"]')
+        : specTestsElement.locator('.block.lg\\:hidden img[src*="4_evaluaciones_especializadas_image"]');
+      const isLoaded = await specImg.first().evaluate((img) => img.complete && img.naturalWidth > 0);
+      if (!isLoaded) {
+        console.error(`❌ [${vp.name}] Specialized tests image failed to load`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Specialized tests image loaded successfully`);
+      }
+
+      // Check technology banner
+      const bannerText = await specTestsElement.textContent();
+      if (!bannerText.includes('TECNOLOGÍA PARA UNA ATENCIÓN MÁS COMPLETA')) {
+        console.error(`❌ [${vp.name}] Technology banner missing`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Technology banner verified`);
+      }
+
+      // Screenshot of Section 4
+      const specTestsScreenshotPath = path.join(SCREENSHOTS_DIR, `4_evaluaciones_especializadas_${vp.name}_actual.png`);
+      await specTestsElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      // Temporarily hide sticky header during element screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await specTestsElement.screenshot({
+        path: specTestsScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] Specialized Tests screenshot saved: ${path.relative(ROOT_DIR, specTestsScreenshotPath)}`);
+    }
+
     await page.close();
   }
 

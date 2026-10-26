@@ -53,6 +53,18 @@ const SECTIONS = [
     desktopHeight: null, // auto-calculated from content
     mobileHeight: null, // auto-calculated from content
   },
+  {
+    id: '4_evaluaciones_especializadas',
+    name: 'Sección 4 — 02 / Evaluaciones especializadas',
+    mockupDesktop: path.join(DOCS_SERVICES, '4_evaluaciones_especializadas_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '4_evaluaciones_especializadas_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_SERVICES, '4_evaluaciones_especializadas_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '4_evaluaciones_especializadas_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '4_evaluaciones_especializadas_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '4_evaluaciones_especializadas_mobile_comparison.png'),
+    desktopHeight: null,
+    mobileHeight: null,
+  },
 ];
 
 async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false, customHeight = null) {
