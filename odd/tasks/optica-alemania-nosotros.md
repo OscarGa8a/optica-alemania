@@ -1,8 +1,8 @@
 # Feature: Óptica Alemania — Página Nosotros (/nosotros)
-Branch: feat/about-page
+Branch: main
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && node scripts/test-nosotros.mjs && node scripts/compare-about.mjs
-PR: https://github.com/OscarGa8a/optica-alemania/pull/7
+PR: https://github.com/OscarGa8a/optica-alemania/pull/7 (merged)
 
 ## Specs
 S1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros con Astro + Tailwind CSS."
@@ -42,3 +42,4 @@ L7: Verificación profunda con Playwright sección por sección respecto a los m
 - Sección 4 y 5: Ajustados fondos a tono clínico institucional (#F4F7FC) y redimensionados contenedores fotográficos.
 - Sección 6: Ampliada altura del banner a min-h 640px, centrada la filigrana de ojo y ajustada tipografía editorial.
 - Regeneradas todas las comparativas visuales side-by-side y certificada la suite sin errores ni overflow.
+L8: PR #7 mergeado en main (d64d57c). Sincronizados repositorio principal local y worktree.
