@@ -159,7 +159,7 @@ async function run() {
       sec.mockupMobile,
       sec.actualMobile,
       sec.mobileComparisonOut,
-      900
+      1300
     );
     if (mobOk) {
       console.log(`  ✅ Mobile: ${path.basename(sec.mobileComparisonOut)}`);

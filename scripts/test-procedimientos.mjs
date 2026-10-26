@@ -141,10 +141,24 @@ async function run() {
           console.error(`❌ Sección ${sec.label} (${sec.id}) no encontrada en el DOM`);
           hasErrors = true;
         } else {
-          // Capture section screenshot
           const screenshotPath = path.join(SCREENSHOTS_DIR, `${sec.label}_${vp.name}_actual.png`);
-          await el.screenshot({ path: screenshotPath });
-          console.log(`📸 Capturada sección ${sec.label} (${vp.name}) -> ${path.basename(screenshotPath)}`);
+          if (sec.id === '#inicio') {
+            const box = await el.boundingBox();
+            const clipHeight = Math.min(
+              Math.round((box?.y || 0) + (box?.height || 800)),
+              vp.name === 'desktop' ? 860 : 1050
+            );
+            await page.screenshot({
+              path: screenshotPath,
+              clip: { x: 0, y: 0, width: vp.width, height: clipHeight },
+            });
+            console.log(`📸 Capturada sección ${sec.label} (${vp.name}) [con Navbar] -> ${path.basename(screenshotPath)}`);
+          } else {
+            await el.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(100);
+            await el.screenshot({ path: screenshotPath });
+            console.log(`📸 Capturada sección ${sec.label} (${vp.name}) -> ${path.basename(screenshotPath)}`);
+          }
         }
       }
 
