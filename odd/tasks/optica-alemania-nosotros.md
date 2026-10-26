@@ -17,15 +17,15 @@ S10: "Ruta y Navegación: Página /nosotros (src/pages/nosotros.astro), actualiz
 S11: "Certificación Visual Playwright: Script de prueba automatizado (scripts/test-nosotros.mjs) y comparador visual side-by-side (scripts/compare-about.mjs) verificando 0 errores de consola, 0 404s y 0 scroll horizontal en 1440px y 390px."
 
 ## Tasks
-- T1 [S2,S4,S5,S7,S8,S9]: Optimización y staging de imágenes WebP/PNG en public/images/about/ | Route: inline | Status: done | Commit: 60b083d
-- T2 [S4]: Sección 1 — Hero Sobre Nosotros (AboutHero.astro) | Route: inline | Status: done | Commit: 60b083d
-- T3 [S5]: Sección 2 — Nuestra Trayectoria (AboutTrajectory.astro) | Route: inline | Status: done | Commit: 60b083d
-- T4 [S6]: Sección 3 — Nuestro Propósito (AboutPurpose.astro) | Route: inline | Status: done | Commit: 60b083d
-- T5 [S7]: Sección 4 — Nuestro Equipo (AboutTeam.astro) | Route: inline | Status: done | Commit: 60b083d
-- T6 [S8]: Sección 5 — Nuestros Espacios (AboutSpaces.astro) | Route: inline | Status: done | Commit: 60b083d
-- T7 [S9]: Sección 6 — Estamos Para Ti (AboutCta.astro) | Route: inline | Status: done | Commit: 60b083d
-- T8 [S10]: Ensamblaje de página /nosotros (src/pages/nosotros.astro), actualización de Navbar.astro y Footer.astro | Route: inline | Status: done | Commit: 60b083d
-- T9 [S11]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-nosotros.mjs, scripts/compare-about.mjs) | Route: inline | Status: done | Commit: 60b083d
+- T1 [S2,S4,S5,S7,S8,S9]: Optimización y staging de imágenes WebP/PNG en public/images/about/ | Route: inline | Status: done | Commit: 91d6274
+- T2 [S4]: Sección 1 — Hero Sobre Nosotros (AboutHero.astro) | Route: inline | Status: done | Commit: 91d6274
+- T3 [S5]: Sección 2 — Nuestra Trayectoria (AboutTrajectory.astro) | Route: inline | Status: done | Commit: 91d6274
+- T4 [S6]: Sección 3 — Nuestro Propósito (AboutPurpose.astro) | Route: inline | Status: done | Commit: 91d6274
+- T5 [S7]: Sección 4 — Nuestro Equipo (AboutTeam.astro) | Route: inline | Status: done | Commit: 91d6274
+- T6 [S8]: Sección 5 — Nuestros Espacios (AboutSpaces.astro) | Route: inline | Status: done | Commit: 91d6274
+- T7 [S9]: Sección 6 — Estamos Para Ti (AboutCta.astro) | Route: inline | Status: done | Commit: 91d6274
+- T8 [S10]: Ensamblaje de página /nosotros (src/pages/nosotros.astro), actualización de Navbar.astro y Footer.astro | Route: inline | Status: done | Commit: 91d6274
+- T9 [S11]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-nosotros.mjs, scripts/compare-about.mjs) | Route: inline | Status: done | Commit: 91d6274
 
 ## Log
 L1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros."
