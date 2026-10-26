@@ -1,5 +1,5 @@
 # Feature: Óptica Alemania — Página Nosotros (/nosotros)
-Branch: worktree/about-page
+Branch: feat/about-page
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && node scripts/test-nosotros.mjs && node scripts/compare-about.mjs
 
