@@ -41,6 +41,18 @@ const SECTIONS = [
     desktopHeight: 710,
     mobileHeight: 640,
   },
+  {
+    id: '3_atencion_visual',
+    name: 'Sección 3 — 01 / Atención visual a tu medida',
+    mockupDesktop: path.join(DOCS_SERVICES, '3_atencion_visual_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '3_atencion_visual_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_SERVICES, '3_atencion_visual_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '3_atencion_visual_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '3_atencion_visual_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '3_atencion_visual_mobile_comparison.png'),
+    desktopHeight: null, // auto-calculated from content
+    mobileHeight: null, // auto-calculated from content
+  },
 ];
 
 async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false, customHeight = null) {
@@ -57,15 +69,25 @@ async function createSideBySide(mockupPath, actualPath, outputPath, title, isMob
   const actualMeta = await sharp(actualPath).metadata();
 
   const targetWidth = isMobile ? 390 : 1440;
-  const targetHeight = customHeight || (isMobile ? 844 : 810);
+  const scaledMockupHeight = Math.round(mockupMeta.height * (targetWidth / mockupMeta.width));
+  const scaledActualHeight = Math.round(actualMeta.height * (targetWidth / actualMeta.width));
+  const targetHeight = customHeight || Math.max(scaledMockupHeight, scaledActualHeight);
 
-  // Resize both to identical dimensions for clean 1:1 side-by-side comparison
+  // Resize both to identical dimensions for clean 1:1 side-by-side comparison without cropping
   const resizedMockup = await sharp(mockupPath)
-    .resize(targetWidth, targetHeight, { fit: 'cover', position: 'top' })
+    .resize(targetWidth, targetHeight, {
+      fit: 'contain',
+      position: 'top',
+      background: { r: 255, g: 255, b: 255, alpha: 1 },
+    })
     .toBuffer();
 
   const resizedActual = await sharp(actualPath)
-    .resize(targetWidth, targetHeight, { fit: 'cover', position: 'top' })
+    .resize(targetWidth, targetHeight, {
+      fit: 'contain',
+      position: 'top',
+      background: { r: 255, g: 255, b: 255, alpha: 1 },
+    })
     .toBuffer();
 
   const headerHeight = isMobile ? 70 : 60;

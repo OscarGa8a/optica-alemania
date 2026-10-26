@@ -193,9 +193,32 @@ export interface ServicesOverviewConfig {
   cards: ServiceOverviewCard[];
 }
 
+export interface VisualCareServiceItem {
+  serviceNumber: string;
+  titleLine1: string;
+  titleLine2: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  image: SpaceImage & {
+    positionClass?: string;
+  };
+  reverse?: boolean;
+}
+
+export interface VisualCareConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titleHighlight: string;
+  description: string;
+  items: VisualCareServiceItem[];
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
+  visualCare: VisualCareConfig;
 }
 
 export interface SiteConfig {
@@ -608,6 +631,45 @@ export const siteConfig: SiteConfig = {
             height: 800,
             positionClass: "object-[88%_center]",
           },
+        },
+      ],
+    },
+    visualCare: {
+      id: "atencion-visual",
+      eyebrow: "01 / ATENCIÓN VISUAL",
+      titlePart1: "Atención visual",
+      titleHighlight: "a tu medida.",
+      description: "Conoce nuestras consultas de optometría especializada y el servicio de adaptación de lentes de contacto.",
+      items: [
+        {
+          serviceNumber: "SERVICIO 01",
+          titleLine1: "Consulta de",
+          titleLine2: "optometría especializada.",
+          description: "Realizamos una evaluación completa de tu salud visual para determinar tus necesidades de corrección, con el apoyo de tecnología especializada y un enfoque personalizado.",
+          ctaText: "Consultar este servicio",
+          whatsappMessage: "Hola, me gustaría agendar una consulta de optometría especializada en Óptica Alemania.",
+          image: {
+            src: "/images/services/3_atencion_visual_image1.webp",
+            alt: "Optómetra realizando examen de salud visual con tecnología especializada en Óptica Alemania",
+            width: 1400,
+            height: 788,
+          },
+          reverse: false,
+        },
+        {
+          serviceNumber: "SERVICIO 02",
+          titleLine1: "Adaptación de",
+          titleLine2: "lentes de contacto.",
+          description: "Te acompañamos en el proceso de adaptación de lentes de contacto, con una evaluación profesional, orientación en la elección y el uso adecuado según tus necesidades visuales.",
+          ctaText: "Consultar este servicio",
+          whatsappMessage: "Hola, deseo información sobre la adaptación de lentes de contacto en Óptica Alemania.",
+          image: {
+            src: "/images/services/3_atencion_visual_image2.webp",
+            alt: "Optómetra explicando la adaptación y colocación de lentes de contacto a una paciente en Óptica Alemania",
+            width: 1400,
+            height: 788,
+          },
+          reverse: true,
         },
       ],
     },

@@ -25,9 +25,9 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T3 [S5,S14]: Implementación y certificación Sección 1 — Hero de Servicios (ServicesHero.astro) con Playwright y comparativa Sharp | Route: inline | Status: done | Commit: 86ba379
 - T4 [S5]: Puerta de aprobación Sección 1 con el usuario | Route: inline | Status: done | Commit: 86ba379
 - T5 [S6,S14]: Implementación y certificación Sección 2 — Explora nuestros servicios (ServicesOverview.astro) | Route: inline | Status: done | Commit: 9befe87
-- T6 [S6]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: in-progress | Commit: -
-- T7 [S7,S14]: Implementación y certificación Sección 3 — Atención visual a tu medida (VisualCareDetail.astro) | Route: inline | Status: pending | Commit: -
-- T8 [S7]: Puerta de aprobación Sección 3 con el usuario | Route: inline | Status: pending | Commit: -
+- T6 [S6]: Puerta de aprobación Sección 2 con el usuario | Route: inline | Status: done | Commit: 9befe87
+- T7 [S7,S14]: Implementación y certificación Sección 3 — Atención visual a tu medida (VisualCareDetail.astro) | Route: inline | Status: done | Commit: pending
+- T8 [S7]: Puerta de aprobación Sección 3 con el usuario | Route: inline | Status: in-progress | Commit: -
 - T9 [S8,S14]: Implementación y certificación Sección 4 — Evaluaciones especializadas (SpecializedTests.astro) | Route: inline | Status: pending | Commit: -
 - T10 [S8]: Puerta de aprobación Sección 4 con el usuario | Route: inline | Status: pending | Commit: -
 - T11 [S9,S14]: Implementación y certificación Sección 5 — Urgencias oculares (EyeEmergencies.astro) | Route: inline | Status: pending | Commit: -
@@ -45,3 +45,5 @@ L1: "rey continuemos con la pagina de services o nosotros aplciando lo que dice 
 L2: "autorizo rey, dale"
 L3: "continua rey" — Sección 1 Hero certificada visualmente con Playwright (0 console errors, 0 broken assets, 0 overflow) y comparativa side-by-side Sharp generada y aprobada (commit 86ba379). Inicio Sección 2 (Explora nuestros servicios).
 L4: "como va eso rey? ya va mucha demora" — Implementación y verificación de Sección 2 (Explora nuestros servicios) finalizada: ServicesOverview.astro, datos en siteConfig.ts, 0 console errors, 0 404s, 0 overflow en desktop (1440px) y mobile (390px), comparativas side-by-side generadas. Presentación de resultados para puerta de aprobación.
+L5: "Arrancar directamente con la Tarea T7: Implementación y certificación de la Sección 3 — 01 / Atención visual a tu medida (docs/services/3_atencion_visual_desktop.png y 3_atencion_visual_mobile.png) en src/components/services/VisualCareDetail.astro y datos en src/data/siteConfig.ts." — Sección 2 aprobada por el usuario. T6 marcada done. T7 iniciada.
+L6: "Implementación y certificación de Sección 3 (01 / Atención visual a tu medida) completada: VisualCareDetail.astro, datos en siteConfig.ts, imágenes webp optimizadas, 0 errores de consola, 0 404s, 0 overflow horizontal en viewports desktop (1440px) y mobile (390px). Comparativas Sharp side-by-side generadas y auditadas en docs/screenshots/services/."

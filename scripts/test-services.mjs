@@ -247,6 +247,120 @@ async function run() {
       console.log(`📸 [${vp.name}] Overview screenshot saved: ${path.relative(ROOT_DIR, overviewScreenshotPath)}`);
     }
 
+    // 6. Section 3 — 01 / Atención visual a tu medida Verification
+    const visualCareElement = page.locator('#atencion-visual');
+    const visualCareExists = (await visualCareElement.count()) > 0;
+    if (!visualCareExists) {
+      console.error(`❌ [${vp.name}] Section #atencion-visual does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #atencion-visual exists`);
+
+      const rawH2 = await visualCareElement.locator('h2').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
+      if (!h2Text.includes('Atención visual') || !h2Text.includes('a tu medida')) {
+        console.error(`❌ [${vp.name}] H2 title text mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Atención visual a tu medida'`);
+      }
+
+      // Check both services exist
+      const serviceArticles = visualCareElement.locator('article');
+      const articleCount = await serviceArticles.count();
+      if (articleCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 service articles, found: ${articleCount}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 service articles found in #atencion-visual`);
+      }
+
+      // Check headings of both services
+      const h3s = visualCareElement.locator('h3');
+      const h3Count = await h3s.count();
+      if (h3Count < 2) {
+        console.error(`❌ [${vp.name}] Expected at least 2 h3 headings, found: ${h3Count}`);
+        hasErrors = true;
+      } else {
+        const text1 = (await h3s.nth(0).textContent() || '').replace(/\s+/g, ' ');
+        const text2 = (await h3s.nth(1).textContent() || '').replace(/\s+/g, ' ');
+        if (!text1.includes('Consulta de') || !text1.includes('optometría especializada')) {
+          console.error(`❌ [${vp.name}] Service 01 H3 mismatch: ${text1}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] Service 01 H3 contains 'Consulta de optometría especializada'`);
+        }
+
+        if (!text2.includes('Adaptación de') || !text2.includes('lentes de contacto')) {
+          console.error(`❌ [${vp.name}] Service 02 H3 mismatch: ${text2}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] Service 02 H3 contains 'Adaptación de lentes de contacto'`);
+        }
+      }
+
+      // Check images loaded successfully
+      const serviceImgs = visualCareElement.locator('img[src*="3_atencion_visual_image"]');
+      const imgCount = await serviceImgs.count();
+      if (imgCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 visual care images, found: ${imgCount}`);
+        hasErrors = true;
+      } else {
+        for (let i = 0; i < 2; i++) {
+          const isLoaded = await serviceImgs.nth(i).evaluate((img) => img.complete && img.naturalWidth > 0);
+          if (!isLoaded) {
+            console.error(`❌ [${vp.name}] Visual care image ${i + 1} failed to load`);
+            hasErrors = true;
+          }
+        }
+        console.log(`✅ [${vp.name}] Both visual care images loaded successfully`);
+      }
+
+      // Check CTAs
+      const ctas = visualCareElement.locator('a[data-event="service_detail_cta"]');
+      const ctaCount = await ctas.count();
+      if (ctaCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 detail CTAs, found: ${ctaCount}`);
+        hasErrors = true;
+      } else {
+        for (let i = 0; i < 2; i++) {
+          const href = await ctas.nth(i).getAttribute('href');
+          if (!href || !href.includes('wa.me/573112017302')) {
+            console.error(`❌ [${vp.name}] CTA ${i + 1} href is invalid: ${href}`);
+            hasErrors = true;
+          }
+        }
+        console.log(`✅ [${vp.name}] Both WhatsApp CTAs verified`);
+      }
+
+      // Screenshot of Section 3
+      const visualCareScreenshotPath = path.join(SCREENSHOTS_DIR, `3_atencion_visual_${vp.name}_actual.png`);
+      // Scroll into view and ensure images are fully loaded and rendered
+      await visualCareElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      await visualCareElement.locator('img').evaluateAll((imgs) => {
+        return Promise.all(imgs.map((img) => {
+          if (img.complete && img.naturalWidth > 0) return true;
+          return new Promise((resolve) => {
+            img.onload = img.onerror = resolve;
+          });
+        }));
+      });
+      // Temporarily hide sticky header during element screenshot to avoid any overlap
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await visualCareElement.screenshot({
+        path: visualCareScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] Visual Care screenshot saved: ${path.relative(ROOT_DIR, visualCareScreenshotPath)}`);
+    }
+
     await page.close();
   }
 
