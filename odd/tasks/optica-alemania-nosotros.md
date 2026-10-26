@@ -34,3 +34,10 @@ L3: T1 completada: optimizados y convertidos 7 recursos fotográficos a formato 
 L4: T2 a T7 completadas: implementadas con fidelidad editorial las 6 secciones en src/components/about/ (AboutHero, AboutTrajectory, AboutPurpose, AboutTeam, AboutSpaces, AboutCta).
 L5: T8 completada: ruta /nosotros ensamblada en src/pages/nosotros.astro, Navbar.astro actualizado con soporte de tema claro y enlaces inter-página, y Footer.astro adaptado.
 L6: T9 completada: suite de Playwright ejecutada (pnpm test:nosotros) con 0 errores de consola, 0 404s y 0 scroll horizontal en desktop (1440px) y mobile (390px). 12 composiciones side-by-side generadas en docs/screenshots/about/. Suite existente de la home (pnpm test) 100% aprobada sin regresiones.
+L7: Verificación profunda con Playwright sección por sección respecto a los mockups y afinación estética (commit c38695c):
+- Sección 1: Incorporada marca de agua del arco visual de marca a gran escala sobre el fondo del Hero.
+- Sección 2: Ajustado layout a composición full-bleed lateral en desktop con esquina redondeada y banner superior en mobile con fondo clínico (#F4F7FC).
+- Sección 3: Bento cards con escala editorial completa (min-h 640px), arco gráfico decorativo en Card 01 y filigrana invertida en Card 02.
+- Sección 4 y 5: Ajustados fondos a tono clínico institucional (#F4F7FC) y redimensionados contenedores fotográficos.
+- Sección 6: Ampliada altura del banner a min-h 640px, centrada la filigrana de ojo y ajustada tipografía editorial.
+- Regeneradas todas las comparativas visuales side-by-side y certificada la suite sin errores ni overflow.
