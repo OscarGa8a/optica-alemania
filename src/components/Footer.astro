@@ -7,25 +7,31 @@ interface Props {
 
 const { currentPath = '' } = Astro.props;
 const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
+const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
+const isSubpage = isNosotros || isContacto;
 const { footer } = siteConfig;
 
 const navLinks = footer.navLinks.map((link) => {
   let href = link.href;
-  if (isNosotros) {
+  if (isSubpage) {
     if (href === '#nosotros' || href === '/nosotros') {
       href = '/nosotros';
+    } else if (href === '#contacto' || href === '/contacto') {
+      href = '/contacto';
     } else if (href.startsWith('#')) {
       href = `/${href}`;
     }
   } else {
     if (href === '#nosotros') {
       href = '/nosotros';
+    } else if (href === '#contacto') {
+      href = '/contacto';
     }
   }
   return { ...link, href };
 });
 
-const logoHref = isNosotros ? '/#inicio' : '#inicio';
+const logoHref = isSubpage ? '/#inicio' : '#inicio';
 ---
 
 <footer id="footer" class="relative bg-gradient-to-b from-[#082245] via-[#061A36] to-[#041226] text-white overflow-hidden">

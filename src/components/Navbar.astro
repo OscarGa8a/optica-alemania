@@ -10,23 +10,35 @@ interface Props {
 const { currentPath = '#inicio', theme = 'dark-hero' } = Astro.props;
 const isLight = theme === 'light';
 const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
+const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
+const isSubpage = isNosotros || isContacto;
 const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
 
 const navItems = siteConfig.nav.map((item) => {
   let href = item.href;
-  const isActive = isNosotros
-    ? item.href === '#nosotros' || item.href === '/nosotros'
-    : (item.href === currentPath || item.active);
+  let isActive = false;
 
   if (isNosotros) {
+    isActive = item.href === '#nosotros' || item.href === '/nosotros';
+  } else if (isContacto) {
+    isActive = item.href === '#contacto' || item.href === '/contacto';
+  } else {
+    isActive = item.href === currentPath || item.active;
+  }
+
+  if (isSubpage) {
     if (item.href === '#nosotros' || item.href === '/nosotros') {
       href = '/nosotros';
+    } else if (item.href === '#contacto' || item.href === '/contacto') {
+      href = '/contacto';
     } else if (item.href.startsWith('#')) {
       href = `/${item.href}`;
     }
   } else {
     if (item.href === '#nosotros') {
       href = '/nosotros';
+    } else if (item.href === '#contacto') {
+      href = '/contacto';
     }
   }
 
@@ -37,7 +49,7 @@ const navItems = siteConfig.nav.map((item) => {
   };
 });
 
-const logoHref = isNosotros ? '/#inicio' : '#inicio';
+const logoHref = isSubpage ? '/#inicio' : '#inicio';
 ---
 
 <header
