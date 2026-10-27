@@ -280,6 +280,30 @@ export interface ProceduresPreviewConfig {
   items: ProcedureVideoItem[];
 }
 
+export interface FaqItem {
+  id: string;
+  number: string;
+  question: string;
+  answer: string;
+  defaultOpen?: boolean;
+}
+
+export interface ServicesFaqContactConfig {
+  title: string;
+  actionText: string;
+  whatsappMessage: string;
+}
+
+export interface ServicesFaqConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titleHighlight: string;
+  description: string;
+  contact: ServicesFaqContactConfig;
+  items: FaqItem[];
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
@@ -287,6 +311,7 @@ export interface ServicesPageConfig {
   specializedTests: SpecializedTestsConfig;
   eyeEmergencies: EyeEmergenciesConfig;
   procedures: ProceduresPreviewConfig;
+  faq: ServicesFaqConfig;
 }
 
 export interface SiteConfig {
@@ -845,6 +870,48 @@ export const siteConfig: SiteConfig = {
             width: 1200,
             height: 675,
           },
+        },
+      ],
+    },
+    faq: {
+      id: "preguntas-frecuentes",
+      eyebrow: "07 / PREGUNTAS FRECUENTES",
+      titlePart1: "Resolvemos tus",
+      titleHighlight: "dudas.",
+      description: "Encuentra respuestas a algunas de las preguntas más habituales sobre nuestros servicios de atención visual.",
+      contact: {
+        title: "¿Tienes otra pregunta?",
+        actionText: "Escríbenos",
+        whatsappMessage: "Hola Óptica Alemania, tengo una consulta sobre sus servicios de atención visual.",
+      },
+      items: [
+        {
+          id: "cita-optometria",
+          number: "01",
+          question: "¿Cómo puedo consultar por una cita de optometría?",
+          answer: "Puedes comunicarte con nuestro equipo por WhatsApp para consultar la disponibilidad de atención y recibir información sobre nuestros servicios.",
+          defaultOpen: true,
+        },
+        {
+          id: "examenes-ninos",
+          number: "02",
+          question: "¿Realizan exámenes visuales para niños?",
+          answer: "Sí, realizamos valoraciones optométricas adaptadas para niños, evaluando agudeza visual, motilidad ocular y refracción para detectar oportunamente cualquier dificultad visual en su etapa de desarrollo.",
+          defaultOpen: false,
+        },
+        {
+          id: "pruebas-color",
+          number: "03",
+          question: "¿Qué pruebas realizan para evaluar la visión de los colores?",
+          answer: "Realizamos el Test de Ishihara para detección de deficiencias cromáticas y la prueba especializada de Farnsworth D-15 para una discriminación y clasificación precisa del color.",
+          defaultOpen: false,
+        },
+        {
+          id: "evaluacion-adecuada",
+          number: "04",
+          question: "¿Cómo sé qué evaluación visual necesito?",
+          answer: "Si no estás seguro de qué examen necesitas, nuestro equipo te orientará por WhatsApp o en consulta según tus síntomas, molestias o antecedentes visuales para indicarte la evaluación adecuada.",
+          defaultOpen: false,
         },
       ],
     },

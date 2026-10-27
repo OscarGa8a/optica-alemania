@@ -618,6 +618,113 @@ async function run() {
       console.log(`📸 [${vp.name}] Procedimientos screenshot saved: ${path.relative(ROOT_DIR, proceduresScreenshotPath)}`);
     }
 
+    // 10. Section 7 — FAQ Verification
+    const faqElement = page.locator('#preguntas-frecuentes');
+    const faqExists = (await faqElement.count()) > 0;
+    if (!faqExists) {
+      console.error(`❌ [${vp.name}] Section #preguntas-frecuentes does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #preguntas-frecuentes exists`);
+
+      // Check Eyebrow
+      const eyebrowText = (await faqElement.locator('p.tracking-wider').first().textContent() || '').trim();
+      if (!eyebrowText.includes('07 / PREGUNTAS FRECUENTES')) {
+        console.error(`❌ [${vp.name}] FAQ Eyebrow mismatch: ${eyebrowText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Eyebrow verified: '07 / PREGUNTAS FRECUENTES'`);
+      }
+
+      // Check Title
+      const rawH2 = await faqElement.locator('#faq-heading').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ').trim();
+      if (!h2Text.includes('Resolvemos tus') || !h2Text.includes('dudas.')) {
+        console.error(`❌ [${vp.name}] FAQ H2 title mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 title verified: 'Resolvemos tus dudas.'`);
+      }
+
+      // Check Description
+      const descText = (await faqElement.locator('p.text-slate-600').first().textContent() || '').trim();
+      if (!descText.includes('preguntas más habituales')) {
+        console.error(`❌ [${vp.name}] FAQ description mismatch: ${descText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Description verified`);
+      }
+
+      // Check FAQ Items (4 items)
+      const faqItems = faqElement.locator('.faq-item');
+      const faqCount = await faqItems.count();
+      if (faqCount !== 4) {
+        console.error(`❌ [${vp.name}] Expected 4 FAQ items, found: ${faqCount}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Found 4 FAQ items`);
+
+        // Check item 01 is open by default
+        const item1Toggle = faqItems.nth(0).locator('.faq-toggle');
+        const item1Expanded = await item1Toggle.getAttribute('aria-expanded');
+        const item1Answer = faqItems.nth(0).locator('.faq-answer');
+        const item1AnswerVisible = await item1Answer.isVisible();
+
+        if (item1Expanded !== 'true' || !item1AnswerVisible) {
+          console.error(`❌ [${vp.name}] Item 01 should be open by default. aria-expanded: ${item1Expanded}, visible: ${item1AnswerVisible}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] Item 01 is open by default`);
+        }
+
+        // Test interactive toggle
+        const item2Toggle = faqItems.nth(1).locator('.faq-toggle');
+        await item2Toggle.click();
+        await page.waitForTimeout(200);
+
+        const item2ExpandedAfter = await item2Toggle.getAttribute('aria-expanded');
+        const item1ExpandedAfter = await item1Toggle.getAttribute('aria-expanded');
+
+        if (item2ExpandedAfter !== 'true' || item1ExpandedAfter !== 'false') {
+          console.error(`❌ [${vp.name}] Accordion toggle failed: Item 2 expanded: ${item2ExpandedAfter}, Item 1 expanded: ${item1ExpandedAfter}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] Accordion interactive toggle works (Item 2 opened, Item 1 closed)`);
+        }
+
+        // Restore item 01 open for official screenshot matching mockup
+        await item1Toggle.click();
+        await page.waitForTimeout(200);
+      }
+
+      // Check WhatsApp contact box
+      const whatsappLinks = faqElement.locator('a[href*="wa.me"]');
+      const waCount = await whatsappLinks.count();
+      if (waCount === 0) {
+        console.error(`❌ [${vp.name}] WhatsApp contact link not found in FAQ section`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] WhatsApp contact link found (${waCount} instance(s))`);
+      }
+
+      // Screenshot of Section 7
+      const faqScreenshotPath = path.join(SCREENSHOTS_DIR, `7_faq_${vp.name}_actual.png`);
+      await faqElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await faqElement.screenshot({
+        path: faqScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] FAQ screenshot saved: ${path.relative(ROOT_DIR, faqScreenshotPath)}`);
+    }
+
     await page.close();
   }
 
