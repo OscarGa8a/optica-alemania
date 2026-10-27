@@ -383,11 +383,10 @@ export const siteConfig: SiteConfig = {
   },
   nav: [
     { label: "Inicio", href: "/" },
-    { label: "Nosotros", href: "/#nosotros" },
+    { label: "Nosotros", href: "/nosotros" },
     { label: "Servicios", href: "/servicios" },
-    { label: "Procedimientos", href: "/#procedimientos" },
-    { label: "Monturas", href: "/#monturas" },
-    { label: "Contacto", href: "/#contacto" },
+    { label: "Procedimientos", href: "/procedimientos" },
+    { label: "Contacto", href: "/contacto" },
   ],
   services: [
     {

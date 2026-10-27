@@ -8,65 +8,27 @@ interface Props {
   variant?: 'transparent' | 'light';
 }
 
-const { currentPath = '#inicio', theme, variant } = Astro.props;
+const { currentPath = '/', theme, variant } = Astro.props;
 const effectiveTheme: 'dark-hero' | 'light' = theme || (variant === 'light' ? 'light' : 'dark-hero');
 const isLight = effectiveTheme === 'light';
-
-const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
-const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
-const isProcedimientos = currentPath === '/procedimientos' || currentPath === 'procedimientos';
-const isServicios = currentPath === '/servicios' || currentPath === 'servicios';
-const isSubpage = isNosotros || isContacto || isProcedimientos || isServicios;
 const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
 
+const normalizedCurrentPath = (currentPath === '#inicio' || currentPath === '' || currentPath === '/')
+  ? '/'
+  : (currentPath.startsWith('/') ? currentPath : `/${currentPath}`).replace(/\/$/, '');
+
 const navItems = siteConfig.nav.map((item) => {
-  let href = item.href;
-  let isActive = false;
-
-  if (isNosotros) {
-    isActive = item.href === '#nosotros' || item.href === '/nosotros';
-  } else if (isContacto) {
-    isActive = item.href === '#contacto' || item.href === '/contacto';
-  } else if (isProcedimientos) {
-    isActive = item.href === '#procedimientos' || item.href === '/procedimientos';
-  } else if (isServicios) {
-    isActive = item.href === '#servicios' || item.href === '/servicios';
-  } else {
-    isActive = item.href === currentPath || item.active;
-  }
-
-  if (isSubpage) {
-    if (item.href === '#nosotros' || item.href === '/nosotros') {
-      href = '/nosotros';
-    } else if (item.href === '#contacto' || item.href === '/contacto') {
-      href = '/contacto';
-    } else if (item.href === '#procedimientos' || item.href === '/procedimientos') {
-      href = '/procedimientos';
-    } else if (item.href === '#servicios' || item.href === '/servicios') {
-      href = '/servicios';
-    } else if (item.href.startsWith('#')) {
-      href = `/${item.href}`;
-    }
-  } else {
-    if (item.href === '#nosotros') {
-      href = '/nosotros';
-    } else if (item.href === '#contacto') {
-      href = '/contacto';
-    } else if (item.href === '#procedimientos') {
-      href = '/procedimientos';
-    } else if (item.href === '#servicios') {
-      href = '/servicios';
-    }
-  }
+  const itemPath = item.href === '/' ? '/' : (item.href.startsWith('/') ? item.href : `/${item.href}`).replace(/\/$/, '');
+  const isActive = normalizedCurrentPath === itemPath;
 
   return {
     ...item,
-    href,
+    href: item.href,
     isActive,
   };
 });
 
-const logoHref = isSubpage ? '/#inicio' : '#inicio';
+const logoHref = '/';
 ---
 
 <header
