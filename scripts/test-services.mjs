@@ -796,6 +796,24 @@ async function run() {
       console.log(`📸 [${vp.name}] CTA screenshot saved: ${path.relative(ROOT_DIR, ctaScreenshotPath)}`);
     }
 
+    // 12. Full Page Flow Verification
+    const footerElement = page.locator('footer');
+    const footerExists = (await footerElement.count()) > 0;
+    if (!footerExists) {
+      console.error(`❌ [${vp.name}] Footer element not found!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Footer element verified`);
+    }
+
+    // Full-page screenshot
+    const fullPagePath = path.join(SCREENSHOTS_DIR, `full_page_${vp.name}.png`);
+    await page.screenshot({
+      path: fullPagePath,
+      fullPage: true,
+    });
+    console.log(`📸 [${vp.name}] Full page screenshot saved: ${path.relative(ROOT_DIR, fullPagePath)}`);
+
     await page.close();
   }
 
