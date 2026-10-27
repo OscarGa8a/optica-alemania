@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicesHero from '../components/services/ServicesHero.astro';
+import ServicesOverview from '../components/services/ServicesOverview.astro';
+import VisualCareDetail from '../components/services/VisualCareDetail.astro';
+import SpecializedTests from '../components/services/SpecializedTests.astro';
+import EyeEmergencies from '../components/services/EyeEmergencies.astro';
+import ProceduresPreview from '../components/services/ProceduresPreview.astro';
+import ServicesFaq from '../components/services/ServicesFaq.astro';
+import ServicesCta from '../components/services/ServicesCta.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Servicios de Optometría en Villavicencio | Óptica Alemania"
+  description="Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas para el cuidado de tu salud visual en Villavicencio."
+  currentPath="/servicios"
+  navVariant="light"
+>
+  <ServicesHero />
+  <ServicesOverview />
+  <VisualCareDetail />
+  <SpecializedTests />
+  <EyeEmergencies />
+  <ProceduresPreview />
+  <ServicesFaq />
+  <ServicesCta />
+  <Footer />
+</Layout>

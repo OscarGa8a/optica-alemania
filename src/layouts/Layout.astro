@@ -11,6 +11,7 @@ interface Props {
   gtmId?: string;
   currentPath?: string;
   headerTheme?: 'dark-hero' | 'light';
+  navVariant?: 'transparent' | 'light';
 }
 
 const {
@@ -19,8 +20,11 @@ const {
   robots,
   gtmId = import.meta.env.PUBLIC_GTM_ID,
   currentPath = '#inicio',
-  headerTheme = 'dark-hero',
+  headerTheme,
+  navVariant,
 } = Astro.props;
+
+const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || '';
@@ -172,7 +176,7 @@ const schemaGraph = {
     )}
   </head>
   <body class="bg-brand-surface text-brand-body antialiased selection:bg-brand-blue-soft selection:text-brand-primary">
-    <Navbar currentPath={currentPath} theme={headerTheme} />
+    <Navbar currentPath={currentPath} theme={effectiveTheme} />
     <main id="main-content">
       <slot />
     </main>
