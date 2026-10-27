@@ -304,6 +304,17 @@ export interface ServicesFaqConfig {
   items: FaqItem[];
 }
 
+export interface ServicesCtaConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2?: string;
+  titleHighlight: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
@@ -312,6 +323,7 @@ export interface ServicesPageConfig {
   eyeEmergencies: EyeEmergenciesConfig;
   procedures: ProceduresPreviewConfig;
   faq: ServicesFaqConfig;
+  cta: ServicesCtaConfig;
 }
 
 export interface SiteConfig {
@@ -914,6 +926,16 @@ export const siteConfig: SiteConfig = {
           defaultOpen: false,
         },
       ],
+    },
+    cta: {
+      id: "contacto-servicios",
+      eyebrow: "TU PRÓXIMO PASO",
+      titlePart1: "¿Tienes dudas sobre",
+      titlePart2: "nuestros servicios?",
+      titleHighlight: "Hablemos.",
+      description: "Cuéntanos qué servicio te interesa y consulta con nuestro equipo la disponibilidad de atención en Óptica Alemania Villavicencio.",
+      ctaText: "Consultar por WhatsApp",
+      whatsappMessage: "Hola Óptica Alemania, tengo dudas sobre sus servicios y quisiera consultar la disponibilidad de atención.",
     },
   },
 };

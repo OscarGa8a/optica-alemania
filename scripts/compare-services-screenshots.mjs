@@ -101,6 +101,18 @@ const SECTIONS = [
     desktopHeight: null,
     mobileHeight: null,
   },
+  {
+    id: '8_cta',
+    name: 'Sección 8 — Tu próximo paso / CTA Cierre',
+    mockupDesktop: path.join(DOCS_SERVICES, '7_contacto_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '8_cta_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_SERVICES, '7_contacto_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '8_cta_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '8_cta_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '8_cta_mobile_comparison.png'),
+    desktopHeight: null,
+    mobileHeight: null,
+  },
 ];
 
 async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false, customHeight = null) {

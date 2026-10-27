@@ -35,8 +35,8 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T13 [S10,S14]: Implementación y certificación Sección 6 — Procedimientos en video (ProceduresPreview.astro) | Route: inline | Status: done | Commit: f528a92
 - T14 [S10]: Puerta de aprobación Sección 6 con el usuario | Route: inline | Status: done | Commit: d7a366c
 - T15 [S11,S14]: Implementación y certificación Sección 7 — Preguntas frecuentes (ServicesFaq.astro) | Route: inline | Status: done | Commit: 749b166
-- T16 [S11]: Puerta de aprobación Sección 7 con el usuario | Route: inline | Status: pending | Commit: -
-- T17 [S12,S14]: Implementación y certificación Sección 8 — Tu próximo paso / CTA Cierre (ServicesCta.astro) | Route: inline | Status: pending | Commit: -
+- T16 [S11]: Puerta de aprobación Sección 7 con el usuario | Route: inline | Status: done | Commit: 749b166
+- T17 [S12,S14]: Implementación y certificación Sección 8 — Tu próximo paso / CTA Cierre (ServicesCta.astro) | Route: inline | Status: done | Commit: pending
 - T18 [S12]: Puerta de aprobación Sección 8 con el usuario | Route: inline | Status: pending | Commit: -
 - T19 [S13,S14]: Integración final de la página de Servicios y verificación integral | Route: inline | Status: pending | Commit: -
 
@@ -54,3 +54,4 @@ L10: "si rey, siguiente seccion" / "conitnua rey" — Sección 5 aprobada por el
 L11: Implementación y certificación de Sección 6 (04 / Procedimientos en video) finalizada: ProceduresPreview.astro, capa de datos en siteConfig.ts, imágenes webp optimizadas para Volk InView y Farnsworth D-15, 0 errores de consola, 0 404s, 0 scroll horizontal en 1440px y 390px, comparativas side-by-side generadas en docs/screenshots/services/6_procedimientos_desktop_comparison.png y mobile. T13 completada; puerta de aprobación T14 abierta.
 L12: "perfecto rey, queda otra seccion?" — Sección 6 aprobada por el usuario. T14 marcada done. Se informa al usuario sobre las 2 secciones restantes (Sección 7 FAQ y Sección 8 CTA Cierre).
 L13: "conitnua la otra rey por favor" — Implementación y certificación de Sección 7 (07 / Preguntas frecuentes) finalizada: ServicesFaq.astro, capa de datos centralizada en siteConfig.ts, acordeón interactivo accesible con soporte táctil y teclado, bloque de contacto directo WhatsApp (versión outline brand en desktop y responsive móvil), 0 errores de consola, 0 404s, 0 overflow horizontal en viewports 1440x900 y 390x844. Comparativas Sharp side-by-side generadas en docs/screenshots/services/7_faq_desktop_comparison.png y mobile. T15 marcada done. Puerta de aprobación T16 abierta.
+L14: "apruebo, continua rey" / "conitnua rey" — Sección 7 aprobada por el usuario. T16 marcada done. Implementación y certificación de Sección 8 (Tu próximo paso / CTA Cierre) finalizada: ServicesCta.astro, capa de datos en siteConfig.ts (servicesPage.cta), banner en azul profundo con curvas orgánicas de lentes oftálmicos, botón de acción WhatsApp, 0 errores de consola, 0 404s, 0 overflow horizontal en 1440x900 y 390x844. Comparativas Sharp side-by-side generadas en docs/screenshots/services/8_cta_desktop_comparison.png y mobile. T17 marcada done. Puerta de aprobación T18 abierta.

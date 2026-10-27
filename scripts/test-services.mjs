@@ -725,6 +725,77 @@ async function run() {
       console.log(`📸 [${vp.name}] FAQ screenshot saved: ${path.relative(ROOT_DIR, faqScreenshotPath)}`);
     }
 
+    // 11. Section 8 — CTA Cierre Verification
+    const ctaElement = page.locator('#contacto-servicios');
+    const ctaExists = (await ctaElement.count()) > 0;
+    if (!ctaExists) {
+      console.error(`❌ [${vp.name}] Section #contacto-servicios does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #contacto-servicios exists`);
+
+      // Check Eyebrow
+      const eyebrowText = (await ctaElement.locator('p.tracking-\\[0\\.2em\\]').first().textContent() || '').trim();
+      if (!eyebrowText.includes('TU PRÓXIMO PASO')) {
+        console.error(`❌ [${vp.name}] CTA Eyebrow mismatch: ${eyebrowText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Eyebrow verified: 'TU PRÓXIMO PASO'`);
+      }
+
+      // Check Title
+      const rawH2 = await ctaElement.locator('#cta-heading').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ').trim();
+      if (!h2Text.includes('¿Tienes dudas sobre') || !h2Text.includes('Hablemos.')) {
+        console.error(`❌ [${vp.name}] CTA H2 title mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 title verified: '¿Tienes dudas sobre nuestros servicios? Hablemos.'`);
+      }
+
+      // Check Description
+      const descText = (await ctaElement.locator('p.max-w-2xl').first().textContent() || '').trim();
+      if (!descText.includes('Cuéntanos qué servicio te interesa')) {
+        console.error(`❌ [${vp.name}] CTA description mismatch: ${descText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Description verified`);
+      }
+
+      // Check WhatsApp CTA Button
+      const ctaBtn = ctaElement.locator('a[href*="wa.me"]');
+      const ctaBtnCount = await ctaBtn.count();
+      if (ctaBtnCount === 0) {
+        console.error(`❌ [${vp.name}] WhatsApp CTA button not found`);
+        hasErrors = true;
+      } else {
+        const btnText = (await ctaBtn.first().textContent() || '').trim();
+        if (!btnText.includes('Consultar por WhatsApp')) {
+          console.error(`❌ [${vp.name}] CTA button text mismatch: ${btnText}`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] WhatsApp CTA button verified: 'Consultar por WhatsApp'`);
+        }
+      }
+
+      // Screenshot of Section 8
+      const ctaScreenshotPath = path.join(SCREENSHOTS_DIR, `8_cta_${vp.name}_actual.png`);
+      await ctaElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await ctaElement.screenshot({
+        path: ctaScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] CTA screenshot saved: ${path.relative(ROOT_DIR, ctaScreenshotPath)}`);
+    }
+
     await page.close();
   }
 
