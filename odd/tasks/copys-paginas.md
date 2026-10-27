@@ -32,8 +32,8 @@ S15: Verificación estricta con `pnpm build` y `node scripts/test-contacto.mjs`.
 - T4 [S8]: Verificación con build y Playwright test (`node scripts/test-nosotros.mjs`) | Route: inline | Status: done | Commit: c4fb806
 - T5 [S9,S10]: Implementar actualización de copys de `/procedimientos` en `src/pages/procedimientos.astro` y componentes `src/components/procedimientos/*` | Route: inline | Status: done | Commit: fea5c36
 - T6 [S11]: Verificación con build y Playwright test (`node scripts/test-procedimientos.mjs`) | Route: inline | Status: done | Commit: fea5c36
-- T7 [S12,S13,S14]: Implementar actualización de copys de `/contacto` en `src/pages/contacto.astro` y componentes `src/components/contact/*` | Route: inline | Status: in-progress | Commit: pending
-- T8 [S15]: Verificación con build y Playwright test (`node scripts/test-contacto.mjs`) | Route: inline | Status: pending | Commit: pending
+- T7 [S12,S13,S14]: Implementar actualización de copys de `/contacto` en `src/pages/contacto.astro` y componentes `src/components/contact/*` | Route: inline | Status: done | Commit: 517742f
+- T8 [S15]: Verificación con build y Playwright test (`node scripts/test-contacto.mjs`) | Route: inline | Status: done | Commit: 517742f
 
 ## Log
 L1: "rey vamos a empezar a modificar los copys de las secciones de cada apgina, empecemos por home donde su copy es home copy que no esta en este worktree sino en el repo princial, para que lo analices y sobre todo tengas tu criterior de si es mejor el nuevo copy o el viejo que esta, analizalo seccion por seccion antes de implementar por favor"
@@ -44,3 +44,4 @@ L5: Nosotros implementado y certificado en commit c4fb806.
 L6: Usuario solicita continuar con Procedimientos ("ahora procedimientos rey"), se presenta análisis sección por sección y se aprueba con la directiva: "si rey, dale".
 L7: Procedimientos implementado y certificado en commit fea5c36 con build y Playwright test (0 errores consola, 0 404s, 0 overflow).
 L8: Usuario solicita continuar con Contacto ("si rey, analizalo"), se presenta análisis sección por sección y se aprueba con la directiva: "si, ajustalo rey".
+L9: Contacto implementado y certificado en commit 517742f con build y Playwright test (0 errores consola, 0 404s, 0 overflow).
