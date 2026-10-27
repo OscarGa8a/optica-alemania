@@ -33,7 +33,7 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T11 [S9,S14]: Implementación y certificación Sección 5 — Urgencias oculares (EyeEmergencies.astro) | Route: inline | Status: done | Commit: fac158c
 - T12 [S9]: Puerta de aprobación Sección 5 con el usuario | Route: inline | Status: done | Commit: fac158c
 - T13 [S10,S14]: Implementación y certificación Sección 6 — Procedimientos en video (ProceduresPreview.astro) | Route: inline | Status: done | Commit: f528a92
-- T14 [S10]: Puerta de aprobación Sección 6 con el usuario | Route: inline | Status: pending | Commit: -
+- T14 [S10]: Puerta de aprobación Sección 6 con el usuario | Route: inline | Status: done | Commit: d7a366c
 - T15 [S11,S14]: Implementación y certificación Sección 7 — Preguntas frecuentes (ServicesFaq.astro) | Route: inline | Status: pending | Commit: -
 - T16 [S11]: Puerta de aprobación Sección 7 con el usuario | Route: inline | Status: pending | Commit: -
 - T17 [S12,S14]: Implementación y certificación Sección 8 — Tu próximo paso / CTA Cierre (ServicesCta.astro) | Route: inline | Status: pending | Commit: -
@@ -52,3 +52,4 @@ L8: "continua rey, siguiente seccion" — Sección 4 aprobada y comprometida (43
 L9: Implementación y certificación de Sección 5 (03 / Urgencias oculares) finalizada: EyeEmergencies.astro, capa de datos en siteConfig.ts, 0 errores de consola, 0 404s, 0 scroll horizontal en 1440px y 390px, comparativas side-by-side generadas y validadas contra docs/services/5_urgencias_oculares_desktop.png y 5_urgencias_oculares_mobile.png (commit fac158c). T11 marcada done. Puerta de aprobación T12 abierta.
 L10: "si rey, siguiente seccion" / "conitnua rey" — Sección 5 aprobada por el usuario. T12 marcada done. T13 (Sección 6 — 04 / Procedimientos en video) iniciada.
 L11: Implementación y certificación de Sección 6 (04 / Procedimientos en video) finalizada: ProceduresPreview.astro, capa de datos en siteConfig.ts, imágenes webp optimizadas para Volk InView y Farnsworth D-15, 0 errores de consola, 0 404s, 0 scroll horizontal en 1440px y 390px, comparativas side-by-side generadas en docs/screenshots/services/6_procedimientos_desktop_comparison.png y mobile. T13 completada; puerta de aprobación T14 abierta.
+L12: "perfecto rey, queda otra seccion?" — Sección 6 aprobada por el usuario. T14 marcada done. Se informa al usuario sobre las 2 secciones restantes (Sección 7 FAQ y Sección 8 CTA Cierre).
