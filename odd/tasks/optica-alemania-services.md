@@ -34,7 +34,7 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T12 [S9]: Puerta de aprobación Sección 5 con el usuario | Route: inline | Status: done | Commit: fac158c
 - T13 [S10,S14]: Implementación y certificación Sección 6 — Procedimientos en video (ProceduresPreview.astro) | Route: inline | Status: done | Commit: f528a92
 - T14 [S10]: Puerta de aprobación Sección 6 con el usuario | Route: inline | Status: done | Commit: d7a366c
-- T15 [S11,S14]: Implementación y certificación Sección 7 — Preguntas frecuentes (ServicesFaq.astro) | Route: inline | Status: done | Commit: pending
+- T15 [S11,S14]: Implementación y certificación Sección 7 — Preguntas frecuentes (ServicesFaq.astro) | Route: inline | Status: done | Commit: 749b166
 - T16 [S11]: Puerta de aprobación Sección 7 con el usuario | Route: inline | Status: pending | Commit: -
 - T17 [S12,S14]: Implementación y certificación Sección 8 — Tu próximo paso / CTA Cierre (ServicesCta.astro) | Route: inline | Status: pending | Commit: -
 - T18 [S12]: Puerta de aprobación Sección 8 con el usuario | Route: inline | Status: pending | Commit: -
