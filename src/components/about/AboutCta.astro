@@ -1,6 +1,13 @@
 ---
 // Sección 6 — Estamos Para Ti (Banner Institucional)
 // Óptica Alemania Villavicencio
+import { siteConfig } from '../../data/siteConfig';
+import { buildWhatsAppLink } from '../../utils/whatsapp';
+
+const whatsappUrl = buildWhatsAppLink(
+  'Hola, conocí la página Nosotros de Óptica Alemania y quisiera hacer una consulta.',
+  siteConfig.contact.whatsappNumber
+);
 ---
 
 <section id="estamos-para-ti" class="relative bg-gradient-to-br from-[#0C254E] via-[#0A1F3B] to-[#07162C] py-24 sm:py-32 lg:py-36 min-h-[560px] lg:min-h-[640px] xl:min-h-[680px] flex items-center text-white overflow-hidden">
@@ -40,33 +47,52 @@
         </h2>
       </div>
 
-      <!-- Right Column: Description + CTA Link -->
+      <!-- Right Column: Description + Double Conversion CTAs -->
       <div class="lg:col-span-5 flex flex-col items-start lg:pl-6">
         <p class="text-base sm:text-lg lg:text-xl text-white/85 leading-relaxed font-normal mb-8 sm:mb-10 max-w-md">
-          Estamos aquí para orientarte sobre nuestros servicios y ayudarte a encontrar la atención visual que necesitas.
+          ¿Tienes preguntas sobre nuestra atención visual o quieres conocer los servicios disponibles? Escríbenos y conversemos sobre lo que necesitas.
         </p>
 
-        <a
-          href="/#servicios"
-          data-event="services_click"
-          data-event-location="about_cta"
-          class="group inline-flex items-center gap-3.5 pb-2 border-b-[1.5px] border-white/50 text-white hover:text-[#60A5FA] hover:border-[#60A5FA] transition-colors font-medium text-base sm:text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
-        >
-          <span>Explorar servicios</span>
-          <svg
-            class="w-6 h-4 transition-transform duration-200 group-hover:translate-x-1"
-            viewBox="0 0 24 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
+          <!-- Primary CTA (WhatsApp) -->
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="whatsapp_cta"
+            data-event-location="about_cta"
+            aria-label="Contactar a Óptica Alemania por WhatsApp"
+            class="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#1464D9] hover:bg-[#1154B5] text-white text-sm sm:text-base font-semibold shadow-md shadow-[#1464D9]/25 hover:shadow-lg active:scale-[0.98] transition-all duration-200"
           >
-            <path d="M1 8h21" />
-            <path d="m15 2 6 6-6 6" />
-          </svg>
-        </a>
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
+            </svg>
+            <span>Hablar por WhatsApp</span>
+          </a>
+
+          <!-- Secondary CTA (Services) -->
+          <a
+            href="/#servicios"
+            data-event="services_click"
+            data-event-location="about_cta"
+            class="group inline-flex items-center gap-3 pb-1 border-b border-white/40 text-white/90 hover:text-white hover:border-white transition-colors font-medium text-sm sm:text-base focus:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA]"
+          >
+            <span>Explorar servicios</span>
+            <svg
+              class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+              viewBox="0 0 24 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M1 8h21" />
+              <path d="m15 2 6 6-6 6" />
+            </svg>
+          </a>
+        </div>
       </div>
 
     </div>

@@ -19,11 +19,26 @@ S3: Actualizar copys y metadatos del Home (`src/data/siteConfig.ts`, `src/layout
     - Contacto y Ubicación: Eyebrow `ENCUÉNTRANOS EN VILLAVICENCIO`, H2 `Nos vemos en Barzal.`, párrafo invitando a revisar llegada y horarios, CTAs a Google Maps y `/contacto`.
     - Footer: Descripción enriquecida semánticamente, enlaces actualizados a `/`, `/nosotros`, `/servicios`, `/procedimientos`, `/contacto`.
 S4: Verificación estricta con `pnpm build` y `node scripts/test-landing.mjs`.
+S5: "ahora sigue la de nosotros/about rey"
+S6: "ajustalo rey"
+S7: Actualizar metadatos y componentes de `/nosotros` (`src/pages/nosotros.astro`, `AboutHero.astro`, `AboutTrajectory.astro`, `AboutPurpose.astro`, `AboutTeam.astro`, `AboutSpaces.astro`, `AboutCta.astro`):
+    - SEO: `Nosotros | Óptica Alemania en Villavicencio`, meta description geolocalizada en Barzal.
+    - Hero: Eyebrow `NOSOTROS · ÓPTICA ALEMANIA`, nuevo párrafo de bienvenida institucional.
+    - Trayectoria: Párrafos de historia viva ligados a las personas y a la comunidad de Villavicencio.
+    - Propósito: Misión y visión con enfoque en escucha, información comprensible y confianza comunitaria.
+    - Equipo: Párrafo centrado en empatía y conversación clara y respetuosa.
+    - Espacios: Eyebrow `NUESTRAS INSTALACIONES`, mención a la sede de Barzal para familiarizarse antes de la visita.
+    - Cierre / Estamos para ti: Doble CTA de conversión (Botón primario de WhatsApp con mensaje contextual + enlace secundario a Servicios).
+S8: Verificación estricta con `pnpm build` y `node scripts/test-nosotros.mjs`.
 
 ## Tasks
-- T1 [S1,S2,S3]: Copiar `docs/home/home_copy.md` y actualizar copys en `src/data/siteConfig.ts` y componentes del Home | Route: inline | Status: done | Commit: 94080c4
-- T2 [S4]: Verificación con build y Playwright test (`node scripts/test-landing.mjs`) | Route: inline | Status: done | Commit: 94080c4
+- T1 [S1,S2,S3]: Copiar `docs/home/home_copy.md` y actualizar copys en `src/data/siteConfig.ts` y componentes del Home | Route: inline | Status: done | Commit: 2772342
+- T2 [S4]: Verificación con build y Playwright test (`node scripts/test-landing.mjs`) | Route: inline | Status: done | Commit: 2772342
+- T3 [S5,S6,S7]: Implementar actualización de copys de `/nosotros` en `src/pages/nosotros.astro` y componentes `src/components/about/*` | Route: inline | Status: done | Commit: bb56d56
+- T4 [S8]: Verificación con build y Playwright test (`node scripts/test-nosotros.mjs`) | Route: inline | Status: done | Commit: bb56d56
 
 ## Log
 L1: "rey vamos a empezar a modificar los copys de las secciones de cada apgina, empecemos por home donde su copy es home copy que no esta en este worktree sino en el repo princial, para que lo analices y sobre todo tengas tu criterior de si es mejor el nuevo copy o el viejo que esta, analizalo seccion por seccion antes de implementar por favor"
 L2: Análisis sección por sección presentado al usuario y aprobado con la directiva: "de acuerdo con tu analisis rey, implemente de acuerdo a lo que analizaste".
+L3: Home implementado y certificado en commit 2772342.
+L4: Usuario solicita continuar con Nosotros ("ahora sigue la de nosotros/about rey"), se presenta análisis sección por sección y se aprueba con la directiva: "ajustalo rey".
