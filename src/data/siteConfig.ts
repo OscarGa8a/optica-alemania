@@ -690,7 +690,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "EXPLORA NUESTROS SERVICIOS",
       titleLine1: "Encuentra la atención",
       titleLine2: "que buscas.",
-      description: "Conoce nuestros servicios de optometría y evaluaciones visuales especializadas para el cuidado de tu salud visual.",
+      description: "Explora nuestras áreas de atención y conoce las evaluaciones disponibles. Puedes consultar cada servicio antes de visitarnos.",
       cards: [
         {
           number: "01",
@@ -711,7 +711,7 @@ export const siteConfig: SiteConfig = {
           number: "02",
           titlePart1: "Evaluaciones",
           titlePart2: "especializadas",
-          description: "Pruebas visuales específicas para un diagnóstico más completo de tu salud visual.",
+          description: "Pruebas orientadas a explorar diferentes aspectos de la visión y la salud ocular.",
           linkText: "Ver servicios",
           href: "#evaluaciones-especializadas",
           image: {
@@ -726,7 +726,7 @@ export const siteConfig: SiteConfig = {
           number: "03",
           titlePart1: "Urgencias",
           titlePart2: "oculares",
-          description: "Información sobre la atención disponible para determinadas molestias o consulta por orientación.",
+          description: "Conoce el alcance y la disponibilidad de esta atención antes de acudir a nuestra sede.",
           linkText: "Ver servicios",
           href: "#urgencias-oculares",
           image: {
@@ -744,15 +744,15 @@ export const siteConfig: SiteConfig = {
       eyebrow: "01 / ATENCIÓN VISUAL",
       titlePart1: "Atención visual",
       titleHighlight: "a tu medida.",
-      description: "Conoce nuestras consultas de optometría especializada y el servicio de adaptación de lentes de contacto.",
+      description: "Cada persona tiene necesidades visuales distintas. Conoce las opciones de valoración y adaptación que puedes consultar con nuestro equipo.",
       items: [
         {
           serviceNumber: "SERVICIO 01",
           titleLine1: "Consulta de",
           titleLine2: "optometría especializada.",
-          description: "Realizamos una evaluación completa de tu salud visual para determinar tus necesidades de corrección, con el apoyo de tecnología especializada y un enfoque personalizado.",
+          description: "Una consulta para valorar diferentes aspectos de tu visión, conversar sobre las molestias o dificultades que puedas presentar y conocer las recomendaciones que correspondan según la evaluación profesional.",
           ctaText: "Consultar este servicio",
-          whatsappMessage: "Hola, me gustaría agendar una consulta de optometría especializada en Óptica Alemania.",
+          whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania y quisiera información sobre la consulta de optometría especializada.",
           image: {
             src: "/images/services/3_atencion_visual_image1.webp",
             alt: "Optómetra realizando examen de salud visual con tecnología especializada en Óptica Alemania",
@@ -765,9 +765,9 @@ export const siteConfig: SiteConfig = {
           serviceNumber: "SERVICIO 02",
           titleLine1: "Adaptación de",
           titleLine2: "lentes de contacto.",
-          description: "Te acompañamos en el proceso de adaptación de lentes de contacto, con una evaluación profesional, orientación en la elección y el uso adecuado según tus necesidades visuales.",
+          description: "La adaptación de lentes de contacto requiere valorar las características de tus ojos y el tipo de lente adecuado para tu caso. Consulta cómo se realiza este proceso y qué necesitas para comenzar.",
           ctaText: "Consultar este servicio",
-          whatsappMessage: "Hola, deseo información sobre la adaptación de lentes de contacto en Óptica Alemania.",
+          whatsappMessage: "Hola, quisiera información sobre la adaptación de lentes de contacto en Óptica Alemania.",
           image: {
             src: "/images/services/3_atencion_visual_image2.webp",
             alt: "Optómetra explicando la adaptación y colocación de lentes de contacto a una paciente en Óptica Alemania",
@@ -783,25 +783,25 @@ export const siteConfig: SiteConfig = {
       eyebrow: "02 / EVALUACIONES ESPECIALIZADAS",
       titlePart1: "Conoce nuestras evaluaciones",
       titleHighlight: "especializadas.",
-      description: "Contamos con diferentes pruebas y equipos para evaluar aspectos específicos de tu salud visual y ofrecerte una atención acorde con tus necesidades.",
+      description: "Conoce algunas pruebas que pueden aportar información durante una evaluación visual. La indicación de cada una depende de las necesidades del paciente y del criterio profesional.",
       tests: [
         {
           number: "01",
           title: "Toma de presión intraocular.",
-          description: "Medición de la presión dentro del ojo, como parte de la evaluación de tu salud visual.",
-          whatsappMessage: "Hola, me interesa agendar una toma de presión intraocular en Óptica Alemania.",
+          description: "Esta prueba mide la presión dentro del ojo y aporta un dato que puede ser relevante durante la evaluación de la salud ocular.",
+          whatsappMessage: "Hola, quisiera información sobre la medición de presión intraocular en Óptica Alemania.",
         },
         {
           number: "02",
           title: "Test de ojo seco.",
-          description: "Evaluación de aspectos relacionados con la película lagrimal y la superficie ocular.",
-          whatsappMessage: "Hola, deseo consultar sobre el examen y tratamiento para ojo seco en Óptica Alemania.",
+          description: "Consulta por las pruebas disponibles para valorar molestias relacionadas con la sequedad ocular y obtener orientación sobre la evaluación que corresponda.",
+          whatsappMessage: "Hola, quisiera información sobre la evaluación de ojo seco en Óptica Alemania.",
         },
         {
           number: "03",
           title: "Test de Ishihara / Farnsworth D-15.",
-          description: "Pruebas que permiten evaluar la percepción de los colores y la visión cromática.",
-          whatsappMessage: "Hola, deseo información sobre el test de visión cromática (Ishihara / Farnsworth D-15) en Óptica Alemania.",
+          description: "Pruebas que permiten explorar cómo distingues determinados colores mediante láminas de Ishihara y fichas cromáticas organizadas según sus tonalidades.",
+          whatsappMessage: "Hola, quisiera información sobre las pruebas de visión del color Ishihara y Farnsworth D-15 en Óptica Alemania.",
           procedureLink: {
             text: "Conoce cómo realizamos esta prueba",
             href: "#procedimientos",
@@ -810,14 +810,14 @@ export const siteConfig: SiteConfig = {
         {
           number: "04",
           title: "Examen digital por retroiluminación.",
-          description: "Evaluación que permite observar estructuras oculares mediante tecnología de iluminación especializada.",
-          whatsappMessage: "Hola, deseo consultar sobre el examen digital por retroiluminación en Óptica Alemania.",
+          description: "Consulta con nuestro equipo en qué consiste esta técnica de iluminación, cuál es su finalidad y cuándo puede indicarse según el criterio profesional.",
+          whatsappMessage: "Hola, quisiera información sobre el examen digital por retroiluminación en Óptica Alemania.",
         },
         {
           number: "05",
           title: "Retinofotografía.",
-          description: "Captura de imágenes de la retina mediante equipos especializados para un análisis más detallado de la salud visual.",
-          whatsappMessage: "Hola, me gustaría agendar una evaluación de retinofotografía en Óptica Alemania.",
+          description: "Consiste en obtener imágenes de la retina que pueden utilizarse como apoyo documental durante una valoración visual, de acuerdo con el criterio del profesional.",
+          whatsappMessage: "Hola, quisiera información sobre la retinofotografía en Óptica Alemania.",
           procedureLink: {
             text: "Conoce cómo realizamos esta prueba",
             href: "#procedimientos",
@@ -826,7 +826,7 @@ export const siteConfig: SiteConfig = {
       ],
       image: {
         src: "/images/services/4_evaluaciones_especializadas_image.webp",
-        alt: "Optómetra realizando examen y evaluación retinal con equipo Volk InView en Óptica Alemania",
+        alt: "Optómetra realizando examen y evaluación retinal con equipo Volk iNview en Óptica Alemania",
         width: 1400,
         height: 933,
       },
@@ -841,13 +841,13 @@ export const siteConfig: SiteConfig = {
       titlePart1: "¿Necesitas atención",
       titlePart2: "por una",
       titleHighlight: "molestia ocular?",
-      description: "Consulta con nuestro equipo qué situaciones podemos atender y la disponibilidad de nuestros servicios.",
+      description: "Consulta con nuestro equipo qué situaciones podemos atender y la disponibilidad de nuestros servicios antes de acudir a nuestra sede.",
       ctaText: "Consultar disponibilidad",
-      whatsappMessage: "Hola, me comunico por una molestia ocular y quisiera consultar su disponibilidad de atención.",
+      whatsappMessage: "Hola, quisiera conocer qué atención ocular tienen disponible, los horarios y cómo funciona el proceso de consulta.",
       notice: {
         icon: "eye",
-        boldText: "Ante síntomas o lesiones oculares graves,",
-        regularText: "acude directamente a un servicio de urgencias médicas.",
+        boldText: "Ante síntomas o lesiones oculares graves (dolor intenso o pérdida repentina de visión),",
+        regularText: "acude directamente a un servicio de urgencias médicas. No esperes una respuesta por WhatsApp.",
       },
     },
     procedures: {
@@ -861,12 +861,12 @@ export const siteConfig: SiteConfig = {
       items: [
         {
           id: "evaluacion-retinal-volk-inview",
-          title: "Evaluación retinal con Volk InView",
+          title: "Evaluación retinal con Volk iNview",
           actionText: "Ver procedimiento",
           actionHref: "/procedimientos#evaluacion-retinal-volk-inview",
           image: {
             src: "/images/services/6_procedimientos_image1.webp",
-            alt: "Optómetra realizando evaluación retinal con equipo Volk InView en Óptica Alemania Villavicencio",
+            alt: "Optómetra realizando evaluación retinal con equipo Volk iNview en Óptica Alemania Villavicencio",
             width: 1200,
             height: 675,
           },
@@ -894,14 +894,14 @@ export const siteConfig: SiteConfig = {
       contact: {
         title: "¿Tienes otra pregunta?",
         actionText: "Escríbenos",
-        whatsappMessage: "Hola Óptica Alemania, tengo una consulta sobre sus servicios de atención visual.",
+        whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania y tengo una consulta sobre su atención visual.",
       },
       items: [
         {
           id: "cita-optometria",
           number: "01",
           question: "¿Cómo puedo consultar por una cita de optometría?",
-          answer: "Puedes comunicarte con nuestro equipo por WhatsApp para consultar la disponibilidad de atención y recibir información sobre nuestros servicios.",
+          answer: "La disponibilidad depende del servicio que requieras. Te recomendamos escribirnos por WhatsApp antes de visitarnos para confirmar horarios, condiciones de atención y programar tu consulta.",
           defaultOpen: true,
         },
         {
@@ -922,7 +922,7 @@ export const siteConfig: SiteConfig = {
           id: "evaluacion-adecuada",
           number: "04",
           question: "¿Cómo sé qué evaluación visual necesito?",
-          answer: "Si no estás seguro de qué examen necesitas, nuestro equipo te orientará por WhatsApp o en consulta según tus síntomas, molestias o antecedentes visuales para indicarte la evaluación adecuada.",
+          answer: "Cada evaluación cumple una finalidad distinta. Si tienes dudas, contáctanos por WhatsApp y nuestro equipo te orientará según tus molestias o antecedentes para recomendarte la evaluación que corresponda.",
           defaultOpen: false,
         },
       ],
@@ -935,7 +935,7 @@ export const siteConfig: SiteConfig = {
       titleHighlight: "Hablemos.",
       description: "Cuéntanos qué servicio te interesa y consulta con nuestro equipo la disponibilidad de atención en Óptica Alemania Villavicencio.",
       ctaText: "Consultar por WhatsApp",
-      whatsappMessage: "Hola Óptica Alemania, tengo dudas sobre sus servicios y quisiera consultar la disponibilidad de atención.",
+      whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania y quisiera información sobre la atención disponible.",
     },
   },
 };

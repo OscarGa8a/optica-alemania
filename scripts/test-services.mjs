@@ -564,7 +564,7 @@ async function run() {
 
         // Check Card 1
         const card1Text = await articles.nth(0).textContent();
-        if (!card1Text.includes('Evaluación retinal con Volk InView') || !card1Text.includes('Ver procedimiento')) {
+        if ((!card1Text.includes('Evaluación retinal con Volk iNview') && !card1Text.includes('Evaluación retinal con Volk InView')) || !card1Text.includes('Ver procedimiento')) {
           console.error(`❌ [${vp.name}] Card 1 text mismatch`);
           hasErrors = true;
         }
