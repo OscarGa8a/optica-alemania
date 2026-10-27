@@ -77,6 +77,18 @@ const SECTIONS = [
     desktopHeight: null,
     mobileHeight: null,
   },
+  {
+    id: '6_procedimientos',
+    name: 'Sección 6 — 04 / Procedimientos en video',
+    mockupDesktop: path.join(DOCS_SERVICES, '6_procedimiento_desktop.png'),
+    actualDesktop: path.join(SCREENSHOTS_DIR, '6_procedimientos_desktop_actual.png'),
+    mockupMobile: path.join(DOCS_SERVICES, '6_procedimiento_mobile.png'),
+    actualMobile: path.join(SCREENSHOTS_DIR, '6_procedimientos_mobile_actual.png'),
+    desktopComparisonOut: path.join(SCREENSHOTS_DIR, '6_procedimientos_desktop_comparison.png'),
+    mobileComparisonOut: path.join(SCREENSHOTS_DIR, '6_procedimientos_mobile_comparison.png'),
+    desktopHeight: null,
+    mobileHeight: null,
+  },
 ];
 
 async function createSideBySide(mockupPath, actualPath, outputPath, title, isMobile = false, customHeight = null) {

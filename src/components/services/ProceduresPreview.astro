@@ -1,0 +1,157 @@
+---
+// Sección 6: 04 / Procedimientos en video
+// Óptica Alemania Villavicencio
+import { siteConfig } from '../../data/siteConfig';
+
+const { procedures } = siteConfig.servicesPage;
+---
+
+<section id={procedures.id} class="relative bg-[#081F44] text-white py-14 sm:py-20 lg:py-24 overflow-hidden scroll-mt-20">
+  <!-- Subtle organic wave backgrounds matching the mockup's brand curves -->
+  <div class="pointer-events-none absolute -top-24 -right-24 w-[500px] lg:w-[850px] h-[500px] lg:h-[850px] rounded-full bg-[#154687]/30 blur-3xl select-none" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -bottom-24 -left-24 w-[450px] lg:w-[750px] h-[450px] lg:h-[750px] rounded-full bg-[#0A264F]/40 blur-3xl select-none" aria-hidden="true"></div>
+  
+  <!-- Stylized organic wave curves in the background matching the official mockup -->
+  <svg
+    class="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-35 select-none"
+    viewBox="0 0 1440 900"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M950 0C1060 220 1240 380 1440 440V0H950Z"
+      fill="#1A4F94"
+      fill-opacity="0.45"
+    />
+    <path
+      d="M780 0C930 280 1180 530 1440 620V0H780Z"
+      fill="#133E75"
+      fill-opacity="0.3"
+    />
+    <path
+      d="M1440 660C1260 590 1080 680 920 900H1440V660Z"
+      fill="#154582"
+      fill-opacity="0.35"
+    />
+  </svg>
+
+  <div class="max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+    <!-- Section Header: Eyebrow, Title & Right-Aligned Description on Desktop -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-12">
+      <div class="max-w-3xl">
+        <!-- Eyebrow with blue rule -->
+        <div class="flex items-center gap-3">
+          <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#4E95FF]">
+            {procedures.eyebrow}
+          </span>
+          <span class="w-12 sm:w-16 h-[1.5px] bg-[#2E68B8]"></span>
+        </div>
+
+        <!-- Headline: Instrument Serif with exact line breaks -->
+        <h2 class="font-display text-[3.15rem] sm:text-5xl lg:text-[4rem] xl:text-[4.5rem] text-white leading-[0.98] sm:leading-[1.04] tracking-tight mt-3 sm:mt-4">
+          <span class="block sm:hidden">Nuestros</span>
+          <span class="block sm:hidden">procedimientos,</span>
+          <span class="hidden sm:block">Nuestros procedimientos,</span>
+          <span class="block italic font-normal text-[#4E95FF] mt-1 sm:mt-0">de cerca.</span>
+        </h2>
+      </div>
+
+      <!-- Description: Right-aligned on desktop, stacked on mobile -->
+      <p class="text-base sm:text-lg text-[#CAD5E8] leading-relaxed max-w-[420px] lg:mb-2">
+        {procedures.description}
+      </p>
+    </div>
+
+    <!-- Procedures Cards Grid (2 Columns Desktop, Stacked Mobile) -->
+    <div class="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+      {procedures.items.map((item) => (
+        <article class="group">
+          <!-- Video Card Thumbnail -->
+          <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-[16/9.6] bg-[#071F3D] shadow-2xl border border-white/10 group-hover:border-white/25 transition-all duration-300">
+            <img
+              src={item.image.src}
+              alt={item.image.alt}
+              width={item.image.width}
+              height={item.image.height}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+
+            <!-- Accessible Video Trigger Overlay with hover halo -->
+            <a
+              href={item.actionHref}
+              aria-label={`Ver procedimiento: ${item.title}`}
+              class="absolute inset-0 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-2xl sm:rounded-3xl z-10"
+            >
+              <span
+                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1464D9]/25"
+                aria-hidden="true"
+              ></span>
+            </a>
+          </div>
+
+          <!-- Card Content: Title & Link -->
+          <div class="mt-4 sm:mt-5 lg:mt-6">
+            <h3 class="font-display text-2xl sm:text-3xl lg:text-[2.25rem] text-white font-normal leading-snug">
+              <a
+                href={item.actionHref}
+                class="hover:text-[#4E95FF] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4E95FF] rounded"
+              >
+                {item.title}
+              </a>
+            </h3>
+
+            <div class="mt-2 sm:mt-2.5">
+              <a
+                href={item.actionHref}
+                class="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-[#4E95FF] hover:text-white transition-colors group/link focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4E95FF] rounded"
+              >
+                <span>{item.actionText}</span>
+                <svg
+                  class="w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-1"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Bottom Action CTA Button -->
+    <div class="mt-10 sm:mt-14 lg:mt-18 text-center">
+      <a
+        href={procedures.ctaHref}
+        class="inline-flex items-center justify-center gap-3 px-8 py-3.5 sm:px-10 sm:py-3.5 rounded-full border border-[#1E6FD9] hover:border-[#4E95FF] text-white hover:bg-[#1E6FD9]/15 text-sm sm:text-base font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4E95FF]"
+      >
+        <span>{procedures.ctaText}</span>
+        <svg
+          class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -525,6 +525,99 @@ async function run() {
       console.log(`📸 [${vp.name}] Urgencias Oculares screenshot saved: ${path.relative(ROOT_DIR, emergenciesScreenshotPath)}`);
     }
 
+    // 9. Section 6 — 04 / Procedimientos en video Verification
+    const proceduresElement = page.locator('#procedimientos');
+    const proceduresExists = (await proceduresElement.count()) > 0;
+    if (!proceduresExists) {
+      console.error(`❌ [${vp.name}] Section #procedimientos does not exist!`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #procedimientos exists`);
+
+      // Check H2 Title
+      const rawH2 = await proceduresElement.locator('h2').textContent();
+      const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
+      if (!h2Text.includes('Nuestros procedimientos') || !h2Text.includes('de cerca')) {
+        console.error(`❌ [${vp.name}] Procedimientos H2 mismatch: ${h2Text}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Nuestros procedimientos, de cerca.'`);
+      }
+
+      // Check Description
+      const descText = (await proceduresElement.locator('p').first().textContent() || '').replace(/\s+/g, ' ');
+      if (!descText.includes('Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales')) {
+        console.error(`❌ [${vp.name}] Procedimientos description mismatch: ${descText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Description verified`);
+      }
+
+      // Check Video Cards (2 items)
+      const articles = proceduresElement.locator('article');
+      const articleCount = await articles.count();
+      if (articleCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 video procedure cards, found: ${articleCount}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Found 2 video procedure cards`);
+
+        // Check Card 1
+        const card1Text = await articles.nth(0).textContent();
+        if (!card1Text.includes('Evaluación retinal con Volk InView') || !card1Text.includes('Ver procedimiento')) {
+          console.error(`❌ [${vp.name}] Card 1 text mismatch`);
+          hasErrors = true;
+        }
+
+        // Check Card 2
+        const card2Text = await articles.nth(1).textContent();
+        if (!card2Text.includes('Test de Farnsworth D-15') || !card2Text.includes('Ver procedimiento')) {
+          console.error(`❌ [${vp.name}] Card 2 text mismatch`);
+          hasErrors = true;
+        }
+
+        // Check both card images are loaded
+        const img1 = articles.nth(0).locator('img');
+        const img2 = articles.nth(1).locator('img');
+        const isImg1Loaded = await img1.evaluate((img) => img.complete && img.naturalWidth > 0);
+        const isImg2Loaded = await img2.evaluate((img) => img.complete && img.naturalWidth > 0);
+        if (!isImg1Loaded || !isImg2Loaded) {
+          console.error(`❌ [${vp.name}] One or more procedure card images failed to load`);
+          hasErrors = true;
+        } else {
+          console.log(`✅ [${vp.name}] Both procedure card images loaded successfully`);
+        }
+      }
+
+      // Check Bottom CTA
+      const bottomCta = proceduresElement.locator('a[href*="/procedimientos"]').last();
+      const bottomCtaText = (await bottomCta.textContent() || '').trim();
+      if (!bottomCtaText.includes('Explorar más procedimientos')) {
+        console.error(`❌ [${vp.name}] Bottom CTA text mismatch: ${bottomCtaText}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Bottom CTA verified: 'Explorar más procedimientos'`);
+      }
+
+      // Screenshot of Section 6
+      const proceduresScreenshotPath = path.join(SCREENSHOTS_DIR, `6_procedimientos_${vp.name}_actual.png`);
+      await proceduresElement.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      // Temporarily hide sticky header during element screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+      await proceduresElement.screenshot({
+        path: proceduresScreenshotPath,
+      });
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+      console.log(`📸 [${vp.name}] Procedimientos screenshot saved: ${path.relative(ROOT_DIR, proceduresScreenshotPath)}`);
+    }
+
     await page.close();
   }
 

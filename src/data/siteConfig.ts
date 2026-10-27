@@ -261,12 +261,32 @@ export interface EyeEmergenciesConfig {
   notice: EyeEmergenciesNoticeConfig;
 }
 
+export interface ProcedureVideoItem {
+  id: string;
+  title: string;
+  actionText: string;
+  actionHref: string;
+  image: SpaceImage;
+}
+
+export interface ProceduresPreviewConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titleHighlight: string;
+  description: string;
+  ctaText: string;
+  ctaHref: string;
+  items: ProcedureVideoItem[];
+}
+
 export interface ServicesPageConfig {
   hero: ServicesHeroConfig;
   overview: ServicesOverviewConfig;
   visualCare: VisualCareConfig;
   specializedTests: SpecializedTestsConfig;
   eyeEmergencies: EyeEmergenciesConfig;
+  procedures: ProceduresPreviewConfig;
 }
 
 export interface SiteConfig {
@@ -792,6 +812,41 @@ export const siteConfig: SiteConfig = {
         boldText: "Ante síntomas o lesiones oculares graves,",
         regularText: "acude directamente a un servicio de urgencias médicas.",
       },
+    },
+    procedures: {
+      id: "procedimientos",
+      eyebrow: "04 / PROCEDIMIENTOS",
+      titlePart1: "Nuestros procedimientos,",
+      titleHighlight: "de cerca.",
+      description: "Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales en Óptica Alemania Villavicencio.",
+      ctaText: "Explorar más procedimientos",
+      ctaHref: "/procedimientos",
+      items: [
+        {
+          id: "evaluacion-retinal-volk-inview",
+          title: "Evaluación retinal con Volk InView",
+          actionText: "Ver procedimiento",
+          actionHref: "/procedimientos#evaluacion-retinal-volk-inview",
+          image: {
+            src: "/images/services/6_procedimientos_image1.webp",
+            alt: "Optómetra realizando evaluación retinal con equipo Volk InView en Óptica Alemania Villavicencio",
+            width: 1200,
+            height: 675,
+          },
+        },
+        {
+          id: "test-farnsworth-d15",
+          title: "Test de Farnsworth D-15",
+          actionText: "Ver procedimiento",
+          actionHref: "/procedimientos#test-farnsworth-d15",
+          image: {
+            src: "/images/services/6_procedimientos_image2.webp",
+            alt: "Demostración de test de discriminación de color Farnsworth D-15 e Ishihara en Óptica Alemania",
+            width: 1200,
+            height: 675,
+          },
+        },
+      ],
     },
   },
 };
