@@ -3,7 +3,7 @@ import { siteConfig } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 
 const whatsappHeroUrl = buildWhatsAppLink(
-  'Hola, me gustaría consultar por servicios y agendar una cita en Óptica Alemania Villavicencio.',
+  'Hola, visité la página de Óptica Alemania y quisiera información sobre sus servicios.',
   siteConfig.contact.whatsappNumber
 );
 ---
@@ -75,14 +75,9 @@ const whatsappHeroUrl = buildWhatsAppLink(
           <span class="block">y tecnología.</span>
         </h1>
 
-        <!-- Desktop Subtitle -->
-        <p class="hidden sm:block text-base sm:text-lg md:text-xl text-brand-body max-w-xl leading-relaxed mb-8">
-          Atención optométrica, evaluaciones especializadas y soluciones para tu salud visual en Villavicencio.
-        </p>
-
-        <!-- Mobile Subtitle (verbatim from mobile mockup) -->
-        <p class="sm:hidden text-xs sm:text-sm text-brand-body max-w-xs leading-relaxed mb-4 font-normal">
-          Servicios de optometría, evaluaciones visuales especializadas y soluciones ópticas para el cuidado de tu salud visual en Villavicencio.
+        <!-- Subtitle unificado con sede Barzal -->
+        <p class="text-sm sm:text-lg md:text-xl text-brand-body max-w-xl leading-relaxed mb-6 sm:mb-8 font-normal">
+          En nuestra sede de Barzal encontrarás atención optométrica, evaluaciones visuales y orientación para conocer las opciones que mejor se ajusten a tus necesidades.
         </p>
 
         <!-- Actions Container -->
@@ -95,7 +90,7 @@ const whatsappHeroUrl = buildWhatsAppLink(
             rel="noopener noreferrer"
             data-event="whatsapp_cta"
             data-event-location="hero_primary"
-            aria-label="Consultar por WhatsApp con especialistas de Óptica Alemania"
+            aria-label="Consultar los servicios de Óptica Alemania por WhatsApp"
             class="group inline-flex items-center justify-center gap-2.5 w-auto px-5 sm:px-7 py-2.5 sm:py-4 rounded-full bg-brand-primary hover:bg-brand-bright text-white text-xs sm:text-base font-semibold shadow-md shadow-brand-primary/20 hover:shadow-lg hover:shadow-brand-primary/30 active:scale-[0.98] transition-all duration-200"
           >
             <!-- WhatsApp SVG Icon -->

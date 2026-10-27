@@ -1,0 +1,86 @@
+---
+// Sección 1 — Hero Procedimientos
+// Óptica Alemania Villavicencio
+---
+
+<section id="inicio" class="relative bg-gradient-to-br from-[#EBF3FB] via-[#F4F7FC] to-[#FAFBFD] overflow-hidden pt-28 sm:pt-36 lg:pt-40 pb-0 lg:pb-28">
+
+  <!-- Desktop Hero Background Image (Right 60% with smooth gradient feathering to the left) -->
+  <div class="hidden lg:block absolute right-0 top-0 bottom-0 w-[58%] xl:w-[60%] z-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
+    <picture>
+      <source srcset="/images/procedimientos/1_hero_desktop_image.webp" type="image/webp" />
+      <img
+        src="/images/procedimientos/1_hero_desktop_image.png"
+        alt=""
+        width="1672"
+        height="941"
+        loading="eager"
+        decoding="async"
+        class="w-full h-full object-cover object-left-center"
+      />
+    </picture>
+    <!-- Soft horizontal gradient fade from page background to image -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#F4F7FC] via-[#F4F7FC]/30 to-transparent w-48 xl:w-64"></div>
+    <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAFBFD] to-transparent"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
+    <div class="max-w-xl lg:max-w-lg xl:max-w-xl pt-4 lg:py-12">
+      <!-- Eyebrow with decorative rule -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
+          CONOCE NUESTROS PROCEDIMIENTOS
+        </span>
+        <span class="w-12 sm:w-16 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
+      </div>
+
+      <!-- Hero Heading H1: Instrument Serif editorial + Italic Accent -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-display font-normal text-brand-heading tracking-tight leading-[1.08] mt-5 sm:mt-7">
+        Así realizamos <br />
+        nuestras evaluaciones, <br />
+        <span class="italic text-brand-primary">paso a paso.</span>
+      </h1>
+
+      <!-- Subtitle / Lead Paragraph -->
+      <p class="mt-5 sm:mt-6 text-base sm:text-lg lg:text-[1.125rem] text-brand-body leading-relaxed font-normal max-w-xl">
+        Descubre algunos de nuestros procedimientos visuales a través de videos que muestran cómo se realizan en Óptica Alemania, en Villavicencio.
+      </p>
+
+      <!-- Action Anchor CTA -->
+      <div class="mt-7 sm:mt-9">
+        <a
+          href="#volk-inview"
+          data-event="hero_cta"
+          data-event-location="procedimientos_hero"
+          class="inline-flex items-center gap-2.5 text-brand-primary hover:text-brand-bright font-semibold text-base sm:text-lg group transition-colors"
+        >
+          <span>Explorar procedimientos</span>
+          <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Hero Image Stacked Below Text -->
+    <div class="lg:hidden mt-10 -mx-6 sm:-mx-10 relative select-none">
+      <div class="relative w-full overflow-hidden">
+        <picture>
+          <source srcset="/images/procedimientos/1_hero_mobile_image.webp" type="image/webp" />
+          <img
+            src="/images/procedimientos/1_hero_mobile_image.png"
+            alt="Especialista realizando evaluación visual con foróptero en Óptica Alemania Villavicencio"
+            width="941"
+            height="1672"
+            loading="eager"
+            decoding="async"
+            class="w-full h-auto max-h-[540px] sm:max-h-[640px] object-cover object-top"
+          />
+        </picture>
+        <!-- Soft top fade into image -->
+        <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#F4F7FC] to-transparent pointer-events-none"></div>
+      </div>
+    </div>
+  </div>
+</section>

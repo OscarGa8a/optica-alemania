@@ -1,7 +1,42 @@
 ---
 import { siteConfig } from '../data/siteConfig';
 
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
+const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
+const isProcedimientos = currentPath === '/procedimientos' || currentPath === 'procedimientos';
+const isSubpage = isNosotros || isContacto || isProcedimientos;
 const { footer } = siteConfig;
+
+const navLinks = footer.navLinks.map((link) => {
+  let href = link.href;
+  if (isSubpage) {
+    if (href === '#nosotros' || href === '/nosotros') {
+      href = '/nosotros';
+    } else if (href === '#contacto' || href === '/contacto') {
+      href = '/contacto';
+    } else if (href === '#procedimientos' || href === '/procedimientos') {
+      href = '/procedimientos';
+    } else if (href.startsWith('#')) {
+      href = `/${href}`;
+    }
+  } else {
+    if (href === '#nosotros') {
+      href = '/nosotros';
+    } else if (href === '#contacto') {
+      href = '/contacto';
+    } else if (href === '#procedimientos') {
+      href = '/procedimientos';
+    }
+  }
+  return { ...link, href };
+});
+
+const logoHref = isSubpage ? '/#inicio' : '#inicio';
 ---
 
 <footer id="footer" class="relative bg-gradient-to-b from-[#082245] via-[#061A36] to-[#041226] text-white overflow-hidden">
@@ -38,7 +73,7 @@ const { footer } = siteConfig;
     <div class="hidden lg:grid lg:grid-cols-12 lg:gap-0">
       <!-- Col 1: Brand & Tagline -->
       <div class="lg:col-span-5 lg:border-r lg:border-white/10 lg:pr-10 flex flex-col justify-start">
-        <a href="#inicio" class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania - Volver al inicio">
+        <a href={logoHref} class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania - Volver al inicio">
           <img
             src={footer.logo.src}
             alt={footer.logo.alt}
@@ -49,8 +84,8 @@ const { footer } = siteConfig;
             class="w-[290px] h-auto object-contain"
           />
         </a>
-        <p class="mt-6 text-[15px] leading-relaxed text-[#92A7C6] max-w-[280px]">
-          Experiencia y atención para el<br />cuidado de tu salud visual.
+        <p class="mt-6 text-[15px] leading-relaxed text-[#92A7C6] max-w-[340px]">
+          {footer.tagline}
         </p>
       </div>
 
@@ -60,7 +95,7 @@ const { footer } = siteConfig;
           {footer.exploreTitle}
         </h3>
         <ul class="space-y-4">
-          {footer.navLinks.map((link) => (
+          {navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
@@ -164,7 +199,7 @@ const { footer } = siteConfig;
     <div class="lg:hidden flex flex-col space-y-10">
       <!-- Brand & Tagline -->
       <div>
-        <a href="#inicio" class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania - Volver al inicio">
+        <a href={logoHref} class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania - Volver al inicio">
           <img
             src={footer.logo.src}
             alt={footer.logo.alt}
@@ -175,8 +210,8 @@ const { footer } = siteConfig;
             class="w-[240px] sm:w-[270px] h-auto object-contain"
           />
         </a>
-        <p class="mt-4 text-[15px] leading-relaxed text-[#92A7C6] max-w-[280px]">
-          Experiencia y atención para el<br />cuidado de tu salud visual.
+        <p class="mt-4 text-[15px] leading-relaxed text-[#92A7C6] max-w-[340px]">
+          {footer.tagline}
         </p>
       </div>
 
@@ -187,7 +222,7 @@ const { footer } = siteConfig;
         </h3>
         <nav aria-label="Navegación pie de página">
           <ul class="divide-y divide-white/10 border-t border-b border-white/10">
-            {footer.navLinks.map((link) => (
+            {navLinks.map((link) => (
               <li>
                 <a
                   href={link.href}

@@ -1,0 +1,111 @@
+---
+// Sección 1 — Hero Sobre Nosotros
+// Óptica Alemania Villavicencio
+---
+
+<section id="inicio" class="relative bg-gradient-to-br from-[#DFECF8] via-[#EBF3FB] to-[#F5F8FC] overflow-hidden pt-24 sm:pt-28 lg:pt-0">
+  
+  <!-- Large Brand Wave Arc Watermark across the Hero -->
+  <div
+    class="absolute right-[-15%] sm:right-[-5%] top-[-5%] sm:top-[0%] w-[680px] sm:w-[950px] lg:w-[1250px] xl:w-[1450px] pointer-events-none opacity-30 sm:opacity-35 lg:opacity-40 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="eager"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 lg:min-h-[680px] xl:min-h-[760px] items-stretch">
+    
+    <!-- Text column: Left in desktop, Top in mobile -->
+    <div class="flex flex-col justify-center px-6 pt-8 pb-10 sm:px-10 sm:pt-12 sm:pb-14 lg:pl-16 xl:pl-24 lg:pr-10 xl:pr-14 lg:py-28">
+      <div class="max-w-xl">
+        <!-- Eyebrow with decorative rule -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
+            NOSOTROS · ÓPTICA ALEMANIA
+          </span>
+          <span class="w-12 sm:w-16 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
+        </div>
+
+        <!-- Hero Heading H1: Instrument Serif editorial + Italic Accent -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-display font-normal text-brand-heading tracking-tight leading-[1.06] mt-5 sm:mt-7">
+          Personas detrás<br />
+          <span class="italic text-brand-primary">de cada mirada.</span>
+        </h1>
+
+        <!-- Subtitle / Lead Paragraph -->
+        <p class="mt-5 sm:mt-6 text-base sm:text-lg lg:text-[1.125rem] text-brand-body leading-relaxed font-normal max-w-lg">
+          Somos Óptica Alemania, en Villavicencio. Queremos que conozcas nuestra historia, las personas que hacen parte de nuestra atención y la manera en que buscamos acompañarte en el cuidado de tu visión.
+        </p>
+
+        <!-- CTA Link to History Anchor -->
+        <div class="mt-8 sm:mt-10">
+          <a
+            href="#trayectoria"
+            data-event="history_click"
+            data-event-location="about_hero"
+            class="group inline-flex items-center gap-3.5 pr-3 pb-2 border-b-[1.5px] border-brand-heading text-brand-heading hover:text-brand-primary hover:border-brand-primary transition-colors font-medium text-base sm:text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+          >
+            <span>Conoce nuestra historia</span>
+            <svg
+              class="w-6 h-4 transition-transform duration-200 group-hover:translate-x-1"
+              viewBox="0 0 24 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M1 8h21" />
+              <path d="m15 2 6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Column: Right in desktop, Bottom in mobile -->
+    <div class="relative w-full h-[380px] sm:h-[480px] lg:h-full min-h-[380px] lg:min-h-[680px] overflow-hidden">
+      <!-- Responsive Picture composition -->
+      <picture class="block w-full h-full">
+        <!-- Mobile source (< 1024px) -->
+        <source
+          media="(max-width: 1023px)"
+          srcset="/images/about/1_hero_mobile_image.webp"
+          type="image/webp"
+        />
+        <source
+          media="(max-width: 1023px)"
+          srcset="/images/about/1_hero_mobile_image.png"
+          type="image/png"
+        />
+        <!-- Desktop source (>= 1024px) -->
+        <source
+          media="(min-width: 1024px)"
+          srcset="/images/about/1_hero_desktop_image.webp"
+          type="image/webp"
+        />
+        <!-- Fallback image -->
+        <img
+          src="/images/about/1_hero_desktop_image.png"
+          alt="Especialista de Óptica Alemania en el counter de atención"
+          width="1672"
+          height="941"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="w-full h-full object-cover object-top sm:object-center lg:object-left"
+        />
+      </picture>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactHero from '../components/contact/ContactHero.astro';
+import ContactLocation from '../components/contact/ContactLocation.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/siteConfig';
+
+const pageTitle = `Contacto y ubicación | ${siteConfig.name} Villavicencio`;
+const pageDescription = "Encuentra Óptica Alemania en Barzal, Villavicencio. Consulta nuestra dirección, horarios de atención y cómo llegar. Contáctanos por WhatsApp o teléfono.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/contacto"
+  headerTheme="light"
+>
+  <main id="main-content">
+    <ContactHero />
+    <ContactLocation />
+  </main>
+  <Footer currentPath="/contacto" />
+</Layout>

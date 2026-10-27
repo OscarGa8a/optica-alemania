@@ -4,71 +4,116 @@ import { buildWhatsAppLink } from '../utils/whatsapp';
 
 interface Props {
   currentPath?: string;
+  theme?: 'dark-hero' | 'light';
   variant?: 'transparent' | 'light';
 }
 
-const { currentPath = '/', variant = 'transparent' } = Astro.props;
-const isLight = variant === 'light';
+const { currentPath = '#inicio', theme, variant } = Astro.props;
+const effectiveTheme: 'dark-hero' | 'light' = theme || (variant === 'light' ? 'light' : 'dark-hero');
+const isLight = effectiveTheme === 'light';
+
+const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
+const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
+const isProcedimientos = currentPath === '/procedimientos' || currentPath === 'procedimientos';
+const isServicios = currentPath === '/servicios' || currentPath === 'servicios';
+const isSubpage = isNosotros || isContacto || isProcedimientos || isServicios;
 const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptica Alemania.', siteConfig.contact.whatsappNumber);
+
+const navItems = siteConfig.nav.map((item) => {
+  let href = item.href;
+  let isActive = false;
+
+  if (isNosotros) {
+    isActive = item.href === '#nosotros' || item.href === '/nosotros';
+  } else if (isContacto) {
+    isActive = item.href === '#contacto' || item.href === '/contacto';
+  } else if (isProcedimientos) {
+    isActive = item.href === '#procedimientos' || item.href === '/procedimientos';
+  } else if (isServicios) {
+    isActive = item.href === '#servicios' || item.href === '/servicios';
+  } else {
+    isActive = item.href === currentPath || item.active;
+  }
+
+  if (isSubpage) {
+    if (item.href === '#nosotros' || item.href === '/nosotros') {
+      href = '/nosotros';
+    } else if (item.href === '#contacto' || item.href === '/contacto') {
+      href = '/contacto';
+    } else if (item.href === '#procedimientos' || item.href === '/procedimientos') {
+      href = '/procedimientos';
+    } else if (item.href === '#servicios' || item.href === '/servicios') {
+      href = '/servicios';
+    } else if (item.href.startsWith('#')) {
+      href = `/${item.href}`;
+    }
+  } else {
+    if (item.href === '#nosotros') {
+      href = '/nosotros';
+    } else if (item.href === '#contacto') {
+      href = '/contacto';
+    } else if (item.href === '#procedimientos') {
+      href = '/procedimientos';
+    } else if (item.href === '#servicios') {
+      href = '/servicios';
+    }
+  }
+
+  return {
+    ...item,
+    href,
+    isActive,
+  };
+});
+
+const logoHref = isSubpage ? '/#inicio' : '#inicio';
 ---
 
 <header
   id="site-header"
-  data-variant={variant}
-  class:list={[
-    "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
-    isLight
-      ? "bg-white/95 backdrop-blur-md shadow-xs"
-      : "bg-transparent border-b border-transparent"
-  ]}
+  data-theme={effectiveTheme}
+  class="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-transparent border-b border-transparent"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       
       <!-- Brand Logo -->
-      <a href="/" class="flex items-center group transition-transform duration-200" aria-label="Óptica Alemania - Inicio">
-        {isLight ? (
-          <img
-            src="/images/home/10_footer_logo.webp"
-            alt="Óptica Alemania"
-            width="808"
-            height="242"
-            class="h-8 sm:h-9 w-auto object-contain"
-          />
-        ) : (
-          <div class="flex flex-col">
-            <span
-              id="brand-logo-text"
-              class="font-display text-2xl sm:text-3xl font-normal text-white lg:text-brand-heading tracking-tight leading-none group-hover:text-brand-primary transition-colors"
-            >
-              Óptica Alemania
-            </span>
-            <span
-              id="brand-logo-sub"
-              class="font-sans text-[9px] sm:text-[10px] tracking-[0.28em] text-white/85 lg:text-brand-body uppercase mt-1 transition-colors"
-            >
-              Villavicencio
-            </span>
-          </div>
-        )}
+      <a href={logoHref} class="flex flex-col group transition-transform duration-200" aria-label="Óptica Alemania - Inicio">
+        <span
+          id="brand-logo-text"
+          class:list={[
+            "font-display text-2xl sm:text-3xl font-normal tracking-tight leading-none group-hover:text-brand-primary transition-colors",
+            isLight ? "text-brand-heading" : "text-white lg:text-brand-heading"
+          ]}
+        >
+          Óptica Alemania
+        </span>
+        <span
+          id="brand-logo-sub"
+          class:list={[
+            "font-sans text-[9px] sm:text-[10px] tracking-[0.28em] uppercase mt-1 transition-colors",
+            isLight ? "text-brand-body" : "text-white/85 lg:text-brand-body"
+          ]}
+        >
+          Villavicencio
+        </span>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-8" aria-label="Navegación principal">
-        {siteConfig.nav.map((item) => {
-          const isActive = item.href === currentPath || (currentPath === '/servicios' && item.href.includes('servicios')) || item.active;
+        {navItems.map((item) => {
           return (
             <a
               href={item.href}
               class:list={[
                 "relative py-2 text-sm font-medium transition-colors duration-200",
-                isActive 
+                item.isActive 
                   ? "text-brand-primary font-semibold" 
                   : "text-brand-heading/85 hover:text-brand-primary"
               ]}
             >
               {item.label}
-              {isActive && (
+              {item.isActive && (
                 <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-primary rounded-full" />
               )}
             </a>
@@ -78,7 +123,7 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
 
       <!-- Action Button & Mobile Controls -->
       <div class="flex items-center gap-3">
-        <!-- WhatsApp CTA Button -->
+        <!-- WhatsApp CTA Button: Outlined in mobile at top (or filled if light theme), filled solid in desktop and on scroll -->
         <a
           id="navbar-cta-btn"
           href={whatsappUrl}
@@ -86,12 +131,12 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
           rel="noopener noreferrer"
           data-event="whatsapp_cta"
           data-event-location="header_cta"
-          aria-label="Escríbenos por WhatsApp con Óptica Alemania"
+          aria-label="Solicitar atención por WhatsApp con Óptica Alemania"
           class:list={[
-            "items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200",
+            "inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200",
             isLight
-              ? "hidden lg:inline-flex border-transparent bg-brand-primary text-white hover:bg-brand-bright"
-              : "inline-flex border border-white/80 text-white bg-white/10 backdrop-blur-xs lg:border-transparent lg:bg-brand-primary lg:text-white lg:hover:bg-brand-bright"
+              ? "border border-transparent bg-brand-primary text-white hover:bg-brand-bright"
+              : "border border-white/80 text-white bg-white/10 backdrop-blur-xs lg:border-transparent lg:bg-brand-primary lg:text-white lg:hover:bg-brand-bright"
           ]}
         >
           <!-- WhatsApp SVG Icon -->
@@ -109,7 +154,7 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
           class:list={[
             "lg:hidden inline-flex items-center justify-center p-2 rounded-lg transition-colors",
             isLight
-              ? "text-brand-primary hover:bg-brand-cool/80"
+              ? "text-brand-heading hover:bg-brand-cool/80"
               : "text-white hover:bg-white/15"
           ]}
           aria-expanded="false"
@@ -127,10 +172,15 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
 
   <!-- Mobile Drawer / Dropdown -->
   <div id="mobile-menu" class="hidden lg:hidden border-t border-brand-border bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-xl">
-    {siteConfig.nav.map((item) => (
+    {navItems.map((item) => (
       <a
         href={item.href}
-        class="block px-3 py-2.5 rounded-lg text-base font-medium text-brand-heading hover:bg-brand-cool hover:text-brand-primary transition-colors"
+        class:list={[
+          "block px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
+          item.isActive
+            ? "text-brand-primary bg-brand-cool/80 font-semibold"
+            : "text-brand-heading hover:bg-brand-cool hover:text-brand-primary"
+        ]}
       >
         {item.label}
       </a>
@@ -147,7 +197,7 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
   const brandLogoText = document.getElementById('brand-logo-text');
   const brandLogoSub = document.getElementById('brand-logo-sub');
   const navbarCtaBtn = document.getElementById('navbar-cta-btn');
-  const isLightVariant = header?.dataset.variant === 'light';
+  const isLightMode = header?.getAttribute('data-theme') === 'light';
 
   if (button && menu && hamburgerIcon && closeIcon) {
     button.addEventListener('click', () => {
@@ -169,46 +219,46 @@ const whatsappUrl = buildWhatsAppLink('Hola, deseo solicitar atención en Óptic
     });
   }
 
-  // Header scroll appearance for transparent variant
+  // Header scroll appearance
   function updateHeaderState() {
-    if (!header || isLightVariant) return;
+    if (!header) return;
     const isScrolled = window.scrollY > 20;
 
     if (isScrolled) {
       header.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-xs', 'border-brand-border/40');
       header.classList.remove('bg-transparent', 'border-transparent');
       
-      // Update mobile colors for white background
-      brandLogoText?.classList.remove('text-white');
-      brandLogoText?.classList.add('text-brand-heading');
-      brandLogoSub?.classList.remove('text-white/85');
-      brandLogoSub?.classList.add('text-brand-body');
-      
-      button?.classList.remove('text-white', 'hover:bg-white/15');
-      button?.classList.add('text-brand-heading', 'hover:bg-brand-cool/80');
+      if (!isLightMode) {
+        brandLogoText?.classList.remove('text-white');
+        brandLogoText?.classList.add('text-brand-heading');
+        brandLogoSub?.classList.remove('text-white/85');
+        brandLogoSub?.classList.add('text-brand-body');
+        
+        button?.classList.remove('text-white', 'hover:bg-white/15');
+        button?.classList.add('text-brand-heading', 'hover:bg-brand-cool/80');
 
-      navbarCtaBtn?.classList.remove('border-white/80', 'text-white', 'bg-white/10');
-      navbarCtaBtn?.classList.add('border-transparent', 'bg-brand-primary', 'text-white');
+        navbarCtaBtn?.classList.remove('border-white/80', 'text-white', 'bg-white/10');
+        navbarCtaBtn?.classList.add('border-transparent', 'bg-brand-primary', 'text-white');
+      }
     } else {
       header.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-xs', 'border-brand-border/40');
       header.classList.add('bg-transparent', 'border-transparent');
 
-      // Restore mobile colors for transparent over hero background
-      brandLogoText?.classList.add('text-white');
-      brandLogoText?.classList.remove('text-brand-heading');
-      brandLogoSub?.classList.add('text-white/85');
-      brandLogoSub?.classList.remove('text-brand-body');
+      if (!isLightMode) {
+        brandLogoText?.classList.add('text-white');
+        brandLogoText?.classList.remove('text-brand-heading');
+        brandLogoSub?.classList.add('text-white/85');
+        brandLogoSub?.classList.remove('text-brand-body');
 
-      button?.classList.add('text-white', 'hover:bg-white/15');
-      button?.classList.remove('text-brand-heading', 'hover:bg-brand-cool/80');
+        button?.classList.add('text-white', 'hover:bg-white/15');
+        button?.classList.remove('text-brand-heading', 'hover:bg-brand-cool/80');
 
-      navbarCtaBtn?.classList.add('border-white/80', 'text-white', 'bg-white/10');
-      navbarCtaBtn?.classList.remove('border-transparent', 'bg-brand-primary');
+        navbarCtaBtn?.classList.add('border-white/80', 'text-white', 'bg-white/10');
+        navbarCtaBtn?.classList.remove('border-transparent', 'bg-brand-primary');
+      }
     }
   }
 
-  if (!isLightVariant) {
-    window.addEventListener('scroll', updateHeaderState, { passive: true });
-    updateHeaderState();
-  }
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+  updateHeaderState();
 </script>

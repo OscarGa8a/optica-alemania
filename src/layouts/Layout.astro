@@ -10,6 +10,7 @@ interface Props {
   robots?: string;
   gtmId?: string;
   currentPath?: string;
+  headerTheme?: 'dark-hero' | 'light';
   navVariant?: 'transparent' | 'light';
 }
 
@@ -18,9 +19,12 @@ const {
   description = siteConfig.description,
   robots,
   gtmId = import.meta.env.PUBLIC_GTM_ID,
-  currentPath = '/',
-  navVariant = 'transparent',
+  currentPath = '#inicio',
+  headerTheme,
+  navVariant,
 } = Astro.props;
+
+const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || '';
@@ -29,30 +33,34 @@ const publicNoindex = import.meta.env.PUBLIC_NOINDEX;
 
 const isStagingDomain = siteUrl.includes('oscardev.co') || siteUrl.includes('pages.dev') || siteUrl.includes('vercel.app');
 const isStagingEnv = publicEnv === 'staging' || publicEnv === 'preview' || publicEnv === 'development';
-const isExplicitNoindex = publicNoindex === 'true' || publicNoindex === true;
-const isStaging = isStagingDomain || isStagingEnv || isExplicitNoindex;
+const isExplicitNoindex = publicNoindex === 'true';
 
-const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
-const resolvedRobots = robots || defaultRobots;
+const shouldForceNoindex = isStagingDomain || isStagingEnv || isExplicitNoindex;
+const effectiveRobots = robots || (shouldForceNoindex ? 'noindex, nofollow' : 'index, follow');
 
-// PLAYBOOK Fase 4: Schema.org Multigrafo @graph
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.siteUrl).href;
+
+// Generar Schema.org JSON-LD para SEO y GEO Local Search
 const schemaGraph = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Optician",
-      "@id": "https://opticaalemania.co/#optician",
-      "name": siteConfig.name,
-      "legalName": siteConfig.legalName,
-      "url": "https://opticaalemania.co",
-      "telephone": siteConfig.contact.phoneTel,
+      "@id": `${siteConfig.siteUrl}/#organization`,
+      "name": siteConfig.legalName,
+      "alternateName": siteConfig.name,
+      "url": siteConfig.siteUrl,
+      "logo": `${siteConfig.siteUrl}/images/home/10_footer_logo.webp`,
+      "image": `${siteConfig.siteUrl}/images/home/1_hero_desktop_image.webp`,
+      "description": siteConfig.description,
+      "telephone": siteConfig.contact.phone,
+      "email": siteConfig.contact.email,
       "priceRange": "$$",
-      "image": "https://opticaalemania.co/images/home/1_home_desktop_image.png",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": siteConfig.contact.address,
-        "addressLocality": siteConfig.contact.city,
-        "addressRegion": siteConfig.contact.department,
+        "addressLocality": siteConfig.city,
+        "addressRegion": "Meta",
         "addressCountry": "CO"
       },
       "geo": {
@@ -64,14 +72,14 @@ const schemaGraph = {
         {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "08:30",
+          "opens": "08:00",
           "closes": "18:00"
         },
         {
           "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday"],
-          "opens": "08:30",
-          "closes": "15:00"
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "14:00"
         }
       ],
       "sameAs": [
@@ -81,9 +89,13 @@ const schemaGraph = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://opticaalemania.co/#website",
-      "url": "https://opticaalemania.co",
+      "@id": `${siteConfig.siteUrl}/#website`,
+      "url": siteConfig.siteUrl,
       "name": siteConfig.name,
+      "description": siteConfig.tagline,
+      "publisher": {
+        "@id": `${siteConfig.siteUrl}/#organization`
+      },
       "inLanguage": "es-CO"
     }
   ]
@@ -96,59 +108,54 @@ const schemaGraph = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Robots & Staging Isolation (Capa 1) -->
-    <meta name="robots" content={resolvedRobots} />
+    <!-- Google Fonts: Inter & Instrument Serif con Font Display Swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- SEO Meta Tags -->
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="robots" content={effectiveRobots} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- GEO Tags (Local SEO Villavicencio) -->
+    <meta name="geo.region" content="CO-MET" />
+    <meta name="geo.placename" content="Villavicencio" />
+    <meta name="geo.position" content="4.1420;-73.6266" />
+    <meta name="ICBM" content="4.1420, -73.6266" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content={`${siteConfig.siteUrl}/images/home/1_hero_desktop_image.webp`} />
     <meta property="og:locale" content="es_CO" />
-    <meta property="og:url" content="https://opticaalemania.co" />
     <meta property="og:site_name" content={siteConfig.name} />
 
-    <!-- Twitter Meta Tags -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteConfig.siteUrl}/images/home/1_hero_desktop_image.webp`} />
 
-    {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
-      <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION} />
-    )}
-
-    <!-- Schema.org JSON-LD Multigrafo -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
-    <!-- PLAYBOOK Fase 4: Salvaguarda Dinámica en Runtime (Capa 2) -->
-    <script is:inline>
-      (function() {
-        try {
-          var host = window.location.hostname;
-          var isStagingHost = host.includes('oscardev.co') || host.endsWith('.pages.dev') || host.endsWith('.vercel.app');
-          var isProdHost = host === 'opticaalemania.co' || host === 'www.opticaalemania.co';
-          if (isStagingHost && !isProdHost) {
-            var meta = document.querySelector('meta[name="robots"]');
-            if (meta) {
-              meta.setAttribute('content', 'noindex, nofollow');
-            } else {
-              var m = document.createElement('meta');
-              m.name = 'robots';
-              m.content = 'noindex, nofollow';
-              document.head.appendChild(m);
-            }
-          }
-        } catch (_) {}
-      })();
-    </script>
-
-    <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
+    <!-- Google Tag Manager (Carga Diferida para 100/100 Core Web Vitals) -->
     {gtmId && (
       <script is:inline define:vars={{ gtmId }}>
         window.dataLayer = window.dataLayer || [];
+        window._gtmLoaded = false;
         window._loadGTM = function() {
           if (window._gtmLoaded) return;
           window._gtmLoaded = true;
@@ -172,7 +179,7 @@ const schemaGraph = {
     )}
   </head>
   <body class="bg-brand-surface text-brand-body antialiased selection:bg-brand-blue-soft selection:text-brand-primary">
-    <Navbar currentPath={currentPath} variant={navVariant} />
+    <Navbar currentPath={currentPath} theme={effectiveTheme} />
     <main id="main-content">
       <slot />
     </main>
