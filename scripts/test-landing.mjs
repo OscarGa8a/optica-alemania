@@ -167,11 +167,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await aboutSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Quiénes somos')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Quiénes somos', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Detrás de cada mirada')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Detrás de cada mirada', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Quiénes somos'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Detrás de cada mirada'`);
       }
 
       // Verify image rendered properly
@@ -186,8 +186,8 @@ async function run() {
       // Verify CTA link
       const cta = aboutSection.locator('a[data-event="history_click"]');
       const ctaHref = await cta.getAttribute('href');
-      if (ctaHref !== '#trayectoria') {
-        console.error(`❌ [${vp.name}] Expected CTA href='#trayectoria', got: '${ctaHref}'`);
+      if (ctaHref !== '/nosotros') {
+        console.error(`❌ [${vp.name}] Expected CTA href='/nosotros', got: '${ctaHref}'`);
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] CTA link verified (href: ${ctaHref}, data-event: history_click)`);
@@ -364,11 +364,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await spaceSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Conoce el lugar donde')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Conoce el lugar donde', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Conoce dónde')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Conoce dónde', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Conoce el lugar donde'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Conoce dónde'`);
       }
 
       // Verify 3 showcase images loaded properly
@@ -430,11 +430,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await kidsSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Su visión merece')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Su visión merece', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Su manera de')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Su manera de', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Su visión merece'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Su manera de'`);
       }
 
       // Verify image loaded properly
@@ -566,11 +566,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await trajectorySection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Relaciones que')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Relaciones que', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Empresas que han')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Empresas que han', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Relaciones que'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Empresas que han'`);
       }
 
       // Verify organization logos loaded properly
