@@ -41,6 +41,7 @@ S14: Harness de verificación Playwright y comparativas visuales side-by-side (0
 - T19 [S13,S14]: Integración final de la página de Servicios y verificación integral | Route: inline | Status: done | Commit: 94f0da4
 - T20 [S13,S14]: Creación de Pull Request oficial y entrega final de Servicios | Route: inline | Status: done | Commit: PR #11
 - T21 [S4,S14]: Refinamiento editorial quirúrgico basado en docs/services/servicios_copy.md y certificación Playwright | Route: inline | Status: done | Commit: 09f0dca
+- T22 [S4,S14]: Creación de Pull Request #12 para refinamiento editorial de Servicios | Route: inline | Status: done | Commit: PR #12
 
 ## Log
 L1: "rey continuemos con la pagina de services o nosotros aplciando lo que dice la skill concept-demo por favor, analiza todo y me dices si esta claro para empezar. El contenido de la pagina esta en @[docs/services]"
@@ -60,3 +61,4 @@ L14: "apruebo, continua rey" / "conitnua rey" — Sección 7 aprobada por el usu
 L15: "apruebo rey" — Sección 8 aprobada por el usuario. T18 marcada done. T19 finalizada: verificación integral de la página completa de Servicios (/servicios) en desktop (1440x900) y mobile (390x844). 8 secciones de 8 certificadas con cero errores de consola, cero 404/500 y cero overflow horizontal. Capturas completas full-page archivadas en docs/screenshots/services/full_page_desktop.png y mobile. Concept Demo de Servicios cerrado y listo para revisión final.
 L16: "entonces haz pr rey" — Pull Request oficial #11 creado exitosamente en GitHub: https://github.com/OscarGa8a/optica-alemania/pull/11 hacia main desde worktree/service-page. T20 marcada done. Entrega final completada.
 L17: "si rey, dale" — Refinamiento quirúrgico del copy editorial aplicado en siteConfig.ts y servicios.astro (SEO on-page, descripciones clínicas prudentes, advertencia médica explícita en urgencias, tipografía de marca Volk iNview y mensajes contextualizados de WhatsApp). Certificación Playwright (0 console errors, 0 broken resources, 0 overflow) y comparativas Sharp regeneradas. T21 completada.
+L18: "perfecto rey, pr por favor" — Pull Request oficial #12 creado exitosamente en GitHub: https://github.com/OscarGa8a/optica-alemania/pull/12 hacia main desde worktree/service-page. T22 marcada done.
