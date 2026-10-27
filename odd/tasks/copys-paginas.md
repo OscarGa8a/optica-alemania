@@ -30,15 +30,28 @@ S7: Actualizar metadatos y componentes de `/nosotros` (`src/pages/nosotros.astro
     - Espacios: Eyebrow `NUESTRAS INSTALACIONES`, mención a la sede de Barzal para familiarizarse antes de la visita.
     - Cierre / Estamos para ti: Doble CTA de conversión (Botón primario de WhatsApp con mensaje contextual + enlace secundario a Servicios).
 S8: Verificación estricta con `pnpm build` y `node scripts/test-nosotros.mjs`.
+S9: "ahora procedimientos rey" / "si rey, dale"
+S10: Actualizar metadatos y componentes de `/procedimientos` (`src/pages/procedimientos.astro`, `ProcedimientosHero.astro`, `ProcedimientosVolk.astro`, `ProcedimientosFarnsworth.astro`, `ProcedimientosGallery.astro`, `ProcedimientosCta.astro`):
+    - SEO: `Procedimientos visuales en Villavicencio | Óptica Alemania`, meta description orientada a evaluaciones visuales como evaluación retinal y Farnsworth D-15.
+    - Hero: Subtítulo fluido destacando videos de procedimientos en Óptica Alemania Villavicencio.
+    - Volk iNview: Eyebrow `EVALUACIÓN RETINAL · VOLK INVIEW`, descripción con precisión clínica delimitando la interpretación profesional, mensaje WhatsApp contextual conciso.
+    - Farnsworth D-15: Eyebrow `PERCEPCIÓN DEL COLOR · FARNSWORTH D-15`, H2 `Cada color cuenta una historia.`, descripción de discriminación cromática organizando fichas según similitud de tonalidades, mensaje WhatsApp contextual.
+    - Galería / Más de nuestra atención: Eyebrow `MÁS DE NUESTRA ATENCIÓN`, H2 `Otros momentos del cuidado visual.`, descripciones de consulta visual y atención infantil.
+    - Cierre / Estamos para orientarte: Eyebrow `ESTAMOS PARA ORIENTARTE`, párrafo invitando a consultar dudas y disponibilidad, mensaje WhatsApp identificando procedencia de la consulta web, CTA secundario a servicios.
+S11: Verificación estricta con `pnpm build` y `node scripts/test-procedimientos.mjs`.
 
 ## Tasks
 - T1 [S1,S2,S3]: Copiar `docs/home/home_copy.md` y actualizar copys en `src/data/siteConfig.ts` y componentes del Home | Route: inline | Status: done | Commit: 2772342
 - T2 [S4]: Verificación con build y Playwright test (`node scripts/test-landing.mjs`) | Route: inline | Status: done | Commit: 2772342
-- T3 [S5,S6,S7]: Implementar actualización de copys de `/nosotros` en `src/pages/nosotros.astro` y componentes `src/components/about/*` | Route: inline | Status: done | Commit: bb56d56
-- T4 [S8]: Verificación con build y Playwright test (`node scripts/test-nosotros.mjs`) | Route: inline | Status: done | Commit: bb56d56
+- T3 [S5,S6,S7]: Implementar actualización de copys de `/nosotros` en `src/pages/nosotros.astro` y componentes `src/components/about/*` | Route: inline | Status: done | Commit: c4fb806
+- T4 [S8]: Verificación con build y Playwright test (`node scripts/test-nosotros.mjs`) | Route: inline | Status: done | Commit: c4fb806
+- T5 [S9,S10]: Implementar actualización de copys de `/procedimientos` en `src/pages/procedimientos.astro` y componentes `src/components/procedimientos/*` | Route: inline | Status: pending | Commit: pending
+- T6 [S11]: Verificación con build y Playwright test (`node scripts/test-procedimientos.mjs`) | Route: inline | Status: pending | Commit: pending
 
 ## Log
 L1: "rey vamos a empezar a modificar los copys de las secciones de cada apgina, empecemos por home donde su copy es home copy que no esta en este worktree sino en el repo princial, para que lo analices y sobre todo tengas tu criterior de si es mejor el nuevo copy o el viejo que esta, analizalo seccion por seccion antes de implementar por favor"
 L2: Análisis sección por sección presentado al usuario y aprobado con la directiva: "de acuerdo con tu analisis rey, implemente de acuerdo a lo que analizaste".
 L3: Home implementado y certificado en commit 2772342.
 L4: Usuario solicita continuar con Nosotros ("ahora sigue la de nosotros/about rey"), se presenta análisis sección por sección y se aprueba con la directiva: "ajustalo rey".
+L5: Nosotros implementado y certificado en commit c4fb806.
+L6: Usuario solicita continuar con Procedimientos ("ahora procedimientos rey"), se presenta análisis sección por sección y se aprueba con la directiva: "si rey, dale".
