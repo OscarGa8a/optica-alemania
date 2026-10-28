@@ -27,7 +27,7 @@ S11: "Certificación Visual Playwright: Script de prueba automatizado (scripts/t
 - T7 [S9]: Sección 6 — Estamos Para Ti (AboutCta.astro) | Route: inline | Status: done | Commit: 91d6274
 - T8 [S10]: Ensamblaje de página /nosotros (src/pages/nosotros.astro), actualización de Navbar.astro y Footer.astro | Route: inline | Status: done | Commit: 91d6274
 - T9 [S11]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-nosotros.mjs, scripts/compare-about.mjs) | Route: inline | Status: done | Commit: 91d6274
-- T10 [S2]: Optimización dimensional y conversión exclusiva a WebP de imágenes en /nosotros (payload reducido 94.2%) | Route: inline | Status: done | Commit: pending
+- T10 [S2]: Optimización dimensional y conversión exclusiva a WebP de imágenes en /nosotros (payload reducido 94.2%) | Route: inline | Status: done | Commit: 600391f
 
 ## Log
 L1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros."
