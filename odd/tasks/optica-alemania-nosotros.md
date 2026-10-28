@@ -2,7 +2,7 @@
 Branch: main
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && node scripts/test-nosotros.mjs && node scripts/compare-about.mjs
-PR: https://github.com/OscarGa8a/optica-alemania/pull/7 (merged) | PR Refinamiento: https://github.com/OscarGa8a/optica-alemania/pull/15
+PR: https://github.com/OscarGa8a/optica-alemania/pull/7 (merged) | PR Refinamiento: https://github.com/OscarGa8a/optica-alemania/pull/15 (merged) | PR Optimización WebP: https://github.com/OscarGa8a/optica-alemania/pull/16
 
 ## Specs
 S1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros con Astro + Tailwind CSS."
