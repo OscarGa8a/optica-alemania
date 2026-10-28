@@ -6,12 +6,12 @@
 <section id="trayectoria" class="relative bg-brand-cool py-0 lg:py-12 scroll-mt-20 overflow-hidden">
   <div class="grid grid-cols-1 lg:grid-cols-12 lg:min-h-[640px] xl:min-h-[720px] items-stretch">
     
-    <!-- Left Column: Bleed Photo (Desktop Left Bleed / Mobile Top) -->
-    <div class="lg:col-span-6 relative w-full h-[360px] sm:h-[480px] lg:h-full min-h-[360px] lg:min-h-[640px] overflow-hidden rounded-b-3xl sm:rounded-b-[40px] lg:rounded-b-none lg:rounded-r-[40px] xl:rounded-r-[48px] shadow-xs bg-[#E1E8F0]">
+    <!-- Left Column: Bleed Photo (Desktop Left Bleed / Mobile Bottom) -->
+    <div class="order-2 lg:order-1 lg:col-span-6 relative w-full h-[340px] sm:h-[460px] lg:h-full min-h-[340px] lg:min-h-[640px] overflow-hidden rounded-none lg:rounded-r-[40px] xl:rounded-r-[48px] shadow-xs bg-brand-border">
       <picture class="block w-full h-full">
         <source srcset="/images/about/2_nuestra_trayectoria_image.webp" type="image/webp" />
         <img
-          src="/images/about/2_nuestra_trayectoria_image.png"
+          src="/images/about/2_nuestra_trayectoria_image.webp"
           alt="Especialista de Óptica Alemania realizando examen optométrico con paciente"
           width="1536"
           height="1024"
@@ -22,15 +22,14 @@
       </picture>
     </div>
 
-    <!-- Right Column: Editorial Copy & History Stats -->
-    <div class="lg:col-span-6 flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-16 lg:pl-12 xl:pl-20 lg:pr-12 xl:pr-24 lg:py-24">
+    <!-- Right Column: Editorial Copy & History Stats (Desktop Right / Mobile Top) -->
+    <div class="order-1 lg:order-2 lg:col-span-6 flex flex-col justify-center px-6 pt-12 pb-10 sm:px-10 sm:pt-16 sm:pb-12 lg:pl-12 xl:pl-20 lg:pr-12 xl:pr-24 lg:py-24">
       <div class="max-w-xl">
         <!-- Eyebrow -->
-        <div class="flex items-center gap-3 sm:gap-4">
+        <div>
           <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
             NUESTRA TRAYECTORIA
           </span>
-          <span class="w-12 sm:w-16 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
         </div>
 
         <!-- Section Heading H2 -->
@@ -50,7 +49,7 @@
         </div>
 
         <!-- Subtle Divider -->
-        <div class="h-px bg-[#D5E1F0] my-8 sm:my-10" aria-hidden="true"></div>
+        <div class="h-px bg-brand-border my-8 sm:my-10" aria-hidden="true"></div>
 
         <!-- Stat Highlight: +28 Años de experiencia -->
         <div class="flex items-center gap-6 sm:gap-8">

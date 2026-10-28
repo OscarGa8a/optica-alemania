@@ -173,9 +173,21 @@ async function run() {
       for (const sec of sections) {
         const el = page.locator(sec.id);
         if (await el.count() > 0) {
+          if (sec.id !== '#inicio') {
+            await page.evaluate(() => {
+              const header = document.querySelector('#site-header');
+              if (header) header.style.setProperty('display', 'none', 'important');
+            });
+          }
           await el.screenshot({
             path: path.join(SCREENSHOTS_DIR, sec.file),
           });
+          if (sec.id !== '#inicio') {
+            await page.evaluate(() => {
+              const header = document.querySelector('#site-header');
+              if (header) header.style.removeProperty('display');
+            });
+          }
           console.log(`📸 [${vp.name}] Captured: ${sec.label} -> ${sec.file}`);
         } else {
           console.warn(`⚠️ [${vp.name}] Section locator not found: ${sec.id}`);

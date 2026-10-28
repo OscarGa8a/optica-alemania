@@ -4,42 +4,58 @@
 ---
 
 <section id="equipo" class="relative bg-brand-cool py-20 sm:py-24 lg:py-28 scroll-mt-20 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Subtle Arc Watermark in Upper-Right matching mockup -->
+  <div
+    class="absolute -right-32 sm:-right-40 -top-28 sm:-top-44 w-full max-w-xl lg:max-w-3xl pointer-events-none opacity-20 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     
     <!-- Section Header: Title left, Description right -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-end mb-12 sm:mb-16 lg:mb-20">
       <!-- Title & Eyebrow -->
       <div class="lg:col-span-7">
-        <div class="flex items-center gap-3 sm:gap-4">
-          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
+        <!-- Eyebrow without line (consistent with design system) -->
+        <div>
+          <span class="text-xs uppercase font-semibold tracking-widest text-brand-primary">
             NUESTRO EQUIPO
           </span>
-          <span class="w-12 sm:w-16 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
         </div>
 
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-display font-normal text-brand-heading tracking-tight leading-[1.08] mt-4 sm:mt-6">
+        <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal text-brand-heading tracking-tight leading-none mt-4 sm:mt-6">
           La atención comienza<br />
-          <span class="italic text-brand-primary">con las personas.</span>
+          con las <span class="italic text-brand-primary">personas.</span>
         </h2>
       </div>
 
-      <!-- Description Paragraph -->
+      <!-- Description Paragraph (verbatim from mockup) -->
       <div class="lg:col-span-5">
-        <p class="text-base sm:text-lg text-brand-body leading-relaxed font-normal max-w-lg">
-          Cuando buscas orientación para tu visión, cada pregunta importa. En Óptica Alemania queremos escucharte, comprender lo que necesitas y ayudarte a conocer las opciones de atención y monturas disponibles. Creemos que una experiencia cercana empieza con una conversación clara y respetuosa.
+        <p class="text-base sm:text-lg lg:text-xl text-brand-body leading-relaxed font-normal max-w-lg">
+          En Óptica Alemania creemos en la importancia de escuchar, orientar y acompañar a cada persona. Nuestro equipo trabaja para ofrecer una atención cercana y comprometida con tu bienestar visual.
         </p>
       </div>
     </div>
 
-    <!-- Photos Grid (2 Columns) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+    <!-- Photos Grid: Image 1 is wider (8 cols) than Image 2 (4 cols) on desktop -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
       
-      <!-- Photo Card 1 -->
-      <div class="relative rounded-3xl lg:rounded-[40px] overflow-hidden shadow-sm aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/11] bg-[#E1E8F0]">
+      <!-- Photo Card 1: 3 especialistas detrás del counter (8 cols en desktop) -->
+      <div class="lg:col-span-8 relative rounded-3xl overflow-hidden shadow-xs bg-brand-border aspect-16/10 sm:aspect-3/2 lg:aspect-auto lg:h-120 xl:h-128">
         <picture class="block w-full h-full">
           <source srcset="/images/about/4_nuestro_equipo_image1.webp" type="image/webp" />
           <img
-            src="/images/about/4_nuestro_equipo_image1.png"
+            src="/images/about/4_nuestro_equipo_image1.webp"
             alt="Equipo de especialistas y optómetras de Óptica Alemania"
             width="1536"
             height="532"
@@ -50,12 +66,12 @@
         </picture>
       </div>
 
-      <!-- Photo Card 2 -->
-      <div class="relative rounded-3xl lg:rounded-[40px] overflow-hidden shadow-sm aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/11] bg-[#E1E8F0]">
+      <!-- Photo Card 2: Especialista orientando a paciente (4 cols en desktop) -->
+      <div class="lg:col-span-4 relative rounded-3xl overflow-hidden shadow-xs bg-brand-border aspect-16/10 sm:aspect-3/2 lg:aspect-auto lg:h-120 xl:h-128">
         <picture class="block w-full h-full">
           <source srcset="/images/about/4_nuestro_equipo_image2.webp" type="image/webp" />
           <img
-            src="/images/about/4_nuestro_equipo_image2.png"
+            src="/images/about/4_nuestro_equipo_image2.webp"
             alt="Especialista de Óptica Alemania orientando a un paciente con empatía"
             width="1536"
             height="477"
