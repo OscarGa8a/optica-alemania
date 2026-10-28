@@ -640,7 +640,6 @@ export const siteConfig: SiteConfig = {
       { label: "Nosotros", href: "#nosotros" },
       { label: "Servicios", href: "#servicios" },
       { label: "Procedimientos", href: "#tecnologia" },
-      { label: "Monturas", href: "#monturas" },
       { label: "Contacto", href: "#contacto" },
     ],
     contactTitle: "CONTACTO",
