@@ -15,7 +15,8 @@ export type IconName =
   | 'eye'
   | 'glasses'
   | 'shield'
-  | 'sparkles';
+  | 'sparkles'
+  | 'play';
 
 interface Props {
   name: IconName;
@@ -78,7 +79,8 @@ const sizeAttr = size ? { width: size, height: size } : {};
     aria-hidden={ariaHidden}
     {...sizeAttr}
   >
-    <path d="M9 5l7 7-7 7" />
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
   </svg>
 )}
 
@@ -296,5 +298,17 @@ const sizeAttr = size ? { width: size, height: size } : {};
     {...sizeAttr}
   >
     <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+  </svg>
+)}
+
+{name === 'play' && (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    class={className}
+    aria-hidden={ariaHidden}
+    {...sizeAttr}
+  >
+    <polygon points="6 4 20 12 6 20 6 4" />
   </svg>
 )}
