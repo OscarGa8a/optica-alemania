@@ -27,6 +27,7 @@ S11: "Certificación Visual Playwright: Script de prueba automatizado (scripts/t
 - T7 [S9]: Sección 6 — Estamos Para Ti (AboutCta.astro) | Route: inline | Status: done | Commit: 91d6274
 - T8 [S10]: Ensamblaje de página /nosotros (src/pages/nosotros.astro), actualización de Navbar.astro y Footer.astro | Route: inline | Status: done | Commit: 91d6274
 - T9 [S11]: Suite de certificación Playwright y comparativas visuales Sharp (scripts/test-nosotros.mjs, scripts/compare-about.mjs) | Route: inline | Status: done | Commit: 91d6274
+- T10 [S2]: Optimización dimensional y conversión exclusiva a WebP de imágenes en /nosotros (payload reducido 94.2%) | Route: inline | Status: done | Commit: pending
 
 ## Log
 L1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros."
@@ -53,3 +54,9 @@ L10: Refinamiento integral de las Secciones 2 a 6 de Nosotros y del Footer Insti
 - Sección 6 (Estamos Para Ti): Titular en 4 líneas con 'escucharte.' en itálica, botón WhatsApp al 100% en mobile, botón secundario ghost pill centrado al 100% en mobile, y filigrana de ojo desplazada al 50% fuera del margen derecho.
 - Footer Institucional: Remoción de ola blanca decorativa superior, border-t superior para separación limpia en desktop, filigrana de ojo reposicionada, iconos de contacto en azul primario sólido y blanco, adición de horario de atención, eliminación de duplicidad de Instagram dejándolo exclusivamente en los botones sociales con icono oficial de WhatsApp, eliminación de enlaces legales no existentes con balance geográfico editorial, y remoción de 'Monturas' del menú Explora.
 - Cero corchetes arbitrarios y verificación automatizada Playwright en desktop (1440px) y mobile (390px).
+L11: Optimización de imágenes de /nosotros:
+- Análisis de dimensiones máximas de renderizado en múltiples viewports (390px a 2560px).
+- Generación de WebPs con Sharp preservando aspect ratio nativo y resolución óptima (1672x941, 1536x1024, etc.).
+- Reemplazo de referencias en componentes AboutHero, AboutTrajectory, AboutTeam y AboutSpaces por fuentes WebP directas, eliminando fallbacks pesados en PNG.
+- Reducción de payload total de imágenes de 10.6 MB a 614 KB (-94.2% de peso).
+- Certificación Playwright y build Astro aprobados con 0 errores y 0 regresiones.
