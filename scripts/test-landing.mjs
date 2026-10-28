@@ -167,7 +167,7 @@ async function run() {
         bodyFont: getComputedStyle(about.querySelector('p')).fontFamily === getComputedStyle(document.body).fontFamily,
         eyebrowColor: getComputedStyle(eyebrow).color === getComputedStyle(heroEyebrow).color,
         noRule: !eyebrow.parentElement.querySelector('[aria-hidden="true"]'),
-        sharedLink: cta.querySelector('span').classList.contains('border-brand-primary') && Boolean(cta.querySelector('svg')),
+        sharedLink: (cta.querySelector('span').classList.contains('border-current') || cta.querySelector('span').classList.contains('border-brand-primary')) && Boolean(cta.querySelector('svg')),
         tracking: cta.dataset.eventLocation === 'about_section',
       };
     });

@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
-const SCREENSHOTS_DIR = path.resolve(ROOT_DIR, 'docs', 'screenshots', 'about');
+const SCREENSHOTS_DIR = path.resolve(ROOT_DIR, process.env.SCREENSHOTS_DIR || 'docs/screenshots/about');
 
 if (!fs.existsSync(SCREENSHOTS_DIR)) {
   fs.mkdirSync(SCREENSHOTS_DIR, { recursive: true });
@@ -119,6 +119,44 @@ async function run() {
       });
 
       await page.goto(baseUrl, { waitUntil: 'networkidle' });
+
+      // Pin the hero's typography and palette to the shared design tokens.
+      await page.evaluate(() => document.fonts.ready);
+      const heroStyles = await page.locator('#inicio').evaluate((hero) => {
+        const heading = hero.querySelector('h1');
+        const accent = heading.querySelector('span');
+        const lead = hero.querySelector('p');
+        const headingStyle = getComputedStyle(heading);
+        const accentStyle = getComputedStyle(accent);
+        const leadStyle = getComputedStyle(lead);
+        const bounds = heading.getBoundingClientRect();
+        return {
+          displayFamily: headingStyle.fontFamily,
+          headingWeight: headingStyle.fontWeight,
+          accentWeight: accentStyle.fontWeight,
+          headingColor: headingStyle.color,
+          accentColor: accentStyle.color,
+          bodyFamily: leadStyle.fontFamily,
+          bodyColor: leadStyle.color,
+          fits: bounds.left >= 0 && bounds.right <= innerWidth && heading.scrollWidth <= heading.clientWidth,
+          historyLink: hero.querySelector('a').getAttribute('href'),
+        };
+      });
+      const heroMatchesSystem = heroStyles.displayFamily.includes('Instrument Serif')
+        && heroStyles.headingWeight === '400'
+        && heroStyles.accentWeight === '400'
+        && heroStyles.headingColor === 'rgb(24, 45, 83)'
+        && heroStyles.accentColor === 'rgb(20, 100, 217)'
+        && heroStyles.bodyFamily.includes('Inter')
+        && heroStyles.bodyColor === 'rgb(82, 97, 123)'
+        && heroStyles.fits
+        && heroStyles.historyLink === '#trayectoria';
+      if (!heroMatchesSystem) {
+        console.error(`❌ [${vp.name}] Hero design system mismatch:`, heroStyles);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Hero typography, colors, text fit and history link match the design system`);
+      }
 
       // 1. Check Console Errors
       if (consoleErrors.length > 0) {
