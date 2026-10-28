@@ -4,35 +4,51 @@
 ---
 
 <section id="espacios" class="relative bg-brand-cool py-20 sm:py-24 lg:py-28 scroll-mt-20 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Subtle Arc Watermark in Upper-Right matching mockup -->
+  <div
+    class="absolute -right-32 sm:-right-40 -top-28 sm:-top-44 w-full max-w-xl lg:max-w-3xl pointer-events-none opacity-20 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     
     <!-- Section Header: Title left, Description right -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-end mb-12 sm:mb-16 lg:mb-20">
       <!-- Title & Eyebrow -->
       <div class="lg:col-span-7">
-        <div class="flex items-center gap-3 sm:gap-4">
-          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
-            NUESTRAS INSTALACIONES
+        <!-- Eyebrow without line (consistent across sections) -->
+        <div>
+          <span class="text-xs uppercase font-semibold tracking-widest text-brand-primary">
+            NUESTROS ESPACIOS
           </span>
-          <span class="w-12 sm:w-16 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
         </div>
 
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-display font-normal text-brand-heading tracking-tight leading-[1.08] mt-4 sm:mt-6">
+        <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal text-brand-heading tracking-tight leading-none mt-4 sm:mt-6">
           Así es nuestra<br />
           <span class="italic text-brand-primary">óptica.</span>
         </h2>
       </div>
 
-      <!-- Description Paragraph -->
+      <!-- Description Paragraph (verbatim from mockup) -->
       <div class="lg:col-span-5">
-        <p class="text-base sm:text-lg text-brand-body leading-relaxed font-normal max-w-lg">
-          Conoce nuestra sede en el sector Barzal de Villavicencio. Te mostramos algunos de los espacios de Óptica Alemania para que puedas familiarizarte con el lugar antes de tu visita.
+        <p class="text-base sm:text-lg lg:text-xl text-brand-body leading-relaxed font-normal max-w-lg">
+          Conoce los espacios de Óptica Alemania Villavicencio, desde nuestra zona de monturas hasta el consultorio donde realizamos las evaluaciones visuales.
         </p>
       </div>
     </div>
 
     <!-- Full-Width Rounded Showroom Photo -->
-    <div class="relative w-full rounded-3xl lg:rounded-[40px] overflow-hidden shadow-sm aspect-[16/10] sm:aspect-[21/9] lg:aspect-[21/10] max-h-[640px] bg-[#E1E8F0]">
+    <div class="relative w-full rounded-3xl overflow-hidden shadow-xs bg-brand-border h-112 sm:h-128 lg:h-140 xl:h-150">
       <picture class="block w-full h-full">
         <source srcset="/images/about/5_nuestros_espacio_image.webp" type="image/webp" />
         <img

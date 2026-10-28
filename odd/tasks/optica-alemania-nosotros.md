@@ -2,7 +2,7 @@
 Branch: main
 Delivery Strategy: ask-on-risk
 Test Runner: pnpm build && node scripts/test-nosotros.mjs && node scripts/compare-about.mjs
-PR: https://github.com/OscarGa8a/optica-alemania/pull/7 (merged)
+PR: https://github.com/OscarGa8a/optica-alemania/pull/7 (merged) | PR Refinamiento: https://github.com/OscarGa8a/optica-alemania/pull/15
 
 ## Specs
 S1: "Implementar la página 'Nosotros' de Óptica Alemania Villavicencio basada en los mockups y recursos de docs/about/ en la ruta /nosotros con Astro + Tailwind CSS."
@@ -44,3 +44,12 @@ L7: Verificación profunda con Playwright sección por sección respecto a los m
 - Regeneradas todas las comparativas visuales side-by-side y certificada la suite sin errores ni overflow.
 L8: PR #7 mergeado en main (d64d57c). Sincronizados repositorio principal local y worktree.
 L9: Rediseño de AboutHero a full-bleed (100% ancho y alto, gradiente suave translúcido antes del centro, eliminación de líneas azules, tipografía fluida clamp en H1), alineación horizontal simétrica de Navbar con Hero, y reemplazo del logo de texto por imagen de marca oficial (docs/logo.png) con conmutación dinámica claro/oscuro. PR #14 abierto en GitHub (rama: feat/about-hero-and-logo).
+L10: Refinamiento integral de las Secciones 2 a 6 de Nosotros y del Footer Institucional contra mockups oficiales:
+- Eliminación global de líneas horizontales decorativas en eyebrows para consistencia de diseño.
+- Sección 2 (Trayectoria): Orden responsivo corregido (texto primero, foto después) y padding horizontal unificado.
+- Sección 3 (Propósito): Bento cards 50/50 full-bleed sin clases arbitrarias ni corchetes.
+- Sección 4 (Equipo): Grid asimétrico 8/4 cols en desktop con encuadre editorial exacto de fotos de equipo.
+- Sección 5 (Espacios): Título y eyebrow corregidos a 'NUESTROS ESPACIOS' y foto panorámica de exhibición/consultorios.
+- Sección 6 (Estamos Para Ti): Titular en 4 líneas con 'escucharte.' en itálica, botón WhatsApp al 100% en mobile, botón secundario ghost pill centrado al 100% en mobile, y filigrana de ojo desplazada al 50% fuera del margen derecho.
+- Footer Institucional: Remoción de ola blanca decorativa superior, border-t superior para separación limpia en desktop, filigrana de ojo reposicionada, iconos de contacto en azul primario sólido y blanco, adición de horario de atención, eliminación de duplicidad de Instagram dejándolo exclusivamente en los botones sociales con icono oficial de WhatsApp, eliminación de enlaces legales no existentes con balance geográfico editorial, y remoción de 'Monturas' del menú Explora.
+- Cero corchetes arbitrarios y verificación automatizada Playwright en desktop (1440px) y mobile (390px).
