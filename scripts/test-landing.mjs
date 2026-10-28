@@ -151,6 +151,31 @@ async function run() {
       console.log(`✅ [${vp.name}] 0 horizontal overflow`);
     }
 
+    // Home hero gradient and section typography use the existing design system.
+    const designChecks = await page.evaluate(() => {
+      const hero = document.querySelector('#inicio');
+      const about = document.querySelector('#nosotros');
+      const eyebrow = [...about.querySelectorAll('span')].find((span) => span.textContent.trim() === 'CONÓCENOS');
+      const heroEyebrow = hero.querySelector('.text-brand-primary');
+      const gradient = hero.querySelector('.bg-gradient-to-r');
+      const cta = about.querySelector('[data-event="history_click"]');
+      return {
+        gradient: innerWidth < 1024
+          ? getComputedStyle(gradient).display === 'none'
+          : Math.abs(gradient.getBoundingClientRect().width - hero.getBoundingClientRect().width / 2) < 1,
+        headingFont: getComputedStyle(about.querySelector('h2')).fontFamily === getComputedStyle(hero.querySelector('h1')).fontFamily,
+        bodyFont: getComputedStyle(about.querySelector('p')).fontFamily === getComputedStyle(document.body).fontFamily,
+        eyebrowColor: getComputedStyle(eyebrow).color === getComputedStyle(heroEyebrow).color,
+        noRule: !eyebrow.parentElement.querySelector('[aria-hidden="true"]'),
+        sharedLink: (cta.querySelector('span').classList.contains('border-current') || cta.querySelector('span').classList.contains('border-brand-primary')) && Boolean(cta.querySelector('svg')),
+        tracking: cta.dataset.eventLocation === 'about_section',
+      };
+    });
+    for (const [check, passed] of Object.entries(designChecks)) {
+      console.log(`${passed ? '✅' : '❌'} [${vp.name}] Home design: ${check}`);
+      if (!passed) failed = true;
+    }
+
     // Section 1 — Hero screenshot & verification
     const heroShotPath = path.join(SCREENSHOTS_DIR, vp.heroScreenshot);
     await page.screenshot({ path: heroShotPath, fullPage: false });
@@ -254,8 +279,8 @@ async function run() {
       // Verify CTA link
       const cta = servicesSection.locator('a[data-event="services_all_click"]');
       const ctaHref = await cta.getAttribute('href');
-      if (ctaHref !== '#contacto') {
-        console.error(`❌ [${vp.name}] Expected CTA href='#contacto', got: '${ctaHref}'`);
+      if (ctaHref !== '/servicios') {
+        console.error(`❌ [${vp.name}] Expected CTA href='/servicios', got: '${ctaHref}'`);
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] Services CTA link verified (href: ${ctaHref})`);

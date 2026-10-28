@@ -1,7 +1,7 @@
 ---
 import Icon, { type IconName } from './Icon.astro';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'glass' | 'link';
+export type ButtonVariant = 'primary' | 'secondary' | 'glass' | 'link' | 'link-light';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface Props {
@@ -46,8 +46,8 @@ const {
 const hasCustomDisplay = /(^|\s)(hidden|inline|block|flex|inline-flex|inline-block|grid)(\s|$)/.test(className);
 const displayClass = hasCustomDisplay ? '' : 'inline-flex';
 
-// Base styles for pill buttons (non-link)
-const isLinkVariant = variant === 'link';
+// Base styles for link vs pill buttons
+const isLinkVariant = variant === 'link' || variant === 'link-light';
 
 const linkSizeClasses: Record<ButtonSize, string> = {
   sm: 'text-xs gap-1.5',
@@ -63,7 +63,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   glass:
     'border border-white/20 hover:border-white/40 bg-white/10 hover:bg-white/15 text-white backdrop-blur-md',
   link:
-    `group ${displayClass} items-center text-brand-heading hover:text-brand-primary transition-colors font-medium`.trim(),
+    `group ${displayClass} items-center text-brand-heading hover:text-brand-primary transition-colors font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary`.trim(),
+  'link-light':
+    `group ${displayClass} items-center text-brand-steel hover:text-white group-hover:text-white font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white`.trim(),
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -76,7 +78,7 @@ const basePillClasses =
   `group ${displayClass} items-center justify-center gap-2.5 rounded-full active:scale-95 transition-all duration-200`.trim();
 
 const computedClasses = isLinkVariant
-  ? [variantClasses.link, linkSizeClasses[size], className].filter(Boolean).join(' ')
+  ? [variantClasses[variant], linkSizeClasses[size], className].filter(Boolean).join(' ')
   : [basePillClasses, variantClasses[variant], sizeClasses[size], className]
       .filter(Boolean)
       .join(' ');
@@ -84,7 +86,7 @@ const computedClasses = isLinkVariant
 // Automatic icon styling
 const defaultIconClass =
   icon === 'arrow-right'
-    ? 'w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200'
+    ? 'w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200'
     : icon === 'whatsapp'
       ? 'w-4 h-4 sm:w-5 sm:h-5 fill-current shrink-0'
       : 'w-4 h-4 stroke-current stroke-2 fill-none shrink-0';
@@ -107,7 +109,9 @@ const commonProps = {
     <a href={href} target={target} rel={rel} {...commonProps}>
       {icon && iconPosition === 'left' && <Icon name={icon} class={finalIconClass} />}
       {isLinkVariant ? (
-        <span class="border-b-2 border-current pb-0.5 transition-colors"><slot /></span>
+        <span class={variant === 'link-light' ? 'border-b border-brand-slate-border group-hover:border-white pb-0.5 transition-colors duration-200' : 'border-b-2 border-current pb-0.5 transition-colors'}>
+          <slot />
+        </span>
       ) : (
         <span><slot /></span>
       )}
@@ -117,7 +121,9 @@ const commonProps = {
     <button type={type} {...commonProps}>
       {icon && iconPosition === 'left' && <Icon name={icon} class={finalIconClass} />}
       {isLinkVariant ? (
-        <span class="border-b-2 border-current pb-0.5 transition-colors"><slot /></span>
+        <span class={variant === 'link-light' ? 'border-b border-brand-slate-border group-hover:border-white pb-0.5 transition-colors duration-200' : 'border-b-2 border-current pb-0.5 transition-colors'}>
+          <slot />
+        </span>
       ) : (
         <span><slot /></span>
       )}
