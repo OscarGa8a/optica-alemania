@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
+import Button from './ui/Button.astro';
 
 const whatsappHeroUrl = buildWhatsAppLink(
   'Hola, visité la página de Óptica Alemania y quisiera información sobre sus servicios.',
@@ -10,134 +11,117 @@ const whatsappHeroUrl = buildWhatsAppLink(
 
 <section
   id="inicio"
-  class="relative overflow-hidden bg-white min-h-[100svh] flex flex-col justify-between pt-16 sm:pt-24 lg:pt-0 lg:flex-row lg:items-center"
+  class="relative w-full min-h-[100dvh] flex flex-col justify-start lg:justify-center overflow-hidden bg-white"
 >
   
-  <!-- Desktop Full Bleed Background Image with Soft Left Lightening -->
-  <div class="hidden lg:block absolute inset-0 z-0 pointer-events-none">
-    <picture>
-      <source srcset="/images/home/1_home_desktop_image.webp" type="image/webp" />
+  <!-- Full-bleed Background Image occupying 100% width and 100% height of the Hero -->
+  <div class="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
+    <picture class="block w-full h-full">
+      <!-- Mobile source (< 1024px) -->
+      <source
+        media="(max-width: 1023px)"
+        srcset="/images/home/1_home_mobile_image.webp"
+        type="image/webp"
+      />
+      <source
+        media="(max-width: 1023px)"
+        srcset="/images/home/1_home_mobile_image.png"
+        type="image/png"
+      />
+      <!-- Desktop source (>= 1024px) -->
+      <source
+        media="(min-width: 1024px)"
+        srcset="/images/home/1_home_desktop_image.webp"
+        type="image/webp"
+      />
+      <!-- Fallback image -->
       <img
         src="/images/home/1_home_desktop_image.png"
         alt="Examen optométrico de alta tecnología en Óptica Alemania Villavicencio"
-        class="w-full h-full object-cover object-right"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
         width="1672"
         height="941"
-      />
-    </picture>
-    <!-- Smooth editorial horizontal gradient to protect text legibility -->
-    <div class="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent w-[58%] xl:w-[54%]"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent h-20 bottom-0"></div>
-  </div>
-
-  <!-- Mobile Full Bleed Background Image matching 1_home_mobile.png -->
-  <div class="lg:hidden absolute inset-0 z-0 pointer-events-none">
-    <picture>
-      <source srcset="/images/home/1_home_mobile_image.webp" type="image/webp" />
-      <img
-        src="/images/home/1_home_mobile_image.png"
-        alt="Atención optométrica en Óptica Alemania Villavicencio"
-        class="w-full h-full object-cover object-[60%_bottom]"
         loading="eager"
         fetchpriority="high"
         decoding="async"
-        width="941"
-        height="1672"
+        class="w-full h-full object-cover object-[center_top] lg:object-right"
       />
     </picture>
-    <!-- Top dark vignette to guarantee white navbar contrast -->
-    <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-brand-heading/70 via-brand-heading/20 to-transparent"></div>
-    <!-- Soft editorial white wash behind typography for crisp contrast -->
-    <div class="absolute inset-x-0 top-14 h-[360px] bg-gradient-to-b from-white/95 via-white/90 to-transparent"></div>
-    <div class="absolute inset-y-0 left-0 w-[85%] h-[420px] bg-gradient-to-r from-white via-white/85 to-transparent"></div>
+
+    <!-- Desktop gradient: llega casi a la mitad de la izquierda (25%) sin tocar la imagen de la derecha -->
+    <div class="hidden lg:block absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+
+    <!-- Mobile gradient: de arriba hacia abajo para legibilidad total del texto y botón conocer servicios -->
+    <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 via-[52%] to-transparent to-[60%] pointer-events-none"></div>
   </div>
 
-  <!-- Main Content Container -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-2 sm:py-8 lg:py-24">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+  <!-- Content Container: alineado a la izquierda con el header -->
+  <div class="relative z-10 w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 pt-20 pb-8 sm:pt-24 sm:pb-12 lg:py-24">
+    <div class="max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl flex flex-col items-start">
       
-      <!-- Content Block -->
-      <div class="lg:col-span-7 xl:col-span-6 flex flex-col items-start max-w-lg lg:max-w-none">
+      <!-- Eyebrow matching mockup & about rhythm -->
+      <div>
+        <span class="text-xs sm:text-sm uppercase font-semibold tracking-[0.2em] text-brand-primary">
+          ÓPTICA ALEMANIA · VILLAVICENCIO
+        </span>
+      </div>
+
+      <!-- Hero Heading H1: Fluid Instrument Serif scaling smoothly with screen width -->
+      <h1 class="font-display text-[clamp(2.15rem,1.25rem+3.6vw,5.5rem)] text-brand-heading leading-tight tracking-tight mt-3 sm:mt-6">
+        <span class="block">Cuidamos tu visión</span>
+        <span class="block italic text-brand-primary font-normal">con experiencia</span>
+        <span class="block">y tecnología.</span>
+      </h1>
+
+      <!-- Subtitle matching desktop & mobile mockups and about rhythm -->
+      <p class="mt-3 sm:mt-6 text-sm sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-relaxed max-w-md sm:max-w-lg xl:max-w-xl">
+        Atención optométrica, evaluaciones especializadas y soluciones para tu salud visual en Villavicencio.
+      </p>
+
+      <!-- Actions Container matching about rhythm -->
+      <div class="mt-5 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 w-full sm:w-auto">
         
-        <!-- Eyebrow matching mockup -->
-        <p class="font-sans text-[11px] sm:text-xs md:text-sm font-semibold tracking-[0.22em] text-brand-primary uppercase mb-2 sm:mb-4">
-          Óptica Alemania · Villavicencio
-        </p>
+        <!-- Primary CTA (WhatsApp) -->
+        <Button
+          variant="primary"
+          href={whatsappHeroUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-event="whatsapp_cta"
+          data-event-location="hero_primary"
+          aria-label="Consultar los servicios de Óptica Alemania por WhatsApp"
+          icon="whatsapp"
+          iconPosition="left"
+        >
+          Consultar por WhatsApp
+        </Button>
 
-        <!-- H1 Title with Instrument Serif & Italic Editorial Accent -->
-        <h1 class="font-display text-[2.15rem] sm:text-5xl md:text-6xl lg:text-[4.75rem] text-brand-heading leading-[1.04] tracking-tight mb-2.5 sm:mb-6">
-          <span class="block">Cuidamos</span>
-          <span class="block">tu visión</span>
-          <span class="block italic text-brand-primary font-normal">con experiencia</span>
-          <span class="block">y tecnología.</span>
-        </h1>
+        <!-- Secondary CTA Desktop: Pill Button -->
+        <Button
+          variant="secondary"
+          href="#servicios"
+          data-event="services_scroll"
+          data-event-location="hero_secondary_desktop"
+          icon="arrow-right"
+          class="hidden sm:inline-flex"
+        >
+          Conocer servicios
+        </Button>
 
-        <!-- Subtitle unificado con sede Barzal -->
-        <p class="text-sm sm:text-lg md:text-xl text-brand-body max-w-xl leading-relaxed mb-6 sm:mb-8 font-normal">
-          En nuestra sede de Barzal encontrarás atención optométrica, evaluaciones visuales y orientación para conocer las opciones que mejor se ajusten a tus necesidades.
-        </p>
-
-        <!-- Actions Container -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 sm:gap-5 w-full sm:w-auto">
-          
-          <!-- Primary CTA (WhatsApp) -->
-          <a
-            href={whatsappHeroUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-event="whatsapp_cta"
-            data-event-location="hero_primary"
-            aria-label="Consultar los servicios de Óptica Alemania por WhatsApp"
-            class="group inline-flex items-center justify-center gap-2.5 w-auto px-5 sm:px-7 py-2.5 sm:py-4 rounded-full bg-brand-primary hover:bg-brand-bright text-white text-xs sm:text-base font-semibold shadow-md shadow-brand-primary/20 hover:shadow-lg hover:shadow-brand-primary/30 active:scale-[0.98] transition-all duration-200"
-          >
-            <!-- WhatsApp SVG Icon -->
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
-            </svg>
-            <span>Consultar por WhatsApp</span>
-            <!-- Arrow Right -->
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-
-          <!-- Secondary CTA Desktop: Pill Button -->
-          <a
-            href="#servicios"
-            data-event="services_scroll"
-            data-event-location="hero_secondary_desktop"
-            class="hidden sm:inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-4 rounded-full border border-brand-heading/20 hover:border-brand-primary bg-white hover:bg-brand-cool text-brand-heading hover:text-brand-primary text-base font-semibold active:scale-[0.98] transition-all duration-200"
-          >
-            <span>Conocer servicios</span>
-            <svg class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-
-          <!-- Secondary CTA Mobile: Underlined Link matching mobile mockup -->
-          <a
-            href="#servicios"
-            data-event="services_scroll"
-            data-event-location="hero_secondary_mobile"
-            class="sm:hidden inline-flex items-center gap-1 text-brand-heading font-semibold text-xs border-b border-brand-primary pb-0.5 mt-0.5 hover:text-brand-primary transition-colors"
-          >
-            <span>Conocer servicios</span>
-            <svg class="w-3.5 h-3.5 stroke-current stroke-2 fill-none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-
-        </div>
+        <!-- Secondary CTA Mobile: Underlined Link matching mobile mockup -->
+        <Button
+          variant="link"
+          href="#servicios"
+          data-event="services_scroll"
+          data-event-location="hero_secondary_mobile"
+          icon="arrow-right"
+          class="inline-flex sm:hidden"
+        >
+          Conocer servicios
+        </Button>
 
       </div>
 
     </div>
   </div>
-
-  <!-- Spacer to ensure mobile viewport reveals patient slit lamp examination naturally -->
-  <div class="lg:hidden h-28 w-full pointer-events-none" aria-hidden="true"></div>
 
 </section>

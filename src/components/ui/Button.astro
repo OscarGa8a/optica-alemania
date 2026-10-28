@@ -1,0 +1,121 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'glass' | 'link';
+export type ButtonSize = 'sm' | 'md' | 'lg';
+
+interface Props {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  href?: string;
+  target?: string;
+  rel?: string;
+  type?: 'button' | 'submit' | 'reset';
+  icon?: IconName;
+  iconPosition?: 'left' | 'right';
+  iconClass?: string;
+  class?: string;
+  id?: string;
+  'aria-label'?: string;
+  'data-event'?: string;
+  'data-event-location'?: string;
+  'data-event-network'?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  target,
+  rel,
+  type = 'button',
+  icon,
+  iconPosition = 'right',
+  iconClass = '',
+  class: className = '',
+  id,
+  'aria-label': ariaLabel,
+  'data-event': dataEvent,
+  'data-event-location': dataEventLocation,
+  'data-event-network': dataEventNetwork,
+  ...rest
+} = Astro.props;
+
+// If className specifies a display property (hidden, block, flex, inline-flex, etc.), don't force inline-flex
+const hasCustomDisplay = /(^|\s)(hidden|inline|block|flex|inline-flex|inline-block|grid)(\s|$)/.test(className);
+const displayClass = hasCustomDisplay ? '' : 'inline-flex';
+
+// Base styles for pill buttons (non-link)
+const isLinkVariant = variant === 'link';
+
+const variantClasses: Record<ButtonVariant, string> = {
+  primary:
+    'bg-brand-primary hover:bg-brand-bright text-white shadow-md shadow-brand-primary/20 hover:shadow-lg hover:shadow-brand-primary/30',
+  secondary:
+    'border border-brand-heading/20 hover:border-brand-primary bg-white hover:bg-brand-cool text-brand-heading hover:text-brand-primary',
+  glass:
+    'border border-white/20 hover:border-white/40 bg-white/10 hover:bg-white/15 text-white backdrop-blur-md',
+  link:
+    `group ${displayClass} items-center gap-1.5 text-brand-heading hover:text-brand-primary font-semibold text-xs`.trim(),
+};
+
+const sizeClasses: Record<ButtonSize, string> = {
+  sm: 'px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold',
+  md: 'px-6 sm:px-7 py-3 sm:py-4 text-xs sm:text-base font-semibold',
+  lg: 'px-7 sm:px-8 py-3.5 sm:py-4.5 text-base sm:text-lg font-semibold',
+};
+
+const basePillClasses =
+  `group ${displayClass} items-center justify-center gap-2.5 rounded-full active:scale-95 transition-all duration-200`.trim();
+
+const computedClasses = isLinkVariant
+  ? [variantClasses.link, className].filter(Boolean).join(' ')
+  : [basePillClasses, variantClasses[variant], sizeClasses[size], className]
+      .filter(Boolean)
+      .join(' ');
+
+// Automatic icon styling
+const defaultIconClass =
+  icon === 'arrow-right'
+    ? 'w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1 transition-transform duration-200'
+    : icon === 'whatsapp'
+      ? 'w-4 h-4 sm:w-5 sm:h-5 fill-current shrink-0'
+      : 'w-4 h-4 stroke-current stroke-2 fill-none shrink-0';
+
+const finalIconClass = [defaultIconClass, iconClass].filter(Boolean).join(' ');
+
+const commonProps = {
+  id,
+  class: computedClasses,
+  'aria-label': ariaLabel,
+  'data-event': dataEvent,
+  'data-event-location': dataEventLocation,
+  'data-event-network': dataEventNetwork,
+  ...rest,
+};
+---
+
+{
+  href ? (
+    <a href={href} target={target} rel={rel} {...commonProps}>
+      {icon && iconPosition === 'left' && <Icon name={icon} class={finalIconClass} />}
+      {isLinkVariant ? (
+        <span class="border-b-2 border-brand-primary pb-0.5"><slot /></span>
+      ) : (
+        <span><slot /></span>
+      )}
+      {icon && iconPosition === 'right' && <Icon name={icon} class={finalIconClass} />}
+    </a>
+  ) : (
+    <button type={type} {...commonProps}>
+      {icon && iconPosition === 'left' && <Icon name={icon} class={finalIconClass} />}
+      {isLinkVariant ? (
+        <span class="border-b-2 border-brand-primary pb-0.5"><slot /></span>
+      ) : (
+        <span><slot /></span>
+      )}
+      {icon && iconPosition === 'right' && <Icon name={icon} class={finalIconClass} />}
+    </button>
+  )
+}
