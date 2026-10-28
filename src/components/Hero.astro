@@ -47,8 +47,8 @@ const whatsappHeroUrl = buildWhatsAppLink(
       />
     </picture>
 
-    <!-- Desktop gradient: llega casi a la mitad de la izquierda (25%) sin tocar la imagen de la derecha -->
-    <div class="hidden lg:block absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+    <!-- Desktop gradient: cubre la mitad izquierda (w-1/2) para máxima legibilidad del bloque editorial -->
+    <div class="hidden lg:block absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
 
     <!-- Mobile gradient: de arriba hacia abajo para legibilidad total del texto y botón conocer servicios -->
     <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 via-[52%] to-transparent to-[60%] pointer-events-none"></div>
@@ -110,6 +110,7 @@ const whatsappHeroUrl = buildWhatsAppLink(
         <!-- Secondary CTA Mobile: Underlined Link matching mobile mockup -->
         <Button
           variant="link"
+          size="sm"
           href="#servicios"
           data-event="services_scroll"
           data-event-location="hero_secondary_mobile"

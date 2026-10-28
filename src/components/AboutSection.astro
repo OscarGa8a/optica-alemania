@@ -1,9 +1,10 @@
 ---
 // Sección 2 — Quiénes Somos
 // Óptica Alemania Villavicencio
+import Button from './ui/Button.astro';
 ---
 
-<section id="nosotros" class="relative bg-[#F4F7FC] text-[#52617B] scroll-mt-24 overflow-hidden">
+<section id="nosotros" class="relative bg-brand-cool text-brand-body scroll-mt-24 overflow-hidden">
   <div class="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[640px] xl:min-h-[720px] items-stretch">
     <!-- Desktop Left Column / Mobile Middle: Photographic Composition -->
     <div class="order-2 lg:order-1 relative w-full h-[360px] sm:h-[460px] lg:h-full min-h-[340px] lg:min-h-[640px] overflow-hidden">
@@ -25,22 +26,21 @@
     <div class="contents lg:flex lg:flex-col lg:justify-center lg:order-2 lg:pl-16 xl:pl-24 lg:pr-12 xl:pr-20 lg:py-20 xl:py-24">
       <!-- Text content: Eyebrow, Heading, Paragraphs -->
       <div class="order-1 px-6 pt-12 pb-8 sm:px-10 sm:pt-16 sm:pb-10 lg:p-0">
-        <!-- Eyebrow with decorative rule -->
-        <div class="flex items-center gap-3 sm:gap-4">
-          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-[#182D53]">
+        <!-- Eyebrow matching hero tokens -->
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-[0.2em] text-brand-primary">
             CONÓCENOS
           </span>
-          <span class="w-14 sm:w-20 h-[1.5px] bg-[#9bb0ce]" aria-hidden="true"></span>
         </div>
 
         <!-- Section Heading: Semibold, deep navy, editorial scale -->
-        <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-[#182D53] tracking-[-0.02em] leading-[1.15] mt-4 sm:mt-6">
+        <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-brand-heading tracking-[-0.02em] leading-[1.15] mt-4 sm:mt-6">
           <span class="block">Detrás de cada mirada,</span>
           <span class="block">hay personas que cuidan de ti.</span>
         </h2>
 
         <!-- Body copy -->
-        <div class="mt-5 sm:mt-7 space-y-4 sm:space-y-5 text-base sm:text-[1.0625rem] text-[#52617B] leading-[1.75] font-normal max-w-xl">
+        <div class="mt-5 sm:mt-7 space-y-4 sm:space-y-5 text-base sm:text-[1.0625rem] text-brand-body leading-[1.75] font-normal max-w-xl">
           <p>
             En Óptica Alemania creemos que una buena atención comienza por escuchar. Queremos que cada visita sea una oportunidad para conocer tus necesidades visuales, explicarte las opciones disponibles y acompañarte con información clara. Desde Villavicencio trabajamos para que te sientas en confianza al cuidar tu visión.
           </p>
@@ -49,27 +49,16 @@
 
       <!-- Action Link CTA -->
       <div class="order-3 px-6 pt-6 pb-12 sm:px-10 sm:pt-8 sm:pb-16 lg:p-0 lg:mt-10">
-        <a
+        <Button
+          variant="link"
+          size="lg"
           href="/nosotros"
           data-event="history_click"
           data-event-location="about_section"
-          class="group inline-flex items-center gap-3.5 pr-3 pb-2 border-b-[1.5px] border-[#182D53] text-[#182D53] hover:text-[#1464D9] hover:border-[#1464D9] transition-colors font-medium text-base sm:text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1464D9] focus-visible:ring-offset-2"
+          icon="arrow-right"
         >
-          <span>Conoce nuestra historia</span>
-          <svg
-            class="w-6 h-4 transition-transform duration-200 group-hover:translate-x-1"
-            viewBox="0 0 24 16"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M1 8h21" />
-            <path d="m15 2 6 6-6 6" />
-          </svg>
-        </a>
+          Conoce nuestra historia
+        </Button>
       </div>
     </div>
   </div>
