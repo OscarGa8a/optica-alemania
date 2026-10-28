@@ -2,54 +2,60 @@
 // Sección 4 — Tecnología en Acción
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../data/siteConfig';
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
 
 const { technologies } = siteConfig;
 const item01 = technologies.find(t => t.id === 'volk-inview') || technologies[0];
 const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies[1];
 ---
 
-<section id="tecnologia" class="relative bg-gradient-to-b from-[#0C2D54] via-[#092548] to-[#072040] text-white py-14 sm:py-16 lg:py-20 scroll-mt-20 overflow-hidden">
-  <!-- Subtle eye watermark overlay from official clinic assets -->
-  <img
-    src="/images/home/eye.webp"
-    alt=""
-    class="pointer-events-none absolute -top-8 -right-20 sm:-top-16 sm:-right-12 lg:-top-20 lg:-right-16 w-[420px] sm:w-[600px] lg:w-[820px] max-w-none opacity-30 mix-blend-screen select-none"
-    loading="lazy"
-    decoding="async"
+<section id="tecnologia" class="relative bg-brand-heading text-white py-14 sm:py-16 lg:py-24 scroll-mt-20 overflow-hidden">
+  <!-- Stylized Decorative Eye Watermark from assets.webp matching About sections -->
+  <div
+    class="absolute -right-20 sm:-right-28 lg:-right-36 -top-10 sm:-top-16 lg:-top-20 w-full max-w-lg sm:max-w-xl lg:max-w-3xl xl:max-w-4xl pointer-events-none opacity-10 select-none filter brightness-0 invert z-0"
     aria-hidden="true"
-    width="1448"
-    height="1086"
-  />
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
 
-  <div class="max-w-[1360px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     
     <!-- Section Header: Eyebrow, Editorial Title & Description -->
     <div class="max-w-2xl">
-      <!-- Eyebrow -->
-      <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#6BA6E8]">
+      <!-- Eyebrow matching brand tokens -->
+      <span class="font-sans text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-ice">
         TECNOLOGÍA EN ACCIÓN
       </span>
 
-      <!-- Title: Instrument Serif, white + italic light steel blue -->
-      <h2 class="font-display text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] text-white leading-[1.08] tracking-tight mt-3 sm:mt-4">
+      <!-- Title: Instrument Serif with brand-steel italic contrast -->
+      <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-tight tracking-tight mt-3 sm:mt-4">
         <span class="block font-normal">La tecnología detrás</span>
-        <span class="block italic font-normal text-[#7FAEE8]">de cada evaluación.</span>
+        <span class="block italic font-normal text-brand-steel">de cada evaluación.</span>
       </h2>
 
       <!-- Description -->
-      <p class="text-base sm:text-lg text-[#CAD5E8] leading-relaxed mt-3 sm:mt-4 max-w-xl">
+      <p class="text-sm sm:text-base lg:text-lg text-brand-ice/80 leading-relaxed mt-3 sm:mt-4 max-w-xl">
         Conoce de cerca algunos de los procedimientos que realizamos y descubre cómo se utilizan distintas herramientas en la atención visual.
       </p>
     </div>
 
-    <!-- Technology Showcase Items: Compact rhythm matching editorial mockups -->
-    <div class="mt-10 sm:mt-12 lg:mt-14 space-y-10 sm:space-y-12 lg:space-y-12">
+    <!-- Technology Showcase Items: Clean editorial rhythm -->
+    <div class="mt-10 sm:mt-12 lg:mt-16 space-y-12 sm:space-y-16 lg:space-y-20">
       
       <!-- Item 01: Volk iNview (Desktop: Video Left, Text Right | Mobile: Video Top, Text Bottom) -->
       <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
         <!-- Video Card -->
         <div class="lg:col-span-7">
-          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[16/9.6] w-full bg-[#071F3D]">
+          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video w-full bg-brand-heading">
             <img
               src={item01.image}
               alt={item01.alt}
@@ -68,20 +74,14 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
                 aria-label={`Ver demostración de ${item01.titlePart1} ${item01.titlePart2}`}
                 data-event="video_preview_click"
                 data-event-video={item01.id}
-                class="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1464D9]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <svg
-                  class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <polygon points="6 4 20 12 6 20 6 4" />
-                </svg>
+                <Icon name="play" class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current" />
               </button>
             </div>
 
             <!-- Duration Badge -->
-            <span class="absolute bottom-3.5 left-3.5 sm:bottom-4 sm:left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
+            <span class="absolute bottom-4 left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
               {item01.duration}
             </span>
           </div>
@@ -90,41 +90,30 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
         <!-- Text Content -->
         <div class="lg:col-span-5 flex flex-col justify-center">
           <div class="flex items-center gap-3">
-            <span class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-[#7FAEE8]">{item01.number}</span>
-            <span class="w-10 h-[1.5px] bg-[#2A4D7E]"></span>
+            <span class="font-display text-2xl sm:text-3xl lg:text-4xl text-brand-steel">{item01.number}</span>
+            <span class="w-10 h-[1.5px] bg-brand-slate-border"></span>
           </div>
 
-          <h3 class="font-display text-2xl sm:text-3xl lg:text-[2.25rem] text-white leading-[1.12] mt-2.5 sm:mt-3">
+          <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl text-white leading-snug mt-3">
             <span class="block font-normal">{item01.titlePart1}</span>
-            <span class="block italic font-normal text-[#7FAEE8]">{item01.titlePart2}</span>
+            <span class="block italic font-normal text-brand-steel">{item01.titlePart2}</span>
           </h3>
 
-          <p class="text-sm sm:text-base text-[#CAD5E8] leading-relaxed mt-3 max-w-lg">
+          <p class="text-sm sm:text-base text-brand-ice/80 leading-relaxed mt-3 max-w-lg">
             {item01.description}
           </p>
 
           <div class="mt-4 sm:mt-5">
-            <a
+            <Button
+              variant="link-light"
+              size="md"
               href={item01.actionHref}
+              icon="arrow-right"
               data-event="procedure_click"
               data-event-item={item01.id}
-              class="group inline-flex items-center gap-2 text-sm sm:text-base text-[#7FAEE8] hover:text-white transition-colors border-b border-[#2A4D7E] hover:border-white pb-0.5 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
-              <span>{item01.actionText}</span>
-              <svg
-                class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </a>
+              {item01.actionText}
+            </Button>
           </div>
         </div>
       </article>
@@ -134,47 +123,36 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
         <!-- Text Content (order-2 on mobile, order-1 on desktop) -->
         <div class="order-2 lg:order-1 lg:col-span-5 flex flex-col justify-center">
           <div class="flex items-center gap-3">
-            <span class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-[#7FAEE8]">{item02.number}</span>
-            <span class="w-10 h-[1.5px] bg-[#2A4D7E]"></span>
+            <span class="font-display text-2xl sm:text-3xl lg:text-4xl text-brand-steel">{item02.number}</span>
+            <span class="w-10 h-[1.5px] bg-brand-slate-border"></span>
           </div>
 
-          <h3 class="font-display text-2xl sm:text-3xl lg:text-[2.25rem] text-white leading-[1.12] mt-2.5 sm:mt-3">
+          <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl text-white leading-snug mt-3">
             <span class="block font-normal">{item02.titlePart1}</span>
-            <span class="block italic font-normal text-[#7FAEE8]">{item02.titlePart2}</span>
+            <span class="block italic font-normal text-brand-steel">{item02.titlePart2}</span>
           </h3>
 
-          <p class="text-sm sm:text-base text-[#CAD5E8] leading-relaxed mt-3 max-w-lg">
+          <p class="text-sm sm:text-base text-brand-ice/80 leading-relaxed mt-3 max-w-lg">
             {item02.description}
           </p>
 
           <div class="mt-4 sm:mt-5">
-            <a
+            <Button
+              variant="link-light"
+              size="md"
               href={item02.actionHref}
+              icon="arrow-right"
               data-event="procedure_click"
               data-event-item={item02.id}
-              class="group inline-flex items-center gap-2 text-sm sm:text-base text-[#7FAEE8] hover:text-white transition-colors border-b border-[#2A4D7E] hover:border-white pb-0.5 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
-              <span>{item02.actionText}</span>
-              <svg
-                class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </a>
+              {item02.actionText}
+            </Button>
           </div>
         </div>
 
         <!-- Video Card (order-1 on mobile, order-2 on desktop) -->
         <div class="order-1 lg:order-2 lg:col-span-7">
-          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[16/9.6] w-full bg-[#071F3D]">
+          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video w-full bg-brand-heading">
             <img
               src={item02.image}
               alt={item02.alt}
@@ -193,20 +171,14 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
                 aria-label={`Ver demostración de ${item02.titlePart1} ${item02.titlePart2}`}
                 data-event="video_preview_click"
                 data-event-video={item02.id}
-                class="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-[#1464D9]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <svg
-                  class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <polygon points="6 4 20 12 6 20 6 4" />
-                </svg>
+                <Icon name="play" class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current" />
               </button>
             </div>
 
             <!-- Duration Badge -->
-            <span class="absolute bottom-3.5 left-3.5 sm:bottom-4 sm:left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
+            <span class="absolute bottom-4 left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
               {item02.duration}
             </span>
           </div>

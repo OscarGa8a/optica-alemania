@@ -3,35 +3,37 @@
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
 
 const { services } = siteConfig;
 ---
 
-<section id="servicios" class="relative bg-[#F4F7FC] text-[#52617B] py-16 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden">
-  <!-- Subtle organic background wash matching design tokens -->
-  <div class="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+<section id="servicios" class="relative bg-brand-cool text-brand-body py-12 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden">
+  <!-- Consistent fluid container matching Hero, Navbar, and /nosotros -->
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
       
       <!-- Left Column: Eyebrow, Heading, Description & Large Featured Image -->
       <div class="lg:col-span-5 flex flex-col">
-        <!-- Eyebrow -->
-        <span class="text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-[#1464D9]">
+        <!-- Eyebrow matching brand rhythm -->
+        <span class="font-sans text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.2em] text-brand-primary">
           NUESTROS SERVICIOS
         </span>
 
         <!-- Section Title: Instrument Serif, editorial contrast with italic brand blue -->
-        <h2 class="font-display text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] text-[#182D53] leading-[1.06] tracking-tight mt-4 sm:mt-5">
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5">
           <span class="block font-normal">Atención visual</span>
-          <span class="block italic font-normal text-[#1464D9]">para cada necesidad.</span>
+          <span class="block italic font-normal text-brand-primary">para cada necesidad.</span>
         </h2>
 
         <!-- Description -->
-        <p class="text-base sm:text-lg text-[#52617B] leading-relaxed mt-4 sm:mt-6 max-w-lg">
+        <p class="text-sm sm:text-lg text-brand-body leading-relaxed mt-3 sm:mt-6 max-w-lg">
           Conoce algunas de las evaluaciones y servicios de salud visual que puedes consultar en Óptica Alemania. Encuentra más información sobre cada uno en nuestra página de Servicios.
         </p>
 
-        <!-- Featured Clinic Image Card: Height adjusted to harmonize with services list -->
-        <div class="mt-8 sm:mt-10 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 w-full h-[280px] sm:h-[380px] lg:h-[460px] xl:h-[500px]">
+        <!-- Featured Clinic Image Card: Height harmonized with services list -->
+        <div class="mt-6 sm:mt-10 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 w-full h-[220px] sm:h-[340px] lg:h-[400px] xl:h-[440px]">
           <img
             src="/images/home/3_nuestros_servicios_image1.webp"
             alt="Especialista de Óptica Alemania realizando examen de agudeza visual con foróptero"
@@ -46,7 +48,7 @@ const { services } = siteConfig;
 
       <!-- Right Column: Interactive Services List & Bottom CTA -->
       <div class="lg:col-span-7 flex flex-col pt-2 lg:pt-4">
-        <div class="divide-y divide-[#E2EAF4] border-t border-b border-[#E2EAF4]">
+        <div class="divide-y divide-brand-border border-t border-b border-brand-border">
           {services.map((service) => {
             const serviceUrl = buildWhatsAppLink(service.whatsappMessage, siteConfig.contact.whatsappNumber);
             return (
@@ -57,15 +59,15 @@ const { services } = siteConfig;
                 data-event="service_click"
                 data-event-service={service.id}
                 aria-label={`Solicitar información sobre ${service.title}`}
-                class="group flex items-center gap-4 sm:gap-6 py-5 sm:py-6 lg:py-7 px-2 sm:px-4 rounded-2xl hover:bg-white/70 transition-all duration-200"
+                class="group flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4 rounded-2xl hover:bg-white/70 active:bg-white/90 transition-all duration-200"
               >
                 <!-- Numeric Index: Instrument Serif -->
-                <span class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-[#8CA4C7] group-hover:text-[#1464D9] transition-colors min-w-[2rem] sm:min-w-[2.5rem]">
+                <span class="font-display text-xl sm:text-2xl lg:text-[2rem] text-brand-primary/40 group-hover:text-brand-primary transition-colors min-w-[1.25rem] sm:min-w-[2.5rem] shrink-0 text-center sm:text-left">
                   {service.number}
                 </span>
 
-                <!-- Service Thumbnail: Rounded-2xl, crisp clinic photography -->
-                <div class="relative w-24 h-16 sm:w-32 sm:h-22 lg:w-36 lg:h-24 rounded-2xl overflow-hidden shrink-0 shadow-xs border border-white/80">
+                <!-- Service Thumbnail: Crisp clinic photography -->
+                <div class="relative w-18 h-14 sm:w-28 sm:h-20 lg:w-36 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs border border-white/80">
                   <img
                     src={service.image}
                     alt={service.alt}
@@ -78,30 +80,21 @@ const { services } = siteConfig;
                 </div>
 
                 <!-- Textual Content -->
-                <div class="flex-1 min-w-0 pr-2">
-                  <h3 class="font-display text-lg sm:text-xl lg:text-[1.375rem] font-semibold text-[#182D53] group-hover:text-[#1464D9] transition-colors leading-snug">
+                <div class="flex-1 min-w-0 pr-1 sm:pr-2">
+                  <h3 class="font-display text-base sm:text-xl lg:text-[1.375rem] font-normal text-brand-heading group-hover:text-brand-primary transition-colors leading-snug">
                     {service.title}
                   </h3>
-                  <p class="text-xs sm:text-sm text-[#52617B] leading-relaxed mt-1 sm:mt-1.5 line-clamp-2">
+                  <p class="text-xs sm:text-sm text-brand-body leading-relaxed mt-1 sm:mt-1.5 line-clamp-3 sm:line-clamp-none">
                     {service.description}
                   </p>
                 </div>
 
                 <!-- Circle Action Arrow Button -->
-                <div class="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-[#EBF2FC] text-[#182D53] group-hover:bg-[#1464D9] group-hover:text-white transition-all duration-200 flex items-center justify-center shrink-0">
-                  <svg
-                    class="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+                <div class="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-brand-mist text-brand-heading group-hover:bg-brand-primary group-hover:text-white transition-all duration-200 flex items-center justify-center shrink-0">
+                  <Icon
+                    name="arrow-right"
+                    class="w-3.5 h-3.5 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
                 </div>
               </a>
             );
@@ -109,28 +102,17 @@ const { services } = siteConfig;
         </div>
 
         <!-- Section Footer Link CTA -->
-        <div class="mt-8 sm:mt-10 px-2 sm:px-4">
-          <a
-            href="#contacto"
+        <div class="mt-8 sm:mt-10 px-1.5 sm:px-4">
+          <Button
+            variant="link"
+            size="lg"
+            href="/servicios"
+            icon="arrow-right"
             data-event="services_all_click"
             data-event-location="services_section"
-            class="group inline-flex items-center gap-2 pb-1.5 border-b-[1.5px] border-[#1464D9] text-[#1464D9] hover:text-[#182D53] hover:border-[#182D53] transition-colors font-medium text-base sm:text-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1464D9] focus-visible:ring-offset-2"
           >
-            <span>Ver todos los servicios</span>
-            <svg
-              class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
+            Ver todos los servicios
+          </Button>
         </div>
       </div>
 
