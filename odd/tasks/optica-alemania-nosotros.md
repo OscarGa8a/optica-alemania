@@ -43,3 +43,4 @@ L7: Verificación profunda con Playwright sección por sección respecto a los m
 - Sección 6: Ampliada altura del banner a min-h 640px, centrada la filigrana de ojo y ajustada tipografía editorial.
 - Regeneradas todas las comparativas visuales side-by-side y certificada la suite sin errores ni overflow.
 L8: PR #7 mergeado en main (d64d57c). Sincronizados repositorio principal local y worktree.
+L9: Rediseño de AboutHero a full-bleed (100% ancho y alto, gradiente suave translúcido antes del centro, eliminación de líneas azules, tipografía fluida clamp en H1), alineación horizontal simétrica de Navbar con Hero, y reemplazo del logo de texto por imagen de marca oficial (docs/logo.png) con conmutación dinámica claro/oscuro. PR #14 abierto en GitHub (rama: feat/about-hero-and-logo).
