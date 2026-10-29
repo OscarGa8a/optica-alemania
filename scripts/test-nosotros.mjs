@@ -158,6 +158,43 @@ async function run() {
         console.log(`✅ [${vp.name}] Hero typography, colors, text fit and history link match the design system`);
       }
 
+      // Pin Hero CTA button to shared Button variant="link" (blue idle -> darker navy hover)
+      const heroCtaMatches = await page.locator('#inicio a[data-event="history_click"]').evaluate((link) => {
+        const cls = [...link.classList];
+        return cls.includes('text-brand-primary') && cls.includes('hover:text-brand-heading');
+      });
+      if (!heroCtaMatches) {
+        console.error(`❌ [${vp.name}] Expected Hero CTA to use Button variant="link" (text-brand-primary hover:text-brand-heading)`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Hero CTA uses Button variant="link" (blue idle -> darker hover)`);
+      }
+
+      // Pin Vision block in #proposito and #estamos-para-ti section to bg-brand-midnight (#0B1B36 -> rgb(11, 27, 54))
+      const midnightCheck = await page.evaluate(() => {
+        const visionBlock = document.querySelector('#proposito .grid > div:nth-child(2)');
+        const ctaSection = document.querySelector('#estamos-para-ti');
+        const visionBg = visionBlock ? getComputedStyle(visionBlock).backgroundColor : null;
+        const ctaBg = ctaSection ? getComputedStyle(ctaSection).backgroundColor : null;
+        return {
+          visionHasMidnightClass: visionBlock ? visionBlock.classList.contains('bg-brand-midnight') : false,
+          ctaHasMidnightClass: ctaSection ? ctaSection.classList.contains('bg-brand-midnight') : false,
+          visionBg,
+          ctaBg,
+        };
+      });
+      if (
+        !midnightCheck.visionHasMidnightClass ||
+        !midnightCheck.ctaHasMidnightClass ||
+        midnightCheck.visionBg !== 'rgb(11, 27, 54)' ||
+        midnightCheck.ctaBg !== 'rgb(11, 27, 54)'
+      ) {
+        console.error(`❌ [${vp.name}] Expected Vision block and #estamos-para-ti to use bg-brand-midnight (rgb(11, 27, 54)):`, midnightCheck);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Vision block and #estamos-para-ti use bg-brand-midnight (rgb(11, 27, 54))`);
+      }
+
       // 1. Check Console Errors
       if (consoleErrors.length > 0) {
         console.error(`❌ [${vp.name}] Console Errors detected:`, consoleErrors);
