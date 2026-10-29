@@ -63,7 +63,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   glass:
     'border border-white/20 hover:border-white/40 bg-white/10 hover:bg-white/15 text-white backdrop-blur-md',
   link:
-    `group ${displayClass} items-center text-brand-heading hover:text-brand-primary transition-colors font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary`.trim(),
+    `group ${displayClass} items-center text-brand-primary hover:text-brand-heading transition-colors font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary`.trim(),
   'link-light':
     `group ${displayClass} items-center text-brand-steel hover:text-white group-hover:text-white font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white`.trim(),
 };
@@ -113,7 +113,9 @@ const commonProps = {
           <slot />
         </span>
       ) : (
-        <span><slot /></span>
+        Astro.slots.has('default') ? (
+          <span><slot /></span>
+        ) : null
       )}
       {icon && iconPosition === 'right' && <Icon name={icon} class={finalIconClass} />}
     </a>
@@ -125,7 +127,9 @@ const commonProps = {
           <slot />
         </span>
       ) : (
-        <span><slot /></span>
+        Astro.slots.has('default') ? (
+          <span><slot /></span>
+        ) : null
       )}
       {icon && iconPosition === 'right' && <Icon name={icon} class={finalIconClass} />}
     </button>

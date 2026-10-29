@@ -4,20 +4,20 @@
 import { siteConfig } from '../data/siteConfig';
 
 const { trajectory } = siteConfig;
-const [carabao, itau, crismasol, entrepalmas, copalma] = trajectory.organizations;
+const [carabao, cofrem, crismasol, entrepalmas, copalma] = trajectory.organizations;
 ---
 
 <section
   id="trayectoria"
-  class="relative bg-[#F4FAFE] text-[#52617B] py-16 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
+  class="relative bg-brand-cool text-brand-body py-14 sm:py-16 lg:py-24 scroll-mt-20 overflow-hidden"
 >
-  <!-- Atmospheric soft ambient clinic lighting & gentle gradients -->
-  <div class="absolute top-[-10%] left-[-8%] w-[750px] h-[650px] bg-[#E7F3FD]/75 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
-  <div class="absolute bottom-[-10%] right-[-8%] w-[700px] h-[600px] bg-[#EAF2FC]/65 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <!-- Atmospheric soft ambient clinic lighting & gentle gradients matching brand tokens -->
+  <div class="absolute -top-24 -left-20 w-96 sm:w-144 h-96 sm:h-144 bg-brand-blue-soft/50 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -bottom-24 -right-20 w-80 sm:w-128 h-80 sm:h-128 bg-brand-ice/40 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
 
-  <!-- Decorative subtle background curves matching mockup aesthetic -->
+  <!-- Decorative subtle background curves matching brand rhythm -->
   <svg
-    class="absolute inset-0 w-full h-full pointer-events-none select-none opacity-90"
+    class="absolute inset-0 w-full h-full pointer-events-none select-none opacity-90 text-brand-primary"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1440 900"
     preserveAspectRatio="none"
@@ -26,52 +26,52 @@ const [carabao, itau, crismasol, entrepalmas, copalma] = trajectory.organization
     <path
       d="M-80,90 C180,30 460,250 820,160 C1180,70 1420,210 1560,150"
       fill="none"
-      stroke="#1464D9"
+      stroke="currentColor"
       stroke-width="1.2"
       stroke-opacity="0.14"
     />
     <path
       d="M-40,150 C220,90 500,310 860,220 C1220,130 1450,270 1590,210"
       fill="none"
-      stroke="#1464D9"
+      stroke="currentColor"
       stroke-width="1"
       stroke-opacity="0.08"
     />
     <path
       d="M720,920 C960,820 1160,660 1360,700 C1460,720 1540,790 1600,850"
       fill="none"
-      stroke="#1464D9"
+      stroke="currentColor"
       stroke-width="1.2"
       stroke-opacity="0.14"
     />
     <path
       d="M680,970 C920,870 1120,710 1320,750 C1420,770 1500,840 1580,900"
       fill="none"
-      stroke="#1464D9"
+      stroke="currentColor"
       stroke-width="1"
       stroke-opacity="0.07"
     />
   </svg>
 
-  <div class="max-w-[1380px] mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     <!-- Header: Editorial & Centered on Desktop / Left-aligned on Mobile -->
     <div class="text-left md:text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20">
       <!-- Eyebrow -->
-      <span class="inline-block text-xs sm:text-[0.8125rem] font-semibold uppercase tracking-[0.22em] text-[#1464D9]">
+      <span class="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-primary">
         {trajectory.eyebrow}
       </span>
 
       <!-- Desktop decorative line under eyebrow -->
-      <div class="hidden md:block w-14 h-[2px] bg-[#1464D9] mx-auto mt-2.5 mb-6 rounded-full" aria-hidden="true"></div>
+      <div class="hidden md:block w-14 h-0.5 bg-brand-primary mx-auto mt-2.5 mb-6 rounded-full" aria-hidden="true"></div>
 
       <!-- H2 Title (two distinct lines with editorial serif) -->
-      <h2 class="font-display text-[2.85rem] sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[76px] text-[#182D53] leading-[1.03] tracking-tight mt-3 md:mt-0">
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-heading leading-tight tracking-tight mt-3 md:mt-0">
         <span class="block font-normal">{trajectory.titlePart1}</span>
-        <span class="block italic font-normal text-[#1464D9]">{trajectory.titlePart2}</span>
+        <span class="block italic font-normal text-brand-primary">{trajectory.titlePart2}</span>
       </h2>
 
       <!-- Description -->
-      <p class="mt-4 sm:mt-5 text-[15px] sm:text-base lg:text-lg text-[#52617B] max-w-xl mx-auto leading-relaxed">
+      <p class="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-brand-body max-w-xl mx-auto leading-relaxed">
         {trajectory.description}
       </p>
     </div>
@@ -79,65 +79,65 @@ const [carabao, itau, crismasol, entrepalmas, copalma] = trajectory.organization
     <!-- Mobile View (< md): 2x2 Grid + 1 Full-width card with white rounded boxes -->
     <div class="grid grid-cols-2 gap-3.5 sm:gap-4 md:hidden">
       <!-- Card 1: Carabao -->
-      <div class="bg-white rounded-3xl border border-blue-100/60 shadow-[0_4px_20px_rgba(20,100,217,0.03)] p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-[0.98]">
+      <div class="bg-white rounded-2xl sm:rounded-3xl border border-brand-border shadow-xs p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-95">
         <img
           src={carabao.image.src}
           alt={carabao.image.alt}
           width={carabao.image.width}
           height={carabao.image.height}
-          class="max-h-24 sm:max-h-28 w-auto max-w-[94%] object-contain"
+          class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain"
           loading="lazy"
           decoding="async"
         />
       </div>
 
-      <!-- Card 2: Itaú -->
-      <div class="bg-white rounded-3xl border border-blue-100/60 shadow-[0_4px_20px_rgba(20,100,217,0.03)] p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-[0.98]">
+      <!-- Card 2: Cofrem -->
+      <div class="bg-white rounded-2xl sm:rounded-3xl border border-brand-border shadow-xs p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-95">
         <img
-          src={itau.image.src}
-          alt={itau.image.alt}
-          width={itau.image.width}
-          height={itau.image.height}
-          class="max-h-28 sm:max-h-32 w-auto max-w-[84%] object-contain"
+          src={cofrem.image.src}
+          alt={cofrem.image.alt}
+          width={cofrem.image.width}
+          height={cofrem.image.height}
+          class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain"
           loading="lazy"
           decoding="async"
         />
       </div>
 
       <!-- Card 3: Crismasol -->
-      <div class="bg-white rounded-3xl border border-blue-100/60 shadow-[0_4px_20px_rgba(20,100,217,0.03)] p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-[0.98]">
+      <div class="bg-white rounded-2xl sm:rounded-3xl border border-brand-border shadow-xs p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-95">
         <img
           src={crismasol.image.src}
           alt={crismasol.image.alt}
           width={crismasol.image.width}
           height={crismasol.image.height}
-          class="max-h-24 sm:max-h-28 w-auto max-w-[94%] object-contain"
+          class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain"
           loading="lazy"
           decoding="async"
         />
       </div>
 
       <!-- Card 4: Entrepalmas -->
-      <div class="bg-white rounded-3xl border border-blue-100/60 shadow-[0_4px_20px_rgba(20,100,217,0.03)] p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-[0.98]">
+      <div class="bg-white rounded-2xl sm:rounded-3xl border border-brand-border shadow-xs p-3.5 sm:p-4 aspect-square flex items-center justify-center transition-transform active:scale-95">
         <img
           src={entrepalmas.image.src}
           alt={entrepalmas.image.alt}
           width={entrepalmas.image.width}
           height={entrepalmas.image.height}
-          class="max-h-24 sm:max-h-28 w-auto max-w-[94%] object-contain"
+          class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain"
           loading="lazy"
           decoding="async"
         />
       </div>
 
       <!-- Card 5 (col-span-2): Copalma -->
-      <div class="col-span-2 bg-white rounded-3xl border border-blue-100/60 shadow-[0_4px_20px_rgba(20,100,217,0.03)] p-5 sm:p-6 aspect-[2.1/1] flex items-center justify-center transition-transform active:scale-[0.98]">
+      <div class="col-span-2 bg-white rounded-2xl sm:rounded-3xl border border-brand-border shadow-xs p-5 sm:p-6 aspect-2/1 flex items-center justify-center transition-transform active:scale-95">
         <img
           src={copalma.image.src}
           alt={copalma.image.alt}
           width={copalma.image.width}
           height={copalma.image.height}
-          class="max-h-24 sm:max-h-28 w-auto max-w-[82%] object-contain"
+          class="max-h-24 sm:max-h-28 w-auto max-w-full object-contain"
           loading="lazy"
           decoding="async"
         />
@@ -147,47 +147,47 @@ const [carabao, itau, crismasol, entrepalmas, copalma] = trajectory.organization
     <!-- Desktop View (>= md): Editorial Logo Cloud with Subtle Vertical Dividers -->
     <div class="hidden md:flex flex-col items-center gap-14 lg:gap-16 max-w-5xl mx-auto">
       <!-- Row 1: 3 Organizations with 2 vertical dividers -->
-      <div class="w-full max-w-[1060px] grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-4 lg:gap-8">
+      <div class="w-full max-w-5xl flex items-center justify-between gap-4 lg:gap-8">
         <!-- Item 1: Carabao -->
-        <div class="flex items-center justify-center px-4">
+        <div class="flex-1 flex items-center justify-center px-4">
           <img
             src={carabao.image.src}
             alt={carabao.image.alt}
             width={carabao.image.width}
             height={carabao.image.height}
-            class="h-20 lg:h-24 xl:h-[98px] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+            class="h-20 lg:h-24 xl:h-28 w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
           />
         </div>
 
         <!-- Vertical Divider 1 -->
-        <div class="w-[1px] h-20 lg:h-24 bg-slate-300/80" aria-hidden="true"></div>
+        <div class="w-px h-20 lg:h-24 bg-brand-border shrink-0" aria-hidden="true"></div>
 
-        <!-- Item 2: Itaú -->
-        <div class="flex items-center justify-center px-4">
+        <!-- Item 2: Cofrem -->
+        <div class="flex-1 flex items-center justify-center px-4">
           <img
-            src={itau.image.src}
-            alt={itau.image.alt}
-            width={itau.image.width}
-            height={itau.image.height}
-            class="h-28 lg:h-32 xl:h-[135px] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+            src={cofrem.image.src}
+            alt={cofrem.image.alt}
+            width={cofrem.image.width}
+            height={cofrem.image.height}
+            class="h-24 lg:h-28 xl:h-32 w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
           />
         </div>
 
         <!-- Vertical Divider 2 -->
-        <div class="w-[1px] h-20 lg:h-24 bg-slate-300/80" aria-hidden="true"></div>
+        <div class="w-px h-20 lg:h-24 bg-brand-border shrink-0" aria-hidden="true"></div>
 
         <!-- Item 3: Crismasol -->
-        <div class="flex items-center justify-center px-4">
+        <div class="flex-1 flex items-center justify-center px-4">
           <img
             src={crismasol.image.src}
             alt={crismasol.image.alt}
             width={crismasol.image.width}
             height={crismasol.image.height}
-            class="h-20 lg:h-24 xl:h-[98px] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+            class="h-20 lg:h-24 xl:h-28 w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
           />
@@ -195,31 +195,31 @@ const [carabao, itau, crismasol, entrepalmas, copalma] = trajectory.organization
       </div>
 
       <!-- Row 2: 2 Organizations with 1 central vertical divider -->
-      <div class="w-full max-w-[740px] grid grid-cols-[1fr_auto_1fr] items-center gap-4 lg:gap-8">
+      <div class="w-full max-w-3xl flex items-center justify-between gap-4 lg:gap-8">
         <!-- Item 4: Entrepalmas -->
-        <div class="flex items-center justify-center px-4">
+        <div class="flex-1 flex items-center justify-center px-4">
           <img
             src={entrepalmas.image.src}
             alt={entrepalmas.image.alt}
             width={entrepalmas.image.width}
             height={entrepalmas.image.height}
-            class="h-20 lg:h-24 xl:h-[98px] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+            class="h-20 lg:h-24 xl:h-28 w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
           />
         </div>
 
         <!-- Vertical Divider 3 -->
-        <div class="w-[1px] h-20 lg:h-24 bg-slate-300/80" aria-hidden="true"></div>
+        <div class="w-px h-20 lg:h-24 bg-brand-border shrink-0" aria-hidden="true"></div>
 
         <!-- Item 5: Copalma -->
-        <div class="flex items-center justify-center px-4">
+        <div class="flex-1 flex items-center justify-center px-4">
           <img
             src={copalma.image.src}
             alt={copalma.image.alt}
             width={copalma.image.width}
             height={copalma.image.height}
-            class="h-20 lg:h-24 xl:h-[98px] w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
+            class="h-20 lg:h-24 xl:h-28 w-auto max-w-full object-contain transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
           />

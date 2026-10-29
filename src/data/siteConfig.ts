@@ -14,6 +14,8 @@ export interface BusinessContact {
   city: string;
   department: string;
   schedule: string;
+  scheduleWeekdays: string;
+  scheduleSaturday: string;
   instagram: string;
   instagramUrl: string;
   facebookUrl: string;
@@ -366,6 +368,8 @@ export const siteConfig: SiteConfig = {
     city: "Villavicencio",
     department: "Meta",
     schedule: "Lunes a viernes 8:30 a. m. – 6:00 p. m. | Sábados 8:30 a. m. – 3:00 p. m.",
+    scheduleWeekdays: "Lunes a viernes 8:30 a. m. – 6:00 p. m.",
+    scheduleSaturday: "Sábados 8:30 a. m. – 3:00 p. m.",
     instagram: "@opticaalemania",
     instagramUrl: "https://www.instagram.com/opticaalemania/",
     facebookUrl: "https://www.facebook.com/opticaalemaniavillavicencio/",
@@ -554,18 +558,18 @@ export const siteConfig: SiteConfig = {
         image: {
           src: "/images/home/8_nuestra_trayectoria_image2.webp",
           alt: "Logotipo de Palmeras Carabao S.A., aliado corporativo de Óptica Alemania",
-          width: 1152,
-          height: 448,
+          width: 1200,
+          height: 743,
         },
       },
       {
-        id: "itau",
-        name: "Itaú",
+        id: "cofrem",
+        name: "Cofrem",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_image3.webp",
-          alt: "Logotipo de Banco Itaú, organización aliada en la trayectoria de Óptica Alemania",
-          width: 484,
-          height: 480,
+          src: "/images/home/8_nuestra_trayectoria_cofrem.webp",
+          alt: "Logotipo de Caja de Compensación Familiar Cofrem, aliado institucional de Óptica Alemania",
+          width: 670,
+          height: 800,
         },
       },
       {
@@ -574,8 +578,8 @@ export const siteConfig: SiteConfig = {
         image: {
           src: "/images/home/8_nuestra_trayectoria_image4.webp",
           alt: "Logotipo de Inversiones Crismasol S.A.S., aliado institucional de Óptica Alemania",
-          width: 1234,
-          height: 422,
+          width: 1200,
+          height: 719,
         },
       },
       {
@@ -584,8 +588,8 @@ export const siteConfig: SiteConfig = {
         image: {
           src: "/images/home/8_nuestra_trayectoria_image5.webp",
           alt: "Logotipo de Entrepalmas, empresa aliada de Óptica Alemania",
-          width: 1192,
-          height: 382,
+          width: 1138,
+          height: 800,
         },
       },
       {
@@ -594,8 +598,8 @@ export const siteConfig: SiteConfig = {
         image: {
           src: "/images/home/8_nuestra_trayectoria_image1.webp",
           alt: "Logotipo de Copalma, aliado corporativo en la trayectoria de Óptica Alemania",
-          width: 1062,
-          height: 398,
+          width: 1200,
+          height: 690,
         },
       },
     ],
