@@ -104,6 +104,26 @@ export interface FramesConfig {
   categories: FrameCategory[];
 }
 
+export interface CofremBenefitItem {
+  id: string;
+  discount: string;
+  label: string;
+  icon: 'glasses' | 'lenses';
+  theme: 'blue' | 'green';
+}
+
+export interface CofremSectionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  disclaimer: string;
+  logo: SpaceImage;
+  benefits: CofremBenefitItem[];
+}
+
 export interface TrajectoryOrganization {
   id: string;
   name: string;
@@ -346,6 +366,7 @@ export interface SiteConfig {
   space: SpaceSectionConfig;
   kidsVision: KidsVisionConfig;
   frames: FramesConfig;
+  cofrem: CofremSectionConfig;
   trajectory: TrajectoryConfig;
   contactSection: ContactSectionConfig;
   footer: FooterConfig;
@@ -543,6 +564,37 @@ export const siteConfig: SiteConfig = {
           height: 615,
         },
         whatsappMessage: "Hola, quisiera consultar por monturas para niños en Óptica Alemania.",
+      },
+    ],
+  },
+  cofrem: {
+    eyebrow: "BENEFICIOS ESPECIALES",
+    titlePart1: "Club descuentos",
+    titlePart2: "Cofrem.",
+    description: "Si haces parte del Club Descuentos Cofrem, en Óptica Alemania puedes acceder a beneficios especiales en productos seleccionados.",
+    ctaText: "Consultar beneficio",
+    whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania.",
+    disclaimer: "Aplican condiciones. Beneficios sujetos a validación del convenio vigente.",
+    logo: {
+      src: "/images/home/8_nuestra_trayectoria_cofrem.webp",
+      alt: "Logotipo de Cofrem Caja de Compensación Familiar, convenio de descuentos en Óptica Alemania",
+      width: 670,
+      height: 800,
+    },
+    benefits: [
+      {
+        id: "montura",
+        discount: "15%",
+        label: "en montura",
+        icon: "glasses",
+        theme: "green",
+      },
+      {
+        id: "lente-oftalmico",
+        discount: "10%",
+        label: "en lente oftálmico",
+        icon: "lenses",
+        theme: "blue",
       },
     ],
   },

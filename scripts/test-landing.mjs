@@ -77,6 +77,7 @@ async function run() {
       spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_desktop_actual.png',
       framesScreenshot: '7_monturas_desktop_actual.png',
+      cofremScreenshot: '8_club_descuentos_cofrem_desktop_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_desktop_actual.png',
       contactScreenshot: '9_contacto_desktop_actual.png',
       footerScreenshot: '10_footer_desktop_actual.png',
@@ -92,6 +93,7 @@ async function run() {
       spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
       kidsVisionScreenshot: '6_visual_infantil_mobile_actual.png',
       framesScreenshot: '7_monturas_mobile_actual.png',
+      cofremScreenshot: '8_club_descuentos_cofrem_mobile_actual.png',
       trajectoryScreenshot: '8_nuestra_trayectoria_mobile_actual.png',
       contactScreenshot: '9_contacto_mobile_actual.png',
       footerScreenshot: '10_footer_mobile_actual.png',
@@ -208,6 +210,17 @@ async function run() {
         console.log(`✅ [${vp.name}] About image loaded (naturalWidth: ${imgNaturalWidth}px)`);
       }
 
+      // Verify hover zoom effect on About image
+      const aboutHasHoverScale = await aboutSection.locator('img').evaluate((img) => {
+        return [...img.classList].some((c) => c.startsWith('group-hover:scale-') || c.startsWith('hover:scale-'));
+      });
+      if (!aboutHasHoverScale) {
+        console.error(`❌ [${vp.name}] Expected About image to have hover scale effect!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] About image hover scale effect verified`);
+      }
+
       // Verify CTA link
       const cta = aboutSection.locator('a[data-event="history_click"]');
       const ctaHref = await cta.getAttribute('href');
@@ -274,6 +287,17 @@ async function run() {
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] Services featured image loaded (naturalWidth: ${featuredImgWidth}px)`);
+      }
+
+      // Verify hover zoom effect on Services featured left image
+      const servicesFeaturedHasHoverScale = await servicesSection.locator('img').first().evaluate((img) => {
+        return [...img.classList].some((c) => c.startsWith('group-hover:scale-') || c.startsWith('hover:scale-'));
+      });
+      if (!servicesFeaturedHasHoverScale) {
+        console.error(`❌ [${vp.name}] Expected Services featured image to have hover scale effect!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Services featured image hover scale effect verified`);
       }
 
       // Verify CTA link
@@ -580,6 +604,113 @@ async function run() {
       });
     }
 
+    // Section 7.5 — Club Descuentos Cofrem verification
+    const cofremSection = page.locator('#cofrem');
+    const cofremCount = await cofremSection.count();
+    if (cofremCount === 0) {
+      console.error(`❌ [${vp.name}] Section #cofrem not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #cofrem exists`);
+
+      // Verify heading text
+      const headingText = await cofremSection.locator('h2').textContent();
+      if (!headingText || !headingText.includes('Club descuentos')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Club descuentos', got: '${headingText}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Club descuentos'`);
+      }
+
+      // Verify 2 discount benefit cards exist
+      const benefitCards = cofremSection.locator('[data-cofrem-benefit]');
+      const benefitCount = await benefitCards.count();
+      if (benefitCount !== 2) {
+        console.error(`❌ [${vp.name}] Expected 2 Cofrem benefit cards, got: ${benefitCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 2 Cofrem benefit cards verified (15% montura, 10% lente oftálmico)`);
+      }
+
+      // Verify Cofrem logo loaded properly
+      const cofremLogo = cofremSection.locator('img');
+      const logoNaturalWidth = await cofremLogo.first().evaluate((img) => img.naturalWidth);
+      if (!logoNaturalWidth || logoNaturalWidth === 0) {
+        console.error(`❌ [${vp.name}] Cofrem logo failed to load!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Cofrem logo loaded successfully (naturalWidth: ${logoNaturalWidth}px)`);
+      }
+
+      // Verify WhatsApp CTA button
+      const cofremCta = cofremSection.locator('a[data-event="whatsapp_cta"][data-event-location="cofrem_section"]');
+      const cofremCtaCount = await cofremCta.count();
+      if (cofremCtaCount < 1) {
+        console.error(`❌ [${vp.name}] Expected Cofrem WhatsApp CTA button, got: ${cofremCtaCount}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Cofrem WhatsApp CTA button verified`);
+      }
+
+      // Verify Cofrem benefit cards have rounded icon on the left in both mobile and desktop
+      const iconLeftRounded = await cofremSection.evaluate((section) => {
+        const cards = [...section.querySelectorAll('[data-cofrem-benefit]')];
+        return cards.every((card) => {
+          const iconWrap = card.firstElementChild;
+          const textWrap = card.lastElementChild;
+          if (!iconWrap || !textWrap) return false;
+          const iconRect = iconWrap.getBoundingClientRect();
+          const textRect = textWrap.getBoundingClientRect();
+          const style = getComputedStyle(iconWrap);
+          return iconRect.left < textRect.left && parseFloat(style.borderRadius) >= 20;
+        });
+      });
+      if (!iconLeftRounded) {
+        console.error(`❌ [${vp.name}] Expected Cofrem benefit cards to have rounded icon on the left!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Cofrem benefit cards have rounded icon on the left`);
+      }
+
+      // Verify no arbitrary bracket Tailwind classes exist inside #cofrem
+      const arbitraryClasses = await cofremSection.evaluate((section) => {
+        const allElements = [section, ...section.querySelectorAll('*')];
+        const found = [];
+        for (const el of allElements) {
+          for (const cls of el.classList) {
+            if (cls.includes('[') && cls.includes(']')) {
+              found.push(cls);
+            }
+          }
+        }
+        return found;
+      });
+      if (arbitraryClasses.length > 0) {
+        console.error(`❌ [${vp.name}] Found arbitrary Tailwind classes in #cofrem: ${arbitraryClasses.join(', ')}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] 0 arbitrary Tailwind classes in #cofrem`);
+      }
+
+      // Scroll into view and screenshot the section without sticky header
+      await cofremSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const cofremShotPath = path.join(SCREENSHOTS_DIR, vp.cofremScreenshot);
+      await cofremSection.screenshot({ path: cofremShotPath });
+      console.log(`📸 [${vp.name}] Club Descuentos Cofrem screenshot saved: ${path.relative(ROOT_DIR, cofremShotPath)}`);
+
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
     // Section 8 — Nuestra Trayectoria verification
     const trajectorySection = page.locator('#trayectoria');
     const trajectoryCount = await trajectorySection.count();
@@ -681,6 +812,26 @@ async function run() {
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] WhatsApp CTA button verified`);
+      }
+
+      // Verify contact items are vertically stacked (not 4-col horizontal grid) on all viewports
+      const contactItemsVertical = await contactSection.evaluate((section) => {
+        const list = section.querySelector('[data-contact-list]');
+        if (!list) return false;
+        const items = [...list.children];
+        if (items.length !== 4) return false;
+        for (let i = 1; i < items.length; i++) {
+          if (items[i].getBoundingClientRect().top <= items[i - 1].getBoundingClientRect().top) {
+            return false;
+          }
+        }
+        return true;
+      });
+      if (!contactItemsVertical) {
+        console.error(`❌ [${vp.name}] Expected contact items to be vertically stacked!`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Contact items vertically stacked verified`);
       }
 
       // Scroll into view and screenshot the section without sticky header
