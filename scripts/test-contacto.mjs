@@ -113,6 +113,7 @@ async function run() {
       });
 
       await page.goto(baseUrl, { waitUntil: 'networkidle' });
+      await page.evaluate(() => document.fonts.ready);
 
       // 1. Check Console Errors
       if (consoleErrors.length > 0) {
@@ -154,8 +155,97 @@ async function run() {
         );
       }
 
-      // 4. Capture section screenshots
-      // Hero Contacto (including site header as in mockup)
+      // 4. Verify shared tokens, alignment, Button/Icon usage, and zero arbitrary bracket classes
+      const contactChecks = await page.evaluate(() => {
+        const headerContainer = document.querySelector('#site-header > div');
+        const heroContainer = document.querySelector('#inicio > div.relative.z-10');
+        const ubicacionContainers = [...document.querySelectorAll('#ubicacion > div > div.w-full.relative.z-10')];
+
+        const headerRect = headerContainer?.getBoundingClientRect();
+        const heroRect = heroContainer?.getBoundingClientRect();
+
+        // Check left text column padding matches header
+        const leftAligned =
+          headerRect &&
+          heroRect &&
+          Math.abs(headerRect.left - heroRect.left) <= 1 &&
+          ubicacionContainers.length === 2 &&
+          ubicacionContainers.every((el) => {
+            const r = el.getBoundingClientRect();
+            return Math.abs(r.left - headerRect.left) <= 1;
+          });
+
+        // Check typography & colors on Hero & Ubicación
+        const h1 = document.querySelector('#inicio h1');
+        const h1Style = h1 ? getComputedStyle(h1) : null;
+        const h2 = document.querySelector('#ubicacion h2');
+        const h2Style = h2 ? getComputedStyle(h2) : null;
+        const h3 = document.querySelector('#ubicacion h3');
+        const h3Style = h3 ? getComputedStyle(h3) : null;
+
+        // Check no arbitrary Tailwind bracket classes in #inicio and #ubicacion
+        const mainEls = [...document.querySelectorAll('#inicio, #inicio *, #ubicacion, #ubicacion *')];
+        const bracketClasses = [];
+        for (const el of mainEls) {
+          for (const cls of el.classList) {
+            if (cls.includes('[') || cls.includes(']')) {
+              bracketClasses.push(cls);
+            }
+          }
+        }
+
+        // Check CTAs use Button component classes (group + rounded-full)
+        const heroWhatsappBtn = document.querySelector('#inicio a[data-event="whatsapp_cta"]');
+        const heroPhoneBtn = document.querySelector('#inicio a[data-event="phone_call"]');
+        const locationCtaBtn = document.querySelector('#ubicacion a[data-event-location="contact_location_cta"]');
+        const ctasUseSharedButton =
+          heroWhatsappBtn?.classList.contains('bg-brand-primary') &&
+          heroWhatsappBtn?.classList.contains('hover:bg-brand-bright') &&
+          heroPhoneBtn?.classList.contains('border-brand-heading/20') &&
+          heroPhoneBtn?.classList.contains('hover:border-brand-primary') &&
+          locationCtaBtn?.classList.contains('rounded-full') &&
+          locationCtaBtn?.classList.contains('border-brand-primary');
+
+        // Check contact list is vertical flex-col across all viewports
+        const contactList = document.querySelector('[data-contact-list]');
+        const contactListFlexDir = contactList ? getComputedStyle(contactList).flexDirection : null;
+
+        return {
+          leftAligned,
+          h1Font: h1Style?.fontFamily || '',
+          h1Color: h1Style?.color || '',
+          h2Font: h2Style?.fontFamily || '',
+          h2Color: h2Style?.color || '',
+          h3Font: h3Style?.fontFamily || '',
+          h3Color: h3Style?.color || '',
+          bracketClasses,
+          ctasUseSharedButton,
+          contactListFlexDir,
+        };
+      });
+
+      const checksPassed =
+        contactChecks.leftAligned &&
+        contactChecks.h1Font.includes('Instrument Serif') &&
+        contactChecks.h1Color === 'rgb(24, 45, 83)' &&
+        contactChecks.h2Font.includes('Instrument Serif') &&
+        contactChecks.h2Color === 'rgb(24, 45, 83)' &&
+        contactChecks.h3Font.includes('Instrument Serif') &&
+        contactChecks.h3Color === 'rgb(24, 45, 83)' &&
+        contactChecks.bracketClasses.length === 0 &&
+        contactChecks.ctasUseSharedButton &&
+        contactChecks.contactListFlexDir === 'column';
+
+      if (!checksPassed) {
+        console.error(`❌ [${vp.name}] Design system / alignment checks failed:`, contactChecks);
+        failed = true;
+      } else {
+        console.log(
+          `✅ [${vp.name}] Left alignment, Instrument Serif typography, shared Button/Icon CTAs, vertical contact list, and 0 arbitrary bracket classes verified`
+        );
+      }
+
+      // 5. Capture section screenshots
       const heroEl = page.locator('#inicio');
       if (await heroEl.count() > 0) {
         const heroBox = await heroEl.boundingBox();
@@ -167,16 +257,26 @@ async function run() {
         console.log(`📸 [${vp.name}] Captured: Hero Contacto (with header) -> ${vp.heroScreenshot}`);
       }
 
-      // Ubicación y Recorrido
+      // Ubicación y Recorrido (hide fixed header & wait for images to decode before screenshotting)
       const ubicacionEl = page.locator('#ubicacion');
       if (await ubicacionEl.count() > 0) {
+        await page.evaluate(async () => {
+          const header = document.getElementById('site-header');
+          if (header) header.style.display = 'none';
+          const imgs = Array.from(document.querySelectorAll('#ubicacion img'));
+          await Promise.all(imgs.map((img) => img.decode().catch(() => {})));
+        });
         await ubicacionEl.screenshot({
           path: path.join(SCREENSHOTS_DIR, vp.ubicacionScreenshot),
+        });
+        await page.evaluate(() => {
+          const header = document.getElementById('site-header');
+          if (header) header.style.display = '';
         });
         console.log(`📸 [${vp.name}] Captured: Ubicación y Recorrido -> ${vp.ubicacionScreenshot}`);
       }
 
-      // 5. Capture full page screenshot
+      // 6. Capture full page screenshot
       await page.screenshot({
         path: path.join(SCREENSHOTS_DIR, vp.fullScreenshot),
         fullPage: true,
