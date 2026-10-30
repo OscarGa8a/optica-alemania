@@ -1,4 +1,6 @@
 ---
+// Services overview — non-clickable intro that frames the page and introduces the 01/02/03 areas
+// detailed in the sections below. All copy and images come from siteConfig.servicesPage.overview.
 import { siteConfig } from '../../data/siteConfig';
 
 const { overview } = siteConfig.servicesPage;
@@ -6,140 +8,63 @@ const { overview } = siteConfig.servicesPage;
 
 <section
   id={overview.id}
-  class="relative bg-white pt-4 sm:pt-8 lg:pt-12 pb-14 sm:pb-20 lg:pb-28 scroll-mt-20 overflow-hidden"
+  class="relative bg-brand-cool text-brand-body py-12 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
   aria-labelledby="overview-heading"
 >
-  <!-- Organic Top Wave Divider: Smooth transition connecting with Hero above -->
-  <div class="relative w-full overflow-hidden leading-none z-10 -mt-8 sm:-mt-12 lg:-mt-16 pointer-events-none">
-    <!-- Desktop Wave (>= 1024px) -->
-    <svg
-      viewBox="0 0 1440 64"
-      class="hidden lg:block w-full h-10 lg:h-16 text-white"
-      fill="currentColor"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <path d="M0,24 C360,6 640,-2 920,28 C1160,54 1320,52 1440,32 L1440,64 L0,64 Z" />
-    </svg>
+  <!-- Consistent fluid container matching Hero, Navbar, and /nosotros -->
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <!-- Left Column: Heading & Description -->
+      <div class="lg:col-span-5 flex flex-col">
+        <h2
+          id="overview-heading"
+          class="font-display text-3xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] text-brand-heading leading-[1.06] tracking-tight"
+        >
+          <span class="block font-normal">{overview.titleLine1}</span>
+          <span class="block italic font-normal text-brand-primary">{overview.titleLine2}</span>
+        </h2>
 
-    <!-- Mobile / Tablet Wave (< 1024px) -->
-    <svg
-      viewBox="0 0 390 32"
-      class="lg:hidden w-full h-6 sm:h-8 text-white"
-      fill="currentColor"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <path d="M0,20 C120,12 240,6 390,2 L390,32 L0,32 Z" />
-    </svg>
-  </div>
-
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pt-3 sm:pt-5 lg:pt-6">
-    
-    <!-- Section Header -->
-    <div class="max-w-2xl lg:max-w-3xl">
-      <!-- Eyebrow with horizontal accent line -->
-      <div class="flex items-center gap-3.5 mb-2.5 sm:mb-3.5">
-        <span class="font-sans text-xs sm:text-[13px] font-semibold tracking-[0.2em] text-brand-primary uppercase">
-          {overview.eyebrow}
-        </span>
-        <span class="w-10 sm:w-14 h-px bg-brand-primary/50" aria-hidden="true"></span>
+        <p class="text-sm sm:text-lg text-brand-body leading-relaxed mt-3 sm:mt-6 max-w-lg">
+          {overview.description}
+        </p>
       </div>
 
-      <!-- Main H2 Title: Instrument Serif, 2 lines matching official mockups -->
-      <h2
-        id="overview-heading"
-        class="font-display text-[38px] sm:text-5xl lg:text-[68px] xl:text-[72px] font-normal text-brand-heading leading-[1.0] tracking-tight"
-      >
-        <span class="block">{overview.titleLine1}</span>
-        <span class="block italic text-brand-primary font-normal">{overview.titleLine2}</span>
-      </h2>
-
-      <!-- Editorial Description / Subtitle -->
-      <p class="font-sans text-[15px] sm:text-lg lg:text-[18px] text-brand-body font-normal leading-relaxed mt-3 sm:mt-4 max-w-xl lg:max-w-2xl text-balance">
-        {overview.description}
-      </p>
-    </div>
-
-    <!-- 3 Pillar Services Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-6 lg:gap-8 mt-6 sm:mt-10 lg:mt-14">
-      {overview.cards.map((card) => (
-        <a
-          href={card.href}
-          data-event="service_pillar_click"
-          data-event-service={card.number}
-          class="group relative bg-[#F7FAFD] hover:bg-[#F2F7FC] border border-[#E3EDF7] hover:border-[#CADDF2] rounded-2xl md:rounded-[28px] p-4.5 sm:p-6 lg:p-7 flex flex-row md:flex-col justify-between items-center md:items-start min-h-0 md:min-h-[290px] lg:min-h-[310px] overflow-hidden transition-all duration-300 shadow-[0_2px_12px_rgba(20,100,217,0.03)] hover:shadow-[0_12px_32px_rgba(20,100,217,0.08)] cursor-pointer"
-        >
-          <!-- Desktop Visual: Photography layer with smooth fade -->
-          <div class="hidden md:block absolute right-0 inset-y-0 w-[60%] overflow-hidden pointer-events-none rounded-r-[28px]">
-            <img
-              src={card.image.src}
-              alt={card.image.alt}
-              width={card.image.width}
-              height={card.image.height}
-              loading="lazy"
-              decoding="async"
-              class={`w-full h-full object-cover ${card.image.positionClass || 'object-center'} group-hover:scale-105 transition-transform duration-700 ease-out`}
-            />
-            <!-- Gradient fade to keep text cleanly readable over background -->
-            <div
-              class="absolute inset-0 bg-gradient-to-r from-[#F7FAFD] via-[#F7FAFD]/60 to-transparent group-hover:from-[#F2F7FC] group-hover:via-[#F2F7FC]/60 transition-colors duration-300"
-              aria-hidden="true"
-            ></div>
-          </div>
-
-          <!-- Card Content -->
-          <div class="relative z-10 flex-1 md:flex-initial pr-3 md:pr-0">
-            <!-- Eyebrow Number with line -->
-            <div class="flex items-center gap-2 mb-1.5 sm:mb-2.5">
-              <span class="font-sans text-xs sm:text-sm font-bold text-brand-primary tracking-wide">
+      <!-- Right Column: Numbered areas (informational, not interactive) -->
+      <div class="lg:col-span-7 flex flex-col pt-2 lg:pt-4">
+        <ol class="divide-y divide-brand-border border-t border-b border-brand-border">
+          {overview.cards.map((card) => (
+            <li class="flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4">
+              <!-- Numeric Index: Instrument Serif -->
+              <span class="font-display text-xl sm:text-2xl lg:text-[2rem] text-brand-primary/40 min-w-[1.25rem] sm:min-w-[2.5rem] shrink-0 text-center sm:text-left">
                 {card.number}
               </span>
-              <span class="w-6 sm:w-8 h-px bg-brand-primary/40" aria-hidden="true"></span>
-            </div>
 
-            <!-- Card Title: Instrument Serif, 2 lines on desktop -->
-            <h3 class="font-display text-[23px] sm:text-[26px] lg:text-[29px] font-normal text-brand-heading leading-[1.08] tracking-tight mb-1.5 sm:mb-2.5">
-              <span>{card.titlePart1}</span>
-              {card.titlePart2 && (
-                <>
-                  <span class="inline md:hidden"> </span>
-                  <span class="hidden md:inline"><br /></span>
-                  <span>{card.titlePart2}</span>
-                </>
-              )}
-            </h3>
+              <!-- Area Thumbnail -->
+              <div class="relative w-18 h-14 sm:w-28 sm:h-20 lg:w-36 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs border border-white/80">
+                <img
+                  src={card.image.src}
+                  alt={card.image.alt}
+                  class="w-full h-full object-cover object-center"
+                  width={card.image.width}
+                  height={card.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
 
-            <!-- Card Description -->
-            <p class="font-sans text-[12.5px] sm:text-[13px] lg:text-[14px] text-brand-body leading-relaxed md:max-w-[170px] lg:max-w-[190px] xl:max-w-[210px]">
-              {card.description}
-            </p>
-          </div>
-
-          <!-- Bottom Action: Link text (desktop) + Circular arrow button -->
-          <div class="relative z-10 shrink-0 md:mt-5 md:pt-2 flex items-center gap-3">
-            <span class="hidden md:inline font-sans text-xs sm:text-sm font-semibold text-brand-primary group-hover:text-brand-bright transition-colors">
-              {card.linkText}
-            </span>
-            <span class="w-11 h-11 sm:w-11.5 sm:h-11.5 rounded-full bg-[#E5EFFF] text-brand-primary flex items-center justify-center shrink-0 group-hover:bg-brand-primary group-hover:text-white group-hover:scale-105 group-hover:translate-x-1 transition-all duration-300">
-              <svg
-                class="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-300"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14"></path>
-                <path d="M12 5l7 7-7 7"></path>
-              </svg>
-            </span>
-          </div>
-        </a>
-      ))}
+              <!-- Textual Content -->
+              <div class="flex-1 min-w-0 pr-1 sm:pr-2">
+                <h3 class="font-display text-base sm:text-xl lg:text-[1.375rem] font-normal text-brand-heading leading-snug">
+                  {card.titlePart1}{card.titlePart2 && ` ${card.titlePart2}`}
+                </h3>
+                <p class="text-xs sm:text-sm text-brand-body leading-relaxed mt-1 sm:mt-1.5">
+                  {card.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
-
   </div>
 </section>

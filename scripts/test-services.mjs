@@ -197,33 +197,32 @@ async function run() {
         console.log(`✅ [${vp.name}] H2 contains 'Encuentra la atención que buscas'`);
       }
 
-      // Check 3 cards exist
-      const cards = overviewElement.locator('a[data-event="service_pillar_click"]');
+      // Check 3 numbered areas exist (non-clickable intro rows with thumbnails)
+      const cards = overviewElement.locator('ol > li');
       const cardsCount = await cards.count();
       if (cardsCount !== 3) {
-        console.error(`❌ [${vp.name}] Expected 3 service cards, found: ${cardsCount}`);
+        console.error(`❌ [${vp.name}] Expected 3 service areas, found: ${cardsCount}`);
         hasErrors = true;
       } else {
-        console.log(`✅ [${vp.name}] 3 service cards found`);
+        console.log(`✅ [${vp.name}] 3 service areas found`);
       }
 
-      // On desktop, check images are loaded
-      if (vp.name === 'desktop') {
-        const cardImgs = overviewElement.locator('img[src*="2_overview_image"]');
-        const imgCount = await cardImgs.count();
-        if (imgCount !== 3) {
-          console.error(`❌ [${vp.name}] Expected 3 card images, found: ${imgCount}`);
-          hasErrors = true;
-        } else {
-          for (let i = 0; i < 3; i++) {
-            const isLoaded = await cardImgs.nth(i).evaluate((img) => img.complete && img.naturalWidth > 0);
-            if (!isLoaded) {
-              console.error(`❌ [${vp.name}] Card image ${i + 1} failed to load`);
-              hasErrors = true;
-            }
+      // Check thumbnails are loaded
+      const cardImgs = overviewElement.locator('img[src*="2_overview_image"]');
+      const imgCount = await cardImgs.count();
+      if (imgCount !== 3) {
+        console.error(`❌ [${vp.name}] Expected 3 area thumbnails, found: ${imgCount}`);
+        hasErrors = true;
+      } else {
+        await cardImgs.evaluateAll((imgs) => Promise.all(imgs.map((img) => img.decode().catch(() => {}))));
+        for (let i = 0; i < 3; i++) {
+          const isLoaded = await cardImgs.nth(i).evaluate((img) => img.complete && img.naturalWidth > 0);
+          if (!isLoaded) {
+            console.error(`❌ [${vp.name}] Area thumbnail ${i + 1} failed to load`);
+            hasErrors = true;
           }
-          console.log(`✅ [${vp.name}] All 3 card images loaded successfully`);
         }
+        console.log(`✅ [${vp.name}] All 3 area thumbnails loaded successfully`);
       }
 
       // Screenshot of Section 2
