@@ -204,6 +204,7 @@ export interface ServiceOverviewCard {
 
 export interface ServicesOverviewConfig {
   id: string;
+  eyebrow: string;
   titleLine1: string;
   titleLine2: string;
   description: string;
@@ -225,6 +226,7 @@ export interface VisualCareServiceItem {
 
 export interface VisualCareConfig {
   id: string;
+  eyebrow: string;
   titlePart1: string;
   titleHighlight: string;
   description: string;
@@ -735,6 +737,7 @@ export const siteConfig: SiteConfig = {
     },
     overview: {
       id: "explora-servicios",
+      eyebrow: "EXPLORA NUESTROS SERVICIOS",
       titleLine1: "Encuentra la atención",
       titleLine2: "que buscas.",
       description: "Explora nuestras áreas de atención y conoce las evaluaciones disponibles. Puedes consultar cada servicio antes de visitarnos.",
@@ -779,6 +782,7 @@ export const siteConfig: SiteConfig = {
     },
     visualCare: {
       id: "atencion-visual",
+      eyebrow: "01 / ATENCIÓN VISUAL",
       titlePart1: "Atención visual",
       titleHighlight: "a tu medida.",
       description: "Cada persona tiene necesidades visuales distintas. Conoce las opciones de valoración y adaptación que puedes consultar con nuestro equipo.",
@@ -889,7 +893,7 @@ export const siteConfig: SiteConfig = {
     },
     procedures: {
       id: "procedimientos",
-      eyebrow: "04 / PROCEDIMIENTOS",
+      eyebrow: "PROCEDIMIENTOS",
       titlePart1: "Nuestros procedimientos,",
       titleHighlight: "de cerca.",
       description: "Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales en Óptica Alemania Villavicencio.",
@@ -900,31 +904,31 @@ export const siteConfig: SiteConfig = {
           id: "evaluacion-retinal-volk-inview",
           title: "Evaluación retinal con Volk iNview",
           actionText: "Ver procedimiento",
-          actionHref: "/procedimientos#evaluacion-retinal-volk-inview",
+          actionHref: "/procedimientos#volk-inview",
           image: {
-            src: "/images/services/6_procedimientos_image1.webp",
-            alt: "Optómetra realizando evaluación retinal con equipo Volk iNview en Óptica Alemania Villavicencio",
-            width: 1200,
-            height: 675,
+            src: "/images/home/4_tecnologia_accion_image1.webp",
+            alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
+            width: 1440,
+            height: 450,
           },
         },
         {
           id: "test-farnsworth-d15",
           title: "Test de Farnsworth D-15",
           actionText: "Ver procedimiento",
-          actionHref: "/procedimientos#test-farnsworth-d15",
+          actionHref: "/procedimientos#farnsworth",
           image: {
-            src: "/images/services/6_procedimientos_image2.webp",
-            alt: "Demostración de test de discriminación de color Farnsworth D-15 e Ishihara en Óptica Alemania",
-            width: 1200,
-            height: 675,
+            src: "/images/home/4_tecnologia_accion_image2.webp",
+            alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
+            width: 1440,
+            height: 450,
           },
         },
       ],
     },
     faq: {
       id: "preguntas-frecuentes",
-      eyebrow: "07 / PREGUNTAS FRECUENTES",
+      eyebrow: "PREGUNTAS FRECUENTES",
       titlePart1: "Resolvemos tus",
       titleHighlight: "dudas.",
       description: "Encuentra respuestas a algunas de las preguntas más habituales sobre nuestros servicios de atención visual.",

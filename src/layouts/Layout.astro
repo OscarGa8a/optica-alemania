@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Analytics from '../components/Analytics.astro';
 import { siteConfig } from '../data/siteConfig';
@@ -101,6 +102,9 @@ const schemaGraph = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- ClientRouter for SPA transitions and lifecycle events -->
+    <ClientRouter />
 
     <!-- Robots & Staging Isolation (Capa 1) -->
     <meta name="robots" content={resolvedRobots} />

@@ -1,6 +1,10 @@
 ---
+// Services — Evaluaciones especializadas.
+// Layout mirrors Home ServicesSection interaction pattern without thumbnails.
+// All copy and images come from siteConfig.servicesPage.specializedTests.
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Icon from '../ui/Icon.astro';
 
 const { specializedTests } = siteConfig.servicesPage;
 const { contact } = siteConfig;
@@ -8,191 +12,128 @@ const { contact } = siteConfig;
 
 <section
   id={specializedTests.id}
-  class="relative bg-white pt-8 sm:pt-12 lg:pt-14 pb-12 sm:pb-16 lg:pb-22 scroll-mt-20 overflow-hidden"
+  class="relative bg-white text-brand-body py-12 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
   aria-labelledby="specialized-tests-heading"
 >
-  <!-- Subtle decorative ambient shape in top-right corner matching official mockups -->
-  <div
-    class="pointer-events-none absolute top-0 right-0 w-[45vw] max-w-[650px] h-[300px] lg:h-[380px] overflow-hidden -z-0 opacity-80"
-    aria-hidden="true"
-  >
-    <svg viewBox="0 0 650 380" fill="none" class="w-full h-full object-cover">
-      <path
-        d="M120 0 C 300 70 460 130 650 160 L 650 0 Z"
-        fill="url(#spec-tests-ambient-grad)"
-      />
-      <defs>
-        <linearGradient id="spec-tests-ambient-grad" x1="650" y1="0" x2="200" y2="120" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#E8F1FD" stop-opacity="0.85" />
-          <stop offset="0.7" stop-color="#F1F6FE" stop-opacity="0.5" />
-          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+  <!-- Consistent fluid container matching Hero, Navbar, and /nosotros -->
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     <!-- Section Header -->
     <div class="max-w-2xl lg:max-w-3xl">
-      <!-- Eyebrow with horizontal accent line -->
-      <div class="flex items-center gap-3 mb-2 sm:mb-2.5">
-        <span class="font-sans text-xs sm:text-[13px] font-semibold tracking-[0.2em] text-brand-primary uppercase">
+      <!-- Eyebrow -->
+      <div>
+        <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
           {specializedTests.eyebrow}
         </span>
-        <span class="w-10 sm:w-14 h-px bg-brand-primary/50" aria-hidden="true"></span>
       </div>
 
-      <!-- Main H2 Title: Instrument Serif matching official mockup proportions -->
       <h2
         id="specialized-tests-heading"
-        class="font-display text-[34px] sm:text-4xl lg:text-[46px] xl:text-[48px] font-normal text-brand-heading leading-[1.08] tracking-tight"
+        class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
       >
-        <span class="block sm:hidden">Conoce nuestras<br />evaluaciones</span>
-        <span class="hidden sm:block">{specializedTests.titlePart1}</span>
-        <span class="block italic text-brand-primary font-normal">{specializedTests.titleHighlight}</span>
+        <span class="block font-normal">{specializedTests.titlePart1}</span>
+        <span class="block italic font-normal text-brand-primary">{specializedTests.titleHighlight}</span>
       </h2>
 
-      <!-- Description / Subtitle -->
-      <p class="font-sans text-[15px] sm:text-base lg:text-[16px] text-brand-body font-normal leading-relaxed mt-2.5 sm:mt-3 max-w-xl lg:max-w-2xl text-balance">
+      <p class="text-sm sm:text-lg text-brand-body leading-relaxed mt-3 sm:mt-6 max-w-lg">
         {specializedTests.description}
       </p>
     </div>
 
-    <!-- Mobile-only image: positioned immediately after header matching 4_evaluaciones_especializadas_mobile.png -->
-    <div class="block lg:hidden mt-6 mb-8">
-      <div class="overflow-hidden rounded-2xl bg-slate-100 shadow-[0_2px_16px_rgba(20,100,217,0.05)] border border-[#E8EFF7]">
+    <!-- Mobile-only image: positioned right after header -->
+    <div class="block lg:hidden mt-8 mb-8">
+      <div class="group relative rounded-2xl overflow-hidden shadow-xs border border-white/80 aspect-video">
         <img
           src={specializedTests.image.src}
           alt={specializedTests.image.alt}
           width={specializedTests.image.width}
           height={specializedTests.image.height}
-          loading="eager"
+          loading="lazy"
           decoding="async"
-          class="w-full h-auto aspect-[16/10] sm:aspect-[16/9.5] object-cover"
+          class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
         />
       </div>
     </div>
 
     <!-- Main Content Grid -->
-    <div class="mt-6 sm:mt-8 lg:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-start">
-      
-      <!-- Left Column: The 5 Specialized Tests List (col-span-7) -->
-      <div class="lg:col-span-7 flex flex-col divide-y divide-[#E5EEF8] border-t border-[#E5EEF8]">
-        {specializedTests.tests.map((test) => {
-          const whatsappUrl = buildWhatsAppLink(test.whatsappMessage, contact.whatsappNumber);
+    <div class="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
+      <!-- Left Column: The 5 Specialized Tests List -->
+      <div class="lg:col-span-7 flex flex-col">
+        <div class="divide-y divide-brand-border border-t border-b border-brand-border">
+          {specializedTests.tests.map((test) => {
+            const whatsappUrl = buildWhatsAppLink(test.whatsappMessage, contact.whatsappNumber);
 
-          return (
-            <div class="group relative py-3.5 sm:py-4 flex items-center justify-between gap-3.5 sm:gap-4 transition-colors hover:bg-[#F8FAFD] -mx-2 px-2 rounded-xl">
-              <!-- Number -->
-              <div class="shrink-0 w-8 sm:w-9 text-left">
-                <span class="font-display text-2xl sm:text-[28px] font-normal text-brand-primary leading-none">
-                  {test.number}
-                </span>
-              </div>
-
-              <!-- Subtle Vertical Divider -->
-              <div class="w-px h-7 sm:h-8 bg-[#E2EAF4] shrink-0" aria-hidden="true"></div>
-
-              <!-- Title, Description & Optional Procedure Link -->
-              <div class="flex-1 min-w-0 pr-2">
-                <h3 class="font-display text-[17px] sm:text-[19px] lg:text-[20px] font-normal text-brand-heading leading-tight group-hover:text-brand-primary transition-colors">
-                  {test.title}
-                </h3>
-                <p class="font-sans text-xs sm:text-[13px] text-brand-body leading-relaxed mt-0.5 sm:mt-1">
-                  {test.description}
-                </p>
-                {test.procedureLink && (
-                  <a
-                    href={test.procedureLink.href}
-                    class="inline-flex items-center gap-1.5 font-sans text-xs font-medium text-brand-primary hover:text-brand-bright mt-1.5 transition-colors group/link cursor-pointer"
-                  >
-                    <span>{test.procedureLink.text}</span>
-                    <svg
-                      class="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      aria-hidden="true"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-
-              <!-- Action Arrow leading to WhatsApp -->
+            return (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="shrink-0 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-brand-primary group-hover:text-brand-bright transition-all group-hover:translate-x-1 cursor-pointer"
                 data-event="specialized_test_click"
                 data-test-number={test.number}
                 aria-label={`Consultar ${test.title} por WhatsApp`}
+                class="group flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4 rounded-2xl hover:bg-brand-cool/60 active:bg-brand-cool/90 transition-all duration-200"
               >
-                <svg
-                  class="w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2.2"
-                  aria-hidden="true"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <!-- Numeric Index: Instrument Serif -->
+                <span class="font-display text-xl sm:text-2xl lg:text-3xl text-brand-primary/40 group-hover:text-brand-primary transition-colors min-w-5 sm:min-w-8 shrink-0 text-center sm:text-left">
+                  {test.number}
+                </span>
+
+                <!-- Textual Content -->
+                <div class="flex-1 min-w-0 pr-1 sm:pr-2">
+                  <h3 class="font-display text-base sm:text-xl lg:text-2xl font-normal text-brand-heading group-hover:text-brand-primary transition-colors leading-snug">
+                    {test.title}
+                  </h3>
+                  <p class="text-xs sm:text-sm text-brand-body leading-relaxed mt-1 sm:mt-1.5">
+                    {test.description}
+                  </p>
+                </div>
+
+                <!-- Circle Action Arrow Button -->
+                <div class="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-brand-mist text-brand-heading group-hover:bg-brand-primary group-hover:text-white transition-all duration-200 flex items-center justify-center shrink-0">
+                  <Icon
+                    name="arrow-right"
+                    class="w-3.5 h-3.5 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
+                </div>
               </a>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      <!-- Right Column: Photography + Technology Banner (col-span-5) on desktop -->
-      <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-5">
+      <!-- Right Column: Featured Photography + Technology Banner -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
         <!-- Desktop Photography -->
-        <div class="hidden lg:block overflow-hidden rounded-[24px] bg-slate-100 shadow-[0_2px_16px_rgba(20,100,217,0.05)] border border-[#E8EFF7]">
+        <div class="hidden lg:block group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-video">
           <img
             src={specializedTests.image.src}
             alt={specializedTests.image.alt}
             width={specializedTests.image.width}
             height={specializedTests.image.height}
-            loading="eager"
+            loading="lazy"
             decoding="async"
-            class="w-full h-auto aspect-[16/10.5] object-cover transition-transform duration-700 ease-editorial hover:scale-[1.02]"
+            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
           />
         </div>
 
-        <!-- Technology Banner (Visible in right column on desktop; on mobile shown at bottom) -->
-        <div class="bg-[#F0F5FD] border border-[#E1EDFA] rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 sm:gap-4 shadow-[0_2px_12px_rgba(20,100,217,0.03)]">
-          <!-- Circular Eye Icon Badge -->
+        <!-- Technology Banner -->
+        <div class="bg-brand-cool border border-brand-border rounded-2xl p-5 sm:p-6 flex items-start gap-4 shadow-xs">
           <div
-            class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#D7E7FC] flex items-center justify-center text-brand-primary"
+            class="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-brand-ice flex items-center justify-center text-brand-primary"
             aria-hidden="true"
           >
-            <svg
-              class="w-5 h-5 sm:w-5.5 sm:h-5.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
+            <Icon name="eye" class="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
 
-          <!-- Banner Copy -->
           <div class="flex-1 min-w-0">
-            <span class="font-sans text-[11px] sm:text-xs font-bold text-brand-primary tracking-[0.08em] uppercase block mb-1">
+            <span class="font-sans text-xs font-semibold text-brand-primary tracking-wider uppercase block mb-1">
               {specializedTests.techBanner.eyebrow}
             </span>
-            <p class="font-sans text-xs sm:text-[13px] text-brand-body leading-relaxed">
+            <p class="font-sans text-xs sm:text-sm text-brand-body leading-relaxed">
               {specializedTests.techBanner.description}
             </p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>

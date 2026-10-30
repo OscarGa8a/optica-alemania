@@ -1,6 +1,10 @@
 ---
+// Services — Urgencias oculares.
+// All copy comes from siteConfig.servicesPage.eyeEmergencies.
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 
 const { eyeEmergencies } = siteConfig.servicesPage;
 const { contact } = siteConfig;
@@ -10,208 +14,89 @@ const whatsappUrl = buildWhatsAppLink(eyeEmergencies.whatsappMessage, contact.wh
 
 <section
   id={eyeEmergencies.id}
-  class="relative bg-white pt-14 sm:pt-20 lg:pt-24 pb-14 sm:pb-20 lg:pb-24 scroll-mt-20 overflow-hidden"
+  class="relative bg-brand-cool text-brand-body py-12 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
   aria-labelledby="urgencias-oculares-heading"
 >
-  <!-- Decorative subtle organic wave backgrounds matching official mockups -->
-  <div class="pointer-events-none absolute inset-0 overflow-hidden -z-0" aria-hidden="true">
-    <!-- Top wave: smooth curve sloping down from top-left (matches official desktop & mobile mockups) -->
-    <svg
-      viewBox="0 0 1440 240"
-      fill="none"
-      class="absolute top-0 left-0 w-full h-[150px] sm:h-[190px] lg:h-[240px] object-cover preserve-3d"
-      preserveAspectRatio="none"
-    >
-      <path
-        d="M0,0 L1440,0 L1440,65 C1140,150 740,20 0,115 Z"
-        fill="url(#urgencias-top-grad)"
-      />
-      <defs>
-        <linearGradient id="urgencias-top-grad" x1="0" y1="0" x2="1440" y2="140" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#E2EEFA" stop-opacity="0.95" />
-          <stop offset="0.6" stop-color="#EDF4FD" stop-opacity="0.65" />
-          <stop offset="1" stop-color="#F8FAFE" stop-opacity="0.3" />
-        </linearGradient>
-      </defs>
-    </svg>
-
-    <!-- Bottom wave: smooth organic curve rising from bottom-left (matches official desktop & mobile mockups) -->
-    <svg
-      viewBox="0 0 1440 240"
-      fill="none"
-      class="absolute bottom-0 left-0 w-full h-[140px] sm:h-[180px] lg:h-[230px] object-cover preserve-3d"
-      preserveAspectRatio="none"
-    >
-      <path
-        d="M0,240 L1440,240 L1440,120 C1060,40 540,165 0,75 Z"
-        fill="url(#urgencias-bottom-grad)"
-      />
-      <defs>
-        <linearGradient id="urgencias-bottom-grad" x1="0" y1="120" x2="1440" y2="240" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#E4EFFB" stop-opacity="0.9" />
-          <stop offset="0.55" stop-color="#EEF5FD" stop-opacity="0.55" />
-          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.2" />
-        </linearGradient>
-      </defs>
-    </svg>
+  <!-- Stylized Decorative Eye Watermark from assets.webp -->
+  <div
+    class="absolute -right-24 sm:-right-32 lg:-right-40 -bottom-10 w-full max-w-xl lg:max-w-3xl pointer-events-none opacity-20 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
   </div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 lg:px-10">
-    <!-- Top Content Row: Left Title + Subtitle / Middle Vertical Divider (Desktop) / Right CTA Button -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
-      
-      <!-- Left Column: Eyebrow, H2 Title, Subtitle -->
+  <!-- Consistent fluid container matching Hero, Navbar, and other sections -->
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+    <!-- Top Content Row: Title + Description on Left / CTA Button on Right -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+      <!-- Left Column: Title & Description -->
       <div class="lg:col-span-8 max-w-2xl lg:max-w-none">
-        <!-- Eyebrow with horizontal accent line -->
-        <div class="flex items-center gap-3 mb-2.5 sm:mb-3">
-          <span class="font-sans text-xs sm:text-[13px] font-semibold tracking-[0.2em] text-brand-primary uppercase">
+        <!-- Eyebrow -->
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
             {eyeEmergencies.eyebrow}
           </span>
-          <span class="w-12 sm:w-16 h-[1.5px] bg-brand-primary/50" aria-hidden="true"></span>
         </div>
 
-        <!-- Main H2 Title: Instrument Serif with exact line-breaks matching official mockups -->
         <h2
           id="urgencias-oculares-heading"
-          class="font-display text-[42px] xs:text-[46px] sm:text-5xl lg:text-[60px] xl:text-[64px] font-normal text-brand-heading leading-[1.03] sm:leading-[1.06] tracking-tight"
+          class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
         >
-          {/* Mobile line-break (matches 5_urgencias_oculares_mobile.png) */}
-          <span class="block sm:hidden leading-[1.03]">
-            <span class="block">¿Necesitas</span>
-            <span class="block">atención por una</span>
-            <span class="block italic text-brand-primary font-normal">{eyeEmergencies.titleHighlight}</span>
-          </span>
-
-          {/* Desktop & Tablet line-break (matches 5_urgencias_oculares_desktop.png) */}
-          <span class="hidden sm:inline">
-            <span>{eyeEmergencies.titlePart1}</span>
-            <br />
-            <span>{eyeEmergencies.titlePart2} </span>
-            <span class="italic text-brand-primary font-normal">{eyeEmergencies.titleHighlight}</span>
-          </span>
+          <span class="block font-normal">{eyeEmergencies.titlePart1} {eyeEmergencies.titlePart2}</span>
+          <span class="block italic font-normal text-brand-primary">{eyeEmergencies.titleHighlight}</span>
         </h2>
 
-        <!-- Description / Subtitle -->
-        <p class="font-sans text-[16px] sm:text-[17px] lg:text-[18px] text-brand-body font-normal leading-relaxed mt-3.5 sm:mt-4 max-w-xl lg:max-w-2xl text-balance">
+        <p class="text-sm sm:text-lg text-brand-body leading-relaxed mt-3 sm:mt-6 max-w-xl lg:max-w-2xl">
           {eyeEmergencies.description}
         </p>
       </div>
 
-      <!-- Right Column: Vertical divider on desktop + CTA Button -->
-      <div class="lg:col-span-4 flex items-center lg:justify-center relative">
-        <!-- Vertical separator line on desktop between text and button (matches 5_urgencias_oculares_desktop.png) -->
-        <div class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-[130px] bg-slate-200/90" aria-hidden="true"></div>
-
-        <!-- Desktop Pill Button: Generous proportions matching official desktop mockup -->
-        <a
+      <!-- Right Column: WhatsApp CTA Button -->
+      <div class="lg:col-span-4 flex items-center lg:justify-end">
+        <Button
+          variant="primary"
+          size="lg"
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center justify-center gap-3.5 bg-brand-primary hover:bg-brand-bright text-white font-medium text-[16px] sm:text-[17px] px-9 sm:px-10 py-4 sm:py-4.5 rounded-full shadow-[0_4px_16px_rgba(20,100,217,0.25)] hover:shadow-[0_6px_22px_rgba(20,100,217,0.35)] transition-all duration-300 group hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+          icon="whatsapp"
+          iconPosition="left"
+          aria-label="Consultar disponibilidad de urgencias oculares por WhatsApp"
         >
-          <span>{eyeEmergencies.ctaText}</span>
-          <svg
-            class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </a>
-
-        <!-- Mobile Button with WhatsApp Icon (Matches 5_urgencias_oculares_mobile.png exactly) -->
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="sm:hidden w-full inline-flex items-center justify-between bg-brand-primary active:bg-brand-bright text-white font-medium text-[16px] px-6 py-4.5 rounded-full shadow-[0_4px_16px_rgba(20,100,217,0.25)] transition-all duration-200"
-        >
-          <span class="flex items-center gap-3">
-            <svg class="w-6 h-6 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12.031 2C6.495 2 2 6.495 2 12.031c0 1.954.563 3.778 1.536 5.319L2 22l4.821-1.503a9.98 9.98 0 005.21 1.458c5.536 0 10.031-4.495 10.031-10.031 0-5.536-4.495-10.031-10.031-10.031zm0 18.25c-1.63 0-3.15-.46-4.453-1.258l-.32-.193-2.857.89.907-2.784-.21-.336a8.167 8.167 0 01-1.31-4.569c0-4.526 3.682-8.208 8.243-8.208 4.561 0 8.243 3.682 8.243 8.208 0 4.526-3.682 8.25-8.243 8.25zm4.516-6.177c-.247-.124-1.464-.722-1.691-.805-.227-.083-.392-.124-.557.124-.165.247-.64 1.25-.785 1.415-.144.165-.289.186-.536.062-.247-.124-1.044-.385-1.988-1.227-.735-.656-1.232-1.466-1.376-1.713-.144-.247-.015-.38.109-.503.111-.111.247-.289.371-.433.124-.144.165-.247.247-.412.083-.165.041-.309-.021-.433-.062-.124-.557-1.34-.763-1.835-.2-.485-.403-.418-.557-.426-.144-.008-.309-.01-.474-.01s-.433.062-.66.309c-.227.247-.866.846-.866 2.062 0 1.217.887 2.392 1.011 2.557.124.165 1.745 2.664 4.227 3.736.591.256 1.052.408 1.411.523.593.188 1.133.162 1.56.098.476-.071 1.464-.598 1.67-1.176.206-.577.206-1.072.144-1.176-.062-.103-.227-.165-.474-.289z"/>
-            </svg>
-            <span>{eyeEmergencies.ctaText}</span>
-          </span>
-          <svg
-            class="w-5 h-5 shrink-0"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </a>
+          {eyeEmergencies.ctaText}
+        </Button>
       </div>
-
     </div>
 
-    <!-- Mobile separator line matching 5_urgencias_oculares_mobile.png -->
-    <div class="sm:hidden w-full h-px bg-[#E2EEF8] my-7" aria-hidden="true"></div>
-
-    <!-- Bottom Notice: Desktop boxed pill card vs Mobile seamless banner matching official mockups -->
-    <div
-      class="mt-0 sm:mt-12 lg:mt-14 sm:bg-[#EEF6FE]/90 sm:border sm:border-[#D5E6FA] sm:rounded-2xl lg:rounded-3xl sm:p-5 sm:px-6 sm:shadow-[0_2px_10px_rgba(20,100,217,0.04)]"
-    >
+    <!-- Bottom Notice: Medical Disclaimer Card -->
+    <div class="mt-10 sm:mt-14 lg:mt-16 bg-white border border-brand-border rounded-2xl lg:rounded-3xl p-5 sm:p-6 shadow-xs max-w-3xl">
       <div class="flex items-center gap-3.5 sm:gap-4">
-        <!-- Circular Icon Badge: Eye icon on desktop, Info icon on mobile -->
+        <!-- Circular Eye Icon Badge -->
         <div
-          class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#DCEAFB] text-brand-primary flex items-center justify-center shrink-0"
+          class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-brand-ice text-brand-primary flex items-center justify-center shrink-0"
           aria-hidden="true"
         >
-          <!-- Eye icon for tablet & desktop (matches 5_urgencias_oculares_desktop.png) -->
-          <svg
-            class="hidden sm:block w-5 h-5 text-brand-primary"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-
-          <!-- Info icon for mobile (matches 5_urgencias_oculares_mobile.png) -->
-          <svg
-            class="sm:hidden w-5 h-5 text-brand-primary"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 16v-4" />
-            <path d="M12 8h.01" />
-          </svg>
+          <Icon name="eye" class="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
 
         <!-- Vertical divider line -->
-        <div class="w-px h-8 bg-brand-primary/20 shrink-0 mx-0.5 sm:mx-1" aria-hidden="true"></div>
+        <div class="w-px h-8 bg-brand-border shrink-0" aria-hidden="true"></div>
 
         <!-- Notice text with bold disclaimer lead -->
-        <p class="font-sans text-[13.5px] sm:text-[14.5px] lg:text-[15px] leading-snug sm:leading-relaxed text-brand-body">
+        <p class="font-sans text-xs sm:text-sm text-brand-body leading-relaxed">
           <strong class="font-semibold text-brand-heading">{eyeEmergencies.notice.boldText}</strong>
           {' '}
-          <span class="text-brand-body">{eyeEmergencies.notice.regularText}</span>
+          <span>{eyeEmergencies.notice.regularText}</span>
         </p>
       </div>
     </div>
-
   </div>
 </section>

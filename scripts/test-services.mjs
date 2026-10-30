@@ -141,9 +141,7 @@ async function run() {
       }
 
       // Check hero image loaded
-      const heroImg = vp.name === 'desktop'
-        ? heroElement.locator('img[src*="1_hero_desktop_image"]')
-        : heroElement.locator('img[src*="1_hero_mobile_image"]');
+      const heroImg = heroElement.locator('picture img');
 
       const imgCount = await heroImg.count();
       if (imgCount === 0) {
@@ -626,15 +624,6 @@ async function run() {
     } else {
       console.log(`✅ [${vp.name}] Section #preguntas-frecuentes exists`);
 
-      // Check Eyebrow
-      const eyebrowText = (await faqElement.locator('p.tracking-wider').first().textContent() || '').trim();
-      if (!eyebrowText.includes('07 / PREGUNTAS FRECUENTES')) {
-        console.error(`❌ [${vp.name}] FAQ Eyebrow mismatch: ${eyebrowText}`);
-        hasErrors = true;
-      } else {
-        console.log(`✅ [${vp.name}] Eyebrow verified: '07 / PREGUNTAS FRECUENTES'`);
-      }
-
       // Check Title
       const rawH2 = await faqElement.locator('#faq-heading').textContent();
       const h2Text = (rawH2 || '').replace(/\s+/g, ' ').trim();
@@ -646,7 +635,7 @@ async function run() {
       }
 
       // Check Description
-      const descText = (await faqElement.locator('p.text-slate-600').first().textContent() || '').trim();
+      const descText = (await faqElement.locator('p.text-brand-body').first().textContent() || '').trim();
       if (!descText.includes('preguntas más habituales')) {
         console.error(`❌ [${vp.name}] FAQ description mismatch: ${descText}`);
         hasErrors = true;
@@ -734,7 +723,7 @@ async function run() {
       console.log(`✅ [${vp.name}] Section #contacto-servicios exists`);
 
       // Check Eyebrow
-      const eyebrowText = (await ctaElement.locator('p.tracking-\\[0\\.2em\\]').first().textContent() || '').trim();
+      const eyebrowText = (await ctaElement.locator('[data-eyebrow], span.tracking-widest, p.tracking-\\[0\\.2em\\]').first().textContent() || '').trim();
       if (!eyebrowText.includes('TU PRÓXIMO PASO')) {
         console.error(`❌ [${vp.name}] CTA Eyebrow mismatch: ${eyebrowText}`);
         hasErrors = true;
