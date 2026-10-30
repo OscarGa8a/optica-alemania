@@ -1,6 +1,9 @@
 ---
+// Services — Atención visual detail: alternating image/text rows.
+// All copy and images come from siteConfig.servicesPage.visualCare.
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Button from '../ui/Button.astro';
 
 const { visualCare } = siteConfig.servicesPage;
 const { contact } = siteConfig;
@@ -8,149 +11,75 @@ const { contact } = siteConfig;
 
 <section
   id={visualCare.id}
-  class="relative bg-white pt-8 sm:pt-10 lg:pt-14 pb-12 sm:pb-16 lg:pb-20 scroll-mt-20 overflow-hidden"
+  class="relative bg-white text-brand-body py-12 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
   aria-labelledby="visual-care-heading"
 >
-  <!-- Subtle decorative ambient shape in top-right corner matching official mockups -->
-  <div
-    class="pointer-events-none absolute top-0 right-0 w-[50vw] max-w-[700px] h-[300px] lg:h-[380px] overflow-hidden -z-0 opacity-80"
-    aria-hidden="true"
-  >
-    <svg viewBox="0 0 700 380" fill="none" class="w-full h-full object-cover">
-      <path
-        d="M120 0 C 320 80 480 140 700 170 L 700 0 Z"
-        fill="url(#visual-care-ambient-grad)"
-      />
-      <defs>
-        <linearGradient id="visual-care-ambient-grad" x1="700" y1="0" x2="200" y2="120" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#E8F1FD" stop-opacity="0.85" />
-          <stop offset="0.7" stop-color="#F1F6FE" stop-opacity="0.5" />
-          <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+  <!-- Consistent fluid container matching Hero, Navbar, and /nosotros -->
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     <!-- Section Header -->
     <div class="max-w-2xl lg:max-w-3xl">
-      <!-- Eyebrow with horizontal accent line -->
-      <div class="flex items-center gap-3 mb-2 sm:mb-2.5">
-        <span class="font-sans text-xs sm:text-[13px] font-semibold tracking-[0.2em] text-brand-primary uppercase">
-          {visualCare.eyebrow}
-        </span>
-        <span class="w-10 sm:w-14 h-px bg-brand-primary/50" aria-hidden="true"></span>
-      </div>
-
-      <!-- Main H2 Title: Instrument Serif matching official mockup proportions -->
       <h2
         id="visual-care-heading"
-        class="font-display text-[34px] sm:text-4xl lg:text-[46px] xl:text-[48px] font-normal text-brand-heading leading-[1.08] tracking-tight"
+        class="font-display text-3xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] text-brand-heading leading-[1.06] tracking-tight"
       >
-        <span class="block sm:inline">{visualCare.titlePart1} </span>
-        <span class="block sm:inline italic text-brand-primary font-normal">{visualCare.titleHighlight}</span>
+        <span class="block font-normal">{visualCare.titlePart1}</span>
+        <span class="block italic font-normal text-brand-primary">{visualCare.titleHighlight}</span>
       </h2>
 
-      <!-- Description / Subtitle -->
-      <p class="font-sans text-[15px] sm:text-base lg:text-[16px] text-brand-body font-normal leading-relaxed mt-2.5 sm:mt-3 max-w-xl lg:max-w-2xl text-balance">
+      <p class="text-sm sm:text-lg text-brand-body leading-relaxed mt-3 sm:mt-6 max-w-lg">
         {visualCare.description}
       </p>
     </div>
 
-    <!-- Alternating Services Grid -->
-    <div class="mt-8 sm:mt-10 lg:mt-12 flex flex-col gap-8 sm:gap-10 lg:gap-12">
-      {visualCare.items.map((item, index) => {
+    <!-- Alternating services -->
+    <div class="mt-10 sm:mt-14 lg:mt-20 flex flex-col gap-12 sm:gap-16 lg:gap-24">
+      {visualCare.items.map((item) => {
         const whatsappUrl = buildWhatsAppLink(item.whatsappMessage, contact.whatsappNumber);
         const isReversed = item.reverse;
 
         return (
-          <article class="flex flex-col">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 xl:gap-14 items-center">
-              
-              {/* Image Container: Order-1 on mobile; on desktop: col-span-7, left if not reversed, right if reversed */}
-              <div
-                class={`order-1 ${
-                  isReversed
-                    ? 'lg:col-span-7 lg:order-2'
-                    : 'lg:col-span-7 lg:order-1'
-                }`}
-              >
-                <div class="overflow-hidden rounded-2xl lg:rounded-[22px] bg-slate-100 shadow-[0_2px_16px_rgba(20,100,217,0.05)] border border-[#E8EFF7]">
-                  <img
-                    src={item.image.src}
-                    alt={item.image.alt}
-                    width={item.image.width}
-                    height={item.image.height}
-                    loading="eager"
-                    decoding="async"
-                    class={`w-full h-auto aspect-[16/9.5] sm:aspect-[16/9.2] lg:h-[285px] xl:h-[305px] object-cover transition-transform duration-700 ease-editorial hover:scale-[1.02] ${
-                      item.image.positionClass || 'object-center'
-                    }`}
-                  />
-                </div>
+          <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
+            <!-- Image: first on mobile; left on desktop unless reversed -->
+            <div class={`lg:col-span-7 order-1 ${isReversed ? 'lg:order-2' : 'lg:order-1'}`}>
+              <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[16/10]">
+                <img
+                  src={item.image.src}
+                  alt={item.image.alt}
+                  width={item.image.width}
+                  height={item.image.height}
+                  loading="lazy"
+                  decoding="async"
+                  class={`w-full h-full object-cover ${item.image.positionClass || 'object-center'}`}
+                />
               </div>
-
-              {/* Content Container: Order-2 on mobile; on desktop: col-span-5, right if not reversed, left if reversed */}
-              <div
-                class={`order-2 ${
-                  isReversed
-                    ? 'lg:col-span-5 lg:order-1 lg:pr-2'
-                    : 'lg:col-span-5 lg:order-2 lg:pl-2'
-                }`}
-              >
-                <!-- Service Number with line -->
-                <div class="flex items-center gap-2.5 mb-1.5 sm:mb-2">
-                  <span class="font-sans text-xs sm:text-[12px] font-bold text-brand-primary tracking-[0.15em] uppercase">
-                    {item.serviceNumber}
-                  </span>
-                  <span class="w-8 sm:w-10 h-px bg-brand-primary/50" aria-hidden="true"></span>
-                </div>
-
-                <!-- Service Title -->
-                <h3 class="font-display text-[26px] sm:text-3xl lg:text-[34px] xl:text-[36px] font-normal text-brand-heading leading-[1.12] tracking-tight">
-                  <span class="block">{item.titleLine1}</span>
-                  <span class="block">{item.titleLine2}</span>
-                </h3>
-
-                <!-- Description -->
-                <p class="font-sans text-[14px] sm:text-[15px] lg:text-[15px] text-brand-body font-normal leading-relaxed mt-2.5 sm:mt-3 max-w-lg">
-                  {item.description}
-                </p>
-
-                <!-- CTA Link with WhatsApp Action -->
-                <div class="mt-3.5 sm:mt-4">
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 font-sans text-sm sm:text-[15px] font-medium text-brand-primary hover:text-brand-bright transition-colors group cursor-pointer"
-                    data-event="service_detail_cta"
-                    data-event-service={item.serviceNumber}
-                  >
-                    <span>{item.ctaText}</span>
-                    <svg
-                      class="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-200 group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2.2"
-                      aria-hidden="true"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
             </div>
 
-            {/* Mobile Separator Line between items */}
-            {index < visualCare.items.length - 1 && (
-              <div
-                class="block lg:hidden w-full my-8 sm:my-10 border-b border-[#E5EEF8]"
-                aria-hidden="true"
-              ></div>
-            )}
+            <!-- Content: second on mobile; right on desktop unless reversed -->
+            <div class={`lg:col-span-5 order-2 ${isReversed ? 'lg:order-1' : 'lg:order-2'}`}>
+              <h3 class="font-display text-3xl sm:text-4xl lg:text-5xl text-brand-heading leading-[1.06] tracking-tight">
+                <span class="block font-normal">{item.titleLine1}</span>
+                <span class="block italic font-normal text-brand-primary">{item.titleLine2}</span>
+              </h3>
+
+              <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-3 sm:mt-5 max-w-lg">
+                {item.description}
+              </p>
+
+              <div class="mt-5 sm:mt-8">
+                <Button
+                  variant="link"
+                  size="lg"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  icon="arrow-right"
+                  data-event="service_detail_cta"
+                  data-event-service={item.serviceNumber}
+                >
+                  {item.ctaText}
+                </Button>
+              </div>
+            </div>
           </article>
         );
       })}
