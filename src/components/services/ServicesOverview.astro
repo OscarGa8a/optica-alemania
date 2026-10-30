@@ -16,9 +16,16 @@ const { overview } = siteConfig.servicesPage;
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
       <!-- Left Column: Heading & Description -->
       <div class="lg:col-span-5 flex flex-col">
+        <!-- Eyebrow -->
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
+            {overview.eyebrow}
+          </span>
+        </div>
+
         <h2
           id="overview-heading"
-          class="font-display text-3xl sm:text-5xl lg:text-[3.5rem] xl:text-[4.25rem] text-brand-heading leading-[1.06] tracking-tight"
+          class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
         >
           <span class="block font-normal">{overview.titleLine1}</span>
           <span class="block italic font-normal text-brand-primary">{overview.titleLine2}</span>
@@ -33,18 +40,18 @@ const { overview } = siteConfig.servicesPage;
       <div class="lg:col-span-7 flex flex-col pt-2 lg:pt-4">
         <ol class="divide-y divide-brand-border border-t border-b border-brand-border">
           {overview.cards.map((card) => (
-            <li class="flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4">
+            <li class="group flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4">
               <!-- Numeric Index: Instrument Serif -->
-              <span class="font-display text-xl sm:text-2xl lg:text-[2rem] text-brand-primary/40 min-w-[1.25rem] sm:min-w-[2.5rem] shrink-0 text-center sm:text-left">
+              <span class="font-display text-xl sm:text-2xl lg:text-3xl text-brand-primary/40 group-hover:text-brand-primary transition-colors min-w-5 sm:min-w-8 shrink-0 text-center sm:text-left">
                 {card.number}
               </span>
 
               <!-- Area Thumbnail -->
-              <div class="relative w-18 h-14 sm:w-28 sm:h-20 lg:w-36 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs border border-white/80">
+              <div class="relative w-16 h-12 sm:w-28 sm:h-20 lg:w-36 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs border border-white/80">
                 <img
                   src={card.image.src}
                   alt={card.image.alt}
-                  class="w-full h-full object-cover object-center"
+                  class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                   width={card.image.width}
                   height={card.image.height}
                   loading="lazy"
@@ -54,7 +61,7 @@ const { overview } = siteConfig.servicesPage;
 
               <!-- Textual Content -->
               <div class="flex-1 min-w-0 pr-1 sm:pr-2">
-                <h3 class="font-display text-base sm:text-xl lg:text-[1.375rem] font-normal text-brand-heading leading-snug">
+                <h3 class="font-display text-base sm:text-xl lg:text-2xl font-normal text-brand-heading leading-snug">
                   {card.titlePart1}{card.titlePart2 && ` ${card.titlePart2}`}
                 </h3>
                 <p class="text-xs sm:text-sm text-brand-body leading-relaxed mt-1 sm:mt-1.5">

@@ -1,6 +1,10 @@
 ---
+// Sección 7: Preguntas frecuentes
+// Óptica Alemania Villavicencio
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 
 const { faq } = siteConfig.servicesPage;
 const { contact } = siteConfig;
@@ -10,95 +14,72 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
 <section
   id={faq.id}
-  class="relative bg-[#F9FBFE] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28 scroll-mt-20 overflow-hidden"
+  class="relative bg-brand-cool text-brand-body py-14 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
   aria-labelledby="faq-heading"
 >
-  <!-- Decorative subtle organic wave background at bottom-left matching official mockups -->
-  <div class="pointer-events-none absolute inset-0 overflow-hidden -z-0" aria-hidden="true">
-    <svg
-      viewBox="0 0 900 600"
-      fill="none"
-      class="absolute bottom-0 left-0 w-[500px] sm:w-[680px] lg:w-[880px] h-auto object-cover opacity-85"
-      preserveAspectRatio="none"
-    >
-      <path
-        d="M0,600 L900,600 C720,530 520,560 340,430 C200,330 110,210 0,140 Z"
-        fill="url(#faq-bottom-grad-1)"
-      />
-      <path
-        d="M0,600 L680,600 C530,550 400,530 260,420 C140,320 80,240 0,190 Z"
-        fill="url(#faq-bottom-grad-2)"
-        opacity="0.85"
-      />
-      <defs>
-        <linearGradient id="faq-bottom-grad-1" x1="0" y1="200" x2="600" y2="600" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#DEEBFC" stop-opacity="0.95" />
-          <stop offset="0.6" stop-color="#EDF4FE" stop-opacity="0.65" />
-          <stop offset="1" stop-color="#F9FBFE" stop-opacity="0.1" />
-        </linearGradient>
-        <linearGradient id="faq-bottom-grad-2" x1="0" y1="250" x2="500" y2="600" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#D4E5FA" stop-opacity="0.85" />
-          <stop offset="0.65" stop-color="#E8F1FD" stop-opacity="0.55" />
-          <stop offset="1" stop-color="#F9FBFE" stop-opacity="0.1" />
-        </linearGradient>
-      </defs>
-    </svg>
+  <!-- Stylized Decorative Eye Watermark from assets.webp -->
+  <div
+    class="absolute -left-20 sm:-left-28 lg:-left-36 -bottom-10 sm:-bottom-16 lg:-bottom-20 w-full max-w-lg sm:max-w-xl lg:max-w-2xl pointer-events-none opacity-15 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
   </div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 lg:px-10">
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-      <!-- Left Column: Sticky Title, Eyebrow, Subtitle & WhatsApp Contact Card (Desktop) -->
+      <!-- Left Column: Sticky Title, Description & WhatsApp Contact Card (Desktop) -->
       <div class="lg:col-span-5 lg:sticky lg:top-28">
-        <!-- Eyebrow with horizontal line -->
-        <div class="flex items-center gap-3 mb-5">
-          <p class="text-xs sm:text-sm font-semibold tracking-wider text-blue-600 uppercase font-sans">
+        <!-- Eyebrow -->
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
             {faq.eyebrow}
-          </p>
-          <span class="w-12 h-0.5 bg-blue-600 inline-block" aria-hidden="true"></span>
+          </span>
         </div>
 
-        <!-- Headline: large commanding Instrument Serif matching mockups -->
         <h2
           id="faq-heading"
-          class="font-serif text-5xl sm:text-6xl lg:text-[4.75rem] xl:text-[5.25rem] font-normal text-[#0A1C3C] leading-[0.98] tracking-tight mb-6"
+          class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
         >
-          {faq.titlePart1}
-          <br />
-          <span class="text-blue-600 italic font-normal">{faq.titleHighlight}</span>
+          <span class="block">{faq.titlePart1}</span>
+          <span class="block italic font-normal text-brand-primary">{faq.titleHighlight}</span>
         </h2>
 
-        <!-- Description -->
-        <p class="text-slate-600 text-base sm:text-lg lg:text-[1.125rem] leading-relaxed font-normal max-w-md">
+        <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed max-w-md mt-4 sm:mt-6">
           {faq.description}
         </p>
 
         <!-- Direct WhatsApp Contact Box (Desktop) -->
-        <div class="hidden lg:flex items-center gap-4 mt-12 pt-2">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group flex items-center gap-4 p-2 -ml-2 rounded-2xl hover:bg-white/60 transition-colors"
-          >
-            <!-- WhatsApp outline bubble icon matching official desktop mockup -->
-            <div class="w-11 h-11 text-blue-600 shrink-0 group-hover:scale-110 transition-transform duration-200">
-              <svg class="w-full h-full fill-none stroke-current" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-4.5-1.2L3 21l1.2-4.5A9 9 0 0 0 12 21z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.5 9.5c.2 1.8 1.8 3.5 3.5 4 .5.1 1.2-.2 1.5-.5l.8-.8c.2-.2.6-.2.8-.1l1.5.7c.3.1.4.5.3.8-.4 1.2-1.6 1.9-2.9 1.9-3.3 0-6-2.7-6-6 0-1.3.7-2.5 1.9-2.9.3-.1.7 0 .8.3l.7 1.5c.1.2.1.6-.1.8l-.8.8c-.3.3-.6 1-.5 1.5z" />
-              </svg>
+        <div class="hidden lg:block mt-10 sm:mt-12">
+          <div class="bg-white border border-brand-border rounded-2xl p-5 shadow-xs max-w-sm">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-full bg-brand-ice text-brand-primary flex items-center justify-center shrink-0">
+                <Icon name="whatsapp" class="w-5 h-5" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs text-brand-body font-medium">{faq.contact.title}</p>
+                <div class="mt-0.5">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    icon="arrow-right"
+                  >
+                    {faq.contact.actionText}
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div>
-              <p class="text-base font-medium text-blue-600">
-                {faq.contact.title}
-              </p>
-              <span class="inline-flex items-center gap-1.5 text-lg font-semibold text-blue-600 group-hover:text-blue-700 transition-colors">
-                {faq.contact.actionText}
-                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-              </span>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
 
@@ -111,65 +92,41 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
               <div
                 class:list={[
                   'faq-item transition-all duration-300 overflow-hidden',
-                  // Mobile styling: distinct cards matching 7_faq_desktop_mobile.png
-                  'rounded-2xl border border-blue-100/80 p-5 sm:p-6',
-                  isOpen ? 'bg-[#EEF4FE] border-blue-200/80 is-open' : 'bg-white',
-                  // Desktop overrides: when closed, clean divider border-b; when open, rounded active blue container
+                  'rounded-2xl border p-5 sm:p-6',
                   isOpen
-                    ? 'lg:rounded-2xl lg:bg-[#EEF4FE] lg:border-blue-100/60 lg:my-2 lg:p-7'
-                    : 'lg:border-0 lg:border-b lg:border-[#E2EEFC] lg:rounded-none lg:bg-transparent lg:p-6 lg:hover:bg-slate-50/60',
+                    ? 'is-open bg-brand-mist/80 border-brand-steel/40 lg:rounded-2xl lg:border lg:my-2 lg:p-7'
+                    : 'bg-white border-brand-border hover:border-brand-steel/40 lg:border-0 lg:border-b lg:border-brand-border lg:rounded-none lg:bg-transparent lg:p-6 lg:hover:bg-brand-mist/30',
                 ]}
                 data-faq-id={item.id}
               >
                 <button
                   type="button"
-                  class="faq-toggle w-full text-left flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 rounded-lg"
+                  class="faq-toggle w-full text-left flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-lg"
                   aria-expanded={isOpen ? 'true' : 'false'}
                   aria-controls={`faq-answer-${item.id}`}
                   id={`faq-toggle-${item.id}`}
                 >
                   <div class="flex items-center gap-3.5 sm:gap-5 flex-1">
                     <!-- Serif Number -->
-                    <span class="font-serif text-2xl sm:text-3xl lg:text-4xl text-blue-600 font-medium shrink-0 w-8 sm:w-10 select-none">
+                    <span class="font-display text-2xl sm:text-3xl lg:text-4xl text-brand-primary font-normal shrink-0 w-8 sm:w-10 select-none">
                       {item.number}
                     </span>
-                    <!-- Subtle Vertical Divider -->
-                    <span class="w-px h-7 sm:h-9 bg-blue-200/90 shrink-0" aria-hidden="true"></span>
+                    <!-- Vertical Divider -->
+                    <span class="w-px h-7 sm:h-9 bg-brand-border shrink-0" aria-hidden="true"></span>
                     <!-- Question Heading -->
-                    <h3 class="font-serif text-xl sm:text-2xl text-[#0A1C3C] font-normal leading-snug flex-1">
+                    <h3 class="font-display text-lg sm:text-xl lg:text-2xl text-brand-heading font-normal leading-snug flex-1">
                       {item.question}
                     </h3>
                   </div>
 
                   <!-- Plus / Minus Icon Indicator -->
-                  <div class="faq-icon-wrapper w-8 h-8 flex items-center justify-center text-blue-600 shrink-0 ml-2">
-                    <!-- Minus icon (shown when open) -->
-                    <svg
-                      class:list={['faq-minus w-5 h-5 transition-transform duration-200', !isOpen && 'hidden']}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.75"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <!-- Plus icon (shown when closed) -->
-                    <svg
-                      class:list={['faq-plus w-5 h-5 transition-transform duration-200', isOpen && 'hidden']}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.75"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      aria-hidden="true"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
+                  <div class="faq-icon-wrapper w-8 h-8 flex items-center justify-center text-brand-primary shrink-0 ml-2">
+                    <span class:list={['faq-minus', !isOpen && 'hidden']}>
+                      <Icon name="minus" class="w-5 h-5 transition-transform duration-200" />
+                    </span>
+                    <span class:list={['faq-plus', isOpen && 'hidden']}>
+                      <Icon name="plus" class="w-5 h-5 transition-transform duration-200" />
+                    </span>
                   </div>
                 </button>
 
@@ -183,8 +140,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                   role="region"
                   aria-labelledby={`faq-toggle-${item.id}`}
                 >
-                  <!-- On mobile, soft container layer; on desktop, clean indented paragraph -->
-                  <div class="mt-3 lg:mt-4 p-3.5 sm:p-4 lg:p-0 rounded-xl lg:rounded-none bg-[#E4EEFB]/70 lg:bg-transparent lg:pl-[calc(2.5rem+1px+1.25rem)] text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
+                  <div class="mt-3 lg:mt-4 p-3.5 sm:p-4 lg:p-0 rounded-xl lg:rounded-none bg-brand-mist/60 lg:bg-transparent lg:pl-[calc(2.5rem+1px+1.25rem)] text-brand-body text-sm sm:text-base leading-relaxed font-normal">
                     {item.answer}
                   </div>
                 </div>
@@ -193,33 +149,30 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
           })}
         </div>
 
-        <!-- Direct WhatsApp Contact Box (Mobile - placed below FAQ list matching official mobile mockup) -->
-        <div class="flex lg:hidden items-center gap-4 mt-8 pt-4 justify-start">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group flex items-center gap-4 p-2 -ml-2 rounded-2xl hover:bg-white/80 transition-colors"
-          >
-            <!-- WhatsApp outline bubble icon matching official mobile mockup -->
-            <div class="w-11 h-11 text-blue-600 shrink-0 group-hover:scale-110 transition-transform duration-200">
-              <svg class="w-full h-full fill-none stroke-current" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0-4.5-1.2L3 21l1.2-4.5A9 9 0 0 0 12 21z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.5 9.5c.2 1.8 1.8 3.5 3.5 4 .5.1 1.2-.2 1.5-.5l.8-.8c.2-.2.6-.2.8-.1l1.5.7c.3.1.4.5.3.8-.4 1.2-1.6 1.9-2.9 1.9-3.3 0-6-2.7-6-6 0-1.3.7-2.5 1.9-2.9.3-.1.7 0 .8.3l.7 1.5c.1.2.1.6-.1.8l-.8.8c-.3.3-.6 1-.5 1.5z" />
-              </svg>
+        <!-- Direct WhatsApp Contact Box (Mobile - placed below FAQ list) -->
+        <div class="flex lg:hidden mt-8 pt-4">
+          <div class="w-full bg-white border border-brand-border rounded-2xl p-4 sm:p-5 shadow-xs">
+            <div class="flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-full bg-brand-ice text-brand-primary flex items-center justify-center shrink-0">
+                <Icon name="whatsapp" class="w-5 h-5" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs text-brand-body font-medium">{faq.contact.title}</p>
+                <div class="mt-0.5">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    icon="arrow-right"
+                  >
+                    {faq.contact.actionText}
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div>
-              <p class="text-base font-medium text-blue-600">
-                {faq.contact.title}
-              </p>
-              <span class="inline-flex items-center gap-1.5 text-lg font-semibold text-blue-600 group-hover:text-blue-700 transition-colors">
-                {faq.contact.actionText}
-                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-              </span>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -236,10 +189,12 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
     items.forEach((item) => {
       const toggle = item.querySelector<HTMLButtonElement>('.faq-toggle');
       const answer = item.querySelector<HTMLElement>('.faq-answer');
-      const plusIcon = item.querySelector<SVGElement>('.faq-plus');
-      const minusIcon = item.querySelector<SVGElement>('.faq-minus');
+      const plusWrapper = item.querySelector<HTMLElement>('.faq-plus');
+      const minusWrapper = item.querySelector<HTMLElement>('.faq-minus');
 
       if (!toggle || !answer) return;
+      if (toggle.dataset.listenerAttached) return;
+      toggle.dataset.listenerAttached = 'true';
 
       toggle.addEventListener('click', () => {
         const isCurrentlyExpanded = toggle.getAttribute('aria-expanded') === 'true';
@@ -249,15 +204,15 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
           if (otherItem !== item) {
             const otherToggle = otherItem.querySelector<HTMLButtonElement>('.faq-toggle');
             const otherAnswer = otherItem.querySelector<HTMLElement>('.faq-answer');
-            const otherPlus = otherItem.querySelector<SVGElement>('.faq-plus');
-            const otherMinus = otherItem.querySelector<SVGElement>('.faq-minus');
+            const otherPlus = otherItem.querySelector<HTMLElement>('.faq-plus');
+            const otherMinus = otherItem.querySelector<HTMLElement>('.faq-minus');
 
             if (otherToggle && otherAnswer) {
               otherToggle.setAttribute('aria-expanded', 'false');
               otherAnswer.classList.add('hidden', 'opacity-0', 'max-h-0');
               otherAnswer.classList.remove('block', 'opacity-100', 'max-h-96');
-              otherItem.classList.remove('is-open', 'bg-[#EEF4FE]', 'border-blue-200/80', 'lg:rounded-2xl', 'lg:bg-[#EEF4FE]', 'lg:border-blue-100/60', 'lg:my-2');
-              otherItem.classList.add('bg-white', 'lg:border-0', 'lg:border-b', 'lg:border-[#E2EEFC]', 'lg:rounded-none', 'lg:bg-transparent');
+              otherItem.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
+              otherItem.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
               otherPlus?.classList.remove('hidden');
               otherMinus?.classList.add('hidden');
             }
@@ -269,18 +224,18 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
           toggle.setAttribute('aria-expanded', 'false');
           answer.classList.add('hidden', 'opacity-0', 'max-h-0');
           answer.classList.remove('block', 'opacity-100', 'max-h-96');
-          item.classList.remove('is-open', 'bg-[#EEF4FE]', 'border-blue-200/80', 'lg:rounded-2xl', 'lg:bg-[#EEF4FE]', 'lg:border-blue-100/60', 'lg:my-2');
-          item.classList.add('bg-white', 'lg:border-0', 'lg:border-b', 'lg:border-[#E2EEFC]', 'lg:rounded-none', 'lg:bg-transparent');
-          plusIcon?.classList.remove('hidden');
-          minusIcon?.classList.add('hidden');
+          item.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
+          item.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
+          plusWrapper?.classList.remove('hidden');
+          minusWrapper?.classList.add('hidden');
         } else {
           toggle.setAttribute('aria-expanded', 'true');
           answer.classList.remove('hidden', 'opacity-0', 'max-h-0');
           answer.classList.add('block', 'opacity-100', 'max-h-96');
-          item.classList.add('is-open', 'bg-[#EEF4FE]', 'border-blue-200/80', 'lg:rounded-2xl', 'lg:bg-[#EEF4FE]', 'lg:border-blue-100/60', 'lg:my-2');
-          item.classList.remove('bg-white', 'lg:border-0', 'lg:border-b', 'lg:border-[#E2EEFC]', 'lg:rounded-none', 'lg:bg-transparent');
-          plusIcon?.classList.add('hidden');
-          minusIcon?.classList.remove('hidden');
+          item.classList.add('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
+          item.classList.remove('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
+          plusWrapper?.classList.add('hidden');
+          minusWrapper?.classList.remove('hidden');
         }
       });
     });
