@@ -4,9 +4,11 @@
 import { siteConfig } from '../../data/siteConfig';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import VideoModal from '../ui/VideoModal.astro';
 
 const { contact, contactSection } = siteConfig;
 const googleMapsUrl = contact.googleMapsUrl;
+const modalId = 'contact-page-como-llegar-video-modal';
 ---
 
 <section id="ubicacion" class="relative overflow-hidden">
@@ -163,24 +165,26 @@ const googleMapsUrl = contact.googleMapsUrl;
 
         <!-- Right Column: Full-Width Panoramic Route Video Banner matching mockup (col-span-7) -->
         <div class="lg:col-span-7 w-full">
-          <a
-            href={contactSection.routeVideo.videoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            data-open-video-modal={modalId}
             data-event="route_video_click"
             data-event-location="contact_tour_video"
-            class="group relative block rounded-2xl lg:rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-white/80 aspect-21/9 sm:aspect-12/5 bg-brand-midnight"
+            class="group relative block w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-white/80 aspect-21/9 sm:aspect-12/5 bg-brand-midnight cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
             aria-label="Reproducir video del recorrido para llegar a Óptica Alemania en Barzal"
           >
-            <img
-              src="/images/contact/2_ubicacion_image.webp"
-              alt={contactSection.facadeImage.alt}
-              width={contactSection.facadeImage.width}
-              height={contactSection.facadeImage.height}
-              class="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-              loading="eager"
-              decoding="async"
-            />
+            <picture>
+              <source srcset="/images/contact/2_ubicacion_image.webp" type="image/webp" />
+              <img
+                src="/images/contact/2_ubicacion_image.png"
+                alt={contactSection.facadeImage.alt}
+                width={contactSection.facadeImage.width}
+                height={contactSection.facadeImage.height}
+                class="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
 
             <!-- Subtle bottom vignette for crisp white label readability -->
             <div
@@ -198,17 +202,26 @@ const googleMapsUrl = contact.googleMapsUrl;
               </span>
             </div>
 
-            <!-- Bottom-Right Duration Badge: 1:28 -->
+            <!-- Bottom-Right Duration Badge -->
             <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 pointer-events-none">
               <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-brand-heading/85 backdrop-blur-xs text-white text-xs font-semibold tabular-nums">
-                1:28
+                {contactSection.routeVideo.duration}
               </span>
             </div>
-          </a>
+          </button>
         </div>
 
       </div>
     </div>
   </div>
 
+  <VideoModal
+    id={modalId}
+    src={contactSection.routeVideo.videoSrc}
+    poster="/images/contact/2_ubicacion_image.webp"
+    pngFallback="/images/contact/2_ubicacion_image.png"
+    alt={contactSection.facadeImage.alt}
+    eyebrow="TE MOSTRAMOS EL CAMINO"
+    title="Cómo llegar a Óptica Alemania en Barzal"
+  />
 </section>

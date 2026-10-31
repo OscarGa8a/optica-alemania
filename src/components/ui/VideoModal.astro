@@ -1,0 +1,153 @@
+---
+// Reusable Portrait Video Lightbox Modal (<dialog>)
+// Opens on-demand when any [data-open-video-modal={id}] trigger is clicked
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  src: string;
+  poster: string;
+  alt: string;
+  title?: string;
+  eyebrow?: string;
+}
+
+const {
+  id,
+  src,
+  poster,
+  alt,
+  title = 'Cómo llegar a Óptica Alemania',
+  eyebrow = 'RECORRIDO EN VIDEO',
+} = Astro.props;
+---
+
+<dialog
+  id={id}
+  data-video-modal={id}
+  aria-label={title}
+  class="fixed inset-0 z-50 m-0 h-dvh w-screen max-h-none max-w-none bg-transparent p-0 backdrop:bg-slate-950/85 backdrop:backdrop-blur-md open:flex items-center justify-center"
+>
+  <div
+    data-modal-backdrop
+    class="relative flex h-full w-full items-center justify-center p-4 sm:p-6"
+  >
+    <!-- Modal Card Container (Portrait 9:16) -->
+    <div
+      class="relative flex flex-col w-full max-w-[360px] sm:max-w-[400px] max-h-[88dvh] rounded-3xl overflow-hidden bg-brand-midnight border border-white/15 shadow-2xl"
+    >
+      <!-- Top Header Bar with Title & Close Button -->
+      <div
+        class="flex items-center justify-between gap-3 px-4 py-3 bg-brand-midnight/95 border-b border-white/10 text-white z-20"
+      >
+        <div class="min-w-0">
+          <span class="block text-[10px] font-semibold uppercase tracking-widest text-blue-400">
+            {eyebrow}
+          </span>
+          <p class="text-xs sm:text-sm font-medium text-white truncate">
+            {title}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          data-close-video-modal
+          class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all duration-150 cursor-pointer shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          aria-label="Cerrar video"
+        >
+          <Icon name="x" class="w-4 h-4 stroke-current stroke-2" />
+        </button>
+      </div>
+
+      <!-- Portrait 9:16 Video Wrapper -->
+      <div class="relative w-full aspect-9/16 max-h-[calc(88dvh-56px)] bg-black overflow-hidden">
+        <video
+          id={`${id}-video`}
+          data-video-src={src}
+          poster={poster}
+          playsinline
+          controls
+          preload="none"
+          class="w-full h-full object-contain bg-black"
+          aria-label={alt}
+        >
+          <source src={src} type="video/mp4" />
+          <img
+            src={poster}
+            alt={alt}
+            width="1047"
+            height="1502"
+            loading="lazy"
+          />
+        </video>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function initVideoModals() {
+    const modals = document.querySelectorAll<HTMLDialogElement>('dialog[data-video-modal]');
+
+    modals.forEach((dialog) => {
+      if (dialog.dataset.initialized === 'true') return;
+      dialog.dataset.initialized = 'true';
+
+      const modalId = dialog.dataset.videoModal;
+      if (!modalId) return;
+
+      const video = dialog.querySelector<HTMLVideoElement>('video');
+      const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-close-video-modal]');
+      const backdrop = dialog.querySelector<HTMLElement>('[data-modal-backdrop]');
+      const triggers = document.querySelectorAll<HTMLElement>(`[data-open-video-modal="${modalId}"]`);
+
+      function openModal(e?: Event) {
+        if (e) e.preventDefault();
+        if (!dialog.open) {
+          dialog.showModal();
+          document.body.style.overflow = 'hidden';
+        }
+        if (video) {
+          video.currentTime = 0;
+          video.play().catch(() => {
+            // Fallback: if browser blocks unmuted autoplay despite user gesture, play muted
+            video.muted = true;
+            video.play().catch(() => {});
+          });
+        }
+      }
+
+      function closeModal() {
+        if (video && !video.paused) {
+          video.pause();
+        }
+        if (dialog.open) {
+          dialog.close();
+        }
+        document.body.style.overflow = '';
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', openModal);
+      });
+
+      closeBtn?.addEventListener('click', closeModal);
+
+      backdrop?.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          closeModal();
+        }
+      });
+
+      dialog.addEventListener('close', () => {
+        if (video && !video.paused) {
+          video.pause();
+        }
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  initVideoModals();
+  document.addEventListener('astro:page-load', initVideoModals);
+</script>
