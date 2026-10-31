@@ -5,8 +5,10 @@ import { siteConfig } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
+import VideoModal from './ui/VideoModal.astro';
 
 const { contact, contactSection } = siteConfig;
+const modalId = 'home-como-llegar-video-modal';
 const whatsappContactUrl = buildWhatsAppLink(
   contactSection.whatsappMessage,
   contact.whatsappNumber
@@ -170,24 +172,23 @@ const whatsappContactUrl = buildWhatsAppLink(
           </a>
         </div>
 
-        <!-- Card 2: Route / Video 'Cómo Llegar' Card -->
-        <div class="rounded-3xl overflow-hidden border border-blue-500/20 bg-brand-midnight-card shadow-xl">
+        <!-- Card 2: Route / Video 'Cómo Llegar' Card (Full-card clickable trigger) -->
+        <button
+          type="button"
+          data-open-video-modal={modalId}
+          class="group w-full text-left rounded-3xl overflow-hidden border border-blue-500/20 hover:border-blue-400/40 bg-brand-midnight-card shadow-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+          aria-label="Ver video del recorrido hasta Óptica Alemania en Barzal"
+        >
           <!-- Desktop Layout (Horizontal split) -->
           <div class="hidden sm:grid sm:grid-cols-2 items-center">
             <!-- Facade Thumbnail with Play Button -->
-            <a
-              href={contactSection.routeVideo.videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group relative block aspect-16/10 overflow-hidden"
-              aria-label="Ver video del recorrido hasta Óptica Alemania en Barzal"
-            >
+            <div class="h-full relative block w-full aspect-16/10 overflow-hidden">
               <img
                 src={contactSection.facadeImage.src}
                 alt={contactSection.facadeImage.alt}
                 width={contactSection.facadeImage.width}
                 height={contactSection.facadeImage.height}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
@@ -199,10 +200,10 @@ const whatsappContactUrl = buildWhatsAppLink(
                   <Icon name="play" class="w-6 h-6 fill-white ml-0.5" />
                 </div>
               </div>
-            </a>
+            </div>
 
-            <!-- Content & Action -->
-            <div class="p-6 lg:p-8 flex items-center justify-between gap-4">
+            <!-- Content -->
+            <div class="p-6 lg:p-8 flex items-center">
               <div>
                 <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
                   {contactSection.routeVideo.eyebrow}
@@ -210,41 +211,23 @@ const whatsappContactUrl = buildWhatsAppLink(
                 <h3 class="font-display text-2xl lg:text-3xl text-white leading-tight mt-1.5">
                   {contactSection.routeVideo.title}
                 </h3>
-                <p class="text-xs lg:text-sm text-slate-300 mt-2 leading-relaxed max-w-xs">
+                <p class="text-xs lg:text-sm text-slate-300 mt-2 leading-relaxed">
                   {contactSection.routeVideo.description}
                 </p>
               </div>
-
-              <!-- Action circular button -->
-              <Button
-                variant="glass"
-                size="sm"
-                href={contactSection.routeVideo.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                icon="arrow-right"
-                class="w-12 h-12 !rounded-full !p-0 justify-center shrink-0 border-white/30 text-white hover:bg-white hover:text-brand-heading"
-                aria-label="Abrir recorrido en video hasta Óptica Alemania"
-              />
             </div>
           </div>
 
           <!-- Mobile Layout (Vertical stack matching 10_contacto_mobile.png) -->
           <div class="sm:hidden flex flex-col">
             <!-- Facade Thumbnail with Play Button -->
-            <a
-              href={contactSection.routeVideo.videoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group relative block aspect-16/10 overflow-hidden"
-              aria-label="Ver video del recorrido hasta Óptica Alemania en Barzal"
-            >
+            <div class="relative block w-full aspect-16/10 overflow-hidden">
               <img
                 src={contactSection.facadeImage.src}
                 alt={contactSection.facadeImage.alt}
                 width={contactSection.facadeImage.width}
                 height={contactSection.facadeImage.height}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
               />
@@ -252,13 +235,13 @@ const whatsappContactUrl = buildWhatsAppLink(
               
               <!-- Play Button -->
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg">
+                <div class="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
                   <Icon name="play" class="w-6 h-6 fill-white ml-0.5" />
                 </div>
               </div>
-            </a>
+            </div>
 
-            <!-- Content & Button -->
+            <!-- Content & Pill Label -->
             <div class="p-5 flex flex-col">
               <span class="text-xs font-semibold uppercase tracking-widest text-blue-400">
                 {contactSection.routeVideo.eyebrow}
@@ -270,25 +253,28 @@ const whatsappContactUrl = buildWhatsAppLink(
                 {contactSection.routeVideo.description}
               </p>
 
-              <!-- Outlined Glass Pill Action Button -->
-              <Button
-                variant="glass"
-                size="sm"
-                href={contactSection.routeVideo.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                icon="arrow-right"
-                class="mt-4 w-full justify-center"
-                aria-label="Ver video del recorrido paso a paso"
+              <!-- Outlined Glass Pill Visual Indicator -->
+              <div
+                class="mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 group-hover:border-white/40 bg-white/10 group-hover:bg-white/15 text-white backdrop-blur-md px-4 py-2.5 text-xs font-semibold transition-all duration-200"
               >
-                {contactSection.routeVideo.actionTextMobile}
-              </Button>
+                <Icon name="play" class="w-3.5 h-3.5 fill-current shrink-0" />
+                <span>{contactSection.routeVideo.actionTextMobile}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </button>
 
       </div>
 
     </div>
   </div>
+
+  <VideoModal
+    id={modalId}
+    src={contactSection.routeVideo.videoSrc}
+    poster={contactSection.facadeImage.src}
+    alt={contactSection.facadeImage.alt}
+    eyebrow={contactSection.routeVideo.eyebrow}
+    title={contactSection.routeVideo.title}
+  />
 </section>

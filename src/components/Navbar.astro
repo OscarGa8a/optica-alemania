@@ -42,31 +42,13 @@ const logoHref = '/';
       
       <!-- Brand Logo -->
       <a href={logoHref} class="flex items-center group transition-transform duration-200" aria-label="Óptica Alemania - Inicio">
-        <!-- Dark logo for light theme / scrolled state -->
         <img
-          id="brand-logo-dark"
-          src="/images/logo.png"
+          id="brand-logo"
+          src="/images/logo.webp"
           alt="Óptica Alemania - Villavicencio"
-          width="1840"
-          height="511"
-          class:list={[
-            "h-8 sm:h-10 lg:h-11 w-auto object-contain transition-opacity duration-200",
-            isLight ? "block" : "hidden"
-          ]}
-          loading="eager"
-          decoding="async"
-        />
-        <!-- White logo for dark hero transparent state -->
-        <img
-          id="brand-logo-white"
-          src="/images/logo-white.png"
-          alt="Óptica Alemania - Villavicencio"
-          width="1840"
-          height="511"
-          class:list={[
-            "h-8 sm:h-10 lg:h-11 w-auto object-contain transition-opacity duration-200",
-            isLight ? "hidden" : "block"
-          ]}
+          width="2172"
+          height="724"
+          class="h-8 sm:h-10 lg:h-11 w-auto object-contain transition-opacity duration-200"
           loading="eager"
           decoding="async"
         />
@@ -96,8 +78,7 @@ const logoHref = '/';
 
       <!-- Action Button & Mobile Controls -->
       <div class="flex items-center gap-3">
-        <!-- WhatsApp CTA Button: Outlined in mobile at top (or filled if light theme), filled solid in desktop and on scroll -->
-        <!-- CTA Desktop & Tablet: Pill button -->
+        <!-- WhatsApp CTA Button: Hidden on mobile (< sm) to prevent crowding, visible on tablet & desktop -->
         <Button
           id="navbar-cta-btn"
           href={whatsappUrl}
@@ -109,10 +90,12 @@ const logoHref = '/';
           icon="whatsapp"
           iconPosition="left"
           size="sm"
-          class={isLight
-            ? "border border-transparent bg-brand-primary text-white hover:bg-brand-bright"
-            : "border border-white/80 text-white bg-white/10 backdrop-blur-xs lg:border-transparent lg:bg-brand-primary lg:text-white lg:hover:bg-brand-bright"
-          }
+          class:list={[
+            "hidden sm:inline-flex",
+            isLight
+              ? "border border-transparent bg-brand-primary text-white hover:bg-brand-bright"
+              : "border border-white/80 text-white bg-white/10 backdrop-blur-xs lg:border-transparent lg:bg-brand-primary lg:text-white lg:hover:bg-brand-bright"
+          ]}
         >
           Solicitar atención
         </Button>
@@ -141,20 +124,40 @@ const logoHref = '/';
   </div>
 
   <!-- Mobile Drawer / Dropdown -->
-  <div id="mobile-menu" class="hidden lg:hidden border-t border-brand-border bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-xl">
-    {navItems.map((item) => (
-      <a
-        href={item.href}
-        class:list={[
-          "block px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
-          item.isActive
-            ? "text-brand-primary bg-brand-cool/80 font-semibold"
-            : "text-brand-heading hover:bg-brand-cool hover:text-brand-primary"
-        ]}
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-brand-border bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-xl">
+    <div class="space-y-1">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "block px-3 py-2.5 rounded-lg text-base font-medium transition-colors",
+            item.isActive
+              ? "text-brand-primary bg-brand-cool/80 font-semibold"
+              : "text-brand-heading hover:bg-brand-cool hover:text-brand-primary"
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile CTA Button inside Menu -->
+    <div class="pt-3 border-t border-brand-border/60">
+      <Button
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-event="whatsapp_cta"
+        data-event-location="mobile_menu_cta"
+        aria-label="Solicitar atención por WhatsApp con Óptica Alemania"
+        icon="whatsapp"
+        iconPosition="left"
+        size="md"
+        class="w-full justify-center bg-brand-primary text-white hover:bg-brand-bright shadow-xs"
       >
-        {item.label}
-      </a>
-    ))}
+        Solicitar atención
+      </Button>
+    </div>
   </div>
 </header>
 
@@ -165,8 +168,6 @@ const logoHref = '/';
     const menu = document.getElementById('mobile-menu');
     const hamburgerIcon = document.getElementById('hamburger-icon');
     const closeIcon = document.getElementById('close-icon');
-    const brandLogoDark = document.getElementById('brand-logo-dark');
-    const brandLogoWhite = document.getElementById('brand-logo-white');
     const navbarCtaBtn = document.getElementById('navbar-cta-btn');
     const isLightMode = header?.getAttribute('data-theme') === 'light';
 
@@ -201,11 +202,6 @@ const logoHref = '/';
         header.classList.remove('bg-transparent', 'border-transparent');
         
         if (!isLightMode) {
-          brandLogoDark?.classList.remove('hidden');
-          brandLogoDark?.classList.add('block');
-          brandLogoWhite?.classList.remove('block');
-          brandLogoWhite?.classList.add('hidden');
-          
           button?.classList.remove('text-white', 'hover:bg-white/15');
           button?.classList.add('text-brand-heading', 'hover:bg-brand-cool/80');
 
@@ -217,11 +213,6 @@ const logoHref = '/';
         header.classList.add('bg-transparent', 'border-transparent');
 
         if (!isLightMode) {
-          brandLogoDark?.classList.remove('block');
-          brandLogoDark?.classList.add('hidden');
-          brandLogoWhite?.classList.remove('hidden');
-          brandLogoWhite?.classList.add('block');
-
           button?.classList.add('text-white', 'hover:bg-white/15');
           button?.classList.remove('text-brand-heading', 'hover:bg-brand-cool/80');
 
