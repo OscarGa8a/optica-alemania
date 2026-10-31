@@ -3,142 +3,113 @@
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import VideoPlayer from '../ui/VideoPlayer.astro';
 
+const { volk } = siteConfig.procedimientosPage;
 const whatsappUrl = buildWhatsAppLink(
-  'Hola, quisiera información sobre la evaluación retinal en Óptica Alemania.',
+  volk.whatsappMessage,
   siteConfig.contact.whatsappNumber
 );
 ---
 
-<section id="volk-inview" class="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden scroll-mt-20 lg:scroll-mt-24">
-  <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+<section
+  id={volk.id}
+  class="relative bg-white text-brand-body py-14 sm:py-20 lg:py-28 overflow-hidden scroll-mt-20 lg:scroll-mt-24"
+  aria-labelledby="volk-inview-heading"
+>
+  <!-- Background decorative watermark -->
+  <div
+    class="absolute -right-24 sm:-right-32 lg:-right-40 -bottom-10 w-full max-w-xl lg:max-w-3xl pointer-events-none opacity-15 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+    <!-- Mobile-only Eyebrow & H2 (above video on mobile matching mockup) -->
+    <div class="lg:hidden mb-6">
+      <div>
+        <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
+          {volk.eyebrow}
+        </span>
+      </div>
+
+      <h2 class="font-display text-4xl sm:text-5xl text-brand-heading leading-[1.06] tracking-tight mt-3">
+        <span class="block font-normal">{volk.titleLine1}</span>
+        <span class="block italic font-normal text-brand-primary">{volk.titleHighlight}</span>
+      </h2>
+    </div>
+
+    <!-- Main Grid: Video on Left (7 cols) / Editorial Content on Right (5 cols) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-16 items-center">
       
-      <!-- Mobile-only Eyebrow & H2 (appears above video on mobile) -->
-      <div class="lg:hidden">
-        <div class="flex items-center gap-3">
-          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
-            EVALUACIÓN RETINAL · VOLK INVIEW
-          </span>
-          <span class="w-12 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
-        </div>
-
-        <h2 class="text-3xl sm:text-4xl font-display font-normal text-brand-heading tracking-tight leading-[1.12] mt-4">
-          Evaluación retinal <br />
-          <span class="italic text-brand-primary">de cerca.</span>
-        </h2>
+      <!-- Video Player Card using reusable VideoPlayer component with Icon.astro -->
+      <div class="lg:col-span-7">
+        <VideoPlayer
+          id={volk.videoId}
+          poster={volk.video.poster}
+          pngFallback={volk.video.pngFallback}
+          alt={volk.video.alt}
+          initialTimestamp={volk.video.initialTimestamp}
+          initialProgress={volk.video.initialProgress}
+        />
       </div>
 
-      <!-- Video Mockup Card (Left on Desktop, Middle on Mobile) -->
-      <div class="lg:col-span-7 lg:order-1">
-        <div class="relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100">
-          <picture>
-            <source srcset="/images/procedimientos/2_tecnologia_image.webp" type="image/webp" />
-            <img
-              src="/images/procedimientos/2_tecnologia_image.png"
-              alt="Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-auto aspect-[16/9] object-cover transform duration-500 group-hover:scale-[1.01]"
-            />
-          </picture>
-
-          <!-- Mockup Video Controls Overlay Bar -->
-          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-4 sm:px-6 pt-10 pb-4 sm:pb-5 flex items-center gap-3 sm:gap-4 text-white select-none">
-            <!-- Pause Icon -->
-            <button
-              type="button"
-              class="text-white hover:text-brand-bright transition-colors focus:outline-none"
-              aria-label="Pausar video"
-            >
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
-                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
-              </svg>
-            </button>
-
-            <!-- Timestamp -->
-            <span class="text-xs sm:text-sm font-sans tracking-tight text-white/90 shrink-0">
-              0:08 / 0:32
-            </span>
-
-            <!-- Progress Scrubber -->
-            <div class="relative flex-1 h-1 bg-white/30 rounded-full cursor-pointer flex items-center">
-              <div class="h-full bg-brand-primary rounded-full w-[25%]"></div>
-              <div class="absolute left-[25%] -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-md"></div>
-            </div>
-
-            <!-- Volume / Mute Icon -->
-            <button
-              type="button"
-              class="text-white/90 hover:text-white transition-colors focus:outline-none"
-              aria-label="Silenciar o activar audio"
-            >
-              <svg class="w-4 h-4 stroke-current shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-              </svg>
-            </button>
-
-            <!-- Fullscreen Icon -->
-            <button
-              type="button"
-              class="text-white/90 hover:text-white transition-colors focus:outline-none"
-              aria-label="Pantalla completa"
-            >
-              <svg class="w-4 h-4 stroke-current shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Text & CTA (Desktop: Full column with H2; Mobile: Paragraph & Button) -->
-      <div class="lg:col-span-5 lg:order-2">
+      <!-- Right Column: Text & CTA Button -->
+      <div class="lg:col-span-5">
         <div class="max-w-xl">
           <!-- Desktop Eyebrow & H2 -->
           <div class="hidden lg:block">
-            <div class="flex items-center gap-3">
-              <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
-                EVALUACIÓN RETINAL · VOLK INVIEW
+            <div>
+              <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
+                {volk.eyebrow}
               </span>
-              <span class="w-12 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
             </div>
 
-            <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-display font-normal text-brand-heading tracking-tight leading-[1.1] mt-4 sm:mt-5">
-              Evaluación retinal <br />
-              <span class="italic text-brand-primary">de cerca.</span>
+            <h2
+              id="volk-inview-heading"
+              class="font-display text-4xl sm:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
+            >
+              <span class="block font-normal">{volk.titleLine1}</span>
+              <span class="block italic font-normal text-brand-primary">{volk.titleHighlight}</span>
             </h2>
           </div>
 
           <!-- Descriptive Paragraph -->
-          <p class="mt-4 sm:mt-5 text-base sm:text-lg text-brand-body leading-relaxed font-normal">
-            Conoce cómo se obtienen imágenes de la retina durante una evaluación visual. En este video mostramos parte del procedimiento y la tecnología utilizada en Óptica Alemania. La interpretación de los hallazgos y la necesidad de otras evaluaciones corresponden al profesional que realiza la valoración.
+          <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-4 sm:mt-6 font-normal">
+            {volk.description}
           </p>
 
-          <!-- WhatsApp Pill Button -->
-          <div class="mt-8">
-            <a
+          <!-- WhatsApp Pill Button using Button.astro and Icon.astro -->
+          <div class="mt-6 sm:mt-8">
+            <Button
+              variant="primary"
+              size="lg"
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               data-event="whatsapp_cta"
               data-event-location="procedimientos_volk"
-              class="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-brand-primary text-white hover:bg-brand-bright font-semibold text-sm sm:text-base tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200"
+              icon="arrow-right"
+              iconPosition="right"
+              aria-label={`${volk.ctaText} - ${siteConfig.name}`}
+              class="w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4"
             >
-              <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
-              </svg>
-              <span>Consultar esta evaluación</span>
-              <svg class="w-4 h-4 stroke-current ml-1" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
+              <span class="inline-flex items-center gap-2.5">
+                <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
+                <span class="text-sm sm:text-base font-semibold whitespace-nowrap">{volk.ctaText}</span>
+              </span>
+            </Button>
           </div>
         </div>
       </div>
@@ -146,3 +117,137 @@ const whatsappUrl = buildWhatsAppLink(
     </div>
   </div>
 </section>
+
+<script>
+  function setupVolkVideo() {
+    const section = document.getElementById('volk-inview');
+    const video = document.getElementById('volk-video') as HTMLVideoElement | null;
+    if (!section || !video) return;
+
+    const playToggle = document.getElementById('volk-video-play-toggle');
+    const pauseIcon = document.getElementById('volk-video-pause-icon');
+    const playIcon = document.getElementById('volk-video-play-icon');
+    const muteToggle = document.getElementById('volk-video-mute-toggle');
+    const muteIcon = document.getElementById('volk-video-mute-icon');
+    const unmuteIcon = document.getElementById('volk-video-unmute-icon');
+    const timestamp = document.getElementById('volk-video-timestamp');
+    const progressFill = document.getElementById('volk-video-progress-fill');
+    const progressThumb = document.getElementById('volk-video-progress-thumb');
+    const progressBar = document.getElementById('volk-video-progress-bar');
+    const fullscreenToggle = document.getElementById('volk-video-fullscreen-toggle');
+
+    let userManuallyPaused = false;
+
+    function formatTime(seconds: number) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function updatePlayState(isPlaying: boolean) {
+      if (pauseIcon && playIcon) {
+        if (isPlaying) {
+          pauseIcon.classList.remove('hidden');
+          pauseIcon.classList.add('block');
+          playIcon.classList.remove('block');
+          playIcon.classList.add('hidden');
+        } else {
+          pauseIcon.classList.remove('block');
+          pauseIcon.classList.add('hidden');
+          playIcon.classList.remove('hidden');
+          playIcon.classList.add('block');
+        }
+      }
+    }
+
+    // IntersectionObserver: auto-play when entering viewport, auto-pause when leaving
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!reducedMotion && !userManuallyPaused && video.currentSrc) {
+              video.play().then(() => {
+                updatePlayState(true);
+              }).catch(() => {
+                updatePlayState(false);
+              });
+            }
+          } else {
+            if (video.currentSrc && !video.paused) {
+              video.pause();
+              updatePlayState(false);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.35,
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(section);
+
+    playToggle?.addEventListener('click', () => {
+      if (video.currentSrc) {
+        if (video.paused) {
+          userManuallyPaused = false;
+          video.play().then(() => updatePlayState(true)).catch(() => {});
+        } else {
+          userManuallyPaused = true;
+          video.pause();
+          updatePlayState(false);
+        }
+      }
+    });
+
+    muteToggle?.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (muteIcon && unmuteIcon) {
+        if (video.muted) {
+          muteIcon.classList.remove('hidden');
+          muteIcon.classList.add('block');
+          unmuteIcon.classList.remove('block');
+          unmuteIcon.classList.add('hidden');
+        } else {
+          muteIcon.classList.remove('block');
+          muteIcon.classList.add('hidden');
+          unmuteIcon.classList.remove('hidden');
+          unmuteIcon.classList.add('block');
+        }
+      }
+    });
+
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration) return;
+      const progress = (video.currentTime / video.duration) * 100;
+      if (progressFill) progressFill.style.width = `${progress}%`;
+      if (progressThumb) progressThumb.style.left = `${progress}%`;
+      if (timestamp) {
+        timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+      }
+      if (progressBar) {
+        progressBar.setAttribute('aria-valuenow', Math.round(progress).toString());
+      }
+    });
+
+    progressBar?.addEventListener('click', (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      if (video.duration) {
+        video.currentTime = pos * video.duration;
+      }
+    });
+
+    fullscreenToggle?.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        video.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupVolkVideo);
+</script>

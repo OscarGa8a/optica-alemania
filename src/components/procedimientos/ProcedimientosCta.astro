@@ -3,75 +3,103 @@
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 
+const { cta } = siteConfig.procedimientosPage;
 const whatsappUrl = buildWhatsAppLink(
-  'Hola, vi los procedimientos en la página web de Óptica Alemania y quisiera más información sobre las evaluaciones visuales.',
+  cta.whatsappMessage,
   siteConfig.contact.whatsappNumber
 );
 ---
 
-<section id="contacto" class="relative bg-gradient-to-br from-[#FAFCFE] via-[#EDF4FD] to-[#DCE8FC] py-20 sm:py-28 lg:py-36 xl:py-40 overflow-hidden">
-  
-  <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+<section
+  id={cta.id}
+  class="relative bg-gradient-to-br from-[#FAFCFE] via-[#EDF4FD] to-[#DCE8FC] py-16 sm:py-24 lg:py-32 xl:py-36 overflow-hidden scroll-mt-20"
+  aria-labelledby="contacto-heading"
+>
+  <!-- Background decorative organic watermark -->
+  <div
+    class="absolute -right-24 sm:-right-32 lg:-right-40 -bottom-10 w-full max-w-xl lg:max-w-3xl pointer-events-none opacity-20 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/about/assets.webp"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="relative z-10 w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
       
       <!-- Left Column: Eyebrow + Heading -->
       <div class="lg:col-span-7">
-        <div class="flex items-center gap-3">
-          <span class="text-xs uppercase font-semibold tracking-[0.2em] text-brand-primary">
-            ESTAMOS PARA ORIENTARTE
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
+            {cta.eyebrow}
           </span>
-          <span class="w-12 h-[1.5px] bg-[#9BB0CE]" aria-hidden="true"></span>
         </div>
 
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.75rem] font-display font-normal text-brand-heading tracking-tight leading-[1.08] mt-4 sm:mt-5 max-w-xl">
-          ¿Quieres conocer más <br />
-          sobre nuestras <br />
-          <span class="italic text-brand-primary">evaluaciones?</span>
+        <h2
+          id="contacto-heading"
+          class="font-display text-[2.6rem] sm:text-5xl lg:text-6xl xl:text-[4rem] text-brand-heading leading-[1.04] tracking-tight mt-3 sm:mt-5 max-w-xl"
+        >
+          <!-- Desktop Line Breaks -->
+          <span class="hidden sm:block font-normal">{cta.titleLine1}</span>
+          <span class="hidden sm:block font-normal">{cta.titleLine2}</span>
+          <!-- Mobile Line Breaks matching Figma -->
+          <span class="block sm:hidden font-normal">{cta.titleMobileLine1 || cta.titleLine1}</span>
+          <span class="block sm:hidden font-normal">{cta.titleMobileLine2 || cta.titleLine2}</span>
+          <!-- Highlighted Keyword -->
+          <span class="block italic font-normal text-brand-primary">{cta.titleHighlight}</span>
         </h2>
       </div>
 
-      <!-- Right Column: Paragraph + CTA Buttons -->
-      <div class="lg:col-span-5 flex flex-col items-start lg:border-l lg:border-[#D6E3F2] lg:pl-12">
-        <p class="text-base sm:text-lg text-brand-body leading-relaxed font-normal max-w-md">
-          Si tienes preguntas sobre alguno de nuestros procedimientos visuales, escríbenos. En Óptica Alemania podemos orientarte sobre la información y disponibilidad de nuestros servicios.
+      <!-- Right Column: Paragraph + CTA Buttons with Divider -->
+      <div class="lg:col-span-5 flex flex-col items-start lg:border-l lg:border-[#C5D7ED] lg:pl-10 xl:pl-14">
+        <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed font-normal max-w-md">
+          {cta.description}
         </p>
 
-        <!-- Primary WhatsApp Button -->
-        <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5 w-full sm:w-auto">
-          <a
+        <!-- Primary WhatsApp Button using Button.astro and Icon.astro -->
+        <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5 w-full sm:w-auto">
+          <Button
+            variant="primary"
+            size="lg"
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             data-event="whatsapp_cta"
             data-event-location="procedimientos_cta_banner"
-            class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-brand-primary text-white hover:bg-brand-bright font-semibold text-base tracking-wide shadow-sm hover:shadow active:scale-[0.98] transition-all duration-200 w-full sm:w-auto"
+            icon="arrow-right"
+            iconPosition="right"
+            aria-label={`${cta.ctaText} con ${siteConfig.name}`}
+            class="w-full sm:w-auto inline-flex items-center !justify-between sm:!justify-center gap-3 px-7 sm:px-8 py-3.5 sm:py-4"
           >
-            <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/>
-            </svg>
-            <span>Hablar por WhatsApp</span>
-            <svg class="w-4 h-4 stroke-current ml-1" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
+            <span class="inline-flex items-center gap-2.5">
+              <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
+              <span class="text-sm sm:text-base font-semibold whitespace-nowrap">{cta.ctaText}</span>
+            </span>
+          </Button>
         </div>
 
         <!-- Secondary Link: Explorar servicios -->
-        <div class="mt-4">
-          <a
-            href="/servicios"
+        <div class="mt-4 sm:mt-5">
+          <Button
+            variant="link"
+            size="md"
+            href={cta.secondaryLink.href}
+            icon="arrow-right"
             data-event="navigation_link"
             data-event-location="procedimientos_cta_banner"
-            class="inline-flex items-center gap-2 text-brand-primary hover:text-brand-bright font-semibold text-sm sm:text-base underline underline-offset-4 transition-colors group"
           >
-            <span>Explorar servicios</span>
-            <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
+            {cta.secondaryLink.text}
+          </Button>
         </div>
       </div>
 

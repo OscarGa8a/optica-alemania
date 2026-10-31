@@ -156,7 +156,16 @@ async function run() {
           } else {
             await el.scrollIntoViewIfNeeded();
             await page.waitForTimeout(100);
+            // Hide fixed navbar temporarily to prevent it from overlaying scrolled sections
+            await page.evaluate(() => {
+              const header = document.querySelector('header');
+              if (header) header.style.display = 'none';
+            });
             await el.screenshot({ path: screenshotPath });
+            await page.evaluate(() => {
+              const header = document.querySelector('header');
+              if (header) header.style.display = '';
+            });
             console.log(`📸 Capturada sección ${sec.label} (${vp.name}) -> ${path.basename(screenshotPath)}`);
           }
         }
