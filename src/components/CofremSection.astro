@@ -50,16 +50,19 @@ const whatsappCofremUrl = buildWhatsAppLink(
       
       <!-- Left Column (Desktop) / Top (Mobile): Cofrem Official Logo -->
       <div class="lg:col-span-5 flex items-center justify-center">
-        <div class="w-44 sm:w-56 lg:w-full lg:max-w-xs xl:max-w-sm flex items-center justify-center">
-          <img
-            src={cofrem.logo.src}
-            alt={cofrem.logo.alt}
-            width={cofrem.logo.width}
-            height={cofrem.logo.height}
-            class="w-full h-auto object-contain mix-blend-multiply"
-            loading="lazy"
-            decoding="async"
-          />
+        <div class="w-48 sm:w-60 lg:w-full lg:max-w-xs xl:max-w-sm flex items-center justify-center">
+          <picture>
+            <source srcset={cofrem.logo.src} type="image/webp" />
+            <img
+              src={cofrem.logo.pngFallback || cofrem.logo.src}
+              alt={cofrem.logo.alt}
+              width={cofrem.logo.width}
+              height={cofrem.logo.height}
+              class="w-full h-auto object-contain"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
 

@@ -681,10 +681,11 @@ export const siteConfig: SiteConfig = {
     whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania.",
     disclaimer: "Aplican condiciones. Beneficios sujetos a validación del convenio vigente.",
     logo: {
-      src: "/images/home/8_nuestra_trayectoria_cofrem.webp",
-      alt: "Logotipo de Cofrem Caja de Compensación Familiar, convenio de descuentos en Óptica Alemania",
-      width: 670,
-      height: 800,
+      src: "/images/home/8_beneficios_cofrem_descuentos.webp",
+      pngFallback: "/images/home/8_beneficios_cofrem_descuentos.png",
+      alt: "Logotipo de Club Descuentos Cofrem, convenio de beneficios especiales en Óptica Alemania",
+      width: 1270,
+      height: 976,
     },
     benefits: [
       {
