@@ -865,7 +865,7 @@ async function run() {
       console.log(`✅ [${vp.name}] Section #footer exists`);
 
       // Verify footer logo loaded properly
-      const footerLogo = footerElement.locator('img[src*="10_footer_logo"]');
+      const footerLogo = footerElement.locator('img[src*="logo"]');
       const logoWidth = await footerLogo.first().evaluate((img) => img.naturalWidth);
       if (!logoWidth || logoWidth === 0) {
         console.error(`❌ [${vp.name}] Footer logo failed to load or has 0 naturalWidth!`);
@@ -875,7 +875,7 @@ async function run() {
       }
 
       // Verify watermark image loaded properly
-      const watermarkImg = footerElement.locator('img[src*="footer_eye_watermark"]');
+      const watermarkImg = footerElement.locator('img[src*="footer-watermark-eye"]');
       const watermarkWidth = await watermarkImg.first().evaluate((img) => img.naturalWidth);
       if (!watermarkWidth || watermarkWidth === 0) {
         console.error(`❌ [${vp.name}] Footer watermark image failed to load or has 0 naturalWidth!`);

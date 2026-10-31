@@ -156,6 +156,8 @@ export interface ContactSectionConfig {
     description: string;
     actionTextMobile: string;
     videoUrl: string;
+    videoSrc: string;
+    duration: string;
   };
 }
 
@@ -518,7 +520,7 @@ export const siteConfig: SiteConfig = {
       number: "01",
       title: "Optometría especializada",
       description: "Consulta por nuestras evaluaciones optométricas y conoce las opciones de atención según tus necesidades visuales.",
-      image: "/images/home/3_nuestros_servicios_image2.webp",
+      image: "/images/service-optometry.webp",
       alt: "Equipo de foróptero para consulta de optometría especializada en Óptica Alemania",
       whatsappMessage: "Hola, quisiera consultar por una evaluación de optometría especializada en Óptica Alemania.",
     },
@@ -527,7 +529,7 @@ export const siteConfig: SiteConfig = {
       number: "02",
       title: "Adaptación de lentes de contacto",
       description: "Conoce el proceso de valoración y adaptación de lentes de contacto, de acuerdo con las características de tus ojos.",
-      image: "/images/home/3_nuestros_servicios_image3.webp",
+      image: "/images/service-contact-lenses.webp",
       alt: "Lente de contacto para adaptación clínica personalizada",
       whatsappMessage: "Hola, deseo información sobre la adaptación de lentes de contacto en Óptica Alemania.",
     },
@@ -536,7 +538,7 @@ export const siteConfig: SiteConfig = {
       number: "03",
       title: "Medición de presión intraocular",
       description: "Una prueba que mide la presión dentro del ojo y puede formar parte de una evaluación visual.",
-      image: "/images/home/3_nuestros_servicios_image4.webp",
+      image: "/images/service-tonometry.webp",
       alt: "Examen de tonometría y toma de presión intraocular para prevención de glaucoma",
       whatsappMessage: "Hola, quisiera consultar sobre la medición de presión intraocular en Óptica Alemania.",
     },
@@ -545,7 +547,7 @@ export const siteConfig: SiteConfig = {
       number: "04",
       title: "Evaluación de ojo seco",
       description: "Consulta por las pruebas disponibles para valorar molestias relacionadas con la sequedad ocular.",
-      image: "/images/home/3_nuestros_servicios_image5.webp",
+      image: "/images/service-dry-eye.webp",
       alt: "Evaluación biomicroscópica con luz azul para diagnóstico de ojo seco",
       whatsappMessage: "Hola, deseo consultar sobre la evaluación de ojo seco en Óptica Alemania.",
     },
@@ -559,8 +561,7 @@ export const siteConfig: SiteConfig = {
       description: "Observa cómo se utiliza este accesorio de exploración ocular para obtener imágenes de la retina.",
       duration: "0:28",
       videoSrc: "/videos/video-volk-inview.mp4",
-      image: "/images/home/4_tecnologia_accion_image1.webp",
-      pngFallback: "/images/home/4_tecnologia_accion_image1.png",
+      image: "/images/tech-volk-inview.webp",
       alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
       actionText: "Conocer procedimiento",
       actionHref: "/procedimientos",
@@ -574,8 +575,7 @@ export const siteConfig: SiteConfig = {
       description: "Conoce una prueba que utiliza fichas de colores para explorar la capacidad de distinguir distintas tonalidades.",
       duration: "0:32",
       videoSrc: "/videos/video-farnsworth-d15.mp4",
-      image: "/images/home/4_tecnologia_accion_image2.webp",
-      pngFallback: "/images/home/4_tecnologia_accion_image2.png",
+      image: "/images/tech-farnsworth-d15.webp",
       alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
       actionText: "Conocer procedimiento",
       actionHref: "/procedimientos",
@@ -591,19 +591,19 @@ export const siteConfig: SiteConfig = {
     ctaHref: "/contacto#ubicacion",
     images: {
       main: {
-        src: "/images/home/5_nuestro_espacio_image1.webp",
+        src: "/images/space-facade-main.webp",
         alt: "Recepción y sala de espera moderna de Óptica Alemania en Villavicencio",
         width: 1028,
         height: 624,
       },
       shelves: {
-        src: "/images/home/5_nuestro_espacio_image2.webp",
+        src: "/images/space-frames-display.webp",
         alt: "Exhibidores iluminados con monturas oftálmicas y gafas de sol en Óptica Alemania",
         width: 632,
         height: 296,
       },
       clinic: {
-        src: "/images/home/5_nuestro_espacio_image3.webp",
+        src: "/images/space-consulting-room.webp",
         alt: "Consultorio optométrico equipado con lámpara de hendidura y monitor de diagnóstico visual",
         width: 632,
         height: 296,
@@ -622,8 +622,7 @@ export const siteConfig: SiteConfig = {
     videoDuration: "3:50",
     videoSrc: "/videos/video-child.mp4",
     image: {
-      src: "/images/home/6_visual_infantil_image.webp",
-      pngFallback: "/images/home/6_visual_infantil_image.png",
+      src: "/images/kids-vision-preview.webp",
       alt: "Especialista de Óptica Alemania realizando examen optométrico pediátrico con lámpara de hendidura a niña paciente",
       width: 799,
       height: 533,
@@ -641,7 +640,7 @@ export const siteConfig: SiteConfig = {
         id: "mujer",
         title: "Mujeres",
         image: {
-          src: "/images/home/7_monturas_image1.webp",
+          src: "/images/frames-prescription.webp",
           alt: "Colección de monturas oftálmicas y de diseño para mujer en Óptica Alemania",
           width: 540,
           height: 615,
@@ -652,7 +651,7 @@ export const siteConfig: SiteConfig = {
         id: "hombre",
         title: "Hombres",
         image: {
-          src: "/images/home/7_monturas_image2.webp",
+          src: "/images/frames-sunglasses.webp",
           alt: "Colección de monturas oftálmicas modernas y elegantes para hombre en Óptica Alemania",
           width: 540,
           height: 615,
@@ -663,7 +662,7 @@ export const siteConfig: SiteConfig = {
         id: "ninos",
         title: "Niños",
         image: {
-          src: "/images/home/7_monturas_image3.webp",
+          src: "/images/frames-kids.webp",
           alt: "Colección de monturas oftálmicas resistentes, cómodas y ligeras para niños en Óptica Alemania",
           width: 540,
           height: 615,
@@ -681,11 +680,10 @@ export const siteConfig: SiteConfig = {
     whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania.",
     disclaimer: "Aplican condiciones. Beneficios sujetos a validación del convenio vigente.",
     logo: {
-      src: "/images/home/8_beneficios_cofrem_descuentos.webp",
-      pngFallback: "/images/home/8_beneficios_cofrem_descuentos.png",
+      src: "/images/cofrem-discount-logo.webp",
       alt: "Logotipo de Club Descuentos Cofrem, convenio de beneficios especiales en Óptica Alemania",
-      width: 1270,
-      height: 976,
+      width: 800,
+      height: 615,
     },
     benefits: [
       {
@@ -714,50 +712,50 @@ export const siteConfig: SiteConfig = {
         id: "palmeras-carabao",
         name: "Palmeras Carabao S.A.",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_image2.webp",
+          src: "/images/partner-palmeras-carabao.webp",
           alt: "Logotipo de Palmeras Carabao S.A., aliado corporativo de Óptica Alemania",
-          width: 1200,
-          height: 743,
+          width: 600,
+          height: 388,
         },
       },
       {
         id: "cofrem",
         name: "Cofrem",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_cofrem.webp",
+          src: "/images/partner-cofrem.webp",
           alt: "Logotipo de Caja de Compensación Familiar Cofrem, aliado institucional de Óptica Alemania",
-          width: 670,
-          height: 800,
+          width: 338,
+          height: 400,
         },
       },
       {
         id: "inversiones-crismasol",
         name: "Inversiones Crismasol S.A.S.",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_image4.webp",
+          src: "/images/partner-crismasol.webp",
           alt: "Logotipo de Inversiones Crismasol S.A.S., aliado institucional de Óptica Alemania",
-          width: 1200,
-          height: 719,
+          width: 600,
+          height: 379,
         },
       },
       {
         id: "entrepalmas",
         name: "Entrepalmas",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_image5.webp",
+          src: "/images/partner-entrepalmas.webp",
           alt: "Logotipo de Entrepalmas, empresa aliada de Óptica Alemania",
-          width: 1138,
-          height: 800,
+          width: 565,
+          height: 400,
         },
       },
       {
         id: "copalma",
         name: "Copalma",
         image: {
-          src: "/images/home/8_nuestra_trayectoria_image1.webp",
+          src: "/images/partner-copalma.webp",
           alt: "Logotipo de Copalma, aliado corporativo en la trayectoria de Óptica Alemania",
-          width: 1200,
-          height: 690,
+          width: 600,
+          height: 362,
         },
       },
     ],
@@ -769,16 +767,16 @@ export const siteConfig: SiteConfig = {
     description: "Estamos en el sector Barzal de Villavicencio. Revisa cómo llegar a nuestra sede y comunícate con nosotros si necesitas confirmar información antes de visitarnos.",
     whatsappMessage: "Hola, visité la página de Óptica Alemania y quisiera agendar una consulta o confirmar información.",
     mapImage: {
-      src: "/images/home/9_contacto_map.webp",
+      src: "/images/contact-map.webp",
       alt: "Mapa interactivo de ubicación de Óptica Alemania en el sector Barzal, Villavicencio",
       width: 1656,
       height: 811,
     },
     facadeImage: {
-      src: "/images/home/9_contacto_image.webp",
-      alt: "Fachada exterior iluminada de la sede Óptica Alemania en Barzal, Villavicencio",
-      width: 1672,
-      height: 941,
+      src: "/images/contact-facade-route.webp",
+      alt: "Fachada exterior de la sede Óptica Alemania en Barzal, Villavicencio",
+      width: 1047,
+      height: 1502,
     },
     routeVideo: {
       eyebrow: "CÓMO LLEGAR",
@@ -786,14 +784,16 @@ export const siteConfig: SiteConfig = {
       description: "Te mostramos el camino paso a paso para que llegues sin complicaciones.",
       actionTextMobile: "Ver video del recorrido",
       videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Villavicencio+Meta",
+      videoSrc: "/videos/video-como-llegar.mp4",
+      duration: "0:26",
     },
   },
   footer: {
     logo: {
-      src: "/images/home/10_footer_logo.webp",
+      src: "/images/logo.webp",
       alt: "Óptica Alemania - Villavicencio",
-      width: 808,
-      height: 242,
+      width: 2172,
+      height: 724,
     },
     tagline: "Atención visual, evaluaciones optométricas y opciones de monturas en Villavicencio. Conoce nuestros servicios y visita nuestra sede en Barzal.",
     exploreTitle: "EXPLORA",
