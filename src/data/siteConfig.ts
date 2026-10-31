@@ -539,7 +539,7 @@ export const siteConfig: SiteConfig = {
       number: "04",
       title: "Evaluación de ojo seco",
       description: "Consulta por las pruebas disponibles para valorar molestias relacionadas con la sequedad ocular.",
-      image: "/images/home/3_nuestros_servicios_image6.webp",
+      image: "/images/home/3_nuestros_servicios_image5.webp",
       alt: "Evaluación biomicroscópica con luz azul para diagnóstico de ojo seco",
       whatsappMessage: "Hola, deseo consultar sobre la evaluación de ojo seco en Óptica Alemania.",
     },
