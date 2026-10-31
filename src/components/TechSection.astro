@@ -3,7 +3,7 @@
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../data/siteConfig';
 import Button from './ui/Button.astro';
-import Icon from './ui/Icon.astro';
+import VideoPlayer from './ui/VideoPlayer.astro';
 
 const { technologies } = siteConfig;
 const item01 = technologies.find(t => t.id === 'volk-inview') || technologies[0];
@@ -31,8 +31,8 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
     
     <!-- Section Header: Eyebrow, Editorial Title & Description -->
     <div class="max-w-2xl">
-      <!-- Eyebrow matching brand tokens -->
-      <span class="font-sans text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-ice">
+      <!-- Eyebrow matching ContactSection color token -->
+      <span class="font-sans text-xs sm:text-sm font-semibold uppercase tracking-widest text-blue-400">
         TECNOLOGÍA EN ACCIÓN
       </span>
 
@@ -55,36 +55,17 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
       <article class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
         <!-- Video Card -->
         <div class="lg:col-span-7">
-          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video w-full bg-brand-heading">
-            <img
-              src={item01.image}
-              alt={item01.alt}
-              class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              width="1440"
-              height="450"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
-
-            <!-- Central Frosted Play Button -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <button
-                type="button"
-                aria-label={`Ver demostración de ${item01.titlePart1} ${item01.titlePart2}`}
-                data-event="video_preview_click"
-                data-event-video={item01.id}
-                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              >
-                <Icon name="play" class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current" />
-              </button>
-            </div>
-
-            <!-- Duration Badge -->
-            <span class="absolute bottom-4 left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
-              {item01.duration}
-            </span>
-          </div>
+          <VideoPlayer
+            id={`home-video-${item01.id}`}
+            src={item01.videoSrc}
+            poster={item01.image}
+            pngFallback={item01.pngFallback}
+            alt={item01.alt}
+            label={`Demostración en video de ${item01.titlePart1} ${item01.titlePart2}`}
+            initialTimestamp={`0:00 / ${item01.duration}`}
+            initialProgress={0}
+            class="border-white/10 shadow-2xl"
+          />
         </div>
 
         <!-- Text Content -->
@@ -152,36 +133,17 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
 
         <!-- Video Card (order-1 on mobile, order-2 on desktop) -->
         <div class="order-1 lg:order-2 lg:col-span-7">
-          <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video w-full bg-brand-heading">
-            <img
-              src={item02.image}
-              alt={item02.alt}
-              class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-              width="1440"
-              height="450"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
-
-            <!-- Central Frosted Play Button -->
-            <div class="absolute inset-0 flex items-center justify-center">
-              <button
-                type="button"
-                aria-label={`Ver demostración de ${item02.titlePart1} ${item02.titlePart2}`}
-                data-event="video_preview_click"
-                data-event-video={item02.id}
-                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/40 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-brand-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              >
-                <Icon name="play" class="w-6 h-6 sm:w-7 sm:h-7 translate-x-0.5 fill-current" />
-              </button>
-            </div>
-
-            <!-- Duration Badge -->
-            <span class="absolute bottom-4 left-4 px-2.5 py-1 rounded-md bg-black/65 backdrop-blur-sm text-xs sm:text-sm font-medium text-white tracking-wide border border-white/10">
-              {item02.duration}
-            </span>
-          </div>
+          <VideoPlayer
+            id={`home-video-${item02.id}`}
+            src={item02.videoSrc}
+            poster={item02.image}
+            pngFallback={item02.pngFallback}
+            alt={item02.alt}
+            label={`Demostración en video de ${item02.titlePart1} ${item02.titlePart2}`}
+            initialTimestamp={`0:00 / ${item02.duration}`}
+            initialProgress={0}
+            class="border-white/10 shadow-2xl"
+          />
         </div>
       </article>
 

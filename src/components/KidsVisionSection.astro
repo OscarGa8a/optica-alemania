@@ -4,7 +4,7 @@
 import { siteConfig } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 import Button from './ui/Button.astro';
-import Icon from './ui/Icon.astro';
+import VideoPlayer from './ui/VideoPlayer.astro';
 
 const { kidsVision } = siteConfig;
 const whatsappKidsUrl = buildWhatsAppLink(
@@ -68,32 +68,17 @@ const whatsappKidsUrl = buildWhatsAppLink(
       <!-- Right Column: Video Preview Card & Mobile Bottom CTAs -->
       <div class="flex flex-col">
         <!-- Interactive Video Card -->
-        <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] w-full group">
-          <picture>
-            <source srcset="/images/home/6_visual_infantil_image.webp" type="image/webp" />
-            <img
-              src="/images/home/6_visual_infantil_image.png"
-              alt={kidsVision.image.alt}
-              width={kidsVision.image.width}
-              height={kidsVision.image.height}
-              class="w-full h-full object-cover object-[35%_center] group-hover:scale-[1.015] transition-transform duration-500 ease-out"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-
-          <!-- Centered Play Button -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/85 backdrop-blur-xs flex items-center justify-center text-brand-heading shadow-lg group-hover:scale-110 group-hover:bg-white transition-all duration-300">
-              <Icon name="play" class="w-5 h-5 sm:w-6 sm:h-6 text-brand-heading translate-x-0.5" />
-            </div>
-          </div>
-
-          <!-- Video Duration Badge -->
-          <div class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-brand-heading/90 backdrop-blur-xs text-white text-xs font-semibold px-2.5 py-1 rounded-md">
-            {kidsVision.videoDuration}
-          </div>
-        </div>
+        <VideoPlayer
+          id="kids-vision-video"
+          src={kidsVision.videoSrc}
+          poster={kidsVision.image.src}
+          pngFallback={kidsVision.image.pngFallback}
+          alt={kidsVision.image.alt}
+          label="Evaluación optométrica infantil en Óptica Alemania Villavicencio"
+          initialTimestamp={`0:00 / ${kidsVision.videoDuration}`}
+          initialProgress={0}
+          class="shadow-xs border-white/80 !aspect-[4/3]"
+        />
 
         <!-- Mobile Action Container (placed below video card matching mobile mockup) -->
         <div class="lg:hidden flex flex-col items-start gap-3 mt-6 sm:mt-7">

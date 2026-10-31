@@ -46,7 +46,9 @@ export interface TechnologyItem {
   titlePart2: string;
   description: string;
   duration: string;
+  videoSrc: string;
   image: string;
+  pngFallback: string;
   alt: string;
   actionText: string;
   actionHref: string;
@@ -55,6 +57,7 @@ export interface TechnologyItem {
 
 export interface SpaceImage {
   src: string;
+  pngFallback?: string;
   alt: string;
   width: number;
   height: number;
@@ -84,6 +87,7 @@ export interface KidsVisionConfig {
   whatsappMessage: string;
   noteText: string;
   videoDuration: string;
+  videoSrc: string;
   image: SpaceImage;
 }
 
@@ -384,6 +388,7 @@ export interface ProcedimientosVideoItemConfig {
   ctaText: string;
   whatsappMessage: string;
   video: {
+    src?: string;
     poster: string;
     pngFallback: string;
     alt: string;
@@ -397,6 +402,7 @@ export interface ProcedimientosGalleryCard {
   videoId: string;
   title: string;
   description: string;
+  src?: string;
   poster: string;
   pngFallback: string;
   alt: string;
@@ -552,7 +558,9 @@ export const siteConfig: SiteConfig = {
       titlePart2: "con Volk iNview",
       description: "Observa cómo se utiliza este accesorio de exploración ocular para obtener imágenes de la retina.",
       duration: "0:28",
+      videoSrc: "/videos/video-volk-inview.mp4",
       image: "/images/home/4_tecnologia_accion_image1.webp",
+      pngFallback: "/images/home/4_tecnologia_accion_image1.png",
       alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
       actionText: "Conocer procedimiento",
       actionHref: "/procedimientos",
@@ -565,7 +573,9 @@ export const siteConfig: SiteConfig = {
       titlePart2: "Farnsworth D-15",
       description: "Conoce una prueba que utiliza fichas de colores para explorar la capacidad de distinguir distintas tonalidades.",
       duration: "0:32",
+      videoSrc: "/videos/video-farnsworth-d15.mp4",
       image: "/images/home/4_tecnologia_accion_image2.webp",
+      pngFallback: "/images/home/4_tecnologia_accion_image2.png",
       alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
       actionText: "Conocer procedimiento",
       actionHref: "/procedimientos",
@@ -610,11 +620,13 @@ export const siteConfig: SiteConfig = {
     whatsappMessage: "Hola, quisiera información sobre la atención visual infantil de Óptica Alemania.",
     noteText: "Consulta también por la disponibilidad de atención optométrica infantil.",
     videoDuration: "3:50",
+    videoSrc: "/videos/video-child.mp4",
     image: {
       src: "/images/home/6_visual_infantil_image.webp",
+      pngFallback: "/images/home/6_visual_infantil_image.png",
       alt: "Especialista de Óptica Alemania realizando examen optométrico pediátrico con lámpara de hendidura a niña paciente",
-      width: 1672,
-      height: 941,
+      width: 799,
+      height: 533,
     },
   },
   frames: {
@@ -669,10 +681,11 @@ export const siteConfig: SiteConfig = {
     whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania.",
     disclaimer: "Aplican condiciones. Beneficios sujetos a validación del convenio vigente.",
     logo: {
-      src: "/images/home/8_nuestra_trayectoria_cofrem.webp",
-      alt: "Logotipo de Cofrem Caja de Compensación Familiar, convenio de descuentos en Óptica Alemania",
-      width: 670,
-      height: 800,
+      src: "/images/home/8_beneficios_cofrem_descuentos.webp",
+      pngFallback: "/images/home/8_beneficios_cofrem_descuentos.png",
+      alt: "Logotipo de Club Descuentos Cofrem, convenio de beneficios especiales en Óptica Alemania",
+      width: 1270,
+      height: 976,
     },
     benefits: [
       {
@@ -1005,8 +1018,8 @@ export const siteConfig: SiteConfig = {
           image: {
             src: "/images/home/4_tecnologia_accion_image1.webp",
             alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
-            width: 1440,
-            height: 450,
+            width: 1672,
+            height: 941,
           },
         },
         {
@@ -1017,8 +1030,8 @@ export const siteConfig: SiteConfig = {
           image: {
             src: "/images/home/4_tecnologia_accion_image2.webp",
             alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
-            width: 1440,
-            height: 450,
+            width: 1672,
+            height: 941,
           },
         },
       ],
@@ -1116,11 +1129,12 @@ export const siteConfig: SiteConfig = {
       ctaText: "Consultar esta evaluación",
       whatsappMessage: "Hola, quisiera información sobre la evaluación retinal en Óptica Alemania.",
       video: {
+        src: "/videos/video-volk-inview.mp4",
         poster: "/images/procedimientos/2_tecnologia_image.webp",
         pngFallback: "/images/procedimientos/2_tecnologia_image.png",
         alt: "Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio",
-        initialTimestamp: "0:08 / 0:32",
-        initialProgress: 25,
+        initialTimestamp: "0:00 / 0:28",
+        initialProgress: 0,
       },
     },
     farnsworth: {
@@ -1136,11 +1150,12 @@ export const siteConfig: SiteConfig = {
       ctaText: "Consultar esta prueba",
       whatsappMessage: "Hola, quisiera información sobre el test de Farnsworth D-15 en Óptica Alemania.",
       video: {
+        src: "/videos/video-farnsworth-d15.mp4",
         poster: "/images/procedimientos/3_vision_color_image.webp",
         pngFallback: "/images/procedimientos/3_vision_color_image.png",
         alt: "Test de Farnsworth D-15 para evaluación de la percepción del color en Óptica Alemania Villavicencio",
-        initialTimestamp: "0:12 / 0:45",
-        initialProgress: 27,
+        initialTimestamp: "0:00 / 0:32",
+        initialProgress: 0,
       },
     },
     gallery: {
@@ -1166,11 +1181,12 @@ export const siteConfig: SiteConfig = {
           videoId: "gallery-video-2",
           title: "Atención visual infantil",
           description: "Evaluaciones adaptadas a las necesidades visuales de cada etapa.",
+          src: "/videos/video-child.mp4",
           poster: "/images/procedimientos/4_nuestro_trabajo_image2.webp",
           pngFallback: "/images/procedimientos/4_nuestro_trabajo_image2.png",
           alt: "Atención visual infantil y valoraciones adaptadas en Óptica Alemania Villavicencio",
-          initialTimestamp: "0:08 / 0:36",
-          initialProgress: 24,
+          initialTimestamp: "0:00 / 3:50",
+          initialProgress: 0,
         },
       ],
     },
