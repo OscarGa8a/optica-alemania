@@ -1,0 +1,134 @@
+---
+// Reusable Video Player Card with Overlay Controls
+// Uses Icon.astro for all control icons
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  poster: string;
+  pngFallback: string;
+  alt: string;
+  label?: string;
+  initialTimestamp?: string;
+  initialProgress?: number;
+  class?: string;
+}
+
+const {
+  id,
+  poster,
+  pngFallback,
+  alt,
+  label = 'Video demostrativo en Óptica Alemania Villavicencio',
+  initialTimestamp = '0:00 / 0:30',
+  initialProgress = 0,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100 aspect-video',
+    className,
+  ]}
+>
+  <!-- Video element with poster and picture fallback -->
+  <video
+    id={id}
+    class="w-full h-full object-cover"
+    poster={poster}
+    muted
+    playsinline
+    loop
+    preload="metadata"
+    aria-label={label}
+  >
+    <picture>
+      <source srcset={poster} type="image/webp" />
+      <img
+        src={pngFallback}
+        alt={alt}
+        width="1672"
+        height="941"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
+    </picture>
+  </video>
+
+  <!-- Interactive Video Controls Overlay Bar -->
+  <div
+    class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-4 sm:px-6 pt-10 pb-4 sm:pb-5 flex items-center gap-3 sm:gap-4 text-white select-none z-10"
+  >
+    <!-- Pause/Play Toggle Button -->
+    <button
+      type="button"
+      id={`${id}-play-toggle`}
+      class="text-white hover:text-brand-bright transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded p-0.5 cursor-pointer"
+      aria-label="Pausar o reproducir video"
+    >
+      <span id={`${id}-pause-icon`} class="block">
+        <Icon name="pause" class="w-4 h-4 fill-current" />
+      </span>
+      <span id={`${id}-play-icon`} class="hidden">
+        <Icon name="play" class="w-4 h-4 fill-current" />
+      </span>
+    </button>
+
+    <!-- Timestamp -->
+    <span
+      id={`${id}-timestamp`}
+      class="text-xs sm:text-sm font-sans tracking-tight text-white/90 shrink-0 tabular-nums"
+    >
+      {initialTimestamp}
+    </span>
+
+    <!-- Progress Scrubber -->
+    <div
+      id={`${id}-progress-bar`}
+      class="relative flex-1 h-1.5 bg-white/30 rounded-full cursor-pointer flex items-center group/scrubber"
+      role="progressbar"
+      aria-valuenow={initialProgress}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-label="Progreso del video"
+    >
+      <div
+        id={`${id}-progress-fill`}
+        class="h-full bg-brand-primary rounded-full transition-all duration-75"
+        style={`width: ${initialProgress}%`}
+      ></div>
+      <div
+        id={`${id}-progress-thumb`}
+        class="absolute -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-md transition-all duration-75 group-hover/scrubber:scale-125"
+        style={`left: ${initialProgress}%`}
+      ></div>
+    </div>
+
+    <!-- Volume / Mute Toggle Button -->
+    <button
+      type="button"
+      id={`${id}-mute-toggle`}
+      class="text-white/90 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded p-0.5 cursor-pointer"
+      aria-label="Silenciar o activar audio"
+    >
+      <span id={`${id}-mute-icon`} class="block">
+        <Icon name="volume-x" class="w-4 h-4 stroke-current shrink-0" />
+      </span>
+      <span id={`${id}-unmute-icon`} class="hidden">
+        <Icon name="volume-2" class="w-4 h-4 stroke-current shrink-0" />
+      </span>
+    </button>
+
+    <!-- Fullscreen Button -->
+    <button
+      type="button"
+      id={`${id}-fullscreen-toggle`}
+      class="text-white/90 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded p-0.5 cursor-pointer"
+      aria-label="Pantalla completa"
+    >
+      <Icon name="maximize" class="w-4 h-4 stroke-current shrink-0" />
+    </button>
+  </div>
+</div>

@@ -8,13 +8,12 @@ import ProcedimientosCta from '../components/procedimientos/ProcedimientosCta.as
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/siteConfig';
 
-const pageTitle = `Procedimientos visuales en Villavicencio | ${siteConfig.name}`;
-const pageDescription = "Conoce cómo se realizan algunas evaluaciones visuales en Óptica Alemania Villavicencio, como la evaluación retinal y el test de Farnsworth D-15.";
+const { metaTitle, metaDescription } = siteConfig.procedimientosPage;
 ---
 
 <Layout
-  title={pageTitle}
-  description={pageDescription}
+  title={metaTitle}
+  description={metaDescription}
   currentPath="/procedimientos"
   headerTheme="light"
 >

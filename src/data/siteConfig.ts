@@ -344,6 +344,102 @@ export interface ServicesPageConfig {
   cta: ServicesCtaConfig;
 }
 
+export interface ProcedimientosHeroConfig {
+  id: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2: string;
+  titleHighlight: string;
+  description: string;
+  exploreText: string;
+  exploreHref: string;
+  images: {
+    desktop: {
+      src: string;
+      pngFallback: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    mobile: {
+      src: string;
+      pngFallback: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+  };
+}
+
+export interface ProcedimientosVideoItemConfig {
+  id: string;
+  videoId: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2?: string;
+  titleHighlight: string;
+  titleHighlightLine1?: string;
+  titleHighlightLine2?: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  video: {
+    poster: string;
+    pngFallback: string;
+    alt: string;
+    initialTimestamp: string;
+    initialProgress: number;
+  };
+}
+
+export interface ProcedimientosGalleryCard {
+  id: string;
+  videoId: string;
+  title: string;
+  description: string;
+  poster: string;
+  pngFallback: string;
+  alt: string;
+  initialTimestamp: string;
+  initialProgress: number;
+}
+
+export interface ProcedimientosGalleryConfig {
+  id: string;
+  eyebrow: string;
+  titlePart1: string;
+  titleHighlight: string;
+  description: string;
+  cards: ProcedimientosGalleryCard[];
+}
+
+export interface ProcedimientosCtaConfig {
+  id: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2: string;
+  titleMobileLine1?: string;
+  titleMobileLine2?: string;
+  titleHighlight: string;
+  description: string;
+  ctaText: string;
+  whatsappMessage: string;
+  secondaryLink: {
+    text: string;
+    href: string;
+  };
+}
+
+export interface ProcedimientosPageConfig {
+  metaTitle: string;
+  metaDescription: string;
+  hero: ProcedimientosHeroConfig;
+  volk: ProcedimientosVideoItemConfig;
+  farnsworth: ProcedimientosVideoItemConfig;
+  gallery: ProcedimientosGalleryConfig;
+  cta: ProcedimientosCtaConfig;
+}
+
 export interface SiteConfig {
   name: string;
   legalName: string;
@@ -367,6 +463,7 @@ export interface SiteConfig {
   contactSection: ContactSectionConfig;
   footer: FooterConfig;
   servicesPage: ServicesPageConfig;
+  procedimientosPage: ProcedimientosPageConfig;
 }
 
 export const siteConfig: SiteConfig = {
@@ -977,6 +1074,121 @@ export const siteConfig: SiteConfig = {
       description: "Cuéntanos qué servicio te interesa y consulta con nuestro equipo la disponibilidad de atención en Óptica Alemania Villavicencio.",
       ctaText: "Consultar por WhatsApp",
       whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania y quisiera información sobre la atención disponible.",
+    },
+  },
+  procedimientosPage: {
+    metaTitle: "Procedimientos visuales en Villavicencio | Óptica Alemania",
+    metaDescription: "Conoce cómo se realizan algunas evaluaciones visuales en Óptica Alemania Villavicencio, como la evaluación retinal y el test de Farnsworth D-15.",
+    hero: {
+      id: "inicio",
+      eyebrow: "CONOCE NUESTROS PROCEDIMIENTOS",
+      titleLine1: "Así realizamos",
+      titleLine2: "nuestras evaluaciones,",
+      titleHighlight: "paso a paso.",
+      description: "Descubre en video cómo realizamos algunos de nuestros procedimientos visuales en Óptica Alemania Villavicencio.",
+      exploreText: "Explorar procedimientos",
+      exploreHref: "#volk-inview",
+      images: {
+        desktop: {
+          src: "/images/procedimientos/1_hero_desktop_image.webp",
+          pngFallback: "/images/procedimientos/1_hero_desktop_image.png",
+          alt: "Especialista realizando evaluación visual con foróptero en Óptica Alemania Villavicencio",
+          width: 1672,
+          height: 941,
+        },
+        mobile: {
+          src: "/images/procedimientos/1_hero_mobile_image.webp",
+          pngFallback: "/images/procedimientos/1_hero_mobile_image.png",
+          alt: "Especialista realizando evaluación visual con foróptero en Óptica Alemania Villavicencio",
+          width: 941,
+          height: 1672,
+        },
+      },
+    },
+    volk: {
+      id: "volk-inview",
+      videoId: "volk-video",
+      eyebrow: "01 / TECNOLOGÍA EN ACCIÓN",
+      titleLine1: "Evaluación retinal",
+      titleLine2: "",
+      titleHighlight: "de cerca.",
+      description: "Descubre cómo realizamos este procedimiento mediante tecnología Volk InView y conoce parte del proceso de evaluación de la retina en Óptica Alemania Villavicencio.",
+      ctaText: "Consultar esta evaluación",
+      whatsappMessage: "Hola, quisiera información sobre la evaluación retinal en Óptica Alemania.",
+      video: {
+        poster: "/images/procedimientos/2_tecnologia_image.webp",
+        pngFallback: "/images/procedimientos/2_tecnologia_image.png",
+        alt: "Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio",
+        initialTimestamp: "0:08 / 0:32",
+        initialProgress: 25,
+      },
+    },
+    farnsworth: {
+      id: "farnsworth",
+      videoId: "farnsworth-video",
+      eyebrow: "02 / VISIÓN DEL COLOR",
+      titleLine1: "Test de",
+      titleLine2: "Farnsworth D-15.",
+      titleHighlight: "Cada color cuenta una historia.",
+      titleHighlightLine1: "Cada color cuenta",
+      titleHighlightLine2: "una historia.",
+      description: "Descubre cómo realizamos esta prueba para evaluar la percepción de los colores en Óptica Alemania Villavicencio.",
+      ctaText: "Consultar esta prueba",
+      whatsappMessage: "Hola, quisiera información sobre el test de Farnsworth D-15 en Óptica Alemania.",
+      video: {
+        poster: "/images/procedimientos/3_vision_color_image.webp",
+        pngFallback: "/images/procedimientos/3_vision_color_image.png",
+        alt: "Test de Farnsworth D-15 para evaluación de la percepción del color en Óptica Alemania Villavicencio",
+        initialTimestamp: "0:12 / 0:45",
+        initialProgress: 27,
+      },
+    },
+    gallery: {
+      id: "nuestro-trabajo",
+      eyebrow: "MÁS DE NUESTRO TRABAJO",
+      titlePart1: "La atención está en",
+      titleHighlight: "cada detalle.",
+      description: "Conoce otros momentos de las evaluaciones visuales que realizamos en Óptica Alemania.",
+      cards: [
+        {
+          id: "evaluacion-optometrica",
+          videoId: "gallery-video-1",
+          title: "Evaluación optométrica",
+          description: "Una evaluación completa de tu visión con tecnología especializada.",
+          poster: "/images/procedimientos/4_nuestro_trabajo_image1.webp",
+          pngFallback: "/images/procedimientos/4_nuestro_trabajo_image1.png",
+          alt: "Evaluación optométrica completa con tecnología especializada en Óptica Alemania Villavicencio",
+          initialTimestamp: "0:10 / 0:45",
+          initialProgress: 22,
+        },
+        {
+          id: "atencion-visual-infantil",
+          videoId: "gallery-video-2",
+          title: "Atención visual infantil",
+          description: "Evaluaciones adaptadas a las necesidades visuales de cada etapa.",
+          poster: "/images/procedimientos/4_nuestro_trabajo_image2.webp",
+          pngFallback: "/images/procedimientos/4_nuestro_trabajo_image2.png",
+          alt: "Atención visual infantil y valoraciones adaptadas en Óptica Alemania Villavicencio",
+          initialTimestamp: "0:08 / 0:36",
+          initialProgress: 24,
+        },
+      ],
+    },
+    cta: {
+      id: "contacto",
+      eyebrow: "CONTINUEMOS CUIDANDO TU VISIÓN",
+      titleLine1: "¿Quieres conocer más",
+      titleLine2: "sobre nuestras",
+      titleMobileLine1: "¿Quieres conocer",
+      titleMobileLine2: "más sobre nuestras",
+      titleHighlight: "evaluaciones?",
+      description: "Nuestro equipo puede orientarte sobre los servicios disponibles y ayudarte a consultar la disponibilidad de atención en Óptica Alemania Villavicencio.",
+      ctaText: "Hablar por WhatsApp",
+      whatsappMessage: "Hola, vi los procedimientos en la página web de Óptica Alemania y quisiera más información sobre las evaluaciones visuales.",
+      secondaryLink: {
+        text: "Explorar servicios",
+        href: "/servicios",
+      },
     },
   },
 };
