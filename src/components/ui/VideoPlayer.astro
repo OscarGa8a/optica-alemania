@@ -5,8 +5,9 @@ import Icon from './Icon.astro';
 
 interface Props {
   id: string;
+  src?: string;
   poster: string;
-  pngFallback: string;
+  pngFallback?: string;
   alt: string;
   label?: string;
   initialTimestamp?: string;
@@ -16,6 +17,7 @@ interface Props {
 
 const {
   id,
+  src,
   poster,
   pngFallback,
   alt,
@@ -27,6 +29,7 @@ const {
 ---
 
 <div
+  data-video-player-container={id}
   class:list={[
     'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100 aspect-video',
     className,
@@ -35,7 +38,8 @@ const {
   <!-- Video element with poster and picture fallback -->
   <video
     id={id}
-    class="w-full h-full object-cover"
+    src={src}
+    class="w-full h-full object-cover cursor-pointer"
     poster={poster}
     muted
     playsinline
@@ -43,10 +47,11 @@ const {
     preload="metadata"
     aria-label={label}
   >
+    {src && <source src={src} type="video/mp4" />}
     <picture>
       <source srcset={poster} type="image/webp" />
       <img
-        src={pngFallback}
+        src={pngFallback || poster}
         alt={alt}
         width="1672"
         height="941"
@@ -68,10 +73,10 @@ const {
       class="text-white hover:text-brand-bright transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded p-0.5 cursor-pointer"
       aria-label="Pausar o reproducir video"
     >
-      <span id={`${id}-pause-icon`} class="block">
+      <span id={`${id}-pause-icon`} class="hidden">
         <Icon name="pause" class="w-4 h-4 fill-current" />
       </span>
-      <span id={`${id}-play-icon`} class="hidden">
+      <span id={`${id}-play-icon`} class="block">
         <Icon name="play" class="w-4 h-4 fill-current" />
       </span>
     </button>
@@ -132,3 +137,164 @@ const {
     </button>
   </div>
 </div>
+
+<script>
+  function initVideoPlayers() {
+    const containers = document.querySelectorAll<HTMLElement>('[data-video-player-container]');
+
+    function formatTime(seconds: number) {
+      if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    containers.forEach((container) => {
+      if (container.dataset.initialized === 'true') return;
+      container.dataset.initialized = 'true';
+
+      const id = container.dataset.videoPlayerContainer;
+      if (!id) return;
+
+      const video = document.getElementById(id) as HTMLVideoElement | null;
+      if (!video) return;
+
+      const playToggle = document.getElementById(`${id}-play-toggle`);
+      const pauseIcon = document.getElementById(`${id}-pause-icon`);
+      const playIcon = document.getElementById(`${id}-play-icon`);
+      const muteToggle = document.getElementById(`${id}-mute-toggle`);
+      const muteIcon = document.getElementById(`${id}-mute-icon`);
+      const unmuteIcon = document.getElementById(`${id}-unmute-icon`);
+      const timestamp = document.getElementById(`${id}-timestamp`);
+      const progressFill = document.getElementById(`${id}-progress-fill`);
+      const progressThumb = document.getElementById(`${id}-progress-thumb`);
+      const progressBar = document.getElementById(`${id}-progress-bar`);
+      const fullscreenToggle = document.getElementById(`${id}-fullscreen-toggle`);
+
+      let userManuallyPaused = false;
+
+      function updatePlayState(isPlaying: boolean) {
+        if (pauseIcon && playIcon) {
+          if (isPlaying) {
+            pauseIcon.classList.remove('hidden');
+            pauseIcon.classList.add('block');
+            playIcon.classList.remove('block');
+            playIcon.classList.add('hidden');
+          } else {
+            pauseIcon.classList.remove('block');
+            pauseIcon.classList.add('hidden');
+            playIcon.classList.remove('hidden');
+            playIcon.classList.add('block');
+          }
+        }
+      }
+
+      function togglePlay() {
+        if (!video) return;
+        const hasSource = Boolean(video.currentSrc || video.getAttribute('src') || video.querySelector('source')?.getAttribute('src'));
+        if (!hasSource) return;
+
+        if (video.paused) {
+          userManuallyPaused = false;
+          video.play().then(() => updatePlayState(true)).catch(() => updatePlayState(false));
+        } else {
+          userManuallyPaused = true;
+          video.pause();
+          updatePlayState(false);
+        }
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const hasSource = Boolean(video.currentSrc || video.getAttribute('src') || video.querySelector('source')?.getAttribute('src'));
+            if (!hasSource) return;
+
+            if (entry.isIntersecting) {
+              const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              if (!reducedMotion && !userManuallyPaused) {
+                video.play().then(() => {
+                  updatePlayState(true);
+                }).catch(() => {
+                  updatePlayState(false);
+                });
+              }
+            } else {
+              if (!video.paused) {
+                video.pause();
+                updatePlayState(false);
+              }
+            }
+          });
+        },
+        {
+          threshold: 0.4,
+          rootMargin: '0px',
+        }
+      );
+
+      observer.observe(container);
+
+      playToggle?.addEventListener('click', togglePlay);
+      video.addEventListener('click', togglePlay);
+
+      video.addEventListener('play', () => updatePlayState(true));
+      video.addEventListener('pause', () => updatePlayState(false));
+
+      muteToggle?.addEventListener('click', () => {
+        video.muted = !video.muted;
+        if (muteIcon && unmuteIcon) {
+          if (video.muted) {
+            muteIcon.classList.remove('hidden');
+            muteIcon.classList.add('block');
+            unmuteIcon.classList.remove('block');
+            unmuteIcon.classList.add('hidden');
+          } else {
+            muteIcon.classList.remove('block');
+            muteIcon.classList.add('hidden');
+            unmuteIcon.classList.remove('hidden');
+            unmuteIcon.classList.add('block');
+          }
+        }
+      });
+
+      video.addEventListener('loadedmetadata', () => {
+        if (video.duration && timestamp) {
+          timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        }
+      });
+
+      video.addEventListener('timeupdate', () => {
+        if (!video.duration) return;
+        const progress = (video.currentTime / video.duration) * 100;
+        if (progressFill) progressFill.style.width = `${progress}%`;
+        if (progressThumb) progressThumb.style.left = `${progress}%`;
+        if (timestamp) {
+          timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        }
+        if (progressBar) {
+          progressBar.setAttribute('aria-valuenow', Math.round(progress).toString());
+        }
+      });
+
+      progressBar?.addEventListener('click', (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (video.duration) {
+          video.currentTime = pos * video.duration;
+        }
+      });
+
+      fullscreenToggle?.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          (container.requestFullscreen ? container.requestFullscreen() : video.requestFullscreen()).catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      });
+    });
+  }
+
+  initVideoPlayers();
+  document.addEventListener('astro:page-load', initVideoPlayers);
+</script>
