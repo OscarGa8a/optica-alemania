@@ -13,6 +13,7 @@ interface Props {
   initialTimestamp?: string;
   initialProgress?: number;
   class?: string;
+  aspectRatio?: string;
 }
 
 const {
@@ -25,13 +26,15 @@ const {
   initialTimestamp = '0:00 / 0:30',
   initialProgress = 0,
   class: className = '',
+  aspectRatio = 'aspect-[4/5] sm:aspect-video',
 } = Astro.props;
 ---
 
 <div
   data-video-player-container={id}
   class:list={[
-    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100 aspect-video',
+    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100',
+    aspectRatio,
     className,
   ]}
 >
@@ -270,10 +273,16 @@ const {
         if (progressFill) progressFill.style.width = `${progress}%`;
         if (progressThumb) progressThumb.style.left = `${progress}%`;
         if (timestamp) {
-          timestamp.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+          const newTimeText = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+          if (timestamp.textContent !== newTimeText) {
+            timestamp.textContent = newTimeText;
+          }
         }
         if (progressBar) {
-          progressBar.setAttribute('aria-valuenow', Math.round(progress).toString());
+          const roundedProgress = Math.round(progress).toString();
+          if (progressBar.getAttribute('aria-valuenow') !== roundedProgress) {
+            progressBar.setAttribute('aria-valuenow', roundedProgress);
+          }
         }
       });
 
