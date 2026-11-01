@@ -875,7 +875,7 @@ async function run() {
       }
 
       // Verify watermark image loaded properly
-      const watermarkImg = footerElement.locator('img[src*="footer-watermark-eye"]');
+      const watermarkImg = footerElement.locator('img[src*="asset.svg"]');
       const watermarkWidth = await watermarkImg.first().evaluate((img) => img.naturalWidth);
       if (!watermarkWidth || watermarkWidth === 0) {
         console.error(`❌ [${vp.name}] Footer watermark image failed to load or has 0 naturalWidth!`);

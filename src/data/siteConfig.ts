@@ -1016,7 +1016,7 @@ export const siteConfig: SiteConfig = {
           actionText: "Ver procedimiento",
           actionHref: "/procedimientos#volk-inview",
           image: {
-            src: "/images/home/4_tecnologia_accion_image1.webp",
+            src: "/images/tech-volk-inview.webp",
             alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
             width: 1672,
             height: 941,
@@ -1028,7 +1028,7 @@ export const siteConfig: SiteConfig = {
           actionText: "Ver procedimiento",
           actionHref: "/procedimientos#farnsworth",
           image: {
-            src: "/images/home/4_tecnologia_accion_image2.webp",
+            src: "/images/tech-farnsworth-d15.webp",
             alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
             width: 1672,
             height: 941,
