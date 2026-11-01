@@ -4,7 +4,10 @@
 import Button from '../ui/Button.astro';
 ---
 
-<section id="inicio" class="relative w-full min-h-screen lg:min-h-[900px] xl:min-h-screen flex flex-col justify-start lg:justify-center overflow-hidden">
+<section
+  id="inicio"
+  class="relative w-full min-h-[100dvh] flex flex-col justify-start lg:justify-center overflow-hidden bg-white"
+>
   
   <!-- Full-bleed Background Image occupying 100% width and 100% height of the Hero -->
   <div class="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
@@ -12,25 +15,25 @@ import Button from '../ui/Button.astro';
       <!-- Mobile source (< 1024px) -->
       <source
         media="(max-width: 1023px)"
-        srcset="/images/about/1_hero_mobile_image.webp"
+        srcset="/images/nosotros-hero-mobile.webp"
         type="image/webp"
       />
       <!-- Desktop source (>= 1024px) -->
       <source
         media="(min-width: 1024px)"
-        srcset="/images/about/1_hero_desktop_image.webp"
+        srcset="/images/nosotros-hero-desktop.webp"
         type="image/webp"
       />
       <!-- Fallback image -->
       <img
-        src="/images/about/1_hero_desktop_image.webp"
+        src="/images/nosotros-hero-desktop.webp"
         alt="Especialista de Óptica Alemania en el counter de atención"
         width="1672"
         height="941"
         loading="eager"
         fetchpriority="high"
         decoding="async"
-        class="w-full h-full object-cover object-[54%_bottom] translate-y-20 sm:translate-y-10 lg:translate-y-0 lg:object-right xl:object-[84%_center]"
+        class="w-full h-full object-cover object-center lg:object-right"
       />
     </picture>
 
@@ -58,7 +61,7 @@ import Button from '../ui/Button.astro';
       </h1>
 
       <!-- Subtitle / Lead Paragraph matching tokens -->
-      <p class="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg xl:text-xl text-brand-body font-normal leading-relaxed max-w-md sm:max-w-lg xl:max-w-xl">
+      <p class="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-relaxed max-w-md sm:max-w-lg xl:max-w-xl">
         Conoce nuestra historia y el compromiso que nos mueve en el cuidado de tu salud visual.
       </p>
 

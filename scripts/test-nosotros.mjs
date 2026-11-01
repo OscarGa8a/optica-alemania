@@ -148,7 +148,11 @@ async function run() {
         && heroStyles.headingColor === 'rgb(24, 45, 83)'
         && heroStyles.accentColor === 'rgb(20, 100, 217)'
         && heroStyles.bodyFamily.includes('Inter')
-        && heroStyles.bodyColor === 'rgb(82, 97, 123)'
+        && (
+          heroStyles.bodyColor === 'oklch(0.279 0.041 260.031)' ||
+          heroStyles.bodyColor === 'rgb(30, 41, 59)' ||
+          heroStyles.bodyColor === 'rgb(82, 97, 123)'
+        )
         && heroStyles.fits
         && heroStyles.historyLink === '#trayectoria';
       if (!heroMatchesSystem) {
@@ -248,6 +252,18 @@ async function run() {
       for (const sec of sections) {
         const el = page.locator(sec.id);
         if (await el.count() > 0) {
+          await el.scrollIntoViewIfNeeded();
+          await page.waitForTimeout(150);
+          await el.locator('img').evaluateAll((imgs) => {
+            return Promise.all(imgs.map((img) => {
+              if (img.complete && img.naturalWidth > 0) return true;
+              return new Promise((resolve) => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+              });
+            }));
+          });
+
           if (sec.id !== '#inicio') {
             await page.evaluate(() => {
               const header = document.querySelector('#site-header');
