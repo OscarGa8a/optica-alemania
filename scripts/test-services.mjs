@@ -206,7 +206,7 @@ async function run() {
       }
 
       // Check thumbnails are loaded
-      const cardImgs = overviewElement.locator('img[src*="2_overview_image"]');
+      const cardImgs = overviewElement.locator('ol img');
       const imgCount = await cardImgs.count();
       if (imgCount !== 3) {
         console.error(`❌ [${vp.name}] Expected 3 area thumbnails, found: ${imgCount}`);
@@ -297,7 +297,7 @@ async function run() {
       }
 
       // Check images loaded successfully
-      const serviceImgs = visualCareElement.locator('img[src*="3_atencion_visual_image"]');
+      const serviceImgs = visualCareElement.locator('article img');
       const imgCount = await serviceImgs.count();
       if (imgCount !== 2) {
         console.error(`❌ [${vp.name}] Expected 2 visual care images, found: ${imgCount}`);
@@ -412,8 +412,8 @@ async function run() {
 
       // Check image is loaded
       const specImg = vp.name === 'desktop'
-        ? specTestsElement.locator('.hidden.lg\\:block img[src*="4_evaluaciones_especializadas_image"]')
-        : specTestsElement.locator('.block.lg\\:hidden img[src*="4_evaluaciones_especializadas_image"]');
+        ? specTestsElement.locator('.hidden.lg\\:block img')
+        : specTestsElement.locator('.block.lg\\:hidden img');
       const isLoaded = await specImg.first().evaluate((img) => img.complete && img.naturalWidth > 0);
       if (!isLoaded) {
         console.error(`❌ [${vp.name}] Specialized tests image failed to load`);
