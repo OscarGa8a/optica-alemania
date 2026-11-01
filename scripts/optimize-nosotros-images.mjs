@@ -1,113 +1,125 @@
-import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
-const IMAGES_DIR = path.resolve(ROOT_DIR, 'public', 'images', 'about');
+const OUT_DIR = path.resolve(ROOT_DIR, 'public', 'images');
 
-const configs = [
+const imageConfigs = [
+  // 1. Hero Desktop
   {
-    name: '1_hero_desktop_image',
-    src: path.join(IMAGES_DIR, '1_hero_desktop_image.png'),
-    outWebp: path.join(IMAGES_DIR, '1_hero_desktop_image.webp'),
-    maxWidth: 1672,
-    maxHeight: 941,
+    name: 'nosotros-hero-desktop',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image2.png'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image2.png')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_desktop_image2.png'),
+    width: 1672,
+    height: 941,
+    fit: 'cover',
     quality: 82,
   },
+  // 1. Hero Mobile
   {
-    name: '1_hero_mobile_image',
-    src: path.join(IMAGES_DIR, '1_hero_mobile_image.png'),
-    outWebp: path.join(IMAGES_DIR, '1_hero_mobile_image.webp'),
-    maxWidth: 941,
-    maxHeight: 1671,
+    name: 'nosotros-hero-mobile',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image2.png'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image2.png')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_mobile_image2.png'),
+    width: 941,
+    height: 1671,
+    fit: 'cover',
     quality: 82,
   },
+  // 2. Trayectoria
   {
-    name: '2_nuestra_trayectoria_image',
-    src: path.join(IMAGES_DIR, '2_nuestra_trayectoria_image.png'),
-    outWebp: path.join(IMAGES_DIR, '2_nuestra_trayectoria_image.webp'),
-    maxWidth: 1536,
-    maxHeight: 1024,
+    name: 'nosotros-trayectoria',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image2.jpeg'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image2.jpeg')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '2_nuestra_trayectoria_image2.jpeg'),
+    width: 1536,
+    height: 1024,
+    fit: 'cover',
     quality: 82,
   },
+  // 4. Equipo - Card 1 (Atención / Counter)
   {
-    name: '4_nuestro_equipo_image1',
-    src: path.join(IMAGES_DIR, '4_nuestro_equipo_image1.png'),
-    outWebp: path.join(IMAGES_DIR, '4_nuestro_equipo_image1.webp'),
-    maxWidth: 1536,
-    maxHeight: 532,
+    name: 'nosotros-equipo-atencion',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '4_nuestro_equipo_image1.jpeg'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '4_nuestro_equipo_image1.jpeg')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '4_nuestro_equipo_image1.jpeg'),
+    width: 1536,
+    height: 1024,
+    fit: 'cover',
     quality: 82,
   },
+  // 4. Equipo - Card 2 (Examen optométrico)
   {
-    name: '4_nuestro_equipo_image2',
-    src: path.join(IMAGES_DIR, '4_nuestro_equipo_image2.png'),
-    outWebp: path.join(IMAGES_DIR, '4_nuestro_equipo_image2.webp'),
-    maxWidth: 1536,
-    maxHeight: 477,
+    name: 'nosotros-equipo-examen',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '4_nuestro_equipo_image2.jpeg'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '4_nuestro_equipo_image2.jpeg')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '4_nuestro_equipo_image2.jpeg'),
+    width: 1080,
+    height: 720,
+    fit: 'cover',
     quality: 82,
   },
+  // 5. Espacios (Showroom / Instalaciones)
   {
-    name: '5_nuestros_espacio_image',
-    src: path.join(IMAGES_DIR, '5_nuestros_espacio_image.png'),
-    outWebp: path.join(IMAGES_DIR, '5_nuestros_espacio_image.webp'),
-    maxWidth: 1672,
-    maxHeight: 941,
+    name: 'nosotros-espacios',
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '5_nuestros_espacio_image.png'))
+      ? path.join(ROOT_DIR, 'docs', 'about', '5_nuestros_espacio_image.png')
+      : path.join(ROOT_DIR, 'public', 'images', 'about', '5_nuestros_espacio_image.png'),
+    width: 1672,
+    height: 941,
+    fit: 'cover',
     quality: 82,
-  },
-  {
-    name: 'assets',
-    src: path.join(IMAGES_DIR, 'assets.png'),
-    outWebp: path.join(IMAGES_DIR, 'assets.webp'),
-    maxWidth: 1774,
-    maxHeight: 887,
-    quality: 85,
-    alphaQuality: 90,
   },
 ];
 
 async function run() {
-  console.log('Optimizing images for /nosotros with Sharp...');
+  console.log('🚀 Optimizing Nosotros Page images directly to public/images/ as pure WebP...\n');
+  if (!fs.existsSync(OUT_DIR)) {
+    fs.mkdirSync(OUT_DIR, { recursive: true });
+  }
+
   let totalOrig = 0;
   let totalNew = 0;
 
-  for (const cfg of configs) {
+  for (const cfg of imageConfigs) {
     if (!fs.existsSync(cfg.src)) {
-      console.warn(`⚠️ Missing source: ${cfg.src}`);
+      console.warn(`⚠️ Source not found: ${cfg.src}`);
       continue;
     }
+
     const origSize = fs.statSync(cfg.src).size;
     totalOrig += origSize;
+    const dest = path.join(OUT_DIR, `${cfg.name}.webp`);
 
-    const img = sharp(cfg.src);
-    const meta = await img.metadata();
-    
-    let pipeline = sharp(cfg.src).resize({
-      width: cfg.maxWidth,
-      height: cfg.maxHeight,
-      fit: 'inside',
-      withoutEnlargement: true,
-    });
+    await sharp(cfg.src)
+      .resize({
+        width: cfg.width,
+        height: cfg.height,
+        fit: cfg.fit || 'cover',
+        withoutEnlargement: true,
+      })
+      .webp({ quality: cfg.quality || 82, effort: 6 })
+      .toFile(dest);
 
-    if (cfg.name === 'assets') {
-      pipeline = pipeline.webp({ quality: cfg.quality, alphaQuality: cfg.alphaQuality, effort: 6 });
-    } else {
-      pipeline = pipeline.webp({ quality: cfg.quality, effort: 6 });
-    }
-
-    await pipeline.toFile(cfg.outWebp);
-    const newMeta = await sharp(cfg.outWebp).metadata();
-    const newSize = fs.statSync(cfg.outWebp).size;
+    const newSize = fs.statSync(dest).size;
     totalNew += newSize;
+    const meta = await sharp(dest).metadata();
+    const reduction = (((origSize - newSize) / origSize) * 100).toFixed(1);
 
     console.log(
-      `✅ ${cfg.name}: ${meta.width}x${meta.height} (${(origSize/1024).toFixed(1)} KB PNG) -> ${newMeta.width}x${newMeta.height} (${(newSize/1024).toFixed(1)} KB WebP) [-${(((origSize - newSize)/origSize)*100).toFixed(1)}%]`
+      `✅ ${cfg.name}.webp: ${meta.width}x${meta.height} (${(origSize / 1024).toFixed(1)} KB) -> ${(newSize / 1024).toFixed(1)} KB WebP [-${reduction}%]`
     );
   }
 
-  console.log(`\n🎉 Total payload reduction: ${(totalOrig/1024).toFixed(1)} KB -> ${(totalNew/1024).toFixed(1)} KB (-${(((totalOrig - totalNew)/totalOrig)*100).toFixed(1)}% reduction)`);
+  const overallReduction = (((totalOrig - totalNew) / totalOrig) * 100).toFixed(1);
+  console.log(
+    `\n🎉 Total Nosotros images payload: ${(totalOrig / 1024).toFixed(1)} KB -> ${(totalNew / 1024).toFixed(1)} KB (-${overallReduction}% reduction)`
+  );
 }
 
 run();
