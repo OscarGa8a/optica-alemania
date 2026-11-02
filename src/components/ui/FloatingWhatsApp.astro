@@ -22,7 +22,7 @@ const whatsappUrl = buildWhatsAppLink(message, siteConfig.contact.whatsappNumber
     data-event="whatsapp_cta"
     data-event-location="floating_widget"
     aria-label="Hablar por WhatsApp con un especialista de Óptica Alemania Villavicencio"
-    class="group relative flex items-center justify-center w-14 h-14 sm:w-15 sm:h-15 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-xl shadow-green-950/25 active:scale-95 hover:scale-105 transition duration-150 ease-out focus:outline-none focus-visible:ring-3 focus-visible:ring-green-400 focus-visible:ring-offset-2"
+    class="group relative flex items-center justify-center w-14 h-14 sm:w-15 sm:h-15 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-xl shadow-green-950/25 active:scale-95 hover:scale-105 transition-transform duration-150 ease-out focus:outline-none focus-visible:ring-3 focus-visible:ring-green-400 focus-visible:ring-offset-2"
   >
     <!-- Active online beacon dot -->
     <span class="absolute top-0 right-0 -mt-0.5 -mr-0.5 flex h-3.5 w-3.5 pointer-events-none" aria-hidden="true">
@@ -36,7 +36,7 @@ const whatsappUrl = buildWhatsAppLink(message, siteConfig.contact.whatsappNumber
     <!-- Desktop Tooltip on hover/focus -->
     <span
       role="tooltip"
-      class="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-xl bg-brand-midnight text-white text-xs font-medium py-1.5 px-3 shadow-lg border border-white/10 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 transition duration-150 ease-out hidden sm:inline-block"
+      class="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-xl bg-brand-midnight text-white text-xs font-medium py-1.5 px-3 shadow-lg border border-white/10 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 transition-[opacity,transform] duration-150 ease-out hidden sm:inline-block"
     >
       ¿En qué podemos ayudarte?
     </span>

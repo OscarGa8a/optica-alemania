@@ -199,6 +199,144 @@ async function run() {
         console.log(`✅ [${vp.name}] Vision block and #estamos-para-ti use bg-brand-midnight (rgb(11, 27, 54))`);
       }
 
+      // Check Heading Hierarchy and Semantic Structure (A11y)
+      const headingCheck = await page.evaluate(() => {
+        const h1s = [...document.querySelectorAll('h1')];
+        const h2s = [...document.querySelectorAll('h2')];
+        return {
+          h1Count: h1s.length,
+          h1Text: h1s[0]?.textContent?.trim() || '',
+          h2Count: h2s.length,
+          h2Texts: h2s.map((h) => h.textContent?.replace(/\s+/g, ' ').trim()),
+        };
+      });
+
+      if (headingCheck.h1Count !== 1) {
+        console.error(`❌ [${vp.name}] Expected exactly 1 <h1>, found ${headingCheck.h1Count}`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Heading Hierarchy: Exactly 1 <h1> ("${headingCheck.h1Text.slice(0, 30)}...") and ${headingCheck.h2Count} <h2>s`);
+      }
+
+      // Check Images: Valid alt, width, and height attributes
+      const imagesCheck = await page.evaluate(() => {
+        const imgs = [...document.querySelectorAll('main img')];
+        const issues = [];
+        for (const img of imgs) {
+          const alt = img.getAttribute('alt');
+          const isAriaHidden = img.getAttribute('aria-hidden') === 'true' || img.closest('[aria-hidden="true"]');
+          if (alt === null) {
+            issues.push(`Image without alt: ${img.src}`);
+          } else if (alt === '' && !isAriaHidden) {
+            issues.push(`Content image with empty alt: ${img.src}`);
+          }
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            issues.push(`Image missing width/height: ${img.src}`);
+          }
+        }
+        return { total: imgs.length, issues };
+      });
+
+      if (imagesCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] Image accessibility/dimension issues:`, imagesCheck.issues);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${imagesCheck.total} images have valid alt attributes and explicit dimensions`);
+      }
+
+      // Check Telemetry Data Attributes & Label-in-Name (WCAG 2.5.3)
+      const telemetryAndA11y = await page.evaluate(() => {
+        const historyCta = document.querySelector('#inicio a[data-event="history_click"]');
+        const whatsappCta = document.querySelector('#estamos-para-ti a[data-event="whatsapp_cta"]');
+        const servicesCta = document.querySelector('#estamos-para-ti a[data-event="services_click"]');
+        const floatingWidget = document.querySelector('aside a[data-event="whatsapp_cta"]');
+
+        const whatsappLabel = whatsappCta?.getAttribute('aria-label') || '';
+        const whatsappVisible = whatsappCta?.textContent?.trim() || '';
+        const labelInNameOk = whatsappLabel.toLowerCase().includes(whatsappVisible.toLowerCase().slice(0, 15));
+
+        return {
+          historyCtaOk: historyCta?.getAttribute('data-event-location') === 'about_hero',
+          whatsappCtaOk: whatsappCta?.getAttribute('data-event-location') === 'about_cta',
+          servicesCtaOk: servicesCta?.getAttribute('data-event-location') === 'about_cta',
+          floatingWidgetOk: floatingWidget?.getAttribute('data-event-location') === 'floating_widget',
+          labelInNameOk,
+        };
+      });
+
+      if (!telemetryAndA11y.historyCtaOk || !telemetryAndA11y.whatsappCtaOk || !telemetryAndA11y.servicesCtaOk || !telemetryAndA11y.floatingWidgetOk) {
+        console.error(`❌ [${vp.name}] Telemetry attributes check failed:`, telemetryAndA11y);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Telemetry data-event and data-event-location attributes verified on all CTAs`);
+      }
+
+      if (!telemetryAndA11y.labelInNameOk) {
+        console.error(`❌ [${vp.name}] WCAG 2.5.3 Label-in-Name mismatch on WhatsApp CTA`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] WCAG 2.5.3 Label-in-Name verified on primary CTA`);
+      }
+
+      // Check Schema.org JSON-LD Multigraph
+      const schemaOk = await page.evaluate(() => {
+        const script = document.querySelector('script[type="application/ld+json"]');
+        if (!script) return false;
+        try {
+          const json = JSON.parse(script.textContent || '{}');
+          return json['@context'] === 'https://schema.org' && Array.isArray(json['@graph']) && json['@graph'].length >= 3;
+        } catch {
+          return false;
+        }
+      });
+
+      if (!schemaOk) {
+        console.error(`❌ [${vp.name}] Schema.org JSON-LD @graph missing or invalid`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Schema.org JSON-LD multigraph parsed and validated`);
+      }
+
+      // Test Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
+      const dataLayerTest = await page.evaluate(() => {
+        window.dataLayer = window.dataLayer || [];
+        const initialLen = window.dataLayer.length;
+        const ctaBtn = document.querySelector('#inicio a[data-event="history_click"]');
+        if (!ctaBtn) return { success: false, reason: 'CTA not found' };
+        ctaBtn.click();
+        const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+        return {
+          success: window.dataLayer.length > initialLen && lastEvent?.event === 'cta_click' && lastEvent?.cta_type === 'history_click',
+          lastEvent,
+        };
+      });
+
+      if (!dataLayerTest.success) {
+        console.error(`❌ [${vp.name}] dataLayer buffer failed to receive cta_click event:`, dataLayerTest);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Zero-TBT Analytics: click event successfully buffered into window.dataLayer`);
+      }
+
+      // Phase 8: Search Console & Staging Isolation Verification
+      const indexingAndSeo = await page.evaluate(() => {
+        const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+        const robots = document.querySelector('meta[name="robots"]')?.getAttribute('content');
+        return {
+          canonical,
+          robots,
+          isCanonicalOk: canonical === 'https://opticaalemania.co/nosotros',
+          isRobotsOk: robots === 'index, follow, max-image-preview:large',
+        };
+      });
+
+      if (!indexingAndSeo.isCanonicalOk || !indexingAndSeo.isRobotsOk) {
+        console.error(`❌ [${vp.name}] Indexing & Search Console check failed:`, indexingAndSeo);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] Search Console Ready: canonical (${indexingAndSeo.canonical}) and robots (${indexingAndSeo.robots}) verified`);
+      }
+
       // 1. Check Console Errors
       if (consoleErrors.length > 0) {
         console.error(`❌ [${vp.name}] Console Errors detected:`, consoleErrors);
