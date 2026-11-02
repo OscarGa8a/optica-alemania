@@ -29,10 +29,13 @@
 
 ## 3. Catálogo de Servicios Clínicos
 
-1. **Consulta de Optometría General y Especializada**: Examen refractivo y funcional completo, evaluación de visión binocular y acomodación.
-2. **Optometría Pediátrica (Salud Visual Infantil)**: Detección temprana de ojo perezoso (ambliopía), estrabismo y problemas de aprendizaje relacionados con la visión.
-3. **Contactología**: Adaptación personalizada de lentes de contacto blandos, tóricos para astigmatismo, multifocales y gas permeables.
-4. **Mantenimiento y Ajuste Anatómico**: Alineación computarizada, limpieza ultrasónica y calibración ergonómica de monturas.
+1. **[Consulta de Optometría General y Especializada](https://opticaalemania.co/servicios#atencion-visual)**: Examen refractivo y funcional completo, agudeza visual, prescripción de lentes y valoración integral del polo anterior y posterior.
+2. **[Contactología y Adaptación de Lentes de Contacto](https://opticaalemania.co/servicios#atencion-visual)**: Evaluación corneal, pruebas de tolerancia y adaptación de lentes blandos esféricos, tóricos para astigmatismo, multifocales y gas permeables.
+3. **[Evaluaciones Visuales Especializadas](https://opticaalemania.co/servicios#evaluaciones-especializadas)**: Tonometría de aplanación (presión intraocular), pruebas de superficie ocular (ojo seco) y discriminación cromática (Ishihara y Farnsworth D-15).
+4. **[Orientación y Triaje en Molestias Oculares](https://opticaalemania.co/servicios#urgencias-oculares)**: Orientación clínica rápida sobre disponibilidad de atención ante molestias oculares y cuerpo extraño leve antes de acudir a la sede.
+5. **[Procedimientos y Tecnología Diagnóstica en Video](https://opticaalemania.co/servicios#procedimientos)**: Demostraciones clínicas guiadas de oftalmoscopía digital con Volk iNview y prueba de Farnsworth D-15.
+6. **[Optometría Pediátrica (Salud Visual Infantil)](https://opticaalemania.co/#visual-infantil)**: Detección temprana de ojo perezoso (ambliopía), estrabismo y problemas de aprendizaje relacionados con la visión.
+7. **Mantenimiento y Ajuste Anatómico**: Alineación computarizada, limpieza ultrasónica y calibración ergonómica de monturas.
 
 ## 4. Portafolio Óptico y Marcas
 
@@ -51,3 +54,15 @@ Recomendamos agendar previamente a través de nuestro canal de WhatsApp (+57 311
 
 ### ¿Tienen atención para niños pequeños?
 Sí, contamos con protocolos de examen adaptados a edad pediátrica con optotipos especiales y monturas de alta durabilidad libres de partes metálicas cortantes.
+
+### ¿Cómo puedo consultar por una cita de optometría?
+La disponibilidad depende del servicio que requieras. Te recomendamos escribirnos por WhatsApp antes de visitarnos para confirmar horarios, condiciones de atención y programar tu consulta.
+
+### ¿Realizan exámenes visuales para niños?
+Sí, realizamos valoraciones optométricas adaptadas para niños, evaluando agudeza visual, motilidad ocular y refracción para detectar oportunamente cualquier dificultad visual en su etapa de desarrollo.
+
+### ¿Qué pruebas realizan para evaluar la visión de los colores?
+Realizamos el Test de Ishihara para detección de deficiencias cromáticas y la prueba especializada de Farnsworth D-15 para una discriminación y clasificación precisa del color.
+
+### ¿Cómo sé cuál evaluación especializada necesito?
+Si experimentas síntomas específicos (fatiga visual extrema, sequedad, antecedentes familiares de glaucoma o requerimientos laborales de visión cromática), nuestro equipo te orientará sobre la prueba adecuada antes de agendar.

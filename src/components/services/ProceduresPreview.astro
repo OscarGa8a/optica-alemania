@@ -42,7 +42,7 @@ const { procedures } = siteConfig.servicesPage;
         </h2>
       </div>
 
-      <p class="text-sm sm:text-base lg:text-lg text-white/80 leading-relaxed max-w-md lg:mb-2">
+      <p class="text-sm sm:text-base lg:text-lg text-slate-200 leading-relaxed max-w-md lg:mb-2">
         {procedures.description}
       </p>
     </div>
@@ -53,11 +53,13 @@ const { procedures } = siteConfig.servicesPage;
         <article class="group">
           <a
             href={item.actionHref}
-            class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl"
-            aria-label={`Ver procedimiento: ${item.title}`}
+            data-event="procedure_card_click"
+            data-event-location="procedures_preview"
+            data-event-item={item.id}
+            class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl active:scale-[0.99] transition-transform duration-150"
           >
             <!-- Thumbnail Container -->
-            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-white/25 transition-all duration-300">
+            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-brand-steel/50 transition-colors duration-300">
               <img
                 src={item.image.src}
                 alt={item.image.alt}
@@ -98,6 +100,8 @@ const { procedures } = siteConfig.servicesPage;
         size="lg"
         href={procedures.ctaHref}
         icon="arrow-right"
+        data-event="procedures_explore_click"
+        data-event-location="procedures_preview"
       >
         {procedures.ctaText}
       </Button>

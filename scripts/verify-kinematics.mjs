@@ -268,6 +268,93 @@ async function runKinematicsVerification() {
 
     await nosotrosPage.close();
 
+    // -------------------------------------------------------------------------
+    // TEST 4: Página Servicios (/servicios) FAQ Accordion WAAPI Cinemática & CLS
+    // -------------------------------------------------------------------------
+    console.log('\n🔍 [Test 4] Verificando cinemática de Acordeón FAQ en /servicios (Desktop 1440x900)...');
+    const serviciosPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await serviciosPage.goto(`${baseUrl}/servicios`, { waitUntil: 'networkidle' });
+
+    // Track CLS on /servicios
+    await serviciosPage.evaluate(() => {
+      window.__clsScore = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__clsScore += entry.value;
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+
+    const faqAccordion = serviciosPage.locator('#faq-accordion');
+    if (await faqAccordion.count() === 0) {
+      console.error('❌ #faq-accordion no encontrado en /servicios!');
+      failed = true;
+    } else {
+      const items = faqAccordion.locator('.faq-item');
+      const item1Toggle = items.nth(0).locator('.faq-toggle');
+      const item1Answer = items.nth(0).locator('.faq-answer');
+      const item2Toggle = items.nth(1).locator('.faq-toggle');
+      const item2Answer = items.nth(1).locator('.faq-answer');
+
+      // Verify item 1 is expanded initially
+      const initialItem1Exp = await item1Toggle.getAttribute('aria-expanded');
+      const initialItem1Vis = await item1Answer.isVisible();
+      console.log(`✅ Item 1 inicialmente expandido: ${initialItem1Exp === 'true' && initialItem1Vis}`);
+
+      // Scroll accordion into view
+      await items.nth(1).scrollIntoViewIfNeeded();
+      await serviciosPage.waitForTimeout(200);
+
+      // Trigger item 2 with WAAPI
+      console.log('👆 Haciendo click en Item 2 para evaluar animación WAAPI...');
+      await item2Toggle.click();
+
+      // Sample during 220ms WAAPI animation
+      const samples = [];
+      for (let i = 0; i < 4; i++) {
+        const sample = await item2Answer.evaluate((el) => {
+          return {
+            opacity: parseFloat(window.getComputedStyle(el).opacity || '0'),
+            height: parseFloat(window.getComputedStyle(el).height || '0'),
+          };
+        });
+        samples.push(sample);
+        await serviciosPage.waitForTimeout(40);
+      }
+      console.log(`📊 Muestras de altura WAAPI en Item 2: ${samples.map((s) => `${Math.round(s.height)}px`).join(' -> ')}`);
+
+      // Wait for animation to settle
+      await serviciosPage.waitForTimeout(150);
+
+      const item2Exp = await item2Toggle.getAttribute('aria-expanded');
+      const item1Exp = await item1Toggle.getAttribute('aria-expanded');
+      const item2Vis = await item2Answer.isVisible();
+      const item1Vis = await item1Answer.isVisible();
+
+      if (item2Exp !== 'true' || !item2Vis) {
+        console.error('❌ Item 2 no se expandió adecuadamente con WAAPI!');
+        failed = true;
+      } else if (item1Exp !== 'false' || item1Vis) {
+        console.error('❌ Item 1 no se replegó adecuadamente!');
+        failed = true;
+      } else {
+        console.log('✅ Acordeón FAQ WAAPI: Item 2 abierto y Item 1 cerrado con cinemática monótona');
+      }
+
+      const serviciosCls = await serviciosPage.evaluate(() => window.__clsScore || 0);
+      console.log(`📐 Cumulative Layout Shift (CLS) en /servicios tras WAAPI: ${serviciosCls.toFixed(4)}`);
+      if (serviciosCls > 0.05) {
+        console.error(`❌ CLS excesivo en /servicios: ${serviciosCls}`);
+        failed = true;
+      } else {
+        console.log('✅ Criterio CLS cumplido en /servicios (CLS <= 0.05)');
+      }
+    }
+
+    await serviciosPage.close();
+
   } catch (err) {
     console.error('❌ Error durante la verificación cinemática:', err);
     failed = true;

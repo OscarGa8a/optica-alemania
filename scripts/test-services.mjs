@@ -122,6 +122,51 @@ async function run() {
       console.log(`✅ [${vp.name}] 0 horizontal overflow`);
     }
 
+    // 3.1. Heading Hierarchy and Semantic Structure (A11y)
+    const headingCheck = await page.evaluate(() => {
+      const h1s = [...document.querySelectorAll('h1')];
+      const h2s = [...document.querySelectorAll('h2')];
+      return {
+        h1Count: h1s.length,
+        h1Text: h1s[0]?.textContent?.trim() || '',
+        h2Count: h2s.length,
+        h2Texts: h2s.map((h) => h.textContent?.replace(/\s+/g, ' ').trim()),
+      };
+    });
+
+    if (headingCheck.h1Count !== 1) {
+      console.error(`❌ [${vp.name}] Expected exactly 1 <h1>, found ${headingCheck.h1Count}`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Heading Hierarchy: Exactly 1 <h1> ("${headingCheck.h1Text.slice(0, 30)}...") and ${headingCheck.h2Count} <h2>s`);
+    }
+
+    // 3.2. Images: Valid alt, width, and height attributes
+    const imagesCheck = await page.evaluate(() => {
+      const imgs = [...document.querySelectorAll('main img')];
+      const issues = [];
+      for (const img of imgs) {
+        const alt = img.getAttribute('alt');
+        const isAriaHidden = img.getAttribute('aria-hidden') === 'true' || img.closest('[aria-hidden="true"]');
+        if (alt === null) {
+          issues.push(`Image without alt: ${img.src}`);
+        } else if (alt === '' && !isAriaHidden) {
+          issues.push(`Content image with empty alt: ${img.src}`);
+        }
+        if (!img.getAttribute('width') || !img.getAttribute('height')) {
+          issues.push(`Image missing width/height: ${img.src}`);
+        }
+      }
+      return { total: imgs.length, issues };
+    });
+
+    if (imagesCheck.issues.length > 0) {
+      console.error(`❌ [${vp.name}] Image accessibility/dimension issues:`, imagesCheck.issues);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] All ${imagesCheck.total} images have valid alt attributes and explicit dimensions`);
+    }
+
     // 4. Section 1 — Hero Verification
     const heroElement = page.locator('#hero-servicios');
     const heroExists = (await heroElement.count()) > 0;
@@ -792,6 +837,59 @@ async function run() {
       hasErrors = true;
     } else {
       console.log(`✅ [${vp.name}] Footer element verified`);
+    }
+
+    // 13. Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
+    const dataLayerTest = await page.evaluate(() => {
+      window.dataLayer = window.dataLayer || [];
+      const initialLen = window.dataLayer.length;
+      const ctaBtn = document.querySelector('#hero-servicios a[data-event="services_explore_click"]');
+      if (!ctaBtn) return { success: false, reason: 'CTA not found' };
+      ctaBtn.click();
+      const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+      return {
+        success: window.dataLayer.length > initialLen && lastEvent?.event === 'cta_click' && lastEvent?.cta_type === 'services_explore_click',
+        lastEvent,
+      };
+    });
+
+    if (!dataLayerTest.success) {
+      console.error(`❌ [${vp.name}] dataLayer buffer failed to receive cta_click event:`, dataLayerTest);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] Zero-TBT Analytics: click event successfully buffered into window.dataLayer`);
+    }
+
+    // 14. Phase 4 & 8: Schema.org JSON-LD & Staging Isolation
+    const seoAndSchema = await page.evaluate(() => {
+      const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+      const robots = document.querySelector('meta[name="robots"]')?.getAttribute('content');
+      const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+      let parsedLd = null;
+      if (ldJsonScript) {
+        try {
+          parsedLd = JSON.parse(ldJsonScript.textContent || '{}');
+        } catch (_) {}
+      }
+      return {
+        canonical,
+        robots,
+        hasMedicalPage: parsedLd?.['@graph']?.some((node) => node['@type'] === 'MedicalWebPage'),
+        hasFaqPage: parsedLd?.['@graph']?.some((node) => node['@type'] === 'FAQPage'),
+      };
+    });
+
+    if (!seoAndSchema.canonical || !seoAndSchema.canonical.includes('/servicios')) {
+      console.error(`❌ [${vp.name}] Invalid canonical URL: ${seoAndSchema.canonical}`);
+      hasErrors = true;
+    } else if (!seoAndSchema.robots) {
+      console.error(`❌ [${vp.name}] Missing meta robots tag!`);
+      hasErrors = true;
+    } else if (!seoAndSchema.hasMedicalPage || !seoAndSchema.hasFaqPage) {
+      console.error(`❌ [${vp.name}] Incomplete Schema.org @graph (MedicalWebPage: ${seoAndSchema.hasMedicalPage}, FAQPage: ${seoAndSchema.hasFaqPage})`);
+      hasErrors = true;
+    } else {
+      console.log(`✅ [${vp.name}] SEO & Schema: Canonical '${seoAndSchema.canonical}', robots '${seoAndSchema.robots}', MedicalWebPage + FAQPage verified`);
     }
 
     // Full-page screenshot

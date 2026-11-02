@@ -39,7 +39,7 @@ const whatsappUrl = buildWhatsAppLink(cta.whatsappMessage, contact.whatsappNumbe
       </h2>
 
       <!-- Description -->
-      <p class="text-white/80 text-sm sm:text-base lg:text-lg leading-relaxed font-normal max-w-2xl mx-auto mt-4 sm:mt-6 text-center">
+      <p class="text-slate-200 text-sm sm:text-base lg:text-lg leading-relaxed font-normal max-w-2xl mx-auto mt-4 sm:mt-6 text-center">
         {cta.description}
       </p>
 
@@ -53,6 +53,8 @@ const whatsappUrl = buildWhatsAppLink(cta.whatsappMessage, contact.whatsappNumbe
           rel="noopener noreferrer"
           icon="whatsapp"
           iconPosition="left"
+          data-event="whatsapp_cta"
+          data-event-location="services_cta"
           aria-label="Consultar por WhatsApp sobre nuestros servicios"
         >
           {cta.ctaText}
