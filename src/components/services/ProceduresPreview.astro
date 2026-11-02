@@ -53,6 +53,9 @@ const { procedures } = siteConfig.servicesPage;
         <article class="group">
           <a
             href={item.actionHref}
+            data-event="procedure_card_click"
+            data-event-location="procedures_preview"
+            data-event-item={item.id}
             class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl active:scale-[0.99] transition-transform duration-150"
           >
             <!-- Thumbnail Container -->
@@ -97,6 +100,8 @@ const { procedures } = siteConfig.servicesPage;
         size="lg"
         href={procedures.ctaHref}
         icon="arrow-right"
+        data-event="procedures_explore_click"
+        data-event-location="procedures_preview"
       >
         {procedures.ctaText}
       </Button>
