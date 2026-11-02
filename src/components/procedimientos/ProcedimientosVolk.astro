@@ -36,25 +36,27 @@ const whatsappUrl = buildWhatsAppLink(
   </div>
 
   <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
-    <!-- Mobile-only Eyebrow & H2 (above video on mobile matching mockup) -->
-    <div class="lg:hidden mb-6">
-      <div>
-        <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
-          {volk.eyebrow}
-        </span>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-x-14 lg:gap-y-6 items-center">
+      
+      <!-- Eyebrow & H2 Heading (Row 1 on mobile, Col 8-12 Row 1 on desktop) -->
+      <div class="order-1 lg:order-2 lg:col-span-5 lg:col-start-8 lg:self-end">
+        <div>
+          <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
+            {volk.eyebrow}
+          </span>
+        </div>
+
+        <h2
+          id="volk-inview-heading"
+          class="font-display text-4xl sm:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
+        >
+          <span class="block font-normal">{volk.titleLine1}</span>
+          <span class="block italic font-normal text-brand-primary">{volk.titleHighlight}</span>
+        </h2>
       </div>
 
-      <h2 class="font-display text-4xl sm:text-5xl text-brand-heading leading-[1.06] tracking-tight mt-3">
-        <span class="block font-normal">{volk.titleLine1}</span>
-        <span class="block italic font-normal text-brand-primary">{volk.titleHighlight}</span>
-      </h2>
-    </div>
-
-    <!-- Main Grid: Video on Left (7 cols) / Editorial Content on Right (5 cols) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
-      
-      <!-- Video Player Card using reusable VideoPlayer component with Icon.astro -->
-      <div class="lg:col-span-7">
+      <!-- Video Player Card (Row 2 on mobile, Col 1-7 Row 1-2 on desktop) -->
+      <div class="order-2 lg:order-1 lg:col-span-7 lg:row-span-2">
         <VideoPlayer
           id={volk.videoId}
           src={volk.video.src}
@@ -65,52 +67,30 @@ const whatsappUrl = buildWhatsAppLink(
         />
       </div>
 
-      <!-- Right Column: Text & CTA Button -->
-      <div class="lg:col-span-5">
-        <div class="max-w-xl">
-          <!-- Desktop Eyebrow & H2 -->
-          <div class="hidden lg:block">
-            <div>
-              <span class="text-xs sm:text-sm uppercase font-semibold tracking-widest text-brand-primary">
-                {volk.eyebrow}
-              </span>
-            </div>
+      <!-- Right Column: Paragraph & CTA Button (Row 3 on mobile, Col 8-12 Row 2 on desktop) -->
+      <div class="order-3 lg:order-3 lg:col-span-5 lg:col-start-8 lg:self-start">
+        <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-1 sm:mt-2 font-normal">
+          {volk.description}
+        </p>
 
-            <h2
-              id="volk-inview-heading"
-              class="font-display text-4xl sm:text-5xl lg:text-[3rem] xl:text-[3.5rem] text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
-            >
-              <span class="block font-normal">{volk.titleLine1}</span>
-              <span class="block italic font-normal text-brand-primary">{volk.titleHighlight}</span>
-            </h2>
-          </div>
-
-          <!-- Descriptive Paragraph -->
-          <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-4 sm:mt-6 font-normal">
-            {volk.description}
-          </p>
-
-          <!-- WhatsApp Pill Button using Button.astro and Icon.astro -->
-          <div class="mt-6 sm:mt-8">
-            <Button
-              variant="primary"
-              size="lg"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-event="whatsapp_cta"
-              data-event-location="procedimientos_volk"
-              icon="arrow-right"
-              iconPosition="right"
-              aria-label={`${volk.ctaText} - ${siteConfig.name}`}
-              class="w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4"
-            >
-              <span class="inline-flex items-center gap-2.5">
-                <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
-                <span class="text-sm sm:text-base font-semibold whitespace-nowrap">{volk.ctaText}</span>
-              </span>
-            </Button>
-          </div>
+        <div class="mt-6 sm:mt-8">
+          <Button
+            variant="primary"
+            size="lg"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="whatsapp_cta"
+            data-event-location="procedimientos_volk"
+            icon="arrow-right"
+            iconPosition="right"
+            class="w-full sm:w-auto inline-flex items-center justify-between sm:justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4"
+          >
+            <span class="inline-flex items-center gap-2.5">
+              <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
+              <span class="text-sm sm:text-base font-semibold whitespace-nowrap">{volk.ctaText}</span>
+            </span>
+          </Button>
         </div>
       </div>
 
