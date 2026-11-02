@@ -41,10 +41,14 @@ const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'li
 // Preload de Hero LCP adaptativo según página
 const defaultMobilePreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-mobile.webp'
-  : '/images/hero-mobile.webp';
+  : currentPath === '/servicios'
+    ? '/images/services-hero-mobile.webp'
+    : '/images/hero-mobile.webp';
 const defaultDesktopPreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp'
-  : '/images/hero-desktop.webp';
+  : currentPath === '/servicios'
+    ? '/images/services-hero-desktop.webp'
+    : '/images/hero-desktop.webp';
 
 const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
 const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
@@ -52,10 +56,14 @@ const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
 // OpenGraph & Twitter Image adaptativo
 const defaultOgImage = currentPath === '/nosotros'
   ? 'https://opticaalemania.co/images/nosotros-hero-desktop.webp'
-  : 'https://opticaalemania.co/images/hero-desktop.webp';
+  : currentPath === '/servicios'
+    ? 'https://opticaalemania.co/images/services-hero-desktop.webp'
+    : 'https://opticaalemania.co/images/hero-desktop.webp';
 const defaultOgImageAlt = currentPath === '/nosotros'
   ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
-  : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
+  : currentPath === '/servicios'
+    ? 'Servicios de optometría en Villavicencio - Óptica Alemania'
+    : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
 
 const resolvedOgImage = ogImage || defaultOgImage;
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
@@ -63,7 +71,9 @@ const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
 // Mensaje contextual de WhatsApp para widget flotante
 const defaultWhatsAppMessage = currentPath === '/nosotros'
   ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania y deseo solicitar información o agendar una cita.'
-  : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
+  : currentPath === '/servicios'
+    ? 'Hola, estuve viendo los servicios de Óptica Alemania y deseo solicitar información o agendar una consulta.'
+    : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
 
 const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessage;
 

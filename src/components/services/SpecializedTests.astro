@@ -69,11 +69,10 @@ const { contact } = siteConfig;
                 rel="noopener noreferrer"
                 data-event="specialized_test_click"
                 data-test-number={test.number}
-                aria-label={`Consultar ${test.title} por WhatsApp`}
                 class="group flex items-center gap-3 sm:gap-6 py-4 sm:py-6 lg:py-7 px-1.5 sm:px-4 rounded-2xl hover:bg-brand-cool/60 active:bg-brand-cool/90 transition-all duration-200"
               >
-                <!-- Numeric Index: Instrument Serif -->
-                <span class="font-display text-xl sm:text-2xl lg:text-3xl text-brand-primary/40 group-hover:text-brand-primary transition-colors min-w-5 sm:min-w-8 shrink-0 text-center sm:text-left">
+                <!-- Numeric Index: Instrument Serif (High contrast WCAG AA compliant >= 4.5:1) -->
+                <span class="font-display text-xl sm:text-2xl lg:text-3xl text-brand-primary font-medium min-w-5 sm:min-w-8 shrink-0 text-center sm:text-left">
                   {test.number}
                 </span>
 
@@ -93,6 +92,7 @@ const { contact } = siteConfig;
                     name="arrow-right"
                     class="w-3.5 h-3.5 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:translate-x-0.5"
                   />
+                  <span class="sr-only">Consultar por WhatsApp</span>
                 </div>
               </a>
             );

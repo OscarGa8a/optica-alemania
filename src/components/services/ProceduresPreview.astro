@@ -42,7 +42,7 @@ const { procedures } = siteConfig.servicesPage;
         </h2>
       </div>
 
-      <p class="text-sm sm:text-base lg:text-lg text-white/80 leading-relaxed max-w-md lg:mb-2">
+      <p class="text-sm sm:text-base lg:text-lg text-slate-200 leading-relaxed max-w-md lg:mb-2">
         {procedures.description}
       </p>
     </div>
@@ -54,10 +54,9 @@ const { procedures } = siteConfig.servicesPage;
           <a
             href={item.actionHref}
             class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl"
-            aria-label={`Ver procedimiento: ${item.title}`}
           >
             <!-- Thumbnail Container -->
-            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-white/25 transition-all duration-300">
+            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-brand-steel/50 transition-all duration-300">
               <img
                 src={item.image.src}
                 alt={item.image.alt}

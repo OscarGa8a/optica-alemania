@@ -82,6 +82,7 @@ const { contact } = siteConfig;
                   icon="arrow-right"
                   data-event="service_detail_cta"
                   data-event-service={item.serviceNumber}
+                  aria-label={`${item.ctaText}: ${item.titleLine1} ${item.titleLine2}`}
                 >
                   {item.ctaText}
                 </Button>
