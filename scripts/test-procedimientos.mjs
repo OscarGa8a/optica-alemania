@@ -270,6 +270,37 @@ async function run() {
         console.log(`✅ [${vp.name}] Zero-TBT Analytics: click event successfully buffered into window.dataLayer`);
       }
 
+      // Check 6: Phase 8 — Search Console, Canonical, and Dual-Layer Staging Isolation
+      const seoAndStaging = await page.evaluate(() => {
+        const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+        const robots = document.querySelector('meta[name="robots"]')?.getAttribute('content');
+        const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+        let parsedLd = null;
+        if (ldJsonScript) {
+          try {
+            parsedLd = JSON.parse(ldJsonScript.textContent || '{}');
+          } catch (_) {}
+        }
+        return {
+          canonical,
+          robots,
+          hasMedicalPage: parsedLd?.['@graph']?.some((node) => node['@type'] === 'MedicalWebPage'),
+        };
+      });
+
+      if (!seoAndStaging.canonical || !seoAndStaging.canonical.includes('/procedimientos')) {
+        console.error(`❌ [${vp.name}] Invalid canonical URL: ${seoAndStaging.canonical}`);
+        hasErrors = true;
+      } else if (!seoAndStaging.robots) {
+        console.error(`❌ [${vp.name}] Missing meta robots tag!`);
+        hasErrors = true;
+      } else if (!seoAndStaging.hasMedicalPage) {
+        console.error(`❌ [${vp.name}] MedicalWebPage missing in Schema.org @graph`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Search Console & Staging: Canonical '${seoAndStaging.canonical}', robots '${seoAndStaging.robots}', MedicalWebPage verified`);
+      }
+
       await context.close();
     }
   } catch (err) {
