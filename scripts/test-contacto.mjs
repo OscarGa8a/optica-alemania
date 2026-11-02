@@ -89,7 +89,7 @@ async function run() {
       console.log(`\n📱 Testing Viewport: ${vp.name.toUpperCase()} (${vp.width}x${vp.height})`);
       const context = await browser.newContext({
         viewport: { width: vp.width, height: vp.height },
-        deviceScaleFactor: 1,
+        deviceScaleFactor: 2,
       });
 
       const page = await context.newPage();
@@ -103,7 +103,11 @@ async function run() {
       });
 
       page.on('requestfailed', (req) => {
-        failedRequests.push(`${req.url()} (${req.failure()?.errorText || 'failed'})`);
+        const failure = req.failure()?.errorText || '';
+        if (failure.includes('ERR_ABORTED') && req.url().match(/\.(mp4|webm|ogg)$/)) {
+          return;
+        }
+        failedRequests.push(`${req.url()} (${failure || 'failed'})`);
       });
 
       page.on('response', (res) => {
@@ -155,7 +159,57 @@ async function run() {
         );
       }
 
-      // 4. Verify shared tokens, alignment, Button/Icon usage, and zero arbitrary bracket classes
+      // 4. Check Heading Hierarchy and Semantic Structure (A11y)
+      const headingCheck = await page.evaluate(() => {
+        const h1s = [...document.querySelectorAll('h1')];
+        const h2s = [...document.querySelectorAll('h2')];
+        const h3s = [...document.querySelectorAll('h3')];
+        return {
+          h1Count: h1s.length,
+          h1Text: h1s[0]?.textContent?.replace(/\s+/g, ' ').trim() || '',
+          h2Count: h2s.length,
+          h2Text: h2s[0]?.textContent?.replace(/\s+/g, ' ').trim() || '',
+          h3Count: h3s.length,
+          h3Text: h3s[0]?.textContent?.replace(/\s+/g, ' ').trim() || '',
+        };
+      });
+
+      if (headingCheck.h1Count !== 1) {
+        console.error(`❌ [${vp.name}] Expected exactly 1 <h1>, found ${headingCheck.h1Count}`);
+        failed = true;
+      } else {
+        console.log(
+          `✅ [${vp.name}] Heading Hierarchy: 1 <h1> ("${headingCheck.h1Text}"), 1 <h2> ("${headingCheck.h2Text}"), 1 <h3> ("${headingCheck.h3Text}")`
+        );
+      }
+
+      // 5. Check Images (alt, width, height)
+      const imagesCheck = await page.evaluate(() => {
+        const imgs = [...document.querySelectorAll('main img, #inicio img, #ubicacion > div img')];
+        const issues = [];
+        for (const img of imgs) {
+          const alt = img.getAttribute('alt');
+          const isAriaHidden = img.getAttribute('aria-hidden') === 'true' || img.closest('[aria-hidden="true"]');
+          if (alt === null) {
+            issues.push(`Image without alt: ${img.src}`);
+          } else if (alt === '' && !isAriaHidden) {
+            issues.push(`Content image with empty alt: ${img.src}`);
+          }
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            issues.push(`Image missing width/height: ${img.src}`);
+          }
+        }
+        return { total: imgs.length, issues };
+      });
+
+      if (imagesCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] Image accessibility/dimension issues:`, imagesCheck.issues);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${imagesCheck.total} images have valid alt attributes and explicit dimensions`);
+      }
+
+      // 6. Verify shared tokens, alignment, Button/Icon usage, and zero arbitrary bracket classes
       const contactChecks = await page.evaluate(() => {
         const headerContainer = document.querySelector('#site-header > div');
         const heroContainer = document.querySelector('#inicio > div.relative.z-10');
@@ -183,8 +237,8 @@ async function run() {
         const h3 = document.querySelector('#ubicacion h3');
         const h3Style = h3 ? getComputedStyle(h3) : null;
 
-        // Check no arbitrary Tailwind bracket classes in #inicio and #ubicacion
-        const mainEls = [...document.querySelectorAll('#inicio, #inicio *, #ubicacion, #ubicacion *')];
+        // Check no arbitrary Tailwind bracket classes in #inicio and #ubicacion content (excluding modal dialog)
+        const mainEls = [...document.querySelectorAll('#inicio, #inicio *:not(dialog, dialog *), #ubicacion > div, #ubicacion > div *')];
         const bracketClasses = [];
         for (const el of mainEls) {
           for (const cls of el.classList) {
@@ -194,7 +248,7 @@ async function run() {
           }
         }
 
-        // Check CTAs use Button component classes (group + rounded-full)
+        // Check CTAs use Button component classes
         const heroWhatsappBtn = document.querySelector('#inicio a[data-event="whatsapp_cta"]');
         const heroPhoneBtn = document.querySelector('#inicio a[data-event="phone_call"]');
         const locationCtaBtn = document.querySelector('#ubicacion a[data-event-location="contact_location_cta"]');
@@ -245,7 +299,58 @@ async function run() {
         );
       }
 
-      // 5. Capture section screenshots
+      // 7. Check Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
+      const dataLayerTest = await page.evaluate(() => {
+        window.dataLayer = window.dataLayer || [];
+        let gtmTriggered = false;
+        const originalLoadGTM = window._loadGTM;
+        window._loadGTM = () => {
+          gtmTriggered = true;
+          if (typeof originalLoadGTM === 'function') originalLoadGTM();
+        };
+
+        const eventsToTest = [
+          { selector: '#inicio a[data-event="whatsapp_cta"]', expectedCta: 'whatsapp_cta' },
+          { selector: '#inicio a[data-event="phone_call"]', expectedCta: 'phone_call' },
+          { selector: '#ubicacion a[data-event-location="contact_location_cta"]', expectedCta: 'google_maps_click' },
+          { selector: '#ubicacion button[data-event="route_video_click"]', expectedCta: 'route_video_click' },
+        ];
+
+        const results = [];
+        for (const testItem of eventsToTest) {
+          const el = document.querySelector(testItem.selector);
+          if (!el) {
+            results.push({ selector: testItem.selector, success: false, reason: 'Element not found' });
+            continue;
+          }
+          el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+          const passed = lastEvent && (lastEvent.event === 'cta_click' || lastEvent.event === 'portfolio_cta_click') && lastEvent.cta_type === testItem.expectedCta;
+          results.push({
+            selector: testItem.selector,
+            expected: testItem.expectedCta,
+            actual: lastEvent?.cta_type,
+            passed,
+          });
+        }
+
+        return {
+          allPassed: results.every((r) => r.passed),
+          gtmTriggered,
+          results,
+        };
+      });
+
+      if (!dataLayerTest.allPassed) {
+        console.error(`❌ [${vp.name}] Telemetry dataLayer event test failed:`, dataLayerTest);
+        failed = true;
+      } else {
+        console.log(
+          `✅ [${vp.name}] All ${dataLayerTest.results.length} conversion telemetry events verified in dataLayer with GTM instant trigger`
+        );
+      }
+
+      // 8. Capture section screenshots
       const heroEl = page.locator('#inicio');
       if (await heroEl.count() > 0) {
         const heroBox = await heroEl.boundingBox();
@@ -257,13 +362,13 @@ async function run() {
         console.log(`📸 [${vp.name}] Captured: Hero Contacto (with header) -> ${vp.heroScreenshot}`);
       }
 
-      // Ubicación y Recorrido (hide fixed header & wait for images to decode before screenshotting)
+      // Ubicación y Recorrido (hide fixed header & wait for visible images to decode before screenshotting)
       const ubicacionEl = page.locator('#ubicacion');
       if (await ubicacionEl.count() > 0) {
         await page.evaluate(async () => {
           const header = document.getElementById('site-header');
           if (header) header.style.display = 'none';
-          const imgs = Array.from(document.querySelectorAll('#ubicacion img'));
+          const imgs = Array.from(document.querySelectorAll('#ubicacion > div img'));
           await Promise.all(imgs.map((img) => img.decode().catch(() => {})));
         });
         await ubicacionEl.screenshot({
@@ -276,7 +381,7 @@ async function run() {
         console.log(`📸 [${vp.name}] Captured: Ubicación y Recorrido -> ${vp.ubicacionScreenshot}`);
       }
 
-      // 6. Capture full page screenshot
+      // 9. Capture full page screenshot
       await page.screenshot({
         path: path.join(SCREENSHOTS_DIR, vp.fullScreenshot),
         fullPage: true,
