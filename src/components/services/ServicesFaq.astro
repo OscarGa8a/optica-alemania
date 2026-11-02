@@ -92,7 +92,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
             return (
               <div
                 class:list={[
-                  'faq-item transition-all duration-300 overflow-hidden',
+                  'faq-item transition-colors duration-200 overflow-hidden',
                   'rounded-2xl border p-5 sm:p-6',
                   isOpen
                     ? 'is-open bg-brand-mist/80 border-brand-steel/40 lg:rounded-2xl lg:border lg:my-2 lg:p-7'
@@ -102,7 +102,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
               >
                 <button
                   type="button"
-                  class="faq-toggle w-full text-left flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-lg"
+                  class="faq-toggle w-full text-left flex items-start sm:items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 rounded-lg active:scale-[0.99] transition-transform"
                   aria-expanded={isOpen ? 'true' : 'false'}
                   aria-controls={`faq-answer-${item.id}`}
                   id={`faq-toggle-${item.id}`}
@@ -135,8 +135,8 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                 <div
                   id={`faq-answer-${item.id}`}
                   class:list={[
-                    'faq-answer transition-all duration-300',
-                    isOpen ? 'block opacity-100 max-h-96' : 'hidden opacity-0 max-h-0',
+                    'faq-answer',
+                    isOpen ? 'block opacity-100' : 'hidden opacity-0',
                   ]}
                   role="region"
                   aria-labelledby={`faq-toggle-${item.id}`}
@@ -187,6 +187,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
     if (!accordion) return;
 
     const items = accordion.querySelectorAll<HTMLElement>('.faq-item');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     items.forEach((item) => {
       const toggle = item.querySelector<HTMLButtonElement>('.faq-toggle');
@@ -198,46 +199,124 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
       if (toggle.dataset.listenerAttached) return;
       toggle.dataset.listenerAttached = 'true';
 
+      let currentAnimation: Animation | null = null;
+
+      function openItem() {
+        toggle.setAttribute('aria-expanded', 'true');
+        plusWrapper?.classList.add('hidden');
+        minusWrapper?.classList.remove('hidden');
+        item.classList.add('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
+        item.classList.remove('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
+
+        answer.classList.remove('hidden', 'opacity-0');
+        answer.classList.add('block');
+
+        if (prefersReducedMotion) {
+          answer.classList.add('opacity-100');
+          return;
+        }
+
+        if (currentAnimation) currentAnimation.cancel();
+        const endHeight = answer.scrollHeight;
+        answer.style.overflow = 'hidden';
+
+        currentAnimation = answer.animate(
+          [
+            { height: '0px', opacity: 0 },
+            { height: `${endHeight}px`, opacity: 1 }
+          ],
+          { duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+        );
+
+        currentAnimation.onfinish = () => {
+          answer.style.height = 'auto';
+          answer.style.overflow = '';
+          answer.classList.add('opacity-100');
+          currentAnimation = null;
+        };
+      }
+
+      function closeItem() {
+        toggle.setAttribute('aria-expanded', 'false');
+        plusWrapper?.classList.remove('hidden');
+        minusWrapper?.classList.add('hidden');
+        item.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
+        item.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
+
+        if (prefersReducedMotion) {
+          answer.classList.add('hidden', 'opacity-0');
+          answer.classList.remove('block', 'opacity-100');
+          return;
+        }
+
+        if (currentAnimation) currentAnimation.cancel();
+        const startHeight = answer.offsetHeight;
+        answer.style.overflow = 'hidden';
+
+        currentAnimation = answer.animate(
+          [
+            { height: `${startHeight}px`, opacity: 1 },
+            { height: '0px', opacity: 0 }
+          ],
+          { duration: 180, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+        );
+
+        currentAnimation.onfinish = () => {
+          answer.classList.add('hidden', 'opacity-0');
+          answer.classList.remove('block', 'opacity-100');
+          answer.style.height = '';
+          answer.style.overflow = '';
+          currentAnimation = null;
+        };
+      }
+
       toggle.addEventListener('click', () => {
         const isCurrentlyExpanded = toggle.getAttribute('aria-expanded') === 'true';
 
-        // Close all other items (classic accordion behavior)
+        // Close all other items
         items.forEach((otherItem) => {
           if (otherItem !== item) {
             const otherToggle = otherItem.querySelector<HTMLButtonElement>('.faq-toggle');
-            const otherAnswer = otherItem.querySelector<HTMLElement>('.faq-answer');
-            const otherPlus = otherItem.querySelector<HTMLElement>('.faq-plus');
-            const otherMinus = otherItem.querySelector<HTMLElement>('.faq-minus');
+            if (otherToggle && otherToggle.getAttribute('aria-expanded') === 'true') {
+              const otherAnswer = otherItem.querySelector<HTMLElement>('.faq-answer');
+              const otherPlus = otherItem.querySelector<HTMLElement>('.faq-plus');
+              const otherMinus = otherItem.querySelector<HTMLElement>('.faq-minus');
+              if (otherAnswer) {
+                otherToggle.setAttribute('aria-expanded', 'false');
+                otherPlus?.classList.remove('hidden');
+                otherMinus?.classList.add('hidden');
+                otherItem.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
+                otherItem.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
 
-            if (otherToggle && otherAnswer) {
-              otherToggle.setAttribute('aria-expanded', 'false');
-              otherAnswer.classList.add('hidden', 'opacity-0', 'max-h-0');
-              otherAnswer.classList.remove('block', 'opacity-100', 'max-h-96');
-              otherItem.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
-              otherItem.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
-              otherPlus?.classList.remove('hidden');
-              otherMinus?.classList.add('hidden');
+                if (prefersReducedMotion) {
+                  otherAnswer.classList.add('hidden', 'opacity-0');
+                  otherAnswer.classList.remove('block', 'opacity-100');
+                } else {
+                  const sHeight = otherAnswer.offsetHeight;
+                  otherAnswer.style.overflow = 'hidden';
+                  const a = otherAnswer.animate(
+                    [
+                      { height: `${sHeight}px`, opacity: 1 },
+                      { height: '0px', opacity: 0 }
+                    ],
+                    { duration: 180, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+                  );
+                  a.onfinish = () => {
+                    otherAnswer.classList.add('hidden', 'opacity-0');
+                    otherAnswer.classList.remove('block', 'opacity-100');
+                    otherAnswer.style.height = '';
+                    otherAnswer.style.overflow = '';
+                  };
+                }
+              }
             }
           }
         });
 
-        // Toggle current item
         if (isCurrentlyExpanded) {
-          toggle.setAttribute('aria-expanded', 'false');
-          answer.classList.add('hidden', 'opacity-0', 'max-h-0');
-          answer.classList.remove('block', 'opacity-100', 'max-h-96');
-          item.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
-          item.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
-          plusWrapper?.classList.remove('hidden');
-          minusWrapper?.classList.add('hidden');
+          closeItem();
         } else {
-          toggle.setAttribute('aria-expanded', 'true');
-          answer.classList.remove('hidden', 'opacity-0', 'max-h-0');
-          answer.classList.add('block', 'opacity-100', 'max-h-96');
-          item.classList.add('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2');
-          item.classList.remove('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent');
-          plusWrapper?.classList.add('hidden');
-          minusWrapper?.classList.remove('hidden');
+          openItem();
         }
       });
     });
