@@ -34,7 +34,8 @@ const {
   >
     <!-- Modal Card Container (Portrait 9:16) -->
     <div
-      class="relative flex flex-col w-full max-w-[360px] sm:max-w-[400px] max-h-[88dvh] rounded-3xl overflow-hidden bg-brand-midnight border border-white/15 shadow-2xl"
+      data-modal-card
+      class="relative flex flex-col w-full max-w-[360px] sm:max-w-[400px] max-h-[88dvh] rounded-3xl overflow-hidden bg-brand-midnight border border-white/15 shadow-2xl origin-center"
     >
       <!-- Top Header Bar with Title & Close Button -->
       <div
@@ -99,13 +100,27 @@ const {
       const video = dialog.querySelector<HTMLVideoElement>('video');
       const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-close-video-modal]');
       const backdrop = dialog.querySelector<HTMLElement>('[data-modal-backdrop]');
+      const card = dialog.querySelector<HTMLElement>('[data-modal-card]');
       const triggers = document.querySelectorAll<HTMLElement>(`[data-open-video-modal="${modalId}"]`);
+
+      let isClosing = false;
 
       function openModal(e?: Event) {
         if (e) e.preventDefault();
         if (!dialog.open) {
           dialog.showModal();
           document.body.style.overflow = 'hidden';
+
+          // WAAPI zero spring-bounce entrance
+          if (card) {
+            card.animate(
+              [
+                { opacity: 0, transform: 'scale(0.95)' },
+                { opacity: 1, transform: 'scale(1)' }
+              ],
+              { duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+            );
+          }
         }
         if (video) {
           video.currentTime = 0;
@@ -118,13 +133,31 @@ const {
       }
 
       function closeModal() {
+        if (isClosing) return;
+        if (!dialog.open) return;
+
         if (video && !video.paused) {
           video.pause();
         }
-        if (dialog.open) {
+
+        if (card) {
+          isClosing = true;
+          const anim = card.animate(
+            [
+              { opacity: 1, transform: 'scale(1)' },
+              { opacity: 0, transform: 'scale(0.96)' }
+            ],
+            { duration: 160, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+          );
+          anim.onfinish = () => {
+            dialog.close();
+            document.body.style.overflow = '';
+            isClosing = false;
+          };
+        } else {
           dialog.close();
+          document.body.style.overflow = '';
         }
-        document.body.style.overflow = '';
       }
 
       triggers.forEach((trigger) => {
@@ -137,6 +170,11 @@ const {
         if (e.target === backdrop) {
           closeModal();
         }
+      });
+
+      dialog.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        closeModal();
       });
 
       dialog.addEventListener('close', () => {

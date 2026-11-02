@@ -4,6 +4,7 @@ import http from 'http';
 import net from 'net';
 import fs from 'fs';
 import path from 'path';
+import zlib from 'zlib';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -43,11 +44,26 @@ async function startStaticServer(port = 54321) {
     }
     if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
       const ext = path.extname(filePath);
-      res.writeHead(200, {
-        'Content-Type': mimeTypes[ext] || 'application/octet-stream',
-        'Cache-Control': 'no-cache',
-      });
-      fs.createReadStream(filePath).pipe(res);
+      const contentType = mimeTypes[ext] || 'application/octet-stream';
+      const acceptEncoding = req.headers['accept-encoding'] || '';
+      const isCompressible = /^(text\/|application\/(javascript|json|xml)|image\/svg\+xml)/.test(contentType);
+
+      if (isCompressible && acceptEncoding.includes('gzip')) {
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Content-Encoding': 'gzip',
+          'Vary': 'Accept-Encoding',
+          'Cache-Control': 'no-cache',
+        });
+        const gzip = zlib.createGzip();
+        fs.createReadStream(filePath).pipe(gzip).pipe(res);
+      } else {
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Cache-Control': 'no-cache',
+        });
+        fs.createReadStream(filePath).pipe(res);
+      }
     } else {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404 Not Found');
@@ -140,6 +156,27 @@ async function runLighthouseAudit() {
     console.log('\n📊 RESULTADOS OBTENIDOS:');
     console.log('📱 MOBILE:', mobileScores);
     console.log('💻 DESKTOP:', desktopScores);
+
+    console.log('\n🔍 MOBILE LCP ELEMENT:');
+    console.log(JSON.stringify(mobile.lhr.audits['largest-contentful-paint-element']?.details?.items, null, 2));
+
+    function reportAuditFailures(label, lhr) {
+      console.log(`\n🔍 AUDITORÍAS CON OPORTUNIDAD DE MEJORA [${label}]:`);
+      for (const [key, audit] of Object.entries(lhr.audits)) {
+        if (audit.score !== null && audit.score < 1 && audit.scoreDisplayMode !== 'notApplicable' && audit.scoreDisplayMode !== 'informative') {
+          console.log(`- [${key}] ${audit.title} (Score: ${audit.score})`);
+          if (audit.displayValue) console.log(`   Valor: ${audit.displayValue}`);
+          if (audit.explanation) console.log(`   Explicación: ${audit.explanation}`);
+          if (audit.details && audit.details.items && audit.details.items.length > 0) {
+            console.log(`   Detalles (primeros 3):`, JSON.stringify(audit.details.items.slice(0, 3), null, 2));
+          }
+        }
+      }
+    }
+
+    reportAuditFailures('MOBILE ACCESSIBILITY', mobile.lhr);
+    reportAuditFailures('MOBILE PERFORMANCE', mobile.lhr);
+    reportAuditFailures('DESKTOP ACCESSIBILITY', desktop.lhr);
 
     const minScore = 90;
     const allPassed =

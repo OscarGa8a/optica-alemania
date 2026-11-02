@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Analytics from '../components/Analytics.astro';
+import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
 import { siteConfig } from '../data/siteConfig';
 
 interface Props {
@@ -28,7 +29,8 @@ const {
 const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || '';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://opticaalemania.co';
+const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${currentPath === '/' ? '/' : currentPath.startsWith('/') ? currentPath : `/${currentPath}`}`;
 const publicEnv = import.meta.env.PUBLIC_ENV || '';
 const publicNoindex = import.meta.env.PUBLIC_NOINDEX;
 
@@ -81,7 +83,8 @@ const schemaGraph = {
       ],
       "sameAs": [
         siteConfig.social.instagram,
-        siteConfig.social.facebook
+        siteConfig.social.facebook,
+        siteConfig.contact.googleMapsUrl
       ]
     },
     {
@@ -90,6 +93,44 @@ const schemaGraph = {
       "url": "https://opticaalemania.co",
       "name": siteConfig.name,
       "inLanguage": "es-CO"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://opticaalemania.co/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Dónde está ubicada Óptica Alemania en Villavicencio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuáles son los horarios de atención?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Atendemos de lunes a viernes de 8:30 a.m. a 6:00 p.m. y sábados de 8:30 a.m. a 3:00 p.m. en jornada continua."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo puedo agendar una consulta de optometría?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Puedes agendar tu cita directamente a través de nuestro canal de WhatsApp (+57 311 201 7302) o comunicándote al 322 712 8828."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Tienen convenio con Cofrem?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos."
+          }
+        }
+      ]
     }
   ]
 };
@@ -101,7 +142,26 @@ const schemaGraph = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- LCP Hero Image Preloads -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-mobile.webp"
+      type="image/webp"
+      media="(max-width: 1023px)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero-desktop.webp"
+      type="image/webp"
+      media="(min-width: 1024px)"
+      fetchpriority="high"
+    />
 
     <!-- ClientRouter for SPA transitions and lifecycle events -->
     <ClientRouter />
@@ -116,13 +176,18 @@ const schemaGraph = {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CO" />
-    <meta property="og:url" content="https://opticaalemania.co" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:image" content="https://opticaalemania.co/images/hero-desktop.webp" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta property="og:image:alt" content="Óptica Alemania en Villavicencio - Optometría y salud visual" />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://opticaalemania.co/images/hero-desktop.webp" />
 
     {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
       <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION} />
@@ -153,10 +218,14 @@ const schemaGraph = {
       })();
     </script>
 
+    <!-- Initialize dataLayer immediately to buffer events safely -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+    </script>
+
     <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
     {gtmId && (
       <script is:inline define:vars={{ gtmId }}>
-        window.dataLayer = window.dataLayer || [];
         window._loadGTM = function() {
           if (window._gtmLoaded) return;
           window._gtmLoaded = true;
@@ -180,10 +249,21 @@ const schemaGraph = {
     )}
   </head>
   <body class="bg-brand-surface text-brand-body antialiased selection:bg-brand-blue-soft selection:text-brand-primary">
+    {gtmId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
     <Navbar currentPath={currentPath} theme={effectiveTheme} />
     <main id="main-content">
       <slot />
     </main>
+    <FloatingWhatsApp />
     <Analytics />
   </body>
 </html>

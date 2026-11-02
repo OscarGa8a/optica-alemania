@@ -853,6 +853,20 @@ async function run() {
         const header = document.querySelector('header');
         if (header) header.style.display = '';
       });
+
+      // Interactive Verification — Route Video Modal (<dialog>) with WAAPI
+      const modalTrigger = contactSection.locator('button[data-open-video-modal="home-como-llegar-video-modal"]');
+      if (await modalTrigger.count() > 0) {
+        await modalTrigger.click();
+        const dialog = page.locator('#home-como-llegar-video-modal');
+        await dialog.waitFor({ state: 'visible', timeout: 3000 });
+        console.log(`✅ [${vp.name}] Route video modal opened successfully with WAAPI`);
+
+        // Close via Escape with WAAPI smooth exit
+        await page.keyboard.press('Escape');
+        await dialog.waitFor({ state: 'hidden', timeout: 2000 });
+        console.log(`✅ [${vp.name}] Route video modal closed successfully via Escape with WAAPI`);
+      }
     }
 
     // Section 10 — Footer Institucional verification
@@ -923,6 +937,33 @@ async function run() {
         const header = document.querySelector('header');
         if (header) header.style.display = '';
       });
+    }
+
+    // Interactive Verification — Mobile Menu Drawer (Mobile viewport only)
+    if (vp.name === 'mobile') {
+      const menuBtn = page.locator('#mobile-menu-button');
+      const mobileMenu = page.locator('#mobile-menu');
+      if (await menuBtn.count() > 0 && await mobileMenu.count() > 0) {
+        await menuBtn.click();
+        await page.waitForTimeout(220);
+        const isMenuOpen = await mobileMenu.evaluate((el) => !el.classList.contains('hidden'));
+        if (isMenuOpen) {
+          console.log(`✅ [${vp.name}] Mobile drawer opened smoothly with WAAPI`);
+        } else {
+          console.error(`❌ [${vp.name}] Mobile drawer failed to open!`);
+          failed = true;
+        }
+
+        await menuBtn.click();
+        await page.waitForTimeout(180);
+        const isMenuClosed = await mobileMenu.evaluate((el) => el.classList.contains('hidden'));
+        if (isMenuClosed) {
+          console.log(`✅ [${vp.name}] Mobile drawer closed smoothly with WAAPI`);
+        } else {
+          console.error(`❌ [${vp.name}] Mobile drawer failed to close!`);
+          failed = true;
+        }
+      }
     }
 
     await page.close();

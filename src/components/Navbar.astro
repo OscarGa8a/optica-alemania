@@ -173,12 +173,47 @@ const logoHref = '/';
 
     if (button && menu && hamburgerIcon && closeIcon && !button.dataset.listenerAttached) {
       button.dataset.listenerAttached = 'true';
+      let isAnimating = false;
+
       button.addEventListener('click', () => {
+        if (isAnimating) return;
         const isExpanded = button.getAttribute('aria-expanded') === 'true';
-        button.setAttribute('aria-expanded', String(!isExpanded));
-        menu.classList.toggle('hidden');
-        hamburgerIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
+
+        if (!isExpanded) {
+          button.setAttribute('aria-expanded', 'true');
+          menu.classList.remove('hidden');
+          hamburgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+
+          isAnimating = true;
+          const anim = menu.animate(
+            [
+              { opacity: 0, transform: 'translateY(-8px)' },
+              { opacity: 1, transform: 'translateY(0)' }
+            ],
+            { duration: 200, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+          );
+          anim.onfinish = () => {
+            isAnimating = false;
+          };
+        } else {
+          isAnimating = true;
+          button.setAttribute('aria-expanded', 'false');
+          hamburgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+
+          const anim = menu.animate(
+            [
+              { opacity: 1, transform: 'translateY(0)' },
+              { opacity: 0, transform: 'translateY(-6px)' }
+            ],
+            { duration: 150, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
+          );
+          anim.onfinish = () => {
+            menu.classList.add('hidden');
+            isAnimating = false;
+          };
+        }
       });
 
       const links = menu.querySelectorAll('a');
