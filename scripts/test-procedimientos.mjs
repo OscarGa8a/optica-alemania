@@ -249,6 +249,27 @@ async function run() {
       await page.screenshot({ path: fullPagePath, fullPage: true });
       console.log(`📸 Captura de página completa guardada: ${path.basename(fullPagePath)}`);
 
+      // Check 5: Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
+      const dataLayerTest = await page.evaluate(() => {
+        window.dataLayer = window.dataLayer || [];
+        const initialLen = window.dataLayer.length;
+        const ctaBtn = document.querySelector('#inicio a[data-event="procedimientos_explore_click"]');
+        if (!ctaBtn) return { success: false, reason: 'Explore CTA not found' };
+        ctaBtn.click();
+        const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+        return {
+          success: window.dataLayer.length > initialLen && lastEvent?.event === 'cta_click' && lastEvent?.cta_type === 'procedimientos_explore_click',
+          lastEvent,
+        };
+      });
+
+      if (!dataLayerTest.success) {
+        console.error(`❌ [${vp.name}] dataLayer buffer failed to receive cta_click event:`, dataLayerTest);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Zero-TBT Analytics: click event successfully buffered into window.dataLayer`);
+      }
+
       await context.close();
     }
   } catch (err) {
