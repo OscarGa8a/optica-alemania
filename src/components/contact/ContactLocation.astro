@@ -95,7 +95,7 @@ const modalId = 'contact-page-como-llegar-video-modal';
                   <a
                     href={`tel:${contact.phoneTel}`}
                     class="hover:text-brand-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-xs"
-                    aria-label={`Llamar a Óptica Alemania al teléfono ${contact.phonePrimary}`}
+                    aria-label={`+57 ${contact.phonePrimary} - Llamar a Óptica Alemania`}
                     data-event="phone_call"
                     data-event-location="contact_location_list"
                   >
@@ -119,7 +119,7 @@ const modalId = 'contact-page-como-llegar-video-modal';
               data-event-location="contact_location_cta"
               icon="arrow-right"
               class="min-w-52 sm:min-w-56 justify-between border-brand-primary text-brand-primary hover:bg-brand-mist"
-              aria-label="Abrir indicaciones para llegar a Óptica Alemania en Google Maps"
+              aria-label="Cómo llegar a Óptica Alemania en Google Maps"
             >
               <span class="inline-flex items-center gap-2.5">
                 <Icon name="navigation" class="w-4 h-4 stroke-current stroke-2" />
@@ -144,9 +144,9 @@ const modalId = 'contact-page-como-llegar-video-modal';
             <img
               src="/images/contact/2_ubicacion_map.webp"
               alt="Mapa ilustrado de ubicación de Óptica Alemania en Calle 35 #34-36, Barzal, Villavicencio"
-              width="1656"
-              height="811"
-              loading="eager"
+              width="1200"
+              height="588"
+              loading="lazy"
               decoding="async"
               class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             />
@@ -187,13 +187,13 @@ const modalId = 'contact-page-como-llegar-video-modal';
             data-event="route_video_click"
             data-event-location="contact_tour_video"
             class="group relative block w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-white/80 aspect-16/10 bg-brand-midnight cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
-            aria-label="Reproducir video del recorrido para llegar a Óptica Alemania en Barzal"
+            aria-label="Ver cómo llegar a Óptica Alemania en Barzal — Reproducir video del recorrido"
           >
             <img
               src={contactSection.facadeImage.src}
               alt={contactSection.facadeImage.alt}
-              width={contactSection.facadeImage.width}
-              height={contactSection.facadeImage.height}
+              width="640"
+              height="960"
               class="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
               loading="lazy"
               decoding="async"
