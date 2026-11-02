@@ -45,14 +45,18 @@ const defaultMobilePreload = currentPath === '/nosotros'
     ? '/images/services-hero-mobile.webp'
     : currentPath === '/procedimientos'
       ? '/images/procedimientos-hero-mobile.webp'
-      : '/images/hero-mobile.webp';
+      : currentPath === '/contacto'
+        ? ''
+        : '/images/hero-mobile.webp';
 const defaultDesktopPreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp'
   : currentPath === '/servicios'
     ? '/images/services-hero-desktop.webp'
     : currentPath === '/procedimientos'
       ? '/images/procedimientos-hero-desktop.webp'
-      : '/images/hero-desktop.webp';
+      : currentPath === '/contacto'
+        ? ''
+        : '/images/hero-desktop.webp';
 
 const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
 const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
@@ -64,14 +68,18 @@ const defaultOgImage = currentPath === '/nosotros'
     ? 'https://opticaalemania.co/images/services-hero-desktop.webp'
     : currentPath === '/procedimientos'
       ? 'https://opticaalemania.co/images/procedimientos-hero-desktop.webp'
-      : 'https://opticaalemania.co/images/hero-desktop.webp';
+      : currentPath === '/contacto'
+        ? 'https://opticaalemania.co/images/contact-facade-route.webp'
+        : 'https://opticaalemania.co/images/hero-desktop.webp';
 const defaultOgImageAlt = currentPath === '/nosotros'
   ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
   : currentPath === '/servicios'
     ? 'Servicios de optometría en Villavicencio - Óptica Alemania'
     : currentPath === '/procedimientos'
       ? 'Procedimientos visuales en Villavicencio - Óptica Alemania'
-      : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
+      : currentPath === '/contacto'
+        ? 'Contacto y ubicación de Óptica Alemania en Barzal, Villavicencio'
+        : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
 
 const resolvedOgImage = ogImage || defaultOgImage;
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
@@ -83,7 +91,9 @@ const defaultWhatsAppMessage = currentPath === '/nosotros'
     ? 'Hola, estuve viendo los servicios de Óptica Alemania y deseo solicitar información o agendar una consulta.'
     : currentPath === '/procedimientos'
       ? 'Hola, estuve viendo los procedimientos visuales de Óptica Alemania y deseo solicitar información o agendar una cita.'
-      : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
+      : currentPath === '/contacto'
+        ? 'Hola, estuve revisando los canales de contacto de Óptica Alemania y deseo comunicarme con ustedes.'
+        : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
 
 const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessage;
 

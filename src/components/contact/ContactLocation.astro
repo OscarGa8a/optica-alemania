@@ -55,7 +55,17 @@ const modalId = 'contact-page-como-llegar-video-modal';
               <div>
                 <p class="text-sm sm:text-base font-semibold text-brand-primary">Dirección</p>
                 <p class="text-brand-heading text-sm sm:text-base lg:text-lg font-normal mt-0.5">
-                  {contact.address}, {contact.city}
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-brand-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-xs"
+                    aria-label={`Ver dirección de Óptica Alemania en Google Maps: ${contact.address}, ${contact.city}`}
+                    data-event="google_maps_click"
+                    data-event-location="contact_address_text"
+                  >
+                    {contact.address}, {contact.city}
+                  </a>
                 </p>
               </div>
             </div>
@@ -82,7 +92,13 @@ const modalId = 'contact-page-como-llegar-video-modal';
               <div>
                 <p class="text-sm sm:text-base font-semibold text-brand-primary">Teléfono</p>
                 <p class="text-brand-heading text-sm sm:text-base lg:text-lg font-normal mt-0.5">
-                  <a href={`tel:${contact.phoneTel}`} class="hover:text-brand-primary transition-colors">
+                  <a
+                    href={`tel:${contact.phoneTel}`}
+                    class="hover:text-brand-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-xs"
+                    aria-label={`Llamar a Óptica Alemania al teléfono ${contact.phonePrimary}`}
+                    data-event="phone_call"
+                    data-event-location="contact_location_list"
+                  >
                     +57 {contact.phonePrimary}
                   </a>
                 </p>

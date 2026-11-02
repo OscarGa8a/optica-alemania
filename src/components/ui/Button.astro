@@ -75,7 +75,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 };
 
 const basePillClasses =
-  `group ${displayClass} items-center justify-center gap-2.5 rounded-full active:scale-95 transition duration-150 ease-out`.trim();
+  `group ${displayClass} items-center justify-center gap-2.5 rounded-full active:scale-95 transition duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary`.trim();
 
 const computedClasses = isLinkVariant
   ? [variantClasses[variant], linkSizeClasses[size], className].filter(Boolean).join(' ')
