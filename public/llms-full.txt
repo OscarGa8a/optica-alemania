@@ -33,9 +33,18 @@
 2. **[Contactología y Adaptación de Lentes de Contacto](https://opticaalemania.co/servicios#atencion-visual)**: Evaluación corneal, pruebas de tolerancia y adaptación de lentes blandos esféricos, tóricos para astigmatismo, multifocales y gas permeables.
 3. **[Evaluaciones Visuales Especializadas](https://opticaalemania.co/servicios#evaluaciones-especializadas)**: Tonometría de aplanación (presión intraocular), pruebas de superficie ocular (ojo seco) y discriminación cromática (Ishihara y Farnsworth D-15).
 4. **[Orientación y Triaje en Molestias Oculares](https://opticaalemania.co/servicios#urgencias-oculares)**: Orientación clínica rápida sobre disponibilidad de atención ante molestias oculares y cuerpo extraño leve antes de acudir a la sede.
-5. **[Procedimientos y Tecnología Diagnóstica en Video](https://opticaalemania.co/servicios#procedimientos)**: Demostraciones clínicas guiadas de oftalmoscopía digital con Volk iNview y prueba de Farnsworth D-15.
+5. **[Procedimientos y Tecnología Diagnóstica en Video](https://opticaalemania.co/procedimientos)**: Demostraciones clínicas guiadas de oftalmoscopía digital con Volk iNview, evaluación cromática con test de Farnsworth D-15, atención infantil y refracción integral.
 6. **[Optometría Pediátrica (Salud Visual Infantil)](https://opticaalemania.co/#visual-infantil)**: Detección temprana de ojo perezoso (ambliopía), estrabismo y problemas de aprendizaje relacionados con la visión.
 7. **Mantenimiento y Ajuste Anatómico**: Alineación computarizada, limpieza ultrasónica y calibración ergonómica de monturas.
+
+## 3.1. Procedimientos y Tecnología en Acción (/procedimientos)
+
+En la sección especializada de procedimientos ([opticaalemania.co/procedimientos](https://opticaalemania.co/procedimientos)) se documentan en video las siguientes valoraciones clínicas:
+
+- **Evaluación Retinal con Volk iNview**: Oftalmoscopía indirecta digital que acopla óptica oftálmica de alta resolución Volk a dispositivos móviles para examinar retina, nervio óptico y mácula, facilitando el registro y explicación al paciente.
+- **Visión del Color con Test de Farnsworth D-15**: Prueba psicofísica de discriminación cromática mediante 15 discos calibrados ordenados secuencialmente, esencial para certificar aptitud visual laboral y diagnosticar protanopia, deuteranopia o tritanopia.
+- **Atención Visual Infantil**: Protocolo adaptado y lúdico para niños en edad escolar y preescolar para detectar vicios de refracción, problemas binoculares y estrabismo temprano.
+- **Evaluación Optométrica Integral con Foróptero**: Determinación computarizada y subjetiva de la fórmula óptica exacta para anteojos o lentes de contacto.
 
 ## 4. Portafolio Óptico y Marcas
 

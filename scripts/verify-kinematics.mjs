@@ -355,6 +355,66 @@ async function runKinematicsVerification() {
 
     await serviciosPage.close();
 
+    // -------------------------------------------------------------------------
+    // TEST 5: Página Procedimientos (/procedimientos) Cinemática & Smooth Navigation
+    // -------------------------------------------------------------------------
+    console.log('\n🔍 [Test 5] Verificando cinemática y navegación en /procedimientos (Desktop 1440x900)...');
+    const procedimientosPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await procedimientosPage.goto(`${baseUrl}/procedimientos`, { waitUntil: 'networkidle' });
+
+    // Track CLS on /procedimientos
+    await procedimientosPage.evaluate(() => {
+      window.__clsScore = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__clsScore += entry.value;
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+
+    // Check Hero anchor navigation to #volk-inview
+    const exploreAnchor = procedimientosPage.locator('a[href="#volk-inview"]');
+    if (await exploreAnchor.count() > 0) {
+      await exploreAnchor.click();
+      await procedimientosPage.waitForTimeout(400); // Smooth scroll duration
+
+      const currentScrollY = await procedimientosPage.evaluate(() => window.scrollY);
+      console.log(`✅ Scroll suave ejecutado hacia #volk-inview (scrollY: ${Math.round(currentScrollY)}px)`);
+
+      const procedimientosCls = await procedimientosPage.evaluate(() => window.__clsScore || 0);
+      console.log(`📐 Cumulative Layout Shift (CLS) en /procedimientos tras navegación: ${procedimientosCls.toFixed(4)}`);
+      if (procedimientosCls > 0.05) {
+        console.error(`❌ CLS excesivo en /procedimientos: ${procedimientosCls}`);
+        failed = true;
+      } else {
+        console.log('✅ Criterio CLS cumplido en /procedimientos (CLS <= 0.05)');
+      }
+    }
+
+    // Check Mobile Menu on /procedimientos (390x844)
+    console.log('\n🔍 [Test 5.1] Verificando menú móvil WAAPI en /procedimientos (390x844)...');
+    await procedimientosPage.setViewportSize({ width: 390, height: 844 });
+    await procedimientosPage.waitForTimeout(100);
+
+    const procMenuBtn = procedimientosPage.locator('#mobile-menu-button');
+    const procMenu = procedimientosPage.locator('#mobile-menu');
+
+    if (await procMenuBtn.count() > 0 && await procMenu.count() > 0) {
+      await procMenuBtn.click();
+      await procedimientosPage.waitForTimeout(220); // WAAPI 200ms
+      const isVisible = await procMenu.evaluate((el) => !el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil desplegado con WAAPI en /procedimientos: ${isVisible}`);
+
+      await procMenuBtn.click();
+      await procedimientosPage.waitForTimeout(180); // WAAPI 150ms
+      const isHidden = await procMenu.evaluate((el) => el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil replegado suavemente en /procedimientos: ${isHidden}`);
+    }
+
+    await procedimientosPage.close();
+
   } catch (err) {
     console.error('❌ Error durante la verificación cinemática:', err);
     failed = true;

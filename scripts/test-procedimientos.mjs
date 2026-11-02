@@ -88,7 +88,12 @@ async function run() {
       });
 
       page.on('requestfailed', (req) => {
-        failedRequests.push(`${req.method()} ${req.url()} - ${req.failure()?.errorText}`);
+        const failure = req.failure()?.errorText || '';
+        // Ignore expected browser media stream cancellations (byte range buffering aborts)
+        if (failure.includes('ERR_ABORTED') && req.url().match(/\.(mp4|webm|ogg)$/)) {
+          return;
+        }
+        failedRequests.push(`${req.method()} ${req.url()} - ${failure}`);
       });
 
       page.on('response', (res) => {
@@ -123,6 +128,74 @@ async function run() {
         hasErrors = true;
       } else {
         console.log(`✅ Cero recursos rotos / 404s en ${vp.name}`);
+      }
+
+      // Check 3.1: Heading Hierarchy and Semantic Structure (A11y)
+      const headingCheck = await page.evaluate(() => {
+        const h1s = [...document.querySelectorAll('h1')];
+        const h2s = [...document.querySelectorAll('h2')];
+        const h3s = [...document.querySelectorAll('h3')];
+        return {
+          h1Count: h1s.length,
+          h1Text: h1s[0]?.textContent?.replace(/\s+/g, ' ').trim() || '',
+          h2Count: h2s.length,
+          h2Texts: h2s.map((h) => h.textContent?.replace(/\s+/g, ' ').trim()),
+          h3Count: h3s.length,
+        };
+      });
+
+      if (headingCheck.h1Count !== 1) {
+        console.error(`❌ [${vp.name}] Expected exactly 1 <h1>, found ${headingCheck.h1Count}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Heading Hierarchy: Exactly 1 <h1> ("${headingCheck.h1Text.slice(0, 35)}..."), ${headingCheck.h2Count} <h2>s y ${headingCheck.h3Count} <h3>s`);
+      }
+
+      // Check 3.2: Images — Valid alt, width, and height attributes
+      const imagesCheck = await page.evaluate(() => {
+        const imgs = [...document.querySelectorAll('main img')];
+        const issues = [];
+        for (const img of imgs) {
+          const alt = img.getAttribute('alt');
+          const isAriaHidden = img.getAttribute('aria-hidden') === 'true' || img.closest('[aria-hidden="true"]');
+          if (alt === null) {
+            issues.push(`Image without alt: ${img.src}`);
+          } else if (alt === '' && !isAriaHidden) {
+            issues.push(`Content image with empty alt: ${img.src}`);
+          }
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            issues.push(`Image missing width/height: ${img.src}`);
+          }
+        }
+        return { total: imgs.length, issues };
+      });
+
+      if (imagesCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] Image accessibility/dimension issues:`, imagesCheck.issues);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${imagesCheck.total} images have valid alt attributes and explicit dimensions`);
+      }
+
+      // Check 3.3: Interactive Video Players
+      const videoPlayersCheck = await page.evaluate(() => {
+        const containers = [...document.querySelectorAll('[data-video-player-container]')];
+        const issues = [];
+        for (const c of containers) {
+          const id = c.getAttribute('data-video-player-container');
+          const video = c.querySelector('video');
+          const playToggle = document.getElementById(`${id}-play-toggle`);
+          if (!video) issues.push(`Player ${id} missing video element`);
+          if (!playToggle) issues.push(`Player ${id} missing play toggle button`);
+        }
+        return { total: containers.length, issues };
+      });
+
+      if (videoPlayersCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] VideoPlayer issues:`, videoPlayersCheck.issues);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${videoPlayersCheck.total} VideoPlayer components verified with full controls`);
       }
 
       // Check 4: Section DOM validations
@@ -175,6 +248,58 @@ async function run() {
       const fullPagePath = path.join(SCREENSHOTS_DIR, `full_page_${vp.name}_actual.png`);
       await page.screenshot({ path: fullPagePath, fullPage: true });
       console.log(`📸 Captura de página completa guardada: ${path.basename(fullPagePath)}`);
+
+      // Check 5: Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
+      const dataLayerTest = await page.evaluate(() => {
+        window.dataLayer = window.dataLayer || [];
+        const initialLen = window.dataLayer.length;
+        const ctaBtn = document.querySelector('#inicio a[data-event="procedimientos_explore_click"]');
+        if (!ctaBtn) return { success: false, reason: 'Explore CTA not found' };
+        ctaBtn.click();
+        const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+        return {
+          success: window.dataLayer.length > initialLen && lastEvent?.event === 'cta_click' && lastEvent?.cta_type === 'procedimientos_explore_click',
+          lastEvent,
+        };
+      });
+
+      if (!dataLayerTest.success) {
+        console.error(`❌ [${vp.name}] dataLayer buffer failed to receive cta_click event:`, dataLayerTest);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Zero-TBT Analytics: click event successfully buffered into window.dataLayer`);
+      }
+
+      // Check 6: Phase 8 — Search Console, Canonical, and Dual-Layer Staging Isolation
+      const seoAndStaging = await page.evaluate(() => {
+        const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+        const robots = document.querySelector('meta[name="robots"]')?.getAttribute('content');
+        const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+        let parsedLd = null;
+        if (ldJsonScript) {
+          try {
+            parsedLd = JSON.parse(ldJsonScript.textContent || '{}');
+          } catch (_) {}
+        }
+        return {
+          canonical,
+          robots,
+          hasMedicalPage: parsedLd?.['@graph']?.some((node) => node['@type'] === 'MedicalWebPage'),
+        };
+      });
+
+      if (!seoAndStaging.canonical || !seoAndStaging.canonical.includes('/procedimientos')) {
+        console.error(`❌ [${vp.name}] Invalid canonical URL: ${seoAndStaging.canonical}`);
+        hasErrors = true;
+      } else if (!seoAndStaging.robots) {
+        console.error(`❌ [${vp.name}] Missing meta robots tag!`);
+        hasErrors = true;
+      } else if (!seoAndStaging.hasMedicalPage) {
+        console.error(`❌ [${vp.name}] MedicalWebPage missing in Schema.org @graph`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Search Console & Staging: Canonical '${seoAndStaging.canonical}', robots '${seoAndStaging.robots}', MedicalWebPage verified`);
+      }
 
       await context.close();
     }

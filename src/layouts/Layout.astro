@@ -43,12 +43,16 @@ const defaultMobilePreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-mobile.webp'
   : currentPath === '/servicios'
     ? '/images/services-hero-mobile.webp'
-    : '/images/hero-mobile.webp';
+    : currentPath === '/procedimientos'
+      ? '/images/procedimientos-hero-mobile.webp'
+      : '/images/hero-mobile.webp';
 const defaultDesktopPreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp'
   : currentPath === '/servicios'
     ? '/images/services-hero-desktop.webp'
-    : '/images/hero-desktop.webp';
+    : currentPath === '/procedimientos'
+      ? '/images/procedimientos-hero-desktop.webp'
+      : '/images/hero-desktop.webp';
 
 const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
 const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
@@ -58,12 +62,16 @@ const defaultOgImage = currentPath === '/nosotros'
   ? 'https://opticaalemania.co/images/nosotros-hero-desktop.webp'
   : currentPath === '/servicios'
     ? 'https://opticaalemania.co/images/services-hero-desktop.webp'
-    : 'https://opticaalemania.co/images/hero-desktop.webp';
+    : currentPath === '/procedimientos'
+      ? 'https://opticaalemania.co/images/procedimientos-hero-desktop.webp'
+      : 'https://opticaalemania.co/images/hero-desktop.webp';
 const defaultOgImageAlt = currentPath === '/nosotros'
   ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
   : currentPath === '/servicios'
     ? 'Servicios de optometría en Villavicencio - Óptica Alemania'
-    : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
+    : currentPath === '/procedimientos'
+      ? 'Procedimientos visuales en Villavicencio - Óptica Alemania'
+      : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
 
 const resolvedOgImage = ogImage || defaultOgImage;
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
@@ -73,7 +81,9 @@ const defaultWhatsAppMessage = currentPath === '/nosotros'
   ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania y deseo solicitar información o agendar una cita.'
   : currentPath === '/servicios'
     ? 'Hola, estuve viendo los servicios de Óptica Alemania y deseo solicitar información o agendar una consulta.'
-    : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
+    : currentPath === '/procedimientos'
+      ? 'Hola, estuve viendo los procedimientos visuales de Óptica Alemania y deseo solicitar información o agendar una cita.'
+      : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
 
 const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessage;
 
@@ -262,6 +272,68 @@ const schemaGraph = {
                 "@type": "MedicalService",
                 "name": "Orientación y triaje en molestias oculares",
                 "description": "Evaluación rápida de disponibilidad y orientación clínica ante molestias o cuerpos extraños leves antes de acudir a la sede."
+              }
+            }
+          ]
+        }
+      }
+    ] : []),
+    ...(currentPath === '/procedimientos' ? [
+      {
+        "@type": "MedicalWebPage",
+        "@id": `${canonicalUrl}#procedimientospage`,
+        "url": canonicalUrl,
+        "name": title,
+        "description": description,
+        "inLanguage": "es-CO",
+        "isPartOf": {
+          "@id": "https://opticaalemania.co/#website"
+        },
+        "about": {
+          "@id": "https://opticaalemania.co/#optician"
+        },
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "Procedimientos y Evaluaciones Visuales en Video",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "MedicalProcedure",
+                "name": "Evaluación retinal con Volk iNview",
+                "description": "Visualización de retina y fondo de ojo en alta definición mediante óptica Volk y dispositivo móvil para registro clínico.",
+                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "MedicalTest",
+                "name": "Test de visión del color Farnsworth D-15",
+                "description": "Evaluación cuantitativa y cualitativa de discromatopsias (protanopia, deuteranopia, tritanopia) mediante discos cromáticos calibrados.",
+                "usedToDiagnose": "Discromatopsias y deficiencias en la visión cromática"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "MedicalProcedure",
+                "name": "Atención visual infantil",
+                "description": "Examen optométrico lúdico y adaptado para niños, enfocado en agudeza visual, motilidad ocular y prevención de ambliopía.",
+                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "MedicalProcedure",
+                "name": "Evaluación optométrica integral",
+                "description": "Examen refractivo completo con foróptero, medición de agudeza visual y prescripción personalizada de lentes oftálmicos.",
+                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
               }
             }
           ]
