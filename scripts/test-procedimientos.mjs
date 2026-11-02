@@ -88,7 +88,12 @@ async function run() {
       });
 
       page.on('requestfailed', (req) => {
-        failedRequests.push(`${req.method()} ${req.url()} - ${req.failure()?.errorText}`);
+        const failure = req.failure()?.errorText || '';
+        // Ignore expected browser media stream cancellations (byte range buffering aborts)
+        if (failure.includes('ERR_ABORTED') && req.url().match(/\.(mp4|webm|ogg)$/)) {
+          return;
+        }
+        failedRequests.push(`${req.method()} ${req.url()} - ${failure}`);
       });
 
       page.on('response', (res) => {
@@ -123,6 +128,74 @@ async function run() {
         hasErrors = true;
       } else {
         console.log(`✅ Cero recursos rotos / 404s en ${vp.name}`);
+      }
+
+      // Check 3.1: Heading Hierarchy and Semantic Structure (A11y)
+      const headingCheck = await page.evaluate(() => {
+        const h1s = [...document.querySelectorAll('h1')];
+        const h2s = [...document.querySelectorAll('h2')];
+        const h3s = [...document.querySelectorAll('h3')];
+        return {
+          h1Count: h1s.length,
+          h1Text: h1s[0]?.textContent?.replace(/\s+/g, ' ').trim() || '',
+          h2Count: h2s.length,
+          h2Texts: h2s.map((h) => h.textContent?.replace(/\s+/g, ' ').trim()),
+          h3Count: h3s.length,
+        };
+      });
+
+      if (headingCheck.h1Count !== 1) {
+        console.error(`❌ [${vp.name}] Expected exactly 1 <h1>, found ${headingCheck.h1Count}`);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] Heading Hierarchy: Exactly 1 <h1> ("${headingCheck.h1Text.slice(0, 35)}..."), ${headingCheck.h2Count} <h2>s y ${headingCheck.h3Count} <h3>s`);
+      }
+
+      // Check 3.2: Images — Valid alt, width, and height attributes
+      const imagesCheck = await page.evaluate(() => {
+        const imgs = [...document.querySelectorAll('main img')];
+        const issues = [];
+        for (const img of imgs) {
+          const alt = img.getAttribute('alt');
+          const isAriaHidden = img.getAttribute('aria-hidden') === 'true' || img.closest('[aria-hidden="true"]');
+          if (alt === null) {
+            issues.push(`Image without alt: ${img.src}`);
+          } else if (alt === '' && !isAriaHidden) {
+            issues.push(`Content image with empty alt: ${img.src}`);
+          }
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            issues.push(`Image missing width/height: ${img.src}`);
+          }
+        }
+        return { total: imgs.length, issues };
+      });
+
+      if (imagesCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] Image accessibility/dimension issues:`, imagesCheck.issues);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${imagesCheck.total} images have valid alt attributes and explicit dimensions`);
+      }
+
+      // Check 3.3: Interactive Video Players
+      const videoPlayersCheck = await page.evaluate(() => {
+        const containers = [...document.querySelectorAll('[data-video-player-container]')];
+        const issues = [];
+        for (const c of containers) {
+          const id = c.getAttribute('data-video-player-container');
+          const video = c.querySelector('video');
+          const playToggle = document.getElementById(`${id}-play-toggle`);
+          if (!video) issues.push(`Player ${id} missing video element`);
+          if (!playToggle) issues.push(`Player ${id} missing play toggle button`);
+        }
+        return { total: containers.length, issues };
+      });
+
+      if (videoPlayersCheck.issues.length > 0) {
+        console.error(`❌ [${vp.name}] VideoPlayer issues:`, videoPlayersCheck.issues);
+        hasErrors = true;
+      } else {
+        console.log(`✅ [${vp.name}] All ${videoPlayersCheck.total} VideoPlayer components verified with full controls`);
       }
 
       // Check 4: Section DOM validations
