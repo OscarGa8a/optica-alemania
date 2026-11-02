@@ -415,6 +415,107 @@ async function runKinematicsVerification() {
 
     await procedimientosPage.close();
 
+    // -------------------------------------------------------------------------
+    // TEST 6: Página Contacto (/contacto) VideoModal Cinemática, Mobile Menu & Zero CLS
+    // -------------------------------------------------------------------------
+    console.log('\n🔍 [Test 6] Verificando cinemática de VideoModal y navegación en /contacto (Desktop 1440x900)...');
+    const contactoPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await contactoPage.goto(`${baseUrl}/contacto`, { waitUntil: 'networkidle' });
+
+    // Track CLS on /contacto
+    await contactoPage.evaluate(() => {
+      window.__clsScore = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__clsScore += entry.value;
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+
+    const contactModalTrigger = contactoPage.locator('button[data-open-video-modal="contact-page-como-llegar-video-modal"]');
+    if (await contactModalTrigger.count() === 0) {
+      console.error('❌ Trigger de VideoModal en /contacto no encontrado!');
+      failed = true;
+    } else {
+      console.log('✅ Trigger de VideoModal en /contacto encontrado');
+      await contactModalTrigger.scrollIntoViewIfNeeded();
+      await contactModalTrigger.click();
+
+      const contactDialogLocator = contactoPage.locator('#contact-page-como-llegar-video-modal');
+      await contactDialogLocator.waitFor({ state: 'visible', timeout: 3000 });
+      console.log('✅ Dialog /contacto abierto en el DOM con dialog.showModal()');
+
+      const cardLocator = contactDialogLocator.locator('[data-modal-card]');
+      const samples = [];
+      for (let i = 0; i < 5; i++) {
+        const sample = await cardLocator.evaluate((el) => {
+          const style = window.getComputedStyle(el);
+          return {
+            opacity: parseFloat(style.opacity || '1'),
+            transform: style.transform,
+          };
+        });
+        samples.push(sample);
+        await contactoPage.waitForTimeout(40);
+      }
+      console.log(`📊 Muestras de opacidad capturadas en /contacto: ${samples.map((s) => s.opacity.toFixed(2)).join(' -> ')}`);
+
+      await contactoPage.waitForTimeout(100);
+      const finalOpenState = await cardLocator.evaluate((el) => parseFloat(window.getComputedStyle(el).opacity || '1'));
+      if (finalOpenState < 0.95) {
+        console.error(`❌ Estado final de opacidad en /contacto incorrecto: ${finalOpenState}`);
+        failed = true;
+      } else {
+        console.log('✅ VideoModal en /contacto asentó en opacidad 1.0 sin rebote');
+      }
+
+      console.log('⌨️ Presionando Escape para evaluar salida suave con WAAPI en /contacto...');
+      await contactoPage.keyboard.press('Escape');
+      await contactDialogLocator.waitFor({ state: 'hidden', timeout: 2000 });
+      console.log('✅ VideoModal en /contacto cerrado exitosamente tras animación WAAPI');
+
+      const bodyOverflow = await contactoPage.evaluate(() => document.body.style.overflow);
+      if (bodyOverflow !== '') {
+        console.error(`❌ Body overflow en /contacto no se restauró adecuadamente: "${bodyOverflow}"`);
+        failed = true;
+      } else {
+        console.log('✅ Document body overflow en /contacto restaurado a estado normal');
+      }
+    }
+
+    const contactoCls = await contactoPage.evaluate(() => window.__clsScore || 0);
+    console.log(`📐 Cumulative Layout Shift (CLS) en /contacto: ${contactoCls.toFixed(4)}`);
+    if (contactoCls > 0.05) {
+      console.error(`❌ CLS excesivo en /contacto: ${contactoCls}`);
+      failed = true;
+    } else {
+      console.log('✅ Criterio CLS cumplido en /contacto (CLS <= 0.05)');
+    }
+
+    // Check Mobile Menu on /contacto (390x844)
+    console.log('\n🔍 [Test 6.1] Verificando menú móvil WAAPI en /contacto (390x844)...');
+    await contactoPage.setViewportSize({ width: 390, height: 844 });
+    await contactoPage.waitForTimeout(100);
+
+    const contactMenuBtn = contactoPage.locator('#mobile-menu-button');
+    const contactMenu = contactoPage.locator('#mobile-menu');
+
+    if (await contactMenuBtn.count() > 0 && await contactMenu.count() > 0) {
+      await contactMenuBtn.click();
+      await contactoPage.waitForTimeout(220); // WAAPI 200ms
+      const isVisible = await contactMenu.evaluate((el) => !el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil desplegado con WAAPI en /contacto: ${isVisible}`);
+
+      await contactMenuBtn.click();
+      await contactoPage.waitForTimeout(180); // WAAPI 150ms
+      const isHidden = await contactMenu.evaluate((el) => el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil replegado suavemente en /contacto: ${isHidden}`);
+    }
+
+    await contactoPage.close();
+
   } catch (err) {
     console.error('❌ Error durante la verificación cinemática:', err);
     failed = true;
