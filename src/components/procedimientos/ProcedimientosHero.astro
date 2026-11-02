@@ -13,18 +13,13 @@ const { hero } = siteConfig.procedimientosPage;
   aria-labelledby="procedimientos-hero-title"
 >
   <!-- Full-bleed Background Image occupying 100% width and 100% height of the Hero -->
-  <div class="absolute inset-0 w-full h-full z-0 select-none pointer-events-none overflow-hidden">
+  <div class="absolute inset-0 w-full h-full z-0 select-none pointer-events-none">
     <picture class="block w-full h-full">
       <!-- Mobile source (< 1024px) -->
       <source
         media="(max-width: 1023px)"
         srcset={hero.images.mobile.src}
         type="image/webp"
-      />
-      <source
-        media="(max-width: 1023px)"
-        srcset={hero.images.mobile.pngFallback}
-        type="image/png"
       />
       <!-- Desktop source (>= 1024px) -->
       <source
@@ -34,22 +29,22 @@ const { hero } = siteConfig.procedimientosPage;
       />
       <!-- Fallback image -->
       <img
-        src={hero.images.desktop.pngFallback}
+        src={hero.images.desktop.src}
         alt={hero.images.desktop.alt}
         width={hero.images.desktop.width}
         height={hero.images.desktop.height}
         loading="eager"
         fetchpriority="high"
         decoding="async"
-        class="w-full h-full object-cover object-[18%_bottom] translate-y-40 sm:translate-y-28 lg:translate-y-0 lg:object-right"
+        class="w-full h-full object-cover object-center lg:object-right"
       />
     </picture>
 
     <!-- Desktop gradient: cubre el bloque editorial a la izquierda sin velar a la especialista -->
-    <div class="hidden lg:block absolute inset-y-0 left-0 w-[42%] xl:w-[38%] bg-gradient-to-r from-white via-white/95 via-65% to-transparent pointer-events-none"></div>
+    <div class="hidden lg:block absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
 
     <!-- Mobile gradient: de arriba hacia abajo para legibilidad total del texto y botón -->
-    <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-white via-white/95 via-[42%] to-transparent to-[52%] pointer-events-none"></div>
+    <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 via-[52%] to-transparent to-[60%] pointer-events-none"></div>
   </div>
 
   <!-- Content Container: alineado a la izquierda con el header -->

@@ -157,7 +157,6 @@ export interface ContactSectionConfig {
     actionTextMobile: string;
     videoUrl: string;
     videoSrc: string;
-    duration: string;
   };
 }
 
@@ -362,14 +361,12 @@ export interface ProcedimientosHeroConfig {
   images: {
     desktop: {
       src: string;
-      pngFallback: string;
       alt: string;
       width: number;
       height: number;
     };
     mobile: {
       src: string;
-      pngFallback: string;
       alt: string;
       width: number;
       height: number;
@@ -392,7 +389,6 @@ export interface ProcedimientosVideoItemConfig {
   video: {
     src?: string;
     poster: string;
-    pngFallback: string;
     alt: string;
     initialTimestamp: string;
     initialProgress: number;
@@ -406,7 +402,6 @@ export interface ProcedimientosGalleryCard {
   description: string;
   src?: string;
   poster: string;
-  pngFallback: string;
   alt: string;
   initialTimestamp: string;
   initialProgress: number;
@@ -785,7 +780,6 @@ export const siteConfig: SiteConfig = {
       actionTextMobile: "Ver video del recorrido",
       videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Villavicencio+Meta",
       videoSrc: "/videos/video-como-llegar.mp4",
-      duration: "0:26",
     },
   },
   footer: {
@@ -1103,15 +1097,13 @@ export const siteConfig: SiteConfig = {
       exploreHref: "#volk-inview",
       images: {
         desktop: {
-          src: "/images/procedimientos/1_hero_desktop_image.webp",
-          pngFallback: "/images/procedimientos/1_hero_desktop_image.png",
+          src: "/images/procedimientos-hero-desktop.webp",
           alt: "Especialista realizando evaluación visual con foróptero en Óptica Alemania Villavicencio",
           width: 1672,
           height: 941,
         },
         mobile: {
-          src: "/images/procedimientos/1_hero_mobile_image.webp",
-          pngFallback: "/images/procedimientos/1_hero_mobile_image.png",
+          src: "/images/procedimientos-hero-mobile.webp",
           alt: "Especialista realizando evaluación visual con foróptero en Óptica Alemania Villavicencio",
           width: 941,
           height: 1672,
@@ -1130,8 +1122,7 @@ export const siteConfig: SiteConfig = {
       whatsappMessage: "Hola, quisiera información sobre la evaluación retinal en Óptica Alemania.",
       video: {
         src: "/videos/video-volk-inview.mp4",
-        poster: "/images/procedimientos/2_tecnologia_image.webp",
-        pngFallback: "/images/procedimientos/2_tecnologia_image.png",
+        poster: "/images/tech-volk-inview.webp",
         alt: "Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio",
         initialTimestamp: "0:00 / 0:28",
         initialProgress: 0,
@@ -1151,8 +1142,7 @@ export const siteConfig: SiteConfig = {
       whatsappMessage: "Hola, quisiera información sobre el test de Farnsworth D-15 en Óptica Alemania.",
       video: {
         src: "/videos/video-farnsworth-d15.mp4",
-        poster: "/images/procedimientos/3_vision_color_image.webp",
-        pngFallback: "/images/procedimientos/3_vision_color_image.png",
+        poster: "/images/tech-farnsworth-d15.webp",
         alt: "Test de Farnsworth D-15 para evaluación de la percepción del color en Óptica Alemania Villavicencio",
         initialTimestamp: "0:00 / 0:32",
         initialProgress: 0,
@@ -1170,8 +1160,7 @@ export const siteConfig: SiteConfig = {
           videoId: "gallery-video-1",
           title: "Evaluación optométrica",
           description: "Una evaluación completa de tu visión con tecnología especializada.",
-          poster: "/images/procedimientos/4_nuestro_trabajo_image1.webp",
-          pngFallback: "/images/procedimientos/4_nuestro_trabajo_image1.png",
+          poster: "/images/procedimientos-evaluacion-optometrica.webp",
           alt: "Evaluación optométrica completa con tecnología especializada en Óptica Alemania Villavicencio",
           initialTimestamp: "0:10 / 0:45",
           initialProgress: 22,
@@ -1182,8 +1171,7 @@ export const siteConfig: SiteConfig = {
           title: "Atención visual infantil",
           description: "Evaluaciones adaptadas a las necesidades visuales de cada etapa.",
           src: "/videos/video-child.mp4",
-          poster: "/images/procedimientos/4_nuestro_trabajo_image2.webp",
-          pngFallback: "/images/procedimientos/4_nuestro_trabajo_image2.png",
+          poster: "/images/kids-vision-preview.webp",
           alt: "Atención visual infantil y valoraciones adaptadas en Óptica Alemania Villavicencio",
           initialTimestamp: "0:00 / 3:50",
           initialProgress: 0,
