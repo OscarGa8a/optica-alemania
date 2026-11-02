@@ -176,8 +176,9 @@ const whatsappContactUrl = buildWhatsAppLink(
         <button
           type="button"
           data-open-video-modal={modalId}
+          data-event="video_modal_open"
+          data-event-location="contact_route_card"
           class="group w-full text-left rounded-3xl overflow-hidden border border-blue-500/20 hover:border-blue-400/40 bg-brand-midnight-card shadow-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-          aria-label="Ver video del recorrido hasta Óptica Alemania en Barzal"
         >
           <!-- Desktop Layout (Horizontal split) -->
           <div class="hidden sm:grid sm:grid-cols-2 items-center">

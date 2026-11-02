@@ -12,14 +12,22 @@
 
     const ctaType = target.dataset.event;
     const location = target.dataset.eventLocation;
-    const label = target.textContent?.trim();
+    const label = target.dataset.eventLabel || target.textContent?.trim();
     const destination = target instanceof HTMLAnchorElement ? target.href : '';
+    const service = target.dataset.eventService;
+    const item = target.dataset.eventItem;
+    const category = target.dataset.eventCategory;
+    const network = target.dataset.eventNetwork;
 
     const detail = {
       event: ctaType,
       location,
       label,
       destination,
+      ...(service && { service }),
+      ...(item && { item }),
+      ...(category && { category }),
+      ...(network && { network }),
     };
 
     window.dispatchEvent(new CustomEvent('optica:event', { detail }));
@@ -32,6 +40,10 @@
       location,
       label,
       destination,
+      ...(service && { service }),
+      ...(item && { item }),
+      ...(category && { category }),
+      ...(network && { network }),
     });
 
     // Carga inmediata de GTM si el usuario interactuó antes del temporizador

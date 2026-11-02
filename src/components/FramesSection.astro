@@ -52,7 +52,7 @@ const whatsappFramesUrl = buildWhatsAppLink(
           icon="arrow-right"
           data-event="whatsapp_cta"
           data-event-location="frames_header"
-          aria-label="Explorar catálogo de monturas de Óptica Alemania en WhatsApp"
+          aria-label={`${frames.ctaText} en WhatsApp`}
         >
           {frames.ctaText}
         </Button>
@@ -75,7 +75,7 @@ const whatsappFramesUrl = buildWhatsAppLink(
             rel="noopener noreferrer"
             data-event="frame_category_click"
             data-event-category={category.id}
-            aria-label={`Explorar colección de monturas para ${category.title} en WhatsApp`}
+            aria-label={`${category.title} - Ver monturas en WhatsApp`}
             class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[16/9] sm:aspect-[2/1] md:aspect-[4/5] bg-brand-blue-soft block"
           >
             <!-- Card Image -->
