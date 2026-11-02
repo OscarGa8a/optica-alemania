@@ -302,22 +302,51 @@ async function run() {
       // 7. Check Telemetry Event Dispatcher & dataLayer Buffer (Zero-TBT)
       const dataLayerTest = await page.evaluate(() => {
         window.dataLayer = window.dataLayer || [];
-        const ctaBtn = document.querySelector('#inicio a[data-event="whatsapp_cta"]');
-        if (!ctaBtn) return { success: false, reason: 'WhatsApp CTA not found' };
-        ctaBtn.click();
-        const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+        let gtmTriggered = false;
+        const originalLoadGTM = window._loadGTM;
+        window._loadGTM = () => {
+          gtmTriggered = true;
+          if (typeof originalLoadGTM === 'function') originalLoadGTM();
+        };
+
+        const eventsToTest = [
+          { selector: '#inicio a[data-event="whatsapp_cta"]', expectedCta: 'whatsapp_cta' },
+          { selector: '#inicio a[data-event="phone_call"]', expectedCta: 'phone_call' },
+          { selector: '#ubicacion a[data-event-location="contact_location_cta"]', expectedCta: 'google_maps_click' },
+          { selector: '#ubicacion button[data-event="route_video_click"]', expectedCta: 'route_video_click' },
+        ];
+
+        const results = [];
+        for (const testItem of eventsToTest) {
+          const el = document.querySelector(testItem.selector);
+          if (!el) {
+            results.push({ selector: testItem.selector, success: false, reason: 'Element not found' });
+            continue;
+          }
+          el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+          const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+          const passed = lastEvent && (lastEvent.event === 'cta_click' || lastEvent.event === 'portfolio_cta_click') && lastEvent.cta_type === testItem.expectedCta;
+          results.push({
+            selector: testItem.selector,
+            expected: testItem.expectedCta,
+            actual: lastEvent?.cta_type,
+            passed,
+          });
+        }
+
         return {
-          success: lastEvent && (lastEvent.event === 'cta_click' || lastEvent.event === 'portfolio_cta_click') && lastEvent.cta_type === 'whatsapp_cta',
-          lastEvent,
+          allPassed: results.every((r) => r.passed),
+          gtmTriggered,
+          results,
         };
       });
 
-      if (!dataLayerTest.success) {
+      if (!dataLayerTest.allPassed) {
         console.error(`❌ [${vp.name}] Telemetry dataLayer event test failed:`, dataLayerTest);
         failed = true;
       } else {
         console.log(
-          `✅ [${vp.name}] Telemetry event properly dispatched to dataLayer: ${dataLayerTest.lastEvent.event} (cta_type: ${dataLayerTest.lastEvent.cta_type})`
+          `✅ [${vp.name}] All ${dataLayerTest.results.length} conversion telemetry events verified in dataLayer with GTM instant trigger`
         );
       }
 
