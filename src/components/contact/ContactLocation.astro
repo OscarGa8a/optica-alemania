@@ -170,21 +170,18 @@ const modalId = 'contact-page-como-llegar-video-modal';
             data-open-video-modal={modalId}
             data-event="route_video_click"
             data-event-location="contact_tour_video"
-            class="group relative block w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-white/80 aspect-21/9 sm:aspect-12/5 bg-brand-midnight cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+            class="group relative block w-full rounded-2xl lg:rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-white/80 aspect-16/10 bg-brand-midnight cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
             aria-label="Reproducir video del recorrido para llegar a Óptica Alemania en Barzal"
           >
-            <picture>
-              <source srcset="/images/contact/2_ubicacion_image.webp" type="image/webp" />
-              <img
-                src="/images/contact/2_ubicacion_image.png"
-                alt={contactSection.facadeImage.alt}
-                width={contactSection.facadeImage.width}
-                height={contactSection.facadeImage.height}
-                class="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
+            <img
+              src={contactSection.facadeImage.src}
+              alt={contactSection.facadeImage.alt}
+              width={contactSection.facadeImage.width}
+              height={contactSection.facadeImage.height}
+              class="w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
 
             <!-- Subtle bottom vignette for crisp white label readability -->
             <div
@@ -201,13 +198,6 @@ const modalId = 'contact-page-como-llegar-video-modal';
                 Ver cómo llegar
               </span>
             </div>
-
-            <!-- Bottom-Right Duration Badge -->
-            <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 pointer-events-none">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-brand-heading/85 backdrop-blur-xs text-white text-xs font-semibold tabular-nums">
-                {contactSection.routeVideo.duration}
-              </span>
-            </div>
           </button>
         </div>
 
@@ -218,8 +208,7 @@ const modalId = 'contact-page-como-llegar-video-modal';
   <VideoModal
     id={modalId}
     src={contactSection.routeVideo.videoSrc}
-    poster="/images/contact/2_ubicacion_image.webp"
-    pngFallback="/images/contact/2_ubicacion_image.png"
+    poster={contactSection.facadeImage.src}
     alt={contactSection.facadeImage.alt}
     eyebrow="TE MOSTRAMOS EL CAMINO"
     title="Cómo llegar a Óptica Alemania en Barzal"

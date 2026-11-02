@@ -49,7 +49,7 @@ const whatsappUrl = buildWhatsAppLink(
     </div>
 
     <!-- Main Grid: Editorial Content on Left (5 cols) / Video on Right (7 cols) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-14 items-center">
       
       <!-- Left Column on Desktop, Bottom on Mobile: Text & CTA Button -->
       <div class="order-3 lg:order-1 lg:col-span-5">
@@ -110,7 +110,6 @@ const whatsappUrl = buildWhatsAppLink(
           id={farnsworth.videoId}
           src={farnsworth.video.src}
           poster={farnsworth.video.poster}
-          pngFallback={farnsworth.video.pngFallback}
           alt={farnsworth.video.alt}
           initialTimestamp={farnsworth.video.initialTimestamp}
           initialProgress={farnsworth.video.initialProgress}
