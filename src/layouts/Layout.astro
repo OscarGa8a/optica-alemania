@@ -14,6 +14,11 @@ interface Props {
   currentPath?: string;
   headerTheme?: 'dark-hero' | 'light';
   navVariant?: 'transparent' | 'light';
+  preloadMobileImage?: string;
+  preloadDesktopImage?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  floatingWhatsAppMessage?: string;
 }
 
 const {
@@ -24,9 +29,43 @@ const {
   currentPath = '/',
   headerTheme,
   navVariant,
+  preloadMobileImage,
+  preloadDesktopImage,
+  ogImage,
+  ogImageAlt,
+  floatingWhatsAppMessage,
 } = Astro.props;
 
 const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
+
+// Preload de Hero LCP adaptativo según página
+const defaultMobilePreload = currentPath === '/nosotros'
+  ? '/images/nosotros-hero-mobile.webp'
+  : '/images/hero-mobile.webp';
+const defaultDesktopPreload = currentPath === '/nosotros'
+  ? '/images/nosotros-hero-desktop.webp'
+  : '/images/hero-desktop.webp';
+
+const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
+const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
+
+// OpenGraph & Twitter Image adaptativo
+const defaultOgImage = currentPath === '/nosotros'
+  ? 'https://opticaalemania.co/images/nosotros-hero-desktop.webp'
+  : 'https://opticaalemania.co/images/hero-desktop.webp';
+const defaultOgImageAlt = currentPath === '/nosotros'
+  ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
+  : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
+
+const resolvedOgImage = ogImage || defaultOgImage;
+const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
+
+// Mensaje contextual de WhatsApp para widget flotante
+const defaultWhatsAppMessage = currentPath === '/nosotros'
+  ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania y deseo solicitar información o agendar una cita.'
+  : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
+
+const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessage;
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://opticaalemania.co';
@@ -131,7 +170,23 @@ const schemaGraph = {
           }
         }
       ]
-    }
+    },
+    ...(currentPath === '/nosotros' ? [
+      {
+        "@type": "AboutPage",
+        "@id": `${canonicalUrl}#aboutpage`,
+        "url": canonicalUrl,
+        "name": title,
+        "description": description,
+        "inLanguage": "es-CO",
+        "isPartOf": {
+          "@id": "https://opticaalemania.co/#website"
+        },
+        "about": {
+          "@id": "https://opticaalemania.co/#optician"
+        }
+      }
+    ] : [])
   ]
 };
 ---
@@ -146,22 +201,26 @@ const schemaGraph = {
     <meta name="generator" content={Astro.generator} />
 
     <!-- LCP Hero Image Preloads -->
-    <link
-      rel="preload"
-      as="image"
-      href="/images/hero-mobile.webp"
-      type="image/webp"
-      media="(max-width: 1023px)"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      as="image"
-      href="/images/hero-desktop.webp"
-      type="image/webp"
-      media="(min-width: 1024px)"
-      fetchpriority="high"
-    />
+    {resolvedMobilePreload && (
+      <link
+        rel="preload"
+        as="image"
+        href={resolvedMobilePreload}
+        type="image/webp"
+        media="(max-width: 1023px)"
+        fetchpriority="high"
+      />
+    )}
+    {resolvedDesktopPreload && (
+      <link
+        rel="preload"
+        as="image"
+        href={resolvedDesktopPreload}
+        type="image/webp"
+        media="(min-width: 1024px)"
+        fetchpriority="high"
+      />
+    )}
 
     <!-- ClientRouter for SPA transitions and lifecycle events -->
     <ClientRouter />
@@ -178,16 +237,16 @@ const schemaGraph = {
     <meta property="og:locale" content="es_CO" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteConfig.name} />
-    <meta property="og:image" content="https://opticaalemania.co/images/hero-desktop.webp" />
+    <meta property="og:image" content={resolvedOgImage} />
     <meta property="og:image:width" content="1672" />
     <meta property="og:image:height" content="941" />
-    <meta property="og:image:alt" content="Óptica Alemania en Villavicencio - Optometría y salud visual" />
+    <meta property="og:image:alt" content={resolvedOgImageAlt} />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://opticaalemania.co/images/hero-desktop.webp" />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
     {import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
       <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION} />
@@ -263,7 +322,7 @@ const schemaGraph = {
     <main id="main-content">
       <slot />
     </main>
-    <FloatingWhatsApp />
+    <FloatingWhatsApp message={resolvedWhatsAppMessage} />
     <Analytics />
   </body>
 </html>

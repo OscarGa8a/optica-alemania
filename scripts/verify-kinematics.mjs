@@ -206,6 +206,68 @@ async function runKinematicsVerification() {
 
     await mobilePage.close();
 
+    // -------------------------------------------------------------------------
+    // TEST 3: Página Nosotros (/nosotros) Cinemática & Smooth Navigation
+    // -------------------------------------------------------------------------
+    console.log('\n🔍 [Test 3] Verificando cinemática y navegación en /nosotros (Desktop 1440x900)...');
+    const nosotrosPage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await nosotrosPage.goto(`${baseUrl}/nosotros`, { waitUntil: 'networkidle' });
+
+    // Track CLS on /nosotros
+    await nosotrosPage.evaluate(() => {
+      window.__clsScore = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__clsScore += entry.value;
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+
+    // Check Hero anchor navigation to #trayectoria
+    const historyAnchor = nosotrosPage.locator('a[href="#trayectoria"]');
+    if (await historyAnchor.count() > 0) {
+      await historyAnchor.click();
+      await nosotrosPage.waitForTimeout(400); // Smooth scroll duration
+
+      const currentScrollY = await nosotrosPage.evaluate(() => window.scrollY);
+      const trayectoriaSection = nosotrosPage.locator('#trayectoria');
+      const box = await trayectoriaSection.boundingBox();
+      console.log(`✅ Scroll suave ejecutado hacia #trayectoria (scrollY: ${Math.round(currentScrollY)}px)`);
+
+      const nosotrosCls = await nosotrosPage.evaluate(() => window.__clsScore || 0);
+      console.log(`📐 Cumulative Layout Shift (CLS) en /nosotros tras navegación: ${nosotrosCls.toFixed(4)}`);
+      if (nosotrosCls > 0.05) {
+        console.error(`❌ CLS excesivo en /nosotros: ${nosotrosCls}`);
+        failed = true;
+      } else {
+        console.log('✅ Criterio CLS cumplido en /nosotros (CLS <= 0.05)');
+      }
+    }
+
+    // Check Mobile Menu on /nosotros (390x844)
+    console.log('\n🔍 [Test 3.1] Verificando menú móvil WAAPI en /nosotros (390x844)...');
+    await nosotrosPage.setViewportSize({ width: 390, height: 844 });
+    await nosotrosPage.waitForTimeout(100);
+
+    const nosotrosMenuBtn = nosotrosPage.locator('#mobile-menu-button');
+    const nosotrosMenu = nosotrosPage.locator('#mobile-menu');
+
+    if (await nosotrosMenuBtn.count() > 0 && await nosotrosMenu.count() > 0) {
+      await nosotrosMenuBtn.click();
+      await nosotrosPage.waitForTimeout(220); // WAAPI 200ms
+      const isVisible = await nosotrosMenu.evaluate((el) => !el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil desplegado con WAAPI en /nosotros: ${isVisible}`);
+
+      await nosotrosMenuBtn.click();
+      await nosotrosPage.waitForTimeout(180); // WAAPI 150ms
+      const isHidden = await nosotrosMenu.evaluate((el) => el.classList.contains('hidden'));
+      console.log(`✅ Menú móvil replegado suavemente en /nosotros: ${isHidden}`);
+    }
+
+    await nosotrosPage.close();
+
   } catch (err) {
     console.error('❌ Error durante la verificación cinemática:', err);
     failed = true;

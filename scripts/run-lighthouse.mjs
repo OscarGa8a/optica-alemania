@@ -35,8 +35,12 @@ async function startStaticServer(port = 54321) {
   }
 
   const server = http.createServer((req, res) => {
-    let reqPath = req.url.split('?')[0];
-    if (reqPath.endsWith('/')) reqPath += 'index.html';
+    let reqPath = decodeURI(req.url.split('?')[0]);
+    if (reqPath.endsWith('/')) {
+      reqPath += 'index.html';
+    } else if (!path.extname(reqPath)) {
+      reqPath += '/index.html';
+    }
     let filePath = path.join(DIST_DIR, reqPath);
     if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) filePath += '.html';
     if (!fs.existsSync(filePath) && fs.existsSync(path.join(filePath, 'index.html'))) {
@@ -100,7 +104,10 @@ async function runLighthouseAudit() {
     args: [`--remote-debugging-port=${debugPort}`, '--no-sandbox', '--disable-setuid-sandbox'],
   });
 
-  const url = `http://127.0.0.1:${serverPort}/`;
+  const targetPath = process.argv[2] || '/';
+  const cleanPath = targetPath.startsWith('/') ? targetPath : `/${targetPath}`;
+  const url = `http://127.0.0.1:${serverPort}${cleanPath}`;
+  console.log(`🎯 URL auditada: ${url}\n`);
 
   try {
     console.log('📱 Evaluando categoría Mobile...');
