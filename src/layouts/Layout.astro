@@ -349,6 +349,54 @@ const schemaGraph = {
           ]
         }
       }
+    ] : []),
+    ...(currentPath === '/contacto' ? [
+      {
+        "@type": "ContactPage",
+        "@id": `${canonicalUrl}#contactpage`,
+        "url": canonicalUrl,
+        "name": title,
+        "description": description,
+        "inLanguage": "es-CO",
+        "isPartOf": {
+          "@id": "https://opticaalemania.co/#website"
+        },
+        "about": {
+          "@id": "https://opticaalemania.co/#optician"
+        },
+        "mainEntity": {
+          "@type": "Optician",
+          "@id": "https://opticaalemania.co/#optician",
+          "name": siteConfig.name,
+          "telephone": `+57${siteConfig.contact.phonePrimary.replace(/\s+/g, '')}`,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": siteConfig.contact.address,
+            "addressLocality": siteConfig.contact.city,
+            "addressRegion": "Meta",
+            "addressCountry": "CO"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "4.1438",
+            "longitude": "-73.6376"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "08:00",
+              "closes": "18:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday"],
+              "opens": "08:30",
+              "closes": "15:00"
+            }
+          ]
+        }
+      }
     ] : [])
   ]
 };
