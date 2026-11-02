@@ -91,6 +91,54 @@ const isStaging = isStagingDomain || isStagingEnv || isExplicitNoindex;
 const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const resolvedRobots = robots || defaultRobots;
 
+// PLAYBOOK Fase 4: FAQPage dinámico según página (Home vs Servicios)
+const homeFaqQuestions = [
+  {
+    "@type": "Question",
+    "name": "¿Dónde está ubicada Óptica Alemania en Villavicencio?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "¿Cuáles son los horarios de atención?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Atendemos de lunes a viernes de 8:30 a.m. a 6:00 p.m. y sábados de 8:30 a.m. a 3:00 p.m. en jornada continua."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "¿Cómo puedo agendar una consulta de optometría?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Puedes agendar tu cita directamente a través de nuestro canal de WhatsApp (+57 311 201 7302) o comunicándote al 322 712 8828."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "¿Tienen convenio con Cofrem?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos."
+    }
+  }
+];
+
+const servicesFaqQuestions = siteConfig.servicesPage.faq.items.map((item) => ({
+  "@type": "Question",
+  "name": item.question,
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": item.answer,
+  },
+}));
+
+const hasFaq = currentPath === '/' || currentPath === '/servicios';
+const activeFaqQuestions = currentPath === '/servicios' ? servicesFaqQuestions : homeFaqQuestions;
+
 // PLAYBOOK Fase 4: Schema.org Multigrafo @graph
 const schemaGraph = {
   "@context": "https://schema.org",
@@ -143,44 +191,13 @@ const schemaGraph = {
       "name": siteConfig.name,
       "inLanguage": "es-CO"
     },
-    {
-      "@type": "FAQPage",
-      "@id": "https://opticaalemania.co/#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "¿Dónde está ubicada Óptica Alemania en Villavicencio?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Cuáles son los horarios de atención?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Atendemos de lunes a viernes de 8:30 a.m. a 6:00 p.m. y sábados de 8:30 a.m. a 3:00 p.m. en jornada continua."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Cómo puedo agendar una consulta de optometría?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Puedes agendar tu cita directamente a través de nuestro canal de WhatsApp (+57 311 201 7302) o comunicándote al 322 712 8828."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Tienen convenio con Cofrem?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos."
-          }
-        }
-      ]
-    },
+    ...(hasFaq ? [
+      {
+        "@type": "FAQPage",
+        "@id": `${canonicalUrl}#faq`,
+        "mainEntity": activeFaqQuestions
+      }
+    ] : []),
     ...(currentPath === '/nosotros' ? [
       {
         "@type": "AboutPage",
@@ -194,6 +211,60 @@ const schemaGraph = {
         },
         "about": {
           "@id": "https://opticaalemania.co/#optician"
+        }
+      }
+    ] : []),
+    ...(currentPath === '/servicios' ? [
+      {
+        "@type": "MedicalWebPage",
+        "@id": `${canonicalUrl}#servicespage`,
+        "url": canonicalUrl,
+        "name": title,
+        "description": description,
+        "inLanguage": "es-CO",
+        "isPartOf": {
+          "@id": "https://opticaalemania.co/#website"
+        },
+        "about": {
+          "@id": "https://opticaalemania.co/#optician"
+        },
+        "mainEntity": {
+          "@type": "OfferCatalog",
+          "name": "Servicios de Optometría y Salud Ocular",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "MedicalProcedure",
+                "name": "Consulta de optometría especializada",
+                "description": "Examen refractivo integral, agudeza visual, prescripción óptica y valoración preliminar de salud ocular en Barzal, Villavicencio."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "MedicalProcedure",
+                "name": "Adaptación de lentes de contacto",
+                "description": "Evaluación corneal, prueba y adaptación personalizada de lentes de contacto blandos, tóricos y multifocales."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "MedicalTest",
+                "name": "Evaluaciones visuales especializadas",
+                "description": "Tonometría de aplanación para presión intraocular, pruebas de ojo seco y evaluación cromática de Ishihara y Farnsworth D-15."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "MedicalService",
+                "name": "Orientación y triaje en molestias oculares",
+                "description": "Evaluación rápida de disponibilidad y orientación clínica ante molestias o cuerpos extraños leves antes de acudir a la sede."
+              }
+            }
+          ]
         }
       }
     ] : [])

@@ -12,11 +12,12 @@
 
 ## Servicios Clínicos Principales
 
-- [Examen de Optometría Integral](https://opticaalemania.co/#servicios): Valoración clínica completa de agudeza visual, refracción computarizada y salud de polo anterior y posterior.
-- [Evaluación de Fondo de Ojo y Polo Anterior](https://opticaalemania.co/#servicios): Diagnóstico temprano de patologías oculares mediante biomicroscopía y lámpara de hendidura de alta resolución.
-- [Tonometría Ocular](https://opticaalemania.co/#servicios): Medición precisa de la presión intraocular para prevención y control del glaucoma.
+- [Consulta de Optometría Especializada](https://opticaalemania.co/servicios#atencion-visual): Examen refractivo integral, agudeza visual, prescripción óptica y valoración preliminar de salud ocular en Barzal, Villavicencio.
+- [Adaptación de Lentes de Contacto](https://opticaalemania.co/servicios#atencion-visual): Valoración corneal y adaptación personalizada de lentes de contacto blandos, tóricos y multifocales.
+- [Evaluaciones Visuales Especializadas](https://opticaalemania.co/servicios#evaluaciones-especializadas): Tonometría de presión intraocular, pruebas de ojo seco y evaluación de visión del color (Ishihara y Farnsworth D-15).
+- [Orientación en Urgencias Oculares](https://opticaalemania.co/servicios#urgencias-oculares): Consulta de disponibilidad y orientación rápida previa ante molestias oculares y cuerpo extraño.
+- [Procedimientos Clínicos en Video](https://opticaalemania.co/servicios#procedimientos): Demostraciones prácticas en video de evaluaciones de retina y visión cromática.
 - [Salud Visual Infantil](https://opticaalemania.co/#visual-infantil): Consulta especializada para niños con pruebas dinámicas, prevención de ambliopía y monturas ultrarresistentes flexibles.
-- [Adaptación de Lentes de Contacto y Oftálmicos](https://opticaalemania.co/#monturas): Soluciones personalizadas en lentes monofocales, progresivos/multifocales digitales, filtros antirreflejo y protección contra luz azul.
 
 ## Canales de Contacto y Ubicación Oficial
 
