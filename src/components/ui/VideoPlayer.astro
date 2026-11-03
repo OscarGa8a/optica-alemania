@@ -14,6 +14,7 @@ interface Props {
   initialProgress?: number;
   class?: string;
   aspectRatio?: string;
+  fit?: 'contain' | 'cover';
 }
 
 const {
@@ -27,22 +28,36 @@ const {
   initialProgress = 0,
   class: className = '',
   aspectRatio = 'aspect-[4/5] sm:aspect-video',
+  fit = 'contain',
 } = Astro.props;
 ---
 
 <div
   data-video-player-container={id}
   class:list={[
-    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-900 group border border-slate-100',
+    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-950 group border border-slate-100/10',
     aspectRatio,
     className,
   ]}
 >
+  <!-- Ambient blurred poster backdrop for aspect-ratio resilience (vertical or non-standard videos) -->
+  {fit === 'contain' && (
+    <div
+      class="absolute inset-0 bg-cover bg-center blur-2xl opacity-40 scale-110 pointer-events-none select-none z-0"
+      style={`background-image: url('${pngFallback || poster}');`}
+      aria-hidden="true"
+    />
+    <div class="absolute inset-0 bg-slate-950/40 pointer-events-none z-0" aria-hidden="true" />
+  )}
+
   <!-- Video element with poster and picture fallback -->
   <video
     id={id}
     src={src}
-    class="w-full h-full object-cover cursor-pointer"
+    class:list={[
+      'relative w-full h-full cursor-pointer z-10',
+      fit === 'contain' ? 'object-contain' : 'object-cover',
+    ]}
     poster={poster}
     muted
     playsinline
@@ -60,14 +75,17 @@ const {
         height="941"
         loading="lazy"
         decoding="async"
-        class="w-full h-full object-cover"
+        class:list={[
+          'w-full h-full',
+          fit === 'contain' ? 'object-contain' : 'object-cover',
+        ]}
       />
     </picture>
   </video>
 
   <!-- Interactive Video Controls Overlay Bar -->
   <div
-    class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-4 sm:px-6 pt-10 pb-4 sm:pb-5 flex items-center gap-3 sm:gap-4 text-white select-none z-10"
+    class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent px-4 sm:px-6 pt-10 pb-4 sm:pb-5 flex items-center gap-3 sm:gap-4 text-white select-none z-20"
   >
     <!-- Pause/Play Toggle Button -->
     <button
