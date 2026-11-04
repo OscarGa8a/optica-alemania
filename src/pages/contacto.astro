@@ -4,9 +4,12 @@ import ContactHero from '../components/contact/ContactHero.astro';
 import ContactLocation from '../components/contact/ContactLocation.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/siteConfig';
+import { obtenerVideoContacto } from '../lib/sanity/videos';
 
 const pageTitle = `Contacto y ubicación | ${siteConfig.name} Villavicencio`;
 const pageDescription = "Encuentra Óptica Alemania en Barzal, Villavicencio. Consulta nuestra dirección, horarios de atención y cómo llegar. Contáctanos por WhatsApp o teléfono.";
+
+const videoContacto = await obtenerVideoContacto();
 ---
 
 <Layout
@@ -16,6 +19,6 @@ const pageDescription = "Encuentra Óptica Alemania en Barzal, Villavicencio. Co
   headerTheme="light"
 >
   <ContactHero />
-  <ContactLocation />
+  <ContactLocation routeVideo={videoContacto} />
   <Footer currentPath="/contacto" />
 </Layout>

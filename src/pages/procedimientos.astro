@@ -7,8 +7,16 @@ import ProcedimientosGallery from '../components/procedimientos/ProcedimientosGa
 import ProcedimientosCta from '../components/procedimientos/ProcedimientosCta.astro';
 import Footer from '../components/Footer.astro';
 import { siteConfig } from '../data/siteConfig';
+import { obtenerVideosProcedimientos } from '../lib/sanity/videos';
 
 const { metaTitle, metaDescription } = siteConfig.procedimientosPage;
+
+const videos = await obtenerVideosProcedimientos();
+
+// Mapeo resiliente por palabra clave / título con fallback posicional
+const videoVolk = videos.find((v) => /volk/i.test(v.titulo)) ?? videos[1];
+const videoFarnsworth = videos.find((v) => /farnsworth/i.test(v.titulo)) ?? videos[2];
+const videoInfantil = videos.find((v) => /infan/i.test(v.titulo)) ?? videos[0];
 ---
 
 <Layout
@@ -19,9 +27,18 @@ const { metaTitle, metaDescription } = siteConfig.procedimientosPage;
 >
   <main id="main-content">
     <ProcedimientosHero />
-    <ProcedimientosVolk />
-    <ProcedimientosFarnsworth />
-    <ProcedimientosGallery />
+    <ProcedimientosVolk
+      videoUrl={videoVolk?.url}
+      posterUrl={videoVolk?.portada}
+    />
+    <ProcedimientosFarnsworth
+      videoUrl={videoFarnsworth?.url}
+      posterUrl={videoFarnsworth?.portada}
+    />
+    <ProcedimientosGallery
+      childVideoUrl={videoInfantil?.url}
+      childPosterUrl={videoInfantil?.portada}
+    />
     <ProcedimientosCta />
   </main>
   <Footer currentPath="/procedimientos" />

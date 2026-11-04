@@ -6,7 +6,16 @@ import { buildWhatsAppLink } from '../utils/whatsapp';
 import Button from './ui/Button.astro';
 import VideoPlayer from './ui/VideoPlayer.astro';
 
+interface Props {
+  videoUrl?: string | null;
+  posterUrl?: string | null;
+}
+
+const { videoUrl, posterUrl } = Astro.props;
 const { kidsVision } = siteConfig;
+const src = videoUrl || kidsVision.videoSrc;
+const poster = posterUrl || kidsVision.image.src;
+const pngFallback = posterUrl ? undefined : kidsVision.image.pngFallback;
 const whatsappKidsUrl = buildWhatsAppLink(
   kidsVision.whatsappMessage,
   siteConfig.contact.whatsappNumber
@@ -70,9 +79,9 @@ const whatsappKidsUrl = buildWhatsAppLink(
         <!-- Interactive Video Card -->
         <VideoPlayer
           id="kids-vision-video"
-          src={kidsVision.videoSrc}
-          poster={kidsVision.image.src}
-          pngFallback={kidsVision.image.pngFallback}
+          src={src}
+          poster={poster}
+          pngFallback={pngFallback}
           alt={kidsVision.image.alt}
           label="Evaluación optométrica infantil en Óptica Alemania Villavicencio"
           initialTimestamp={`0:00 / ${kidsVision.videoDuration}`}
