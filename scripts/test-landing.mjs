@@ -786,8 +786,10 @@ async function run() {
         console.log(`✅ [${vp.name}] H2 contains 'Nos vemos'`);
       }
 
-      // Verify images loaded properly
-      const images = contactSection.locator('img');
+      // Verify visible images loaded properly
+      await contactSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+      const images = contactSection.locator('img:visible');
       const imgCount = await images.count();
       let allLoaded = true;
       for (let i = 0; i < imgCount; i++) {

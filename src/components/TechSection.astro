@@ -5,9 +5,23 @@ import { siteConfig } from '../data/siteConfig';
 import Button from './ui/Button.astro';
 import VideoPlayer from './ui/VideoPlayer.astro';
 
+interface Props {
+  volkVideo?: { url?: string | null; portada?: string | null } | null;
+  farnsworthVideo?: { url?: string | null; portada?: string | null } | null;
+}
+
+const { volkVideo, farnsworthVideo } = Astro.props;
 const { technologies } = siteConfig;
 const item01 = technologies.find(t => t.id === 'volk-inview') || technologies[0];
 const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies[1];
+
+const volkSrc = volkVideo?.url || item01.videoSrc;
+const volkPoster = volkVideo?.portada || item01.image;
+const volkFallback = volkVideo?.portada ? undefined : item01.pngFallback;
+
+const farnsworthSrc = farnsworthVideo?.url || item02.videoSrc;
+const farnsworthPoster = farnsworthVideo?.portada || item02.image;
+const farnsworthFallback = farnsworthVideo?.portada ? undefined : item02.pngFallback;
 ---
 
 <section id="tecnologia" class="relative bg-brand-heading text-white py-14 sm:py-16 lg:py-24 scroll-mt-20 overflow-hidden">
@@ -57,9 +71,9 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
         <div class="lg:col-span-7">
           <VideoPlayer
             id={`home-video-${item01.id}`}
-            src={item01.videoSrc}
-            poster={item01.image}
-            pngFallback={item01.pngFallback}
+            src={volkSrc}
+            poster={volkPoster}
+            pngFallback={volkFallback}
             alt={item01.alt}
             label={`Demostración en video de ${item01.titlePart1} ${item01.titlePart2}`}
             initialTimestamp={`0:00 / ${item01.duration}`}
@@ -136,9 +150,9 @@ const item02 = technologies.find(t => t.id === 'farnsworth-d15') || technologies
         <div class="order-1 lg:order-2 lg:col-span-7">
           <VideoPlayer
             id={`home-video-${item02.id}`}
-            src={item02.videoSrc}
-            poster={item02.image}
-            pngFallback={item02.pngFallback}
+            src={farnsworthSrc}
+            poster={farnsworthPoster}
+            pngFallback={farnsworthFallback}
             alt={item02.alt}
             label={`Demostración en video de ${item02.titlePart1} ${item02.titlePart2}`}
             initialTimestamp={`0:00 / ${item02.duration}`}

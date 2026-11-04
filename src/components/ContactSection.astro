@@ -7,12 +7,20 @@ import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
 import VideoModal from './ui/VideoModal.astro';
 
+interface Props {
+  routeVideo?: { url?: string | null; portada?: string | null } | null;
+}
+
+const { routeVideo } = Astro.props;
 const { contact, contactSection } = siteConfig;
 const modalId = 'home-como-llegar-video-modal';
 const whatsappContactUrl = buildWhatsAppLink(
   contactSection.whatsappMessage,
   contact.whatsappNumber
 );
+
+const routeVideoSrc = routeVideo?.url || contactSection.routeVideo.videoSrc;
+const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
 ---
 
 <section
@@ -185,7 +193,7 @@ const whatsappContactUrl = buildWhatsAppLink(
             <!-- Facade Thumbnail with Play Button -->
             <div class="h-full relative block w-full aspect-16/10 overflow-hidden">
               <img
-                src={contactSection.facadeImage.src}
+                src={routeVideoPoster}
                 alt={contactSection.facadeImage.alt}
                 width={contactSection.facadeImage.width}
                 height={contactSection.facadeImage.height}
@@ -224,7 +232,7 @@ const whatsappContactUrl = buildWhatsAppLink(
             <!-- Facade Thumbnail with Play Button -->
             <div class="relative block w-full aspect-16/10 overflow-hidden">
               <img
-                src={contactSection.facadeImage.src}
+                src={routeVideoPoster}
                 alt={contactSection.facadeImage.alt}
                 width={contactSection.facadeImage.width}
                 height={contactSection.facadeImage.height}
@@ -272,8 +280,8 @@ const whatsappContactUrl = buildWhatsAppLink(
 
   <VideoModal
     id={modalId}
-    src={contactSection.routeVideo.videoSrc}
-    poster={contactSection.facadeImage.src}
+    src={routeVideoSrc}
+    poster={routeVideoPoster}
     alt={contactSection.facadeImage.alt}
     eyebrow={contactSection.routeVideo.eyebrow}
     title={contactSection.routeVideo.title}

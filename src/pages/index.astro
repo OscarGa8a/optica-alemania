@@ -11,6 +11,22 @@ import CofremSection from '../components/CofremSection.astro';
 import TrajectorySection from '../components/TrajectorySection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
+import { obtenerVideosInicio } from '../lib/sanity/videos';
+
+const videosInicio = await obtenerVideosInicio();
+
+// Mapeo resiliente por título/palabra clave con fallback posicional
+const videoInfantil = videosInicio.procedimientos.find((v) =>
+  /infan/i.test(v.titulo)
+) ?? videosInicio.procedimientos[0];
+
+const videoVolk = videosInicio.procedimientos.find((v) =>
+  /volk/i.test(v.titulo)
+) ?? videosInicio.procedimientos[1];
+
+const videoFarnsworth = videosInicio.procedimientos.find((v) =>
+  /farnsworth/i.test(v.titulo)
+) ?? videosInicio.procedimientos[2];
 ---
 
 <Layout
@@ -22,12 +38,20 @@ import Footer from '../components/Footer.astro';
   <Hero />
   <AboutSection />
   <ServicesSection />
-  <TechSection />
+  <TechSection
+    volkVideo={videoVolk}
+    farnsworthVideo={videoFarnsworth}
+  />
   <SpaceSection />
-  <KidsVisionSection />
+  <KidsVisionSection
+    videoUrl={videoInfantil?.url}
+    posterUrl={videoInfantil?.portada}
+  />
   <FramesSection />
   <CofremSection />
   <TrajectorySection />
-  <ContactSection />
+  <ContactSection
+    routeVideo={videosInicio.comoLlegar}
+  />
   <Footer />
 </Layout>

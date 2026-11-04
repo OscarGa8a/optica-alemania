@@ -4,6 +4,12 @@
 import { siteConfig } from '../../data/siteConfig';
 import VideoPlayer from '../ui/VideoPlayer.astro';
 
+interface Props {
+  childVideoUrl?: string | null;
+  childPosterUrl?: string | null;
+}
+
+const { childVideoUrl, childPosterUrl } = Astro.props;
 const { gallery } = siteConfig.procedimientosPage;
 ---
 
@@ -50,29 +56,37 @@ const { gallery } = siteConfig.procedimientosPage;
 
     <!-- 2 Video Cards Grid generated dynamically from siteConfig -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 xl:gap-12">
-      {gallery.cards.map((card) => (
-        <div class="group flex flex-col">
-          <VideoPlayer
-            id={card.videoId}
-            src={card.src}
-            poster={card.poster}
-            alt={card.alt}
-            label={`${card.title} - ${siteConfig.name}`}
-            initialTimestamp={card.initialTimestamp}
-            initialProgress={card.initialProgress}
-          />
+      {gallery.cards.map((card) => {
+        const isChild = card.id === 'atencion-visual-infantil';
+        const src = (isChild && childVideoUrl) ? childVideoUrl : card.src;
+        const poster = (isChild && childPosterUrl) ? childPosterUrl : card.poster;
+        const pngFallback = (isChild && childPosterUrl) ? undefined : card.poster;
 
-          <!-- Typography & Editorial Details matching Figma -->
-          <div class="mt-4 sm:mt-5">
-            <h3 class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-brand-heading leading-[1.1] tracking-tight">
-              {card.title}
-            </h3>
-            <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-2 font-normal">
-              {card.description}
-            </p>
+        return (
+          <div class="group flex flex-col">
+            <VideoPlayer
+              id={card.videoId}
+              src={src}
+              poster={poster}
+              pngFallback={pngFallback}
+              alt={card.alt}
+              label={`${card.title} - ${siteConfig.name}`}
+              initialTimestamp={card.initialTimestamp}
+              initialProgress={card.initialProgress}
+            />
+
+            <!-- Typography & Editorial Details matching Figma -->
+            <div class="mt-4 sm:mt-5">
+              <h3 class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-brand-heading leading-[1.1] tracking-tight">
+                {card.title}
+              </h3>
+              <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-2 font-normal">
+                {card.description}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

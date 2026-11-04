@@ -46,7 +46,7 @@ export interface TechnologyItem {
   titlePart2: string;
   description: string;
   duration: string;
-  videoSrc: string;
+  videoSrc?: string;
   image: string;
   pngFallback: string;
   alt: string;
@@ -87,7 +87,7 @@ export interface KidsVisionConfig {
   whatsappMessage: string;
   noteText: string;
   videoDuration: string;
-  videoSrc: string;
+  videoSrc?: string;
   image: SpaceImage;
 }
 
@@ -156,7 +156,7 @@ export interface ContactSectionConfig {
     description: string;
     actionTextMobile: string;
     videoUrl: string;
-    videoSrc: string;
+    videoSrc?: string;
   };
 }
 
@@ -555,7 +555,6 @@ export const siteConfig: SiteConfig = {
       titlePart2: "con Volk iNview",
       description: "Observa cómo se utiliza este accesorio de exploración ocular para obtener imágenes de la retina.",
       duration: "0:19",
-      videoSrc: "/videos/video-volk-inview.mp4",
       image: "/images/tech-volk-inview.webp",
       alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania",
       actionText: "Conocer procedimiento",
@@ -569,7 +568,6 @@ export const siteConfig: SiteConfig = {
       titlePart2: "Farnsworth D-15",
       description: "Conoce una prueba que utiliza fichas de colores para explorar la capacidad de distinguir distintas tonalidades.",
       duration: "0:18",
-      videoSrc: "/videos/video-farnsworth-d15.mp4",
       image: "/images/tech-farnsworth-d15.webp",
       alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania",
       actionText: "Conocer procedimiento",
@@ -615,7 +613,6 @@ export const siteConfig: SiteConfig = {
     whatsappMessage: "Hola, quisiera información sobre la atención visual infantil de Óptica Alemania.",
     noteText: "Consulta también por la disponibilidad de atención optométrica infantil.",
     videoDuration: "3:50",
-    videoSrc: "/videos/video-child.mp4",
     image: {
       src: "/images/kids-vision-preview.webp",
       alt: "Especialista de Óptica Alemania realizando examen optométrico pediátrico con lámpara de hendidura a niña paciente",
@@ -779,7 +776,6 @@ export const siteConfig: SiteConfig = {
       description: "Te mostramos el camino paso a paso para que llegues sin complicaciones.",
       actionTextMobile: "Ver video del recorrido",
       videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Villavicencio+Meta",
-      videoSrc: "/videos/video-como-llegar.mp4",
     },
   },
   footer: {
@@ -1121,7 +1117,6 @@ export const siteConfig: SiteConfig = {
       ctaText: "Consultar esta evaluación",
       whatsappMessage: "Hola, quisiera información sobre la evaluación retinal en Óptica Alemania.",
       video: {
-        src: "/videos/video-volk-inview.mp4",
         poster: "/images/tech-volk-inview.webp",
         alt: "Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio",
         initialTimestamp: "0:00 / 0:19",
@@ -1141,7 +1136,6 @@ export const siteConfig: SiteConfig = {
       ctaText: "Consultar esta prueba",
       whatsappMessage: "Hola, quisiera información sobre el test de Farnsworth D-15 en Óptica Alemania.",
       video: {
-        src: "/videos/video-farnsworth-d15.mp4",
         poster: "/images/tech-farnsworth-d15.webp",
         alt: "Test de Farnsworth D-15 para evaluación de la percepción del color en Óptica Alemania Villavicencio",
         initialTimestamp: "0:00 / 0:18",
@@ -1170,7 +1164,6 @@ export const siteConfig: SiteConfig = {
           videoId: "gallery-video-2",
           title: "Atención visual infantil",
           description: "Evaluaciones adaptadas a las necesidades visuales de cada etapa.",
-          src: "/videos/video-child.mp4",
           poster: "/images/kids-vision-preview.webp",
           alt: "Atención visual infantil y valoraciones adaptadas en Óptica Alemania Villavicencio",
           initialTimestamp: "0:00 / 3:50",
