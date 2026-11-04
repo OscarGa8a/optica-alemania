@@ -61,16 +61,22 @@ const defaultDesktopPreload = currentPath === '/nosotros'
 const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
 const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
 
-// OpenGraph & Twitter Image adaptativo
-const defaultOgImage = currentPath === '/nosotros'
-  ? 'https://opticaalemania.co/images/nosotros-hero-desktop.webp'
+// OpenGraph & Twitter Image adaptativo con base URL dinámica
+const ogBaseUrl = import.meta.env.PUBLIC_OG_IMAGE_BASE_URL
+  || import.meta.env.PUBLIC_SITE_URL
+  || 'https://opticaalemania.oscardev.co';
+const cleanOgBase = ogBaseUrl.replace(/\/$/, '');
+
+const defaultOgImagePath = currentPath === '/nosotros'
+  ? '/images/nosotros-hero-desktop.webp'
   : currentPath === '/servicios'
-    ? 'https://opticaalemania.co/images/services-hero-desktop.webp'
+    ? '/images/services-hero-desktop.webp'
     : currentPath === '/procedimientos'
-      ? 'https://opticaalemania.co/images/procedimientos-hero-desktop.webp'
+      ? '/images/procedimientos-hero-desktop.webp'
       : currentPath === '/contacto'
-        ? 'https://opticaalemania.co/images/contact-facade-route.webp'
-        : 'https://opticaalemania.co/images/hero-desktop.webp';
+        ? '/images/contact-facade-route.webp'
+        : '/images/hero-desktop.webp';
+
 const defaultOgImageAlt = currentPath === '/nosotros'
   ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
   : currentPath === '/servicios'
@@ -81,7 +87,13 @@ const defaultOgImageAlt = currentPath === '/nosotros'
         ? 'Contacto y ubicación de Óptica Alemania en Barzal, Villavicencio'
         : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
 
-const resolvedOgImage = ogImage || defaultOgImage;
+const rawOgImage = ogImage || defaultOgImagePath;
+const resolvedOgImage = rawOgImage.startsWith('http')
+  ? (rawOgImage.includes('https://opticaalemania.co')
+      ? rawOgImage.replace('https://opticaalemania.co', cleanOgBase)
+      : rawOgImage)
+  : `${cleanOgBase}${rawOgImage.startsWith('/') ? rawOgImage : `/${rawOgImage}`}`;
+
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
 
 // Mensaje contextual de WhatsApp para widget flotante
