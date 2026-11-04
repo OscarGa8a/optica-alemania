@@ -15,7 +15,7 @@ export default defineConfig({
   },
 
   integrations: [sanity({
-    projectId: '1ygf6oh7',
+    projectId: 'wlz1r3ue',
     dataset: 'production',
     apiVersion: '2026-03-01',
     useCdn: false,
