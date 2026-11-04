@@ -1150,18 +1150,8 @@ export const siteConfig: SiteConfig = {
       description: "Conoce otros momentos de las evaluaciones visuales que realizamos en Óptica Alemania.",
       cards: [
         {
-          id: "evaluacion-optometrica",
-          videoId: "gallery-video-1",
-          title: "Evaluación optométrica",
-          description: "Una evaluación completa de tu visión con tecnología especializada.",
-          poster: "/images/procedimientos-evaluacion-optometrica.webp",
-          alt: "Evaluación optométrica completa con tecnología especializada en Óptica Alemania Villavicencio",
-          initialTimestamp: "0:10 / 0:45",
-          initialProgress: 22,
-        },
-        {
           id: "atencion-visual-infantil",
-          videoId: "gallery-video-2",
+          videoId: "gallery-video-child",
           title: "Atención visual infantil",
           description: "Evaluaciones adaptadas a las necesidades visuales de cada etapa.",
           poster: "/images/kids-vision-preview.webp",
