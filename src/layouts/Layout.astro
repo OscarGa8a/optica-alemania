@@ -115,11 +115,12 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://opticaalemania.co';
 const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${currentPath === '/' ? '/' : currentPath.startsWith('/') ? currentPath : `/${currentPath}`}`;
 const publicEnv = import.meta.env.PUBLIC_ENV || '';
 const publicNoindex = import.meta.env.PUBLIC_NOINDEX;
+const allowIndexing = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true' || publicNoindex === 'false' || publicNoindex === false;
 
 const isStagingDomain = siteUrl.includes('oscardev.co') || siteUrl.includes('pages.dev') || siteUrl.includes('vercel.app');
 const isStagingEnv = publicEnv === 'staging' || publicEnv === 'preview' || publicEnv === 'development';
 const isExplicitNoindex = publicNoindex === 'true' || publicNoindex === true;
-const isStaging = isStagingDomain || isStagingEnv || isExplicitNoindex;
+const isStaging = !allowIndexing && (isStagingDomain || isStagingEnv || isExplicitNoindex);
 
 const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const resolvedRobots = robots || defaultRobots;
@@ -480,26 +481,28 @@ const schemaGraph = {
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
     <!-- PLAYBOOK Fase 4: Salvaguarda Dinámica en Runtime (Capa 2) -->
-    <script is:inline>
-      (function() {
-        try {
-          var host = window.location.hostname;
-          var isStagingHost = host.includes('oscardev.co') || host.endsWith('.pages.dev') || host.endsWith('.vercel.app');
-          var isProdHost = host === 'opticaalemania.co' || host === 'www.opticaalemania.co';
-          if (isStagingHost && !isProdHost) {
-            var meta = document.querySelector('meta[name="robots"]');
-            if (meta) {
-              meta.setAttribute('content', 'noindex, nofollow');
-            } else {
-              var m = document.createElement('meta');
-              m.name = 'robots';
-              m.content = 'noindex, nofollow';
-              document.head.appendChild(m);
+    {!allowIndexing && (
+      <script is:inline>
+        (function() {
+          try {
+            var host = window.location.hostname;
+            var isStagingHost = host.includes('oscardev.co') || host.endsWith('.pages.dev') || host.endsWith('.vercel.app');
+            var isProdHost = host === 'opticaalemania.co' || host === 'www.opticaalemania.co';
+            if (isStagingHost && !isProdHost) {
+              var meta = document.querySelector('meta[name="robots"]');
+              if (meta) {
+                meta.setAttribute('content', 'noindex, nofollow');
+              } else {
+                var m = document.createElement('meta');
+                m.name = 'robots';
+                m.content = 'noindex, nofollow';
+                document.head.appendChild(m);
+              }
             }
-          }
-        } catch (_) {}
-      })();
-    </script>
+          } catch (_) {}
+        })();
+      </script>
+    )}
 
     <!-- Initialize dataLayer immediately to buffer events safely -->
     <script is:inline>
