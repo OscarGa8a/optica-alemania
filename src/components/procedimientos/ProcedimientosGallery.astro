@@ -54,8 +54,14 @@ const { gallery } = siteConfig.procedimientosPage;
       </p>
     </div>
 
-    <!-- 2 Video Cards Grid generated dynamically from siteConfig -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 xl:gap-12">
+    <!-- Video Cards Layout generated dynamically from siteConfig -->
+    <div
+      class={
+        gallery.cards.length === 1
+          ? 'max-w-xl'
+          : 'grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 xl:gap-12'
+      }
+    >
       {gallery.cards.map((card) => {
         const isChild = card.id === 'atencion-visual-infantil';
         const src = (isChild && childVideoUrl) ? childVideoUrl : card.src;
@@ -73,6 +79,7 @@ const { gallery } = siteConfig.procedimientosPage;
               label={`${card.title} - ${siteConfig.name}`}
               initialTimestamp={card.initialTimestamp}
               initialProgress={card.initialProgress}
+              aspectRatio="aspect-[4/5] sm:aspect-video"
             />
 
             <!-- Typography & Editorial Details matching Figma -->
@@ -80,7 +87,7 @@ const { gallery } = siteConfig.procedimientosPage;
               <h3 class="font-display text-2xl sm:text-3xl lg:text-[2rem] text-brand-heading leading-[1.1] tracking-tight">
                 {card.title}
               </h3>
-              <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-2 font-normal">
+              <p class="text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed mt-2 max-w-2xl font-normal">
                 {card.description}
               </p>
             </div>
