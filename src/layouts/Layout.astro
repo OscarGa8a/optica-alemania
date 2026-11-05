@@ -25,7 +25,7 @@ const {
   title = `${siteConfig.name} — ${siteConfig.tagline}`,
   description = siteConfig.description,
   robots,
-  gtmId = import.meta.env.PUBLIC_GTM_ID,
+  gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-5GSR6FH7',
   currentPath = '/',
   headerTheme,
   navVariant,
@@ -529,9 +529,10 @@ const schemaGraph = {
       </script>
     )}
 
-    <!-- Initialize dataLayer immediately to buffer events safely -->
+    <!-- Initialize dataLayer & gtag shim immediately to buffer events safely -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
     </script>
 
     <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
@@ -555,6 +556,17 @@ const schemaGraph = {
 
         ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
           window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
+        });
+
+        // Virtual pageview tracking on client navigation (Astro ClientRouter)
+        document.addEventListener('astro:page-load', function() {
+          if (window.dataLayer && window._gtmLoaded) {
+            window.dataLayer.push({
+              event: 'page_view',
+              page_path: window.location.pathname,
+              page_title: document.title,
+            });
+          }
         });
       </script>
     )}
