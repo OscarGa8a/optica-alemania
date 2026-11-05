@@ -53,7 +53,7 @@ No añadir un segundo H1 para palabras clave. Los campos de contacto como «Nues
 ### Copy final V1
 
 **Eyebrow**  
-`CONTACTO · ÓPTICA ALEMANIA`
+`CONTACTO`
 
 **H1**  
 `Hablemos de tu visión.`
@@ -110,15 +110,15 @@ No añadir un segundo H1 para palabras clave. Los campos de contacto como «Nues
 
 **Bloque de horarios**  
 - Etiqueta: `Horarios de atención`
-- Línea 1 de referencia: `Lunes a viernes: 8:30 a. m. – 6:00 p. m.`
-- Línea 2 de referencia: `Sábados: 8:30 a. m. – 3:00 p. m.`
+- Línea 1 de referencia: `Lunes a viernes: 9:00 a. m. – 12:00 m. y 2:00 p. m. – 6:00 p. m.`
+- Línea 2 de referencia: `Sábados: 9:00 a. m. – 12:00 m. y 1:00 p. m. – 3:00 p. m.`
 - Nota de estado: **VALIDAR horarios vigentes**. No atribuir un horario dominical si no está confirmado; si el cliente confirma que no abre los domingos, agregar expresamente `Domingos: cerrado`.
 
 **Bloque telefónico**  
-- Etiqueta: `Teléfono`
-- Valor de referencia: `+57 311 201 7302`
+- Etiqueta: `Teléfonos`
+- Valor de referencia: `311 201 7302 | 322 712 8828`
 - Acción accesible: `Llamar a Óptica Alemania`
-- Nota de estado: **VALIDAR** el teléfono actual y si ese mismo número es el canal oficial de WhatsApp.
+- Nota de estado: Actualizado con las dos líneas oficiales sin prefijo internacional en vista.
 
 ### Copy final V1 — Mapa
 
@@ -293,7 +293,7 @@ Antes de marcar esta V1 como **copy listo para publicación**, confirmar:
 
 ### Hero
 
-**CONTACTO · ÓPTICA ALEMANIA**
+**CONTACTO**
 
 # Hablemos de tu visión.
 
@@ -313,11 +313,11 @@ Estamos en Villavicencio. Aquí encontrarás nuestra dirección, los horarios de
 Calle 35 #34-36, Barzal, Villavicencio, Meta, Colombia
 
 **Horarios de atención**  
-Lunes a viernes: 8:30 a. m. – 6:00 p. m.  
-Sábados: 8:30 a. m. – 3:00 p. m.
+Lunes a viernes: 9:00 a. m. – 12:00 m. y 2:00 p. m. – 6:00 p. m.  
+Sábados: 9:00 a. m. – 12:00 m. y 1:00 p. m. – 3:00 p. m.
 
-**Teléfono**  
-+57 311 201 7302
+**Teléfonos**  
+311 201 7302 | 322 712 8828
 
 **Ubícanos en el mapa**  
 **Cómo llegar**

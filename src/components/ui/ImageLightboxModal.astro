@@ -1,0 +1,343 @@
+---
+// Reusable Fullscreen Image Lightbox Modal (<dialog>)
+// Opens on-demand when any [data-open-gallery-modal={id}] trigger is clicked
+import Icon from './Icon.astro';
+
+export interface LightboxImage {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
+interface Props {
+  id: string;
+  images: LightboxImage[];
+  title?: string;
+  eyebrow?: string;
+}
+
+const {
+  id,
+  images,
+  title = 'Nuestros Espacios',
+  eyebrow = 'ÓPTICA ALEMANIA',
+} = Astro.props;
+---
+
+<dialog
+  id={id}
+  data-image-lightbox-modal={id}
+  aria-label={title}
+  class="fixed inset-0 z-50 m-0 h-dvh w-screen max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/92 backdrop:backdrop-blur-md open:flex flex-col items-center justify-between"
+>
+  <div
+    data-lightbox-backdrop
+    class="relative flex h-full w-full flex-col items-center justify-between p-3 sm:p-5 lg:p-7 select-none"
+  >
+    <!-- Top Header Bar -->
+    <header class="w-full max-w-6xl flex items-center justify-between gap-4 px-2 py-2 text-white z-20">
+      <div class="min-w-0 flex items-center gap-3">
+        <div>
+          <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-blue-400">
+            {eyebrow}
+          </span>
+          <p class="text-xs sm:text-sm font-medium text-slate-200 truncate" data-lightbox-title>
+            {title}
+          </p>
+        </div>
+        <span
+          class="hidden xs:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/10 text-slate-300 border border-white/10"
+          data-lightbox-counter
+        >
+          1 / {images.length}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span
+          class="xs:hidden inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/10 text-slate-300 border border-white/10"
+          data-lightbox-counter-mobile
+        >
+          1 / {images.length}
+        </span>
+        <button
+          type="button"
+          data-close-lightbox
+          class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 text-white flex items-center justify-center transition-all duration-150 cursor-pointer shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white border border-white/10"
+          aria-label="Cerrar imagen"
+        >
+          <Icon name="x" class="w-5 h-5 stroke-current stroke-2" />
+        </button>
+      </div>
+    </header>
+
+    <!-- Center Stage (Active Image + Navigation Arrows) -->
+    <div class="relative flex-1 w-full max-w-6xl flex items-center justify-center min-h-0 my-2">
+      <!-- Prev Button (Left) -->
+      {images.length > 1 && (
+        <button
+          type="button"
+          data-lightbox-prev
+          class="absolute left-1 sm:left-3 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white shadow-xl"
+          aria-label="Imagen anterior"
+        >
+          <Icon name="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6 stroke-current" />
+        </button>
+      )}
+
+      <!-- Image Card Container -->
+      <div
+        data-lightbox-card
+        class="relative flex items-center justify-center max-w-full max-h-full origin-center"
+      >
+        <img
+          data-lightbox-active-img
+          src={images[0]?.src}
+          alt={images[0]?.alt}
+          width={images[0]?.width || 1600}
+          height={images[0]?.height || 1200}
+          class="max-w-[94vw] sm:max-w-[85vw] max-h-[72dvh] sm:max-h-[78dvh] w-auto h-auto object-contain rounded-xl sm:rounded-2xl shadow-2xl border border-white/10"
+        />
+      </div>
+
+      <!-- Next Button (Right) -->
+      {images.length > 1 && (
+        <button
+          type="button"
+          data-lightbox-next
+          class="absolute right-1 sm:right-3 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/70 active:scale-95 text-white flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white shadow-xl"
+          aria-label="Siguiente imagen"
+        >
+          <Icon name="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6 stroke-current" />
+        </button>
+      )}
+    </div>
+
+    <!-- Bottom Caption Bar -->
+    <footer class="w-full max-w-3xl text-center px-4 py-2 z-20">
+      <p
+        class="text-xs sm:text-sm text-slate-300 font-light tracking-wide line-clamp-2"
+        data-lightbox-caption
+      >
+        {images[0]?.alt}
+      </p>
+    </footer>
+  </div>
+
+  <!-- Raw Images Data for Client Script -->
+  <script type="application/json" data-lightbox-images-data set:html={JSON.stringify(images)} />
+</dialog>
+
+<script>
+  interface LightboxImageItem {
+    src: string;
+    alt: string;
+  }
+
+  function initImageLightboxModals() {
+    const modals = document.querySelectorAll<HTMLDialogElement>('dialog[data-image-lightbox-modal]');
+
+    modals.forEach((dialog) => {
+      if (dialog.dataset.initialized === 'true') return;
+      dialog.dataset.initialized = 'true';
+
+      const modalId = dialog.dataset.imageLightboxModal;
+      if (!modalId) return;
+
+      const dataScript = dialog.querySelector<HTMLScriptElement>('script[data-lightbox-images-data]');
+      let imagesList: LightboxImageItem[] = [];
+      try {
+        if (dataScript?.textContent) {
+          imagesList = JSON.parse(dataScript.textContent);
+        }
+      } catch (err) {
+        imagesList = [];
+      }
+
+      if (!imagesList.length) return;
+
+      const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-close-lightbox]');
+      const backdrop = dialog.querySelector<HTMLElement>('[data-lightbox-backdrop]');
+      const card = dialog.querySelector<HTMLElement>('[data-lightbox-card]');
+      const activeImg = dialog.querySelector<HTMLImageElement>('[data-lightbox-active-img]');
+      const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-prev]');
+      const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lightbox-next]');
+      const counterEl = dialog.querySelector<HTMLElement>('[data-lightbox-counter]');
+      const counterMobileEl = dialog.querySelector<HTMLElement>('[data-lightbox-counter-mobile]');
+      const captionEl = dialog.querySelector<HTMLElement>('[data-lightbox-caption]');
+
+      const triggers = document.querySelectorAll<HTMLElement>(`[data-open-gallery-modal="${modalId}"]`);
+
+      let currentIndex = 0;
+      let isClosing = false;
+      let lastFocusedElement: HTMLElement | null = null;
+
+      function renderIndex(index: number, animate = true) {
+        if (!imagesList.length) return;
+        currentIndex = (index + imagesList.length) % imagesList.length;
+        const currentItem = imagesList[currentIndex];
+
+        if (activeImg) {
+          activeImg.src = currentItem.src;
+          activeImg.alt = currentItem.alt;
+
+          if (animate) {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) {
+              activeImg.animate(
+                [
+                  { opacity: 0.65, transform: 'scale(0.98)' },
+                  { opacity: 1, transform: 'scale(1)' }
+                ],
+                { duration: 180, easing: 'ease-out' }
+              );
+            }
+          }
+        }
+
+        const countText = `${currentIndex + 1} / ${imagesList.length}`;
+        if (counterEl) counterEl.textContent = countText;
+        if (counterMobileEl) counterMobileEl.textContent = countText;
+        if (captionEl) captionEl.textContent = currentItem.alt;
+      }
+
+      function openModal(index = 0, triggerEl?: HTMLElement) {
+        lastFocusedElement = triggerEl || (document.activeElement as HTMLElement);
+        renderIndex(index, false);
+
+        if (!dialog.open) {
+          dialog.showModal();
+          document.body.style.overflow = 'hidden';
+
+          if (card) {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            card.animate(
+              [
+                { opacity: 0, transform: 'scale(0.94)' },
+                { opacity: 1, transform: 'scale(1)' }
+              ],
+              {
+                duration: prefersReducedMotion ? 0 : 220,
+                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                fill: 'forwards'
+              }
+            );
+          }
+
+          // Focus close button for accessibility
+          setTimeout(() => closeBtn?.focus(), 50);
+        }
+      }
+
+      function closeModal() {
+        if (isClosing || !dialog.open) return;
+
+        if (card) {
+          isClosing = true;
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const anim = card.animate(
+            [
+              { opacity: 1, transform: 'scale(1)' },
+              { opacity: 0, transform: 'scale(0.95)' }
+            ],
+            {
+              duration: prefersReducedMotion ? 0 : 160,
+              easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              fill: 'forwards'
+            }
+          );
+          anim.onfinish = () => {
+            dialog.close();
+            document.body.style.overflow = '';
+            isClosing = false;
+            lastFocusedElement?.focus();
+          };
+        } else {
+          dialog.close();
+          document.body.style.overflow = '';
+          lastFocusedElement?.focus();
+        }
+      }
+
+      function goNext() {
+        renderIndex(currentIndex + 1, true);
+      }
+
+      function goPrev() {
+        renderIndex(currentIndex - 1, true);
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetIndex = parseInt(trigger.dataset.galleryIndex || '0', 10);
+          openModal(targetIndex, trigger);
+        });
+      });
+
+      closeBtn?.addEventListener('click', closeModal);
+      prevBtn?.addEventListener('click', goPrev);
+      nextBtn?.addEventListener('click', goNext);
+
+      // Close when clicking directly on backdrop padding
+      backdrop?.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          closeModal();
+        }
+      });
+
+      // Keyboard navigation
+      dialog.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          goNext();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          goPrev();
+        }
+      });
+
+      // Native Escape handling
+      dialog.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        closeModal();
+      });
+
+      dialog.addEventListener('close', () => {
+        document.body.style.overflow = '';
+      });
+
+      // Touch swipe gestures
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      dialog.addEventListener(
+        'touchstart',
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        { passive: true }
+      );
+
+      dialog.addEventListener(
+        'touchend',
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const diffX = touchEndX - touchStartX;
+          if (Math.abs(diffX) > 45) {
+            if (diffX < 0) {
+              goNext(); // swipe left -> next
+            } else {
+              goPrev(); // swipe right -> prev
+            }
+          }
+        },
+        { passive: true }
+      );
+    });
+  }
+
+  initImageLightboxModals();
+  document.addEventListener('astro:page-load', initImageLightboxModals);
+</script>

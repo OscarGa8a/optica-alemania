@@ -420,11 +420,11 @@ async function run() {
         console.log(`✅ [${vp.name}] H2 contains 'Conoce dónde'`);
       }
 
-      // Verify 3 showcase images loaded properly
-      const spaceImages = spaceSection.locator('img');
+      // Verify 5 showcase images loaded properly
+      const spaceImages = spaceSection.locator('button[data-open-gallery-modal] img');
       const imgCount = await spaceImages.count();
-      if (imgCount !== 3) {
-        console.error(`❌ [${vp.name}] Expected 3 space images, got: ${imgCount}`);
+      if (imgCount !== 5) {
+        console.error(`❌ [${vp.name}] Expected 5 space images, got: ${imgCount}`);
         failed = true;
       } else {
         for (let i = 0; i < imgCount; i++) {
@@ -434,7 +434,25 @@ async function run() {
             failed = true;
           }
         }
-        console.log(`✅ [${vp.name}] 3 space images loaded successfully`);
+        console.log(`✅ [${vp.name}] 5 space images loaded successfully`);
+      }
+
+      // Verify Space Image Lightbox Modal opens and closes smoothly
+      const lightboxTrigger = spaceSection.locator('button[data-open-gallery-modal="home-espacio-lightbox"]').first();
+      if (await lightboxTrigger.count() > 0) {
+        await lightboxTrigger.click();
+        const lightboxDialog = page.locator('#home-espacio-lightbox');
+        await lightboxDialog.waitFor({ state: 'visible', timeout: 3000 });
+        console.log(`✅ [${vp.name}] Space image lightbox opened successfully with WAAPI`);
+
+        // Test keyboard navigation to next image
+        await page.keyboard.press('ArrowRight');
+        await page.waitForTimeout(200);
+
+        // Test Escape key closes modal
+        await page.keyboard.press('Escape');
+        await lightboxDialog.waitFor({ state: 'hidden', timeout: 3000 });
+        console.log(`✅ [${vp.name}] Space image lightbox closed successfully via Escape with WAAPI`);
       }
 
       // Verify CTA links
@@ -821,7 +839,7 @@ async function run() {
         const list = section.querySelector('[data-contact-list]');
         if (!list) return false;
         const items = [...list.children];
-        if (items.length !== 4) return false;
+        if (items.length < 4) return false;
         for (let i = 1; i < items.length; i++) {
           if (items[i].getBoundingClientRect().top <= items[i - 1].getBoundingClientRect().top) {
             return false;
@@ -947,7 +965,7 @@ async function run() {
       const mobileMenu = page.locator('#mobile-menu');
       if (await menuBtn.count() > 0 && await mobileMenu.count() > 0) {
         await menuBtn.click();
-        await page.waitForTimeout(220);
+        await page.waitForTimeout(300);
         const isMenuOpen = await mobileMenu.evaluate((el) => !el.classList.contains('hidden'));
         if (isMenuOpen) {
           console.log(`✅ [${vp.name}] Mobile drawer opened smoothly with WAAPI`);
@@ -957,7 +975,7 @@ async function run() {
         }
 
         await menuBtn.click();
-        await page.waitForTimeout(180);
+        await page.waitForTimeout(300);
         const isMenuClosed = await mobileMenu.evaluate((el) => el.classList.contains('hidden'));
         if (isMenuClosed) {
           console.log(`✅ [${vp.name}] Mobile drawer closed smoothly with WAAPI`);

@@ -3,8 +3,11 @@
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../data/siteConfig';
 import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+import ImageLightboxModal from './ui/ImageLightboxModal.astro';
 
 const { space } = siteConfig;
+const lightboxId = 'home-espacio-lightbox';
 ---
 
 <section
@@ -51,46 +54,117 @@ const { space } = siteConfig;
       </div>
     </div>
 
-    <!-- Asymmetric Bento Photo Grid -->
-    <div class="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-[1.626fr_1fr] gap-5 sm:gap-6 lg:gap-7 items-stretch">
-      <!-- Main Featured Image (Reception / Lounge) -->
-      <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[16/10] lg:aspect-auto lg:h-full group">
+    <!-- Responsive Bento Photo Grid (5 images with fullscreen Lightbox) -->
+    <div class="mt-10 sm:mt-12 lg:mt-16 grid grid-cols-2 lg:grid-cols-12 gap-3.5 sm:gap-5 lg:gap-6 items-stretch">
+      <!-- Main Featured Space (Card 1) -->
+      <button
+        type="button"
+        data-open-gallery-modal={lightboxId}
+        data-gallery-index="0"
+        aria-label={`Ampliar imagen: ${space.images[0].alt}`}
+        class="col-span-2 lg:col-span-7 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
+      >
         <img
-          src={space.images.main.src}
-          alt={space.images.main.alt}
-          width={space.images.main.width}
-          height={space.images.main.height}
-          class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+          src={space.images[0].src}
+          alt={space.images[0].alt}
+          width={space.images[0].width}
+          height={space.images[0].height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
         />
-      </div>
+        <div class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 shadow-md border border-white/20">
+          <Icon name="maximize" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </div>
+      </button>
 
-      <!-- Secondary Stacked Column (Frames Display & Clinical Space) -->
-      <div class="grid grid-cols-1 gap-5 sm:gap-6 lg:gap-7 h-full">
-        <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[2/1] group">
-          <img
-            src={space.images.shelves.src}
-            alt={space.images.shelves.alt}
-            width={space.images.shelves.width}
-            height={space.images.shelves.height}
-            class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
-            loading="lazy"
-            decoding="async"
-          />
+      <!-- Secondary Featured Space (Card 2) -->
+      <button
+        type="button"
+        data-open-gallery-modal={lightboxId}
+        data-gallery-index="1"
+        aria-label={`Ampliar imagen: ${space.images[1].alt}`}
+        class="col-span-1 lg:col-span-5 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-auto lg:h-full group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
+      >
+        <img
+          src={space.images[1].src}
+          alt={space.images[1].alt}
+          width={space.images[1].width}
+          height={space.images[1].height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 shadow-md border border-white/20">
+          <Icon name="maximize" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
         </div>
-        <div class="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[2/1] group">
-          <img
-            src={space.images.clinic.src}
-            alt={space.images.clinic.alt}
-            width={space.images.clinic.width}
-            height={space.images.clinic.height}
-            class="w-full h-full object-cover object-center group-hover:scale-[1.015] transition-transform duration-500 ease-out"
-            loading="lazy"
-            decoding="async"
-          />
+      </button>
+
+      <!-- Detail Space 1 (Card 3) -->
+      <button
+        type="button"
+        data-open-gallery-modal={lightboxId}
+        data-gallery-index="2"
+        aria-label={`Ampliar imagen: ${space.images[2].alt}`}
+        class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
+      >
+        <img
+          src={space.images[2].src}
+          alt={space.images[2].alt}
+          width={space.images[2].width}
+          height={space.images[2].height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 shadow-md border border-white/20">
+          <Icon name="maximize" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
         </div>
-      </div>
+      </button>
+
+      <!-- Detail Space 2 (Card 4) -->
+      <button
+        type="button"
+        data-open-gallery-modal={lightboxId}
+        data-gallery-index="3"
+        aria-label={`Ampliar imagen: ${space.images[3].alt}`}
+        class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
+      >
+        <img
+          src={space.images[3].src}
+          alt={space.images[3].alt}
+          width={space.images[3].width}
+          height={space.images[3].height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 shadow-md border border-white/20">
+          <Icon name="maximize" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </div>
+      </button>
+
+      <!-- Detail Space 3 (Card 5) -->
+      <button
+        type="button"
+        data-open-gallery-modal={lightboxId}
+        data-gallery-index="4"
+        aria-label={`Ampliar imagen: ${space.images[4].alt}`}
+        class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
+      >
+        <img
+          src={space.images[4].src}
+          alt={space.images[4].alt}
+          width={space.images[4].width}
+          height={space.images[4].height}
+          class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="pointer-events-none absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/45 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 shadow-md border border-white/20">
+          <Icon name="maximize" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </div>
+      </button>
     </div>
 
     <!-- Mobile Action Link (placed below the image stack matching mobile mockup) -->
@@ -107,4 +181,12 @@ const { space } = siteConfig;
       </Button>
     </div>
   </div>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <ImageLightboxModal
+    id={lightboxId}
+    images={space.images}
+    title="Instalaciones Óptica Alemania"
+    eyebrow={space.eyebrow}
+  />
 </section>

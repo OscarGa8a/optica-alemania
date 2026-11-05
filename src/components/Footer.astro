@@ -131,14 +131,24 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
 
           <!-- Business Hours -->
           <li class="flex items-start gap-3.5 text-sm text-white/90">
-            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
+            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25 mt-0.5">
               <Icon name="clock" class="w-4.5 h-4.5 stroke-current stroke-2" />
             </span>
-            <div class="pt-1.5 leading-snug">
+            <div class="pt-0.5 leading-snug min-w-0">
               <p class="font-medium text-white/90">Horario de atención</p>
-              <div class="text-slate-300 text-xs sm:text-sm mt-0.5 leading-relaxed">
-                <p>{contact.scheduleWeekdays}</p>
-                <p>{contact.scheduleSaturday}</p>
+              <div class="mt-2 space-y-2 text-xs text-slate-300">
+                {contact.scheduleItems.map((item) => (
+                  <div>
+                    <span class="block font-semibold text-slate-400 text-xs uppercase tracking-wider">
+                      {item.days}
+                    </span>
+                    <div class="mt-0.5 space-y-0.5 text-slate-200 tabular-nums">
+                      {item.shifts.map((shift) => (
+                        <p class="whitespace-nowrap">{shift}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </li>
@@ -156,6 +166,17 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
             data-event-network="instagram_icon"
           >
             <Icon name="instagram" class="w-5 h-5 stroke-current stroke-2" />
+          </a>
+          <a
+            href={footer.tiktokUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok de Óptica Alemania"
+            class="w-12 h-12 rounded-full border border-white/20 hover:border-brand-primary hover:bg-brand-primary text-white transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            data-event="footer_social_click"
+            data-event-network="tiktok_icon"
+          >
+            <Icon name="tiktok" class="w-5 h-5 fill-current shrink-0" />
           </a>
           <a
             href={footer.whatsappUrl}
@@ -242,14 +263,24 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
 
           <!-- Business Hours -->
           <li class="flex items-start gap-3.5 text-sm text-white/90">
-            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
+            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25 mt-0.5">
               <Icon name="clock" class="w-4.5 h-4.5 stroke-current stroke-2" />
             </span>
-            <div class="pt-1.5 leading-snug">
+            <div class="pt-0.5 leading-snug min-w-0">
               <p class="font-medium text-white/90">Horario de atención</p>
-              <div class="text-slate-300 text-xs sm:text-sm mt-0.5 leading-relaxed">
-                <p>{contact.scheduleWeekdays}</p>
-                <p>{contact.scheduleSaturday}</p>
+              <div class="mt-2 space-y-2 text-xs text-slate-300">
+                {contact.scheduleItems.map((item) => (
+                  <div>
+                    <span class="block font-semibold text-slate-400 text-xs uppercase tracking-wider">
+                      {item.days}
+                    </span>
+                    <div class="mt-0.5 space-y-0.5 text-slate-200 tabular-nums">
+                      {item.shifts.map((shift) => (
+                        <p class="whitespace-nowrap">{shift}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </li>
@@ -267,6 +298,17 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
             data-event-network="instagram_icon"
           >
             <Icon name="instagram" class="w-5 h-5 stroke-current stroke-2" />
+          </a>
+          <a
+            href={footer.tiktokUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok de Óptica Alemania"
+            class="w-12 h-12 rounded-full border border-white/20 hover:border-brand-primary hover:bg-brand-primary text-white transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            data-event="footer_social_click"
+            data-event-network="tiktok_icon"
+          >
+            <Icon name="tiktok" class="w-5 h-5 fill-current shrink-0" />
           </a>
           <a
             href={footer.whatsappUrl}

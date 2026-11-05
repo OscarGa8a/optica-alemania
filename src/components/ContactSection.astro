@@ -80,7 +80,19 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
             </div>
             <div>
               <p class="text-xs uppercase tracking-wider text-slate-400 font-medium">Dirección</p>
-              <p class="text-white text-sm sm:text-lg font-normal mt-0.5">{contact.address}, {contact.city}, {contact.department}.</p>
+              <p class="text-white text-sm sm:text-lg font-normal mt-0.5">
+                <a
+                  href={contact.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-blue-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-xs"
+                  aria-label={`Ver dirección de Óptica Alemania en Google Maps: ${contact.address}, ${contact.city}`}
+                  data-event="google_maps_click"
+                  data-event-location="home_contact_address_text"
+                >
+                  {contact.address}, {contact.city}, {contact.department}.
+                </a>
+              </p>
             </div>
           </div>
 
@@ -104,11 +116,21 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
             <div class="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-brand-midnight-bubble border border-blue-400/25 flex items-center justify-center text-blue-400 shrink-0 shadow-xs mt-0.5">
               <Icon name="clock" class="w-5 h-5 stroke-current stroke-2" />
             </div>
-            <div>
+            <div class="min-w-0 flex-1">
               <p class="text-xs uppercase tracking-wider text-slate-400 font-medium">Horarios de atención</p>
-              <div class="text-white text-sm sm:text-lg font-normal mt-0.5 leading-snug">
-                <p>{contact.scheduleWeekdays}</p>
-                <p>{contact.scheduleSaturday}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-2">
+                {contact.scheduleItems.map((item) => (
+                  <div>
+                    <span class="block text-xs font-semibold uppercase tracking-wider text-blue-300 mb-0.5">
+                      {item.days}
+                    </span>
+                    <div class="space-y-0.5 text-xs sm:text-sm text-white/95 font-normal tabular-nums">
+                      {item.shifts.map((shift) => (
+                        <p class="whitespace-nowrap">{shift}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -128,6 +150,26 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
                   class="hover:text-blue-400 transition-colors"
                 >
                   {contact.instagram}
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <!-- TikTok -->
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-brand-midnight-bubble border border-blue-400/25 flex items-center justify-center text-blue-400 shrink-0 shadow-xs">
+              <Icon name="tiktok" class="w-5 h-5 fill-current" />
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-wider text-slate-400 font-medium">TikTok</p>
+              <p class="text-white text-sm sm:text-lg font-normal mt-0.5">
+                <a
+                  href={contact.tiktokUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="hover:text-blue-400 transition-colors"
+                >
+                  {contact.tiktok}
                 </a>
               </p>
             </div>

@@ -170,7 +170,7 @@ Explicar qué servicios de optometría y evaluaciones visuales pueden consultars
 `Consulta de optometría especializada`
 
 **Descripción**  
-`Una consulta para valorar diferentes aspectos de tu visión, conversar sobre las molestias o dificultades que puedas presentar y conocer las recomendaciones que correspondan según la evaluación profesional.`
+`En nuestra consulta de optometría evaluamos tu agudeza visual, determinamos si necesitas corrección óptica y examinamos las estructuras externas e internas de tus ojos mediante pruebas manuales y digitales. Al finalizar, te explicamos los resultados y las recomendaciones para cuidar tu salud visual.`
 
 **Microcopy opcional, si el diseño incluye una línea de apoyo**  
 `Consulta por disponibilidad y condiciones de atención.`
@@ -548,7 +548,7 @@ Los siguientes datos se conocen como **referencias históricas del proyecto**, n
 |---|---|---|
 | Dirección | Calle 35 #34-36, Barzal, Villavicencio, Meta | Confirmar dirección exacta, enlace Maps y forma comercial de escribirla |
 | Teléfono / WhatsApp | +57 311 201 7302 | Confirmar si atiende WhatsApp y es el número oficial vigente |
-| Horario | Lunes a viernes 8:30 a. m.–6:00 p. m.; sábado 8:30 a. m.–3:00 p. m. | Confirmar vigencia y si los servicios tienen horarios distintos |
+| Horario | Lunes a viernes 9:00 a. m.–12:00 m. y 2:00 p. m.–6:00 p. m.; sábado 9:00 a. m.–12:00 m. y 1:00 p. m.–3:00 p. m. | Confirmar vigencia y si los servicios tienen horarios distintos |
 | Citas | No verificado | Confirmar si son obligatorias, opcionales o por orden de llegada |
 | Tarifas | No suministradas | No publicar cifras sin lista oficial aprobada |
 | Atención infantil | Se muestra en material de proyecto | Validar edades, condiciones y autorización de imágenes de menores |
