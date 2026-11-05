@@ -1,0 +1,353 @@
+---
+// Sección Reseñas — Social Proof & Google Reviews
+// Óptica Alemania Villavicencio
+import { siteConfig, type ReviewItem } from '../data/siteConfig';
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+
+interface Props {
+  id?: string;
+  class?: string;
+  limit?: number;
+}
+
+const {
+  id = 'resenas',
+  class: className = '',
+  limit,
+} = Astro.props;
+
+const { reviews: reviewsConfig } = siteConfig;
+const displayedReviews: ReviewItem[] = limit
+  ? reviewsConfig.reviews.slice(0, limit)
+  : reviewsConfig.reviews;
+
+const [featuredReview, ...secondaryReviews] = displayedReviews;
+---
+
+<section
+  id={id}
+  class={`relative bg-white text-brand-body py-14 sm:py-16 lg:py-24 scroll-mt-20 overflow-hidden ${className}`.trim()}
+>
+  <!-- Atmospheric soft ambient clinic lighting matching brand tokens -->
+  <div class="absolute -top-24 -left-20 w-96 sm:w-144 h-96 sm:h-144 bg-brand-blue-soft/50 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -bottom-24 -right-20 w-80 sm:w-128 h-80 sm:h-128 bg-brand-ice/40 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Decorative subtle corner brand curve in bottom left -->
+  <div class="absolute -bottom-28 -left-28 w-80 sm:w-96 h-80 sm:h-96 bg-brand-primary/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Eye asset watermark in top right matching visual identity -->
+  <div
+    class="absolute -right-24 sm:-right-32 -top-16 sm:-top-28 w-full max-w-lg lg:max-w-2xl pointer-events-none opacity-[0.14] select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/asset.svg"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
+      
+      <!-- Left Column: Context, Rating Summary, Desktop CTA -->
+      <div class="lg:col-span-5 flex flex-col items-start">
+        <!-- Eyebrow: Google G icon + Divider + Category -->
+        <div class="inline-flex items-center gap-2.5">
+          <Icon name="google" class="w-5 h-5 shrink-0" />
+          <span class="h-3.5 w-px bg-brand-border" aria-hidden="true"></span>
+          <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-primary">
+            {reviewsConfig.eyebrow}
+          </span>
+        </div>
+
+        <!-- H2: Editorial serif heading with deliberate 3-line cadence -->
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl text-brand-heading leading-[1.08] tracking-tight mt-3 sm:mt-4">
+          <span class="block font-normal">{reviewsConfig.titlePart1}</span>
+          <span class="block font-normal">{reviewsConfig.titlePart2}</span>
+          <span class="block italic font-normal text-brand-primary">{reviewsConfig.titlePart3}</span>
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-brand-body leading-relaxed max-w-xl">
+          {reviewsConfig.description}
+        </p>
+
+        <!-- Rating Box -->
+        <div class="mt-6 sm:mt-8 w-full sm:w-auto inline-flex items-center gap-4 sm:gap-6 px-5 sm:px-6 py-4 rounded-2xl bg-brand-blue-soft/35 border border-brand-border/80 shadow-xs">
+          <span class="text-4xl sm:text-5xl font-bold text-brand-heading font-sans tracking-tight">
+            {reviewsConfig.rating.replace('.', ',')}
+          </span>
+          <span class="h-10 w-px bg-brand-border" aria-hidden="true"></span>
+          <div class="flex flex-col gap-1">
+            <div
+              role="img"
+              class="flex items-center gap-0.5 text-amber-400"
+              aria-label={`Calificación ${reviewsConfig.rating} de 5 estrellas`}
+            >
+              {Array.from({ length: 5 }).map(() => (
+                <Icon name="star" class="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+              ))}
+            </div>
+            <span class="text-xs sm:text-sm font-medium text-brand-body">
+              {reviewsConfig.ratingLabel}
+            </span>
+          </div>
+        </div>
+
+        <!-- Desktop Button CTA -->
+        <div class="mt-8 hidden lg:block">
+          <Button
+            variant="primary"
+            size="md"
+            href={reviewsConfig.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            icon="arrow-right"
+            iconPosition="right"
+            data-event="external_review_click"
+            data-event-location="reviews_desktop"
+            aria-label={`${reviewsConfig.ctaText} en Google (abre en nueva pestaña)`}
+          >
+            {reviewsConfig.ctaText}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right Column: Desktop Bento Grid & Mobile Carousel -->
+      <div class="lg:col-span-7">
+        
+        <!-- Desktop Grid (≥ lg) -->
+        <div class="hidden lg:grid grid-cols-2 gap-5 xl:gap-6">
+          
+          <!-- Card 1: Featured Card (Full Width) -->
+          {featuredReview && (
+            <div class="col-span-2 bg-white rounded-3xl border border-brand-border p-7 xl:p-8 shadow-xs hover:shadow-md hover:border-brand-primary/30 transition-all duration-300 flex flex-col justify-between gap-5">
+              <!-- Card Header -->
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <img
+                    src={featuredReview.avatar}
+                    alt={featuredReview.alt}
+                    width="60"
+                    height="60"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-14 h-14 rounded-full object-cover border border-brand-border/60 shadow-xs shrink-0"
+                  />
+                  <div>
+                    <h3 class="text-base sm:text-lg font-semibold text-brand-heading leading-snug">
+                      {featuredReview.author}
+                    </h3>
+                    <p class="text-xs text-brand-body mt-0.5">
+                      {featuredReview.source}
+                    </p>
+                    <div role="img" class="flex items-center gap-0.5 text-amber-400 mt-1.5" aria-label={`Calificación ${featuredReview.rating} de 5 estrellas`}>
+                      {Array.from({ length: featuredReview.rating }).map(() => (
+                        <Icon name="star" class="w-4 h-4 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Google wordmark on featured card -->
+                <div class="flex items-center gap-2.5 pl-4 border-l border-brand-border/60">
+                  <span role="img" aria-label="Google" class="text-base font-semibold tracking-tight font-sans select-none">
+                    <span class="text-[#4285F4]">G</span><span class="text-[#EA4335]">o</span><span class="text-[#FBBC05]">o</span><span class="text-[#4285F4]">g</span><span class="text-[#34A853]">l</span><span class="text-[#EA4335]">e</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card Quote -->
+              <blockquote class="text-base sm:text-lg text-brand-heading/90 leading-relaxed font-sans font-normal">
+                <span class="text-brand-heading/60 text-xl font-serif select-none mr-0.5 leading-none">“</span>{featuredReview.comment}”
+              </blockquote>
+            </div>
+          )}
+
+          <!-- Card 2 & Card 3: Secondary Cards -->
+          {secondaryReviews.map((review) => (
+            <div class="col-span-1 bg-white rounded-3xl border border-brand-border p-6 xl:p-7 shadow-xs hover:shadow-md hover:border-brand-primary/30 transition-all duration-300 flex flex-col justify-start gap-5">
+              <!-- Card Header -->
+              <div class="flex items-center gap-3.5">
+                <img
+                  src={review.avatar}
+                  alt={review.alt}
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-12 h-12 rounded-full object-cover border border-brand-border/60 shadow-xs shrink-0"
+                />
+                <div>
+                  <h3 class="text-base font-semibold text-brand-heading leading-snug">
+                    {review.author}
+                  </h3>
+                  <p class="text-xs text-brand-body mt-0.5">
+                    {review.source}
+                  </p>
+                  <div role="img" class="flex items-center gap-0.5 text-amber-400 mt-1" aria-label={`Calificación ${review.rating} de 5 estrellas`}>
+                    {Array.from({ length: review.rating }).map(() => (
+                      <Icon name="star" class="w-3.5 h-3.5 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Quote -->
+              <blockquote class="text-sm sm:text-base text-brand-heading/90 leading-relaxed font-sans font-normal">
+                <span class="text-brand-heading/60 text-lg font-serif select-none mr-0.5 leading-none">“</span>{review.comment}”
+              </blockquote>
+            </div>
+          ))}
+        </div>
+
+        <!-- Mobile Carousel (< lg) -->
+        <div class="lg:hidden flex flex-col gap-4">
+          <div
+            id="reviews-carousel"
+            class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-6 px-6 sm:-mx-8 sm:px-8 pb-3 no-scrollbar"
+            role="region"
+            aria-label="Carrusel de reseñas"
+            tabindex="0"
+          >
+            {displayedReviews.map((review) => (
+              <div class="w-[88vw] max-w-[340px] shrink-0 snap-center bg-white rounded-3xl border border-brand-border p-6 shadow-xs flex flex-col justify-start gap-4">
+                <!-- Card Header -->
+                <div class="flex items-center gap-3.5">
+                  <img
+                    src={review.avatar}
+                    alt={review.alt}
+                    width="48"
+                    height="48"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-12 h-12 rounded-full object-cover border border-brand-border/60 shadow-xs shrink-0"
+                  />
+                  <div>
+                    <h3 class="text-base font-semibold text-brand-heading leading-snug">
+                      {review.author}
+                    </h3>
+                    <p class="text-xs text-brand-body mt-0.5">
+                      {review.source}
+                    </p>
+                    <div role="img" class="flex items-center gap-0.5 text-amber-400 mt-1" aria-label={`Calificación ${review.rating} de 5 estrellas`}>
+                      {Array.from({ length: review.rating }).map(() => (
+                        <Icon name="star" class="w-3.5 h-3.5 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card Quote -->
+                <blockquote class="text-sm sm:text-base text-brand-heading/90 leading-relaxed font-sans font-normal">
+                  <span class="text-brand-heading/60 text-lg font-serif select-none mr-0.5 leading-none">“</span>{review.comment}”
+                </blockquote>
+              </div>
+            ))}
+          </div>
+
+          <!-- Carousel Dots indicator -->
+          <div class="flex items-center justify-center gap-1 pt-1">
+            {displayedReviews.map((_, index) => (
+              <button
+                type="button"
+                class="p-2 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-full min-w-[28px] min-h-[28px]"
+                data-review-dot={index}
+                aria-label={`Ir a la reseña ${index + 1}`}
+              >
+                <span class={`dot-pill block h-2 rounded-full transition-all duration-300 ${index === 0 ? 'w-6 bg-brand-primary' : 'w-2 bg-brand-border'}`}></span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Mobile Full-Width CTA -->
+          <div class="mt-3">
+            <Button
+              variant="primary"
+              size="md"
+              href={reviewsConfig.ctaHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              icon="arrow-right"
+              iconPosition="right"
+              class="w-full justify-center"
+              data-event="external_review_click"
+              data-event-location="reviews_mobile"
+              aria-label={`${reviewsConfig.ctaText} en Google (abre en nueva pestaña)`}
+            >
+              {reviewsConfig.ctaText}
+            </Button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function initReviewsCarousel() {
+    const carousel = document.getElementById('reviews-carousel');
+    if (!carousel) return;
+
+    const cards = carousel.querySelectorAll<HTMLElement>('.snap-center');
+    const dots = document.querySelectorAll<HTMLButtonElement>('[data-review-dot]');
+    if (!dots.length || !cards.length) return;
+
+    // Click dot to scroll to card
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        const targetCard = cards[idx];
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+    });
+
+    // Update active dot on intersection
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Array.from(cards).indexOf(entry.target as HTMLElement);
+            if (index !== -1) {
+              dots.forEach((dot, dIdx) => {
+                const pill = dot.querySelector('.dot-pill') || dot;
+                if (dIdx === index) {
+                  pill.classList.add('w-6', 'bg-brand-primary');
+                  pill.classList.remove('w-2', 'bg-brand-border');
+                } else {
+                  pill.classList.remove('w-6', 'bg-brand-primary');
+                  pill.classList.add('w-2', 'bg-brand-border');
+                }
+              });
+            }
+          }
+        });
+      },
+      { root: carousel, threshold: 0.6 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
+  initReviewsCarousel();
+  document.addEventListener('astro:page-load', initReviewsCarousel);
+</script>
+
+<style>
+  #reviews-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  #reviews-carousel::-webkit-scrollbar {
+    display: none;
+  }
+</style>
