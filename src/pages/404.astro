@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import { siteConfig } from '../data/siteConfig';
+
+const pageTitle = `Página no encontrada (Error 404) | ${siteConfig.name}`;
+const pageDescription =
+  "Lo sentimos, la página que buscas no existe o ha sido trasladada. Consulta nuestros servicios de optometría y salud visual en Villavicencio.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  robots="noindex, nofollow"
+  currentPath="/404"
+  headerTheme="light"
+>
+  <section class="min-h-[70vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 bg-brand-surface">
+    <div class="max-w-2xl mx-auto text-center flex flex-col items-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-blue-soft text-brand-primary mb-6 shadow-xs border border-brand-primary/10">
+        <span class="font-serif text-2xl font-bold">404</span>
+      </div>
+
+      <p class="text-xs font-semibold uppercase tracking-widest text-brand-blue-accent mb-2">
+        Error 404
+      </p>
+
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-brand-primary mb-4 leading-tight">
+        Página no encontrada
+      </h1>
+
+      <p class="font-sans text-sm sm:text-base text-slate-600 mb-8 max-w-lg leading-relaxed">
+        El recurso o página que estás buscando no existe, ha sido movido o ya no se encuentra disponible.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
+        <Button
+          href="/"
+          variant="primary"
+          size="md"
+          data-event="404_home_click"
+          data-event-location="404_page"
+          class="w-full sm:w-auto"
+        >
+          Volver al inicio
+        </Button>
+        <Button
+          href="/servicios"
+          variant="secondary"
+          size="md"
+          data-event="404_services_click"
+          data-event-location="404_page"
+          class="w-full sm:w-auto"
+        >
+          Ver servicios
+        </Button>
+        <Button
+          href="/contacto"
+          variant="secondary"
+          size="md"
+          data-event="404_contact_click"
+          data-event-location="404_page"
+          class="w-full sm:w-auto"
+        >
+          Contacto
+        </Button>
+      </div>
+    </div>
+  </section>
+  <Footer currentPath="/404" />
+</Layout>

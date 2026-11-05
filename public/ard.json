@@ -1,0 +1,46 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Óptica Alemania",
+    "documentationUrl": "https://opticaalemania.co",
+    "logoUrl": "https://opticaalemania.co/favicon.svg"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:opticaalemania.co:doc:llms",
+      "displayName": "Óptica Alemania LLM Context & Services",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://opticaalemania.co/llms.txt",
+      "description": "Especificación estructurada para agentes de IA con servicios clínicos, monturas y contacto.",
+      "representativeQueries": [
+        "servicios de optometria en Villavicencio",
+        "agendar cita en Optica Alemania",
+        "horarios y ubicacion de Optica Alemania Barzal"
+      ]
+    },
+    {
+      "identifier": "urn:air:opticaalemania.co:doc:llms-full",
+      "displayName": "Óptica Alemania Full Knowledge Base",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://opticaalemania.co/llms-full.txt",
+      "description": "Base de conocimiento clínica completa, equipos diagnósticos, convenios Cofrem y procedimientos.",
+      "representativeQueries": [
+        "convenio Cofrem optica Villavicencio",
+        "test de farnsworth y volk inview",
+        "urgencias y lentes de contacto"
+      ]
+    },
+    {
+      "identifier": "urn:air:opticaalemania.co:service:appointment",
+      "displayName": "Agendamiento y Triage Clínico WhatsApp",
+      "type": "application/agent-card+json",
+      "url": "https://opticaalemania.co/.well-known/agent-card.json",
+      "description": "Canal directo de triage y reserva de citas de optometría en Villavicencio.",
+      "representativeQueries": [
+        "pedir cita optometrista Villavicencio",
+        "agendar examen visual Barzal",
+        "horarios y atencion inmediata Optica Alemania"
+      ]
+    }
+  ]
+}
