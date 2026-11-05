@@ -62,10 +62,10 @@ const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
 const resolvedDesktopPreload = preloadDesktopImage ?? defaultDesktopPreload;
 
 // OpenGraph & Twitter Image adaptativo con base URL dinámica
-// Nota: Mientras opticaalemania.co no resuelva por DNS, las imágenes se resuelven en oscardev.co salvo que se fije PUBLIC_OG_IMAGE_BASE_URL
 const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL;
 const ogBaseUrl = import.meta.env.PUBLIC_OG_IMAGE_BASE_URL
-  || (rawSiteUrl && !rawSiteUrl.includes('opticaalemania.co') ? rawSiteUrl : 'https://opticaalemania.oscardev.co');
+  || rawSiteUrl
+  || 'https://opticaalemania.co';
 const cleanOgBase = ogBaseUrl.replace(/\/$/, '');
 
 const defaultOgImagePath = currentPath === '/nosotros'
@@ -90,9 +90,7 @@ const defaultOgImageAlt = currentPath === '/nosotros'
 
 const rawOgImage = ogImage || defaultOgImagePath;
 const resolvedOgImage = rawOgImage.startsWith('http')
-  ? (rawOgImage.includes('https://opticaalemania.co')
-      ? rawOgImage.replace('https://opticaalemania.co', cleanOgBase)
-      : rawOgImage)
+  ? rawOgImage
   : `${cleanOgBase}${rawOgImage.startsWith('/') ? rawOgImage : `/${rawOgImage}`}`;
 
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
