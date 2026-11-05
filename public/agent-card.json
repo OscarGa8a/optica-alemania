@@ -1,0 +1,16 @@
+{
+  "name": "Óptica Alemania - Agendamiento y Triage Clínico",
+  "description": "Canal oficial de WhatsApp para agendamiento de citas optométricas, valoración visual y atención clínica en Óptica Alemania Villavicencio.",
+  "version": "1.0.0",
+  "protocol": "https",
+  "url": "https://wa.me/573112017302?text=Hola%2C%20quisiera%20agendar%20una%20cita%20en%20%C3%93ptica%20Alemania%20Villavicencio",
+  "provider": {
+    "name": "Óptica Alemania",
+    "url": "https://opticaalemania.co"
+  },
+  "capabilities": [
+    "optometry-appointment-booking",
+    "clinical-triage",
+    "visual-health-consultation"
+  ]
+}
