@@ -12,9 +12,11 @@ const imageConfigs = [
   // 1. Hero Desktop
   {
     name: 'nosotros-hero-desktop',
-    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image2.png'))
-      ? path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image2.png')
-      : path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_desktop_image2.png'),
+    src: [
+      path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image_v2.png'),
+      path.join(ROOT_DIR, 'docs', 'about', '1_hero_desktop_image2.png'),
+      path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_desktop_image2.png'),
+    ].find((p) => fs.existsSync(p)),
     width: 1672,
     height: 941,
     fit: 'cover',
@@ -23,20 +25,24 @@ const imageConfigs = [
   // 1. Hero Mobile
   {
     name: 'nosotros-hero-mobile',
-    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image2.png'))
-      ? path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image2.png')
-      : path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_mobile_image2.png'),
+    src: [
+      path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image_v2.png'),
+      path.join(ROOT_DIR, 'docs', 'about', '1_hero_mobile_image2.png'),
+      path.join(ROOT_DIR, 'public', 'images', 'about', '1_hero_mobile_image2.png'),
+    ].find((p) => fs.existsSync(p)),
     width: 941,
-    height: 1671,
+    height: 1672,
     fit: 'cover',
     quality: 82,
   },
   // 2. Trayectoria
   {
     name: 'nosotros-trayectoria',
-    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image2.jpeg'))
-      ? path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image2.jpeg')
-      : path.join(ROOT_DIR, 'public', 'images', 'about', '2_nuestra_trayectoria_image2.jpeg'),
+    src: [
+      path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image_v2.jpeg'),
+      path.join(ROOT_DIR, 'docs', 'about', '2_nuestra_trayectoria_image2.jpeg'),
+      path.join(ROOT_DIR, 'public', 'images', 'about', '2_nuestra_trayectoria_image2.jpeg'),
+    ].find((p) => fs.existsSync(p)),
     width: 1536,
     height: 1024,
     fit: 'cover',

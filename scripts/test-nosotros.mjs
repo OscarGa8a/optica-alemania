@@ -304,10 +304,12 @@ async function run() {
         const ctaBtn = document.querySelector('#inicio a[data-event="history_click"]');
         if (!ctaBtn) return { success: false, reason: 'CTA not found' };
         ctaBtn.click();
-        const lastEvent = window.dataLayer[window.dataLayer.length - 1];
+        const newEvents = window.dataLayer.slice(initialLen);
+        const ctaEvent = newEvents.find((e) => e?.event === 'cta_click' && e?.cta_type === 'history_click');
         return {
-          success: window.dataLayer.length > initialLen && lastEvent?.event === 'cta_click' && lastEvent?.cta_type === 'history_click',
-          lastEvent,
+          success: !!ctaEvent,
+          ctaEvent,
+          lastEvent: window.dataLayer[window.dataLayer.length - 1],
         };
       });
 

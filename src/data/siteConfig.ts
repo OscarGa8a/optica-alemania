@@ -38,6 +38,32 @@ export interface SocialProof {
   sourceLabel: string;
 }
 
+export interface ReviewItem {
+  id: string;
+  author: string;
+  role?: string;
+  avatar: string;
+  alt: string;
+  source: string;
+  rating: number;
+  date?: string;
+  comment: string;
+}
+
+export interface ReviewsSectionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titlePart2: string;
+  titlePart3: string;
+  description: string;
+  rating: string;
+  reviewCount: number;
+  ratingLabel: string;
+  ctaText: string;
+  ctaHref: string;
+  reviews: ReviewItem[];
+}
+
 export interface ServiceItem {
   id: string;
   number: string;
@@ -469,6 +495,7 @@ export interface SiteConfig {
   frames: FramesConfig;
   cofrem: CofremSectionConfig;
   trajectory: TrajectoryConfig;
+  reviews: ReviewsSectionConfig;
   contactSection: ContactSectionConfig;
   footer: FooterConfig;
   servicesPage: ServicesPageConfig;
@@ -519,9 +546,9 @@ export const siteConfig: SiteConfig = {
   },
   socialProof: {
     rating: "5.0",
-    reviewCount: 38,
+    reviewCount: 61,
     source: "Google",
-    sourceLabel: "Google · 38 reseñas",
+    sourceLabel: "Google · 61 reseñas",
   },
   nav: [
     { label: "Inicio", href: "/" },
@@ -782,6 +809,50 @@ export const siteConfig: SiteConfig = {
           width: 600,
           height: 362,
         },
+      },
+    ],
+  },
+  reviews: {
+    eyebrow: "RESEÑAS EN GOOGLE",
+    titlePart1: "La confianza se",
+    titlePart2: "construye con",
+    titlePart3: "cada experiencia.",
+    description: "Las opiniones de quienes nos visitan son parte de nuestra historia. Conoce sus experiencias en Óptica Alemania y descubre lo que comparten sobre nuestra atención.",
+    rating: "5.0",
+    reviewCount: 61,
+    ratingLabel: "61 reseñas en Google",
+    ctaText: "Ver todas las reseñas en Google",
+    ctaHref: "https://maps.app.goo.gl/uTtxshkghV5m1cUD7",
+    reviews: [
+      {
+        id: "maria-c-ac",
+        author: "María C AC",
+        avatar: "/images/review-avatar-maria.webp",
+        alt: "Foto de perfil de María C AC en Google",
+        source: "Reseña de Google",
+        rating: 5,
+        date: "Hace 2 semanas",
+        comment: "Excelente servicio, atención profesional y personalizada, con tecnología especializada y soluciones que se adaptan a las necesidades de cada cliente. Me he sentido muy bien atendida y satisfecha con la calidad del servicio. ¡Totalmente recomendado!",
+      },
+      {
+        id: "lizeth-parrado",
+        author: "Lizeth Parrado Lopez",
+        avatar: "/images/review-avatar-lizeth.webp",
+        alt: "Foto de perfil de Lizeth Parrado Lopez en Google",
+        source: "Reseña de Google",
+        rating: 5,
+        date: "Hace 3 semanas",
+        comment: "Muy buena atención de parte de la optometra Tatiana Jiménez y te entregan todo a tiempo bien empacado muy lindo de acuerdo a tu estilo 🤩 siempre vuelvo y mi familia igual 🫶🏼🙏🏼",
+      },
+      {
+        id: "erika-cifuentes",
+        author: "Erika Cifuentes Barón",
+        avatar: "/images/review-avatar-erika.webp",
+        alt: "Foto de perfil de Erika Cifuentes Barón en Google",
+        source: "Reseña de Google",
+        rating: 5,
+        date: "Hace 3 semanas",
+        comment: "Excelente servicio y atención al cliente 👓 Cuentan con profesionales altamente capacitados, amables y comprometidos con el bienestar visual de nosotros los usuarios 👩🏻🏫 ¡Un lugar totalmente recomendado para cuidar la salud visual! 👓✨",
       },
     ],
   },
