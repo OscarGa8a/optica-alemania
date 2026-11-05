@@ -5,6 +5,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-XSS-Protection: 1; mode=block
+  Link: </.well-known/ai-catalog.json>; rel="ai-catalog"
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
@@ -43,6 +44,16 @@
   Access-Control-Allow-Origin: *
 
 /.well-known/ai-catalog.json
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Content-Type: application/json; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/agent-card.json
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Content-Type: application/json; charset=UTF-8
+  Access-Control-Allow-Origin: *
+
+/.well-known/agent-card.json
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
   Content-Type: application/json; charset=UTF-8
   Access-Control-Allow-Origin: *
