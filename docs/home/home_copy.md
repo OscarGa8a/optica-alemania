@@ -116,7 +116,7 @@ Cercana, clara, profesional y humana; hablar de **tú**. Priorizar verbos concre
 `Qué hacemos por tu visión.`
 
 **Introducción**  
-`Conoce algunas de las evaluaciones y servicios de salud visual que puedes consultar en Óptica Alemania. Encuentra más información sobre cada uno en nuestra página de Servicios.`
+`Conoce las evaluaciones y servicios que ofrecemos en Óptica Alemania Villavicencio para cuidar tu salud visual. Descubre en nuestra página de Servicios en qué consiste cada uno.`
 
 ## Tarjetas de servicios
 
@@ -294,7 +294,7 @@ Cercana, clara, profesional y humana; hablar de **tú**. Priorizar verbos concre
 `Una montura que va contigo.`
 
 **Párrafo principal**  
-`Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las opciones de monturas disponibles en Óptica Alemania y encuentra orientación para elegir la que más te guste.`
+`Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las opciones de monturas disponibles en Óptica Alemania Villavicencio y encuentra orientación para elegir la que más te guste.`
 
 **Etiquetas de tarjetas / fotografías**  
 - `Hombres`
@@ -363,8 +363,8 @@ Cercana, clara, profesional y humana; hablar de **tú**. Priorizar verbos concre
 
 **Bloque de horario — referencia publicada previamente, contrastar con la empresa**  
 - Label: `Horarios de atención`
-- Lunes a viernes: `8:30 a. m. – 6:00 p. m.`
-- Sábados: `8:30 a. m. – 3:00 p. m.`
+- Lunes a viernes: `9:00 a. m. – 12:00 m. y 2:00 p. m. – 6:00 p. m.`
+- Sábados: `9:00 a. m. – 12:00 m. y 1:00 p. m. – 3:00 p. m.`
 - Domingos/festivos: **no afirmar abierto o cerrado sin confirmación**.
 
 **Bloque de teléfono — confirmar número y canal de uso**  

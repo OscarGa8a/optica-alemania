@@ -4,6 +4,12 @@ export interface NavItem {
   active?: boolean;
 }
 
+export interface ScheduleItem {
+  days: string;
+  shortDays?: string;
+  shifts: string[];
+}
+
 export interface BusinessContact {
   phonePrimary: string;
   phoneSecondary: string;
@@ -16,9 +22,12 @@ export interface BusinessContact {
   schedule: string;
   scheduleWeekdays: string;
   scheduleSaturday: string;
+  scheduleItems: ScheduleItem[];
   instagram: string;
   instagramUrl: string;
   facebookUrl: string;
+  tiktok: string;
+  tiktokUrl: string;
   googleMapsUrl: string;
 }
 
@@ -70,11 +79,7 @@ export interface SpaceSectionConfig {
   description: string;
   ctaText: string;
   ctaHref: string;
-  images: {
-    main: SpaceImage;
-    shelves: SpaceImage;
-    clinic: SpaceImage;
-  };
+  images: SpaceImage[];
 }
 
 export interface KidsVisionConfig {
@@ -178,6 +183,7 @@ export interface FooterConfig {
   phones: string;
   instagramHandle: string;
   instagramUrl: string;
+  tiktokUrl: string;
   whatsappUrl: string;
   copyright: string;
   rights: string;
@@ -484,17 +490,32 @@ export const siteConfig: SiteConfig = {
     neighborhood: "Barzal",
     city: "Villavicencio",
     department: "Meta",
-    schedule: "Lunes a viernes 8:30 a. m. – 6:00 p. m. | Sábados 8:30 a. m. – 3:00 p. m.",
-    scheduleWeekdays: "Lunes a viernes 8:30 a. m. – 6:00 p. m.",
-    scheduleSaturday: "Sábados 8:30 a. m. – 3:00 p. m.",
+    schedule: "Lunes a viernes 9:00 a. m. – 12:00 m. y 2:00 p. m. – 6:00 p. m. | Sábados 9:00 a. m. – 12:00 m. y 1:00 p. m. – 3:00 p. m.",
+    scheduleWeekdays: "Lunes a viernes: 9:00 a. m. – 12:00 m. y 2:00 p. m. – 6:00 p. m.",
+    scheduleSaturday: "Sábados: 9:00 a. m. – 12:00 m. y 1:00 p. m. – 3:00 p. m.",
+    scheduleItems: [
+      {
+        days: "Lunes a viernes",
+        shortDays: "Lun – Vie",
+        shifts: ["9:00 a. m. – 12:00 m.", "2:00 p. m. – 6:00 p. m."],
+      },
+      {
+        days: "Sábados",
+        shortDays: "Sáb",
+        shifts: ["9:00 a. m. – 12:00 m.", "1:00 p. m. – 3:00 p. m."],
+      },
+    ],
     instagram: "@opticaalemania",
     instagramUrl: "https://www.instagram.com/opticaalemania/",
     facebookUrl: "https://www.facebook.com/opticaalemaniavillavicencio/",
-    googleMapsUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Villavicencio+Meta",
+    tiktok: "@opticaalemaniavillavicen",
+    tiktokUrl: "https://www.tiktok.com/@opticaalemaniavillavicen",
+    googleMapsUrl: "https://maps.app.goo.gl/uTtxshkghV5m1cUD7",
   },
   social: {
     instagram: "https://www.instagram.com/opticaalemania/",
     facebook: "https://www.facebook.com/opticaalemaniavillavicencio/",
+    tiktok: "https://www.tiktok.com/@opticaalemaniavillavicen",
   },
   socialProof: {
     rating: "5.0",
@@ -582,26 +603,38 @@ export const siteConfig: SiteConfig = {
     description: "Queremos que conozcas Óptica Alemania antes de visitarnos. Explora nuestra sede en Barzal, Villavicencio, y descubre los espacios donde recibimos a quienes llegan para consultar por su salud visual y sus gafas.",
     ctaText: "Cómo llegar",
     ctaHref: "/contacto#ubicacion",
-    images: {
-      main: {
-        src: "/images/space-facade-main.webp",
-        alt: "Recepción y sala de espera moderna de Óptica Alemania en Villavicencio",
-        width: 1028,
-        height: 624,
+    images: [
+      {
+        src: "/images/space-1.webp",
+        alt: "Instalaciones y recepción de Óptica Alemania en Villavicencio",
+        width: 1600,
+        height: 1200,
       },
-      shelves: {
-        src: "/images/space-frames-display.webp",
-        alt: "Exhibidores iluminados con monturas oftálmicas y gafas de sol en Óptica Alemania",
-        width: 632,
-        height: 296,
+      {
+        src: "/images/space-2.webp",
+        alt: "Exhibición de monturas y gafas oftálmicas en Óptica Alemania",
+        width: 1600,
+        height: 1200,
       },
-      clinic: {
-        src: "/images/space-consulting-room.webp",
-        alt: "Consultorio optométrico equipado con lámpara de hendidura y monitor de diagnóstico visual",
-        width: 632,
-        height: 296,
+      {
+        src: "/images/space-3.webp",
+        alt: "Consultorio y equipos de diagnóstico visual en Óptica Alemania",
+        width: 1600,
+        height: 1200,
       },
-    },
+      {
+        src: "/images/space-4.webp",
+        alt: "Espacio de atención personalizada y asesoría visual en Óptica Alemania",
+        width: 1600,
+        height: 1200,
+      },
+      {
+        src: "/images/space-5.webp",
+        alt: "Área clínica e instrumental óptico de Óptica Alemania",
+        width: 1600,
+        height: 1200,
+      },
+    ],
   },
   kidsVision: {
     eyebrow: "ATENCIÓN VISUAL INFANTIL",
@@ -624,7 +657,7 @@ export const siteConfig: SiteConfig = {
     eyebrow: "MONTURAS Y ESTILO",
     titlePart1: "Una montura que",
     titlePart2: "va contigo.",
-    description: "Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las opciones de monturas disponibles en Óptica Alemania y encuentra orientación para elegir la que más te guste.",
+    description: "Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las opciones de monturas disponibles en Óptica Alemania Villavicencio y encuentra orientación para elegir la que más te guste.",
     ctaText: "Consultar monturas",
     whatsappMessage: "Hola, quisiera conocer las monturas disponibles en Óptica Alemania.",
     categories: [
@@ -775,7 +808,7 @@ export const siteConfig: SiteConfig = {
       title: "Descubre el recorrido hasta nuestra óptica.",
       description: "Te mostramos el camino paso a paso para que llegues sin complicaciones.",
       actionTextMobile: "Ver video del recorrido",
-      videoUrl: "https://maps.google.com/?q=Calle+35+%2334-36+Barzal+Villavicencio+Meta",
+      videoUrl: "https://maps.app.goo.gl/uTtxshkghV5m1cUD7",
     },
   },
   footer: {
@@ -802,6 +835,7 @@ export const siteConfig: SiteConfig = {
     phones: "311 201 7302  |  322 712 8828",
     instagramHandle: "@opticaalemania",
     instagramUrl: "https://www.instagram.com/opticaalemania/",
+    tiktokUrl: "https://www.tiktok.com/@opticaalemaniavillavicen",
     whatsappUrl: "https://wa.me/573112017302?text=Hola,%20visito%20la%20p%C3%A1gina%20de%20%C3%93ptica%20Alemania%20y%20quisiera%20informaci%C3%B3n%20sobre%20sus%20servicios.",
     copyright: "© 2026 Óptica Alemania Villavicencio.",
     rights: "Todos los derechos reservados.",
@@ -891,7 +925,7 @@ export const siteConfig: SiteConfig = {
           serviceNumber: "SERVICIO 01",
           titleLine1: "Consulta de",
           titleLine2: "optometría especializada.",
-          description: "Una consulta para valorar diferentes aspectos de tu visión, conversar sobre las molestias o dificultades que puedas presentar y conocer las recomendaciones que correspondan según la evaluación profesional.",
+          description: "En nuestra consulta de optometría evaluamos tu agudeza visual, determinamos si necesitas corrección óptica y examinamos las estructuras externas e internas de tus ojos mediante pruebas manuales y digitales. Al finalizar, te explicamos los resultados y las recomendaciones para cuidar tu salud visual.",
           ctaText: "Consultar este servicio",
           whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania y quisiera información sobre la consulta de optometría especializada.",
           image: {
