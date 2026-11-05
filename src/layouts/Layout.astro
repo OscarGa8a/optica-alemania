@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import instrumentSerifWoff2 from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+import instrumentSerifItalicWoff2 from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
 import interRegularWoff2 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
 import { ClientRouter } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
@@ -454,6 +455,7 @@ const schemaGraph = {
 
     <!-- Critical Typography Preload for LCP & FCP -->
     <link rel="preload" href={instrumentSerifWoff2} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={instrumentSerifItalicWoff2} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={interRegularWoff2} as="font" type="font/woff2" crossorigin="anonymous" />
 
     <!-- LCP Hero Image Preloads -->
@@ -554,12 +556,7 @@ const schemaGraph = {
           })(window,document,'script','dataLayer',gtmId);
         };
 
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(function() { setTimeout(window._loadGTM, 2500); });
-        } else {
-          setTimeout(window._loadGTM, 3000);
-        }
-
+        // Load GTM strictly on first user interaction for zero TBT and lean mobile performance
         ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
           window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
         });

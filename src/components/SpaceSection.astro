@@ -66,9 +66,11 @@ const lightboxId = 'home-espacio-lightbox';
       >
         <img
           src={space.images[0].src}
+          srcset={`${space.images[0].src.replace('.webp', '-sm.webp')} 640w, ${space.images[0].src} 1200w`}
+          sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc(100vw - 64px), 58vw"
           alt={space.images[0].alt}
-          width={space.images[0].width}
-          height={space.images[0].height}
+          width="1200"
+          height="900"
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -88,9 +90,11 @@ const lightboxId = 'home-espacio-lightbox';
       >
         <img
           src={space.images[1].src}
+          srcset={`${space.images[1].src.replace('.webp', '-sm.webp')} 480w, ${space.images[1].src} 960w`}
+          sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 42vw"
           alt={space.images[1].alt}
-          width={space.images[1].width}
-          height={space.images[1].height}
+          width="960"
+          height="720"
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -110,9 +114,11 @@ const lightboxId = 'home-espacio-lightbox';
       >
         <img
           src={space.images[2].src}
+          srcset={`${space.images[2].src.replace('.webp', '-sm.webp')} 480w, ${space.images[2].src} 960w`}
+          sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
           alt={space.images[2].alt}
-          width={space.images[2].width}
-          height={space.images[2].height}
+          width="960"
+          height="720"
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -132,9 +138,11 @@ const lightboxId = 'home-espacio-lightbox';
       >
         <img
           src={space.images[3].src}
+          srcset={`${space.images[3].src.replace('.webp', '-sm.webp')} 480w, ${space.images[3].src} 960w`}
+          sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
           alt={space.images[3].alt}
-          width={space.images[3].width}
-          height={space.images[3].height}
+          width="960"
+          height="720"
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -154,9 +162,11 @@ const lightboxId = 'home-espacio-lightbox';
       >
         <img
           src={space.images[4].src}
+          srcset={`${space.images[4].src.replace('.webp', '-sm.webp')} 480w, ${space.images[4].src} 960w`}
+          sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
           alt={space.images[4].alt}
-          width={space.images[4].width}
-          height={space.images[4].height}
+          width="960"
+          height="720"
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"

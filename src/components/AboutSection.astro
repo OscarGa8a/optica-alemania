@@ -10,10 +10,12 @@ import Button from './ui/Button.astro';
     <div class="group order-2 lg:order-1 relative w-full h-[360px] sm:h-[460px] lg:h-full min-h-[340px] lg:min-h-[640px] overflow-hidden">
       <img
         src="/images/about-optometrist.webp"
+        srcset="/images/about-optometrist-sm.webp 640w, /images/about-optometrist.webp 1080w"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
         alt="Equipo y atención profesional de salud visual en Óptica Alemania Villavicencio"
         class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-        width="1536"
-        height="1024"
+        width="1080"
+        height="720"
         loading="lazy"
         decoding="async"
       />
