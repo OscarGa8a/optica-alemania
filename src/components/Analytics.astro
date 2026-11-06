@@ -20,7 +20,8 @@
           href.includes('whatsapp.com') ||
           href.includes('maps.app.goo.gl') ||
           href.includes('google.com/maps') ||
-          href.includes('maps.google.')
+          href.includes('maps.google.') ||
+          href.includes('search.google.com/local')
         ) {
           target = anchor;
         }
@@ -33,7 +34,7 @@
     const href = isAnchor ? (target.getAttribute('href') || '') : '';
     const isTel = href.startsWith('tel:');
     const isWa = href.includes('wa.me') || href.includes('whatsapp.com');
-    const isMaps = href.includes('maps.app.goo.gl') || href.includes('google.com/maps') || href.includes('maps.google.');
+    const isMaps = href.includes('maps.app.goo.gl') || href.includes('google.com/maps') || href.includes('maps.google.') || href.includes('search.google.com/local');
 
     const ctaType = target.dataset.event || (isTel ? 'phone_call' : isWa ? 'whatsapp_cta' : isMaps ? 'google_maps_click' : '');
     if (!ctaType) return;
