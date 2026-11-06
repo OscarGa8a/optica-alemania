@@ -44,9 +44,11 @@ const { contact } = siteConfig;
       <div class="group relative rounded-2xl overflow-hidden shadow-xs border border-white/80 aspect-video">
         <img
           src={specializedTests.image.src}
+          srcset={`${specializedTests.image.src.replace('.webp', '-sm.webp')} 640w, ${specializedTests.image.src} 960w`}
+          sizes="(max-width: 1024px) 100vw, 42vw"
           alt={specializedTests.image.alt}
-          width={specializedTests.image.width}
-          height={specializedTests.image.height}
+          width="960"
+          height="540"
           loading="lazy"
           decoding="async"
           class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
@@ -107,9 +109,11 @@ const { contact } = siteConfig;
         <div class="hidden lg:block group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-video">
           <img
             src={specializedTests.image.src}
+            srcset={`${specializedTests.image.src.replace('.webp', '-sm.webp')} 640w, ${specializedTests.image.src} 960w`}
+            sizes="(max-width: 1024px) 100vw, 42vw"
             alt={specializedTests.image.alt}
-            width={specializedTests.image.width}
-            height={specializedTests.image.height}
+            width="960"
+            height="540"
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
