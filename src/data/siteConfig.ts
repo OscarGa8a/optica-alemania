@@ -98,6 +98,8 @@ export interface SpaceImage {
   alt: string;
   width: number;
   height: number;
+  srcset?: string;
+  lightboxSrc?: string;
 }
 
 export interface SpaceSectionConfig {

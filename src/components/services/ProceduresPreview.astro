@@ -4,7 +4,14 @@
 import { siteConfig } from '../../data/siteConfig';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import { optimizeImageUrl } from '../../lib/sanity/image';
 
+interface Props {
+  volkVideo?: { url?: string | null; portada?: string | null } | null;
+  farnsworthVideo?: { url?: string | null; portada?: string | null } | null;
+}
+
+const { volkVideo, farnsworthVideo } = Astro.props;
 const { procedures } = siteConfig.servicesPage;
 ---
 
@@ -49,48 +56,71 @@ const { procedures } = siteConfig.servicesPage;
 
     <!-- Procedures Cards Grid (2 Columns Desktop, Stacked Mobile) -->
     <div class="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-      {procedures.items.map((item) => (
-        <article class="group">
-          <a
-            href={item.actionHref}
-            data-event="procedure_card_click"
-            data-event-location="procedures_preview"
-            data-event-item={item.id}
-            class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl active:scale-[0.99] transition-transform duration-150"
-          >
-            <!-- Thumbnail Container -->
-            <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-brand-steel/50 transition-colors duration-300">
-              <img
-                src={item.image.src}
-                alt={item.image.alt}
-                width={item.image.width}
-                height={item.image.height}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-                decoding="async"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-            </div>
+      {procedures.items.map((item) => {
+        const customPoster =
+          item.id === 'evaluacion-retinal-volk-inview'
+            ? volkVideo?.portada
+            : item.id === 'test-farnsworth-d15'
+              ? farnsworthVideo?.portada
+              : null;
 
-            <!-- Card Content: Title & Link Indicator with unified group hover -->
-            <div class="mt-4 sm:mt-5 lg:mt-6">
-              <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl text-white group-hover:text-brand-steel font-normal leading-snug transition-colors duration-200">
-                {item.title}
-              </h3>
+        const imageSrc = customPoster
+          ? optimizeImageUrl(customPoster, { width: 960, height: 540, fit: 'crop', quality: 84 })
+          : item.image.src;
 
-              <div class="mt-3 sm:mt-4 inline-flex items-center gap-2 text-sm sm:text-base font-medium text-brand-steel group-hover:text-white transition-colors duration-200">
-                <span class="border-b border-brand-slate-border group-hover:border-white pb-0.5 transition-colors duration-200">
-                  {item.actionText}
-                </span>
-                <Icon
-                  name="arrow-right"
-                  class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1.5 transition-transform duration-200"
+        const imageSrcSm = customPoster
+          ? optimizeImageUrl(customPoster, { width: 480, height: 270, fit: 'crop', quality: 82 })
+          : null;
+
+        const imageSrcset = imageSrcSm
+          ? `${imageSrcSm} 480w, ${imageSrc} 960w`
+          : undefined;
+
+        return (
+          <article class="group">
+            <a
+              href={item.actionHref}
+              data-event="procedure_card_click"
+              data-event-location="procedures_preview"
+              data-event-item={item.id}
+              class="block focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-steel rounded-2xl sm:rounded-3xl active:scale-[0.99] transition-transform duration-150"
+            >
+              <!-- Thumbnail Container -->
+              <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden aspect-video bg-brand-midnight-card shadow-2xl border border-white/10 group-hover:border-brand-steel/50 transition-colors duration-300">
+                <img
+                  src={imageSrc}
+                  srcset={imageSrcset}
+                  sizes={imageSrcset ? "(max-width: 1024px) 100vw, 50vw" : undefined}
+                  alt={item.image.alt}
+                  width={item.image.width}
+                  height={item.image.height}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
                 />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
               </div>
-            </div>
-          </a>
-        </article>
-      ))}
+
+              <!-- Card Content: Title & Link Indicator with unified group hover -->
+              <div class="mt-4 sm:mt-5 lg:mt-6">
+                <h3 class="font-display text-2xl sm:text-3xl lg:text-4xl text-white group-hover:text-brand-steel font-normal leading-snug transition-colors duration-200">
+                  {item.title}
+                </h3>
+
+                <div class="mt-3 sm:mt-4 inline-flex items-center gap-2 text-sm sm:text-base font-medium text-brand-steel group-hover:text-white transition-colors duration-200">
+                  <span class="border-b border-brand-slate-border group-hover:border-white pb-0.5 transition-colors duration-200">
+                    {item.actionText}
+                  </span>
+                  <Icon
+                    name="arrow-right"
+                    class="w-4 h-4 stroke-current stroke-2 fill-none group-hover:translate-x-1.5 transition-transform duration-200"
+                  />
+                </div>
+              </div>
+            </a>
+          </article>
+        );
+      })}
     </div>
 
     <!-- Bottom Action CTA Button -->

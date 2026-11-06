@@ -1,13 +1,25 @@
 ---
 // Sección 5 — Nuestro Espacio
 // Óptica Alemania Villavicencio
-import { siteConfig } from '../data/siteConfig';
+import { siteConfig, type SpaceImage } from '../data/siteConfig';
 import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
-import ImageLightboxModal from './ui/ImageLightboxModal.astro';
+import ImageLightboxModal, { type LightboxImage } from './ui/ImageLightboxModal.astro';
+
+interface Props {
+  images?: SpaceImage[];
+}
 
 const { space } = siteConfig;
+const { images = space.images } = Astro.props;
 const lightboxId = 'home-espacio-lightbox';
+
+const lightboxImages: LightboxImage[] = images.map((img) => ({
+  src: img.lightboxSrc || img.src,
+  alt: img.alt,
+  width: img.width,
+  height: img.height,
+}));
 ---
 
 <section
@@ -61,16 +73,16 @@ const lightboxId = 'home-espacio-lightbox';
         type="button"
         data-open-gallery-modal={lightboxId}
         data-gallery-index="0"
-        aria-label={`Ampliar imagen: ${space.images[0].alt}`}
+        aria-label={`Ampliar imagen: ${images[0].alt}`}
         class="col-span-2 lg:col-span-7 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/10] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
       >
         <img
-          src={space.images[0].src}
-          srcset={`${space.images[0].src.replace('.webp', '-sm.webp')} 640w, ${space.images[0].src} 1200w`}
+          src={images[0].src}
+          srcset={images[0].srcset || `${images[0].src.replace('.webp', '-sm.webp')} 640w, ${images[0].src} 1200w`}
           sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) calc(100vw - 64px), 58vw"
-          alt={space.images[0].alt}
-          width="1200"
-          height="900"
+          alt={images[0].alt}
+          width={images[0].width || 1200}
+          height={images[0].height || 900}
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -85,16 +97,16 @@ const lightboxId = 'home-espacio-lightbox';
         type="button"
         data-open-gallery-modal={lightboxId}
         data-gallery-index="1"
-        aria-label={`Ampliar imagen: ${space.images[1].alt}`}
+        aria-label={`Ampliar imagen: ${images[1].alt}`}
         class="col-span-1 lg:col-span-5 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-auto lg:h-full group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
       >
         <img
-          src={space.images[1].src}
-          srcset={`${space.images[1].src.replace('.webp', '-sm.webp')} 480w, ${space.images[1].src} 960w`}
+          src={images[1].src}
+          srcset={images[1].srcset || `${images[1].src.replace('.webp', '-sm.webp')} 480w, ${images[1].src} 960w`}
           sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 42vw"
-          alt={space.images[1].alt}
-          width="960"
-          height="720"
+          alt={images[1].alt}
+          width={images[1].width || 960}
+          height={images[1].height || 720}
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -109,16 +121,16 @@ const lightboxId = 'home-espacio-lightbox';
         type="button"
         data-open-gallery-modal={lightboxId}
         data-gallery-index="2"
-        aria-label={`Ampliar imagen: ${space.images[2].alt}`}
+        aria-label={`Ampliar imagen: ${images[2].alt}`}
         class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
       >
         <img
-          src={space.images[2].src}
-          srcset={`${space.images[2].src.replace('.webp', '-sm.webp')} 480w, ${space.images[2].src} 960w`}
+          src={images[2].src}
+          srcset={images[2].srcset || `${images[2].src.replace('.webp', '-sm.webp')} 480w, ${images[2].src} 960w`}
           sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
-          alt={space.images[2].alt}
-          width="960"
-          height="720"
+          alt={images[2].alt}
+          width={images[2].width || 960}
+          height={images[2].height || 720}
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -133,16 +145,16 @@ const lightboxId = 'home-espacio-lightbox';
         type="button"
         data-open-gallery-modal={lightboxId}
         data-gallery-index="3"
-        aria-label={`Ampliar imagen: ${space.images[3].alt}`}
+        aria-label={`Ampliar imagen: ${images[3].alt}`}
         class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
       >
         <img
-          src={space.images[3].src}
-          srcset={`${space.images[3].src.replace('.webp', '-sm.webp')} 480w, ${space.images[3].src} 960w`}
+          src={images[3].src}
+          srcset={images[3].srcset || `${images[3].src.replace('.webp', '-sm.webp')} 480w, ${images[3].src} 960w`}
           sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
-          alt={space.images[3].alt}
-          width="960"
-          height="720"
+          alt={images[3].alt}
+          width={images[3].width || 960}
+          height={images[3].height || 720}
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -157,16 +169,16 @@ const lightboxId = 'home-espacio-lightbox';
         type="button"
         data-open-gallery-modal={lightboxId}
         data-gallery-index="4"
-        aria-label={`Ampliar imagen: ${space.images[4].alt}`}
+        aria-label={`Ampliar imagen: ${images[4].alt}`}
         class="col-span-1 lg:col-span-4 relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-[4/3] lg:aspect-[16/11] group bg-brand-ice/20 cursor-zoom-in text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary p-0 block"
       >
         <img
-          src={space.images[4].src}
-          srcset={`${space.images[4].src.replace('.webp', '-sm.webp')} 480w, ${space.images[4].src} 960w`}
+          src={images[4].src}
+          srcset={images[4].srcset || `${images[4].src.replace('.webp', '-sm.webp')} 480w, ${images[4].src} 960w`}
           sizes="(max-width: 640px) calc(50vw - 32px), (max-width: 1024px) calc(50vw - 40px), 33vw"
-          alt={space.images[4].alt}
-          width="960"
-          height="720"
+          alt={images[4].alt}
+          width={images[4].width || 960}
+          height={images[4].height || 720}
           class="w-full h-full object-cover object-center group-hover:scale-[1.025] transition-transform duration-500 ease-out"
           loading="lazy"
           decoding="async"
@@ -195,7 +207,7 @@ const lightboxId = 'home-espacio-lightbox';
   <!-- Fullscreen Lightbox Modal -->
   <ImageLightboxModal
     id={lightboxId}
-    images={space.images}
+    images={lightboxImages}
     title="Instalaciones Óptica Alemania"
     eyebrow={space.eyebrow}
   />
