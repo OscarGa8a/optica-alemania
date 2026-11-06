@@ -104,9 +104,21 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
             <div>
               <p class="text-xs uppercase tracking-wider text-slate-400 font-medium">Teléfonos</p>
               <p class="text-white text-sm sm:text-lg font-normal mt-0.5">
-                <a href={`tel:${contact.phonePrimary.replace(/\s+/g, '')}`} class="hover:text-blue-400 transition-colors">{contact.phonePrimary}</a>
+                <a
+                  href={`tel:${contact.phonePrimary.replace(/\s+/g, '')}`}
+                  class="hover:text-blue-400 transition-colors"
+                  data-event="phone_call"
+                  data-event-location="contact_section"
+                  data-event-label={contact.phonePrimary}
+                >{contact.phonePrimary}</a>
                 <span class="text-slate-500 mx-1.5">|</span>
-                <a href={`tel:${contact.phoneSecondary.replace(/\s+/g, '')}`} class="hover:text-blue-400 transition-colors">{contact.phoneSecondary}</a>
+                <a
+                  href={`tel:${contact.phoneSecondary.replace(/\s+/g, '')}`}
+                  class="hover:text-blue-400 transition-colors"
+                  data-event="phone_call"
+                  data-event-location="contact_section"
+                  data-event-label={contact.phoneSecondary}
+                >{contact.phoneSecondary}</a>
               </p>
             </div>
           </div>
@@ -209,6 +221,9 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
             rel="noopener noreferrer"
             class="block relative w-full overflow-hidden"
             aria-label="Abrir mapa de ubicación de Óptica Alemania en Google Maps"
+            data-event="google_maps_click"
+            data-event-location="home_contact_map_card"
+            data-event-label="Mapa interactivo de ubicación"
           >
             <img
               src={contactSection.mapImage.src}

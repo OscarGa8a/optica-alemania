@@ -7,13 +7,40 @@
     const origin = event.target;
     if (!(origin instanceof Element)) return;
 
-    const target = origin.closest('[data-event]');
+    let target = origin.closest('[data-event]');
+
+    // Fallback defensivo para enlaces telefónicos, WhatsApp o Google Maps sin data-event explícito
+    if (!target) {
+      const anchor = origin.closest('a');
+      if (anchor instanceof HTMLAnchorElement) {
+        const href = anchor.getAttribute('href') || '';
+        if (
+          href.startsWith('tel:') ||
+          href.includes('wa.me') ||
+          href.includes('whatsapp.com') ||
+          href.includes('maps.app.goo.gl') ||
+          href.includes('google.com/maps') ||
+          href.includes('maps.google.')
+        ) {
+          target = anchor;
+        }
+      }
+    }
+
     if (!(target instanceof HTMLElement)) return;
 
-    const ctaType = target.dataset.event;
-    const location = target.dataset.eventLocation;
-    const label = target.dataset.eventLabel || target.textContent?.trim();
-    const destination = target instanceof HTMLAnchorElement ? target.href : '';
+    const isAnchor = target instanceof HTMLAnchorElement;
+    const href = isAnchor ? (target.getAttribute('href') || '') : '';
+    const isTel = href.startsWith('tel:');
+    const isWa = href.includes('wa.me') || href.includes('whatsapp.com');
+    const isMaps = href.includes('maps.app.goo.gl') || href.includes('google.com/maps') || href.includes('maps.google.');
+
+    const ctaType = target.dataset.event || (isTel ? 'phone_call' : isWa ? 'whatsapp_cta' : isMaps ? 'google_maps_click' : '');
+    if (!ctaType) return;
+
+    const location = target.dataset.eventLocation || (isTel ? 'tel_link' : isWa ? 'whatsapp_link' : isMaps ? 'maps_link' : '');
+    const label = target.dataset.eventLabel || target.textContent?.trim() || (isMaps ? 'Google Maps' : '');
+    const destination = isAnchor ? target.href : '';
     const service = target.dataset.eventService;
     const item = target.dataset.eventItem;
     const category = target.dataset.eventCategory;

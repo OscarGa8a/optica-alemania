@@ -128,7 +128,23 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
             <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
               <Icon name="phone" class="w-4.5 h-4.5 stroke-current stroke-2" />
             </span>
-            <span class="tracking-wide">{footer.phones}</span>
+            <span class="tracking-wide">
+              <a
+                href={`tel:${contact.phonePrimary.replace(/\s+/g, '')}`}
+                class="hover:text-white transition-colors"
+                data-event="phone_call"
+                data-event-location="footer"
+                data-event-label={contact.phonePrimary}
+              >{contact.phonePrimary}</a>
+              <span class="text-white/40 mx-1.5" aria-hidden="true">|</span>
+              <a
+                href={`tel:${contact.phoneSecondary.replace(/\s+/g, '')}`}
+                class="hover:text-white transition-colors"
+                data-event="phone_call"
+                data-event-location="footer"
+                data-event-label={contact.phoneSecondary}
+              >{contact.phoneSecondary}</a>
+            </span>
           </li>
 
           <!-- Business Hours -->
@@ -262,7 +278,23 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
             <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
               <Icon name="phone" class="w-4.5 h-4.5 stroke-current stroke-2" />
             </span>
-            <span class="tracking-wide">{footer.phones}</span>
+            <span class="tracking-wide">
+              <a
+                href={`tel:${contact.phonePrimary.replace(/\s+/g, '')}`}
+                class="hover:text-white transition-colors"
+                data-event="phone_call"
+                data-event-location="footer"
+                data-event-label={contact.phonePrimary}
+              >{contact.phonePrimary}</a>
+              <span class="text-white/40 mx-1.5" aria-hidden="true">|</span>
+              <a
+                href={`tel:${contact.phoneSecondary.replace(/\s+/g, '')}`}
+                class="hover:text-white transition-colors"
+                data-event="phone_call"
+                data-event-location="footer"
+                data-event-label={contact.phoneSecondary}
+              >{contact.phoneSecondary}</a>
+            </span>
           </li>
 
           <!-- Business Hours -->

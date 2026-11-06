@@ -323,13 +323,15 @@ async function run() {
             results.push({ selector: testItem.selector, success: false, reason: 'Element not found' });
             continue;
           }
+          const prevLen = window.dataLayer.length;
           el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-          const lastEvent = window.dataLayer[window.dataLayer.length - 1];
-          const passed = lastEvent && (lastEvent.event === 'cta_click' || lastEvent.event === 'portfolio_cta_click') && lastEvent.cta_type === testItem.expectedCta;
+          const newEvents = window.dataLayer.slice(prevLen);
+          const ctaEvent = newEvents.find((e) => (e?.event === 'cta_click' || e?.event === 'portfolio_cta_click') && e?.cta_type === testItem.expectedCta);
+          const passed = !!ctaEvent;
           results.push({
             selector: testItem.selector,
             expected: testItem.expectedCta,
-            actual: lastEvent?.cta_type,
+            actual: ctaEvent?.cta_type || newEvents[newEvents.length - 1]?.cta_type,
             passed,
           });
         }
