@@ -51,9 +51,11 @@ const { contact } = siteConfig;
               <div class="group relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-xs border border-white/80 aspect-video">
                 <img
                   src={item.image.src}
+                  srcset={`${item.image.src.replace('.webp', '-sm.webp')} 640w, ${item.image.src} 1080w`}
+                  sizes="(max-width: 1024px) 100vw, 58vw"
                   alt={item.image.alt}
-                  width={item.image.width}
-                  height={item.image.height}
+                  width="1080"
+                  height="608"
                   loading="lazy"
                   decoding="async"
                   class={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out ${item.image.positionClass || 'object-center'}`}
