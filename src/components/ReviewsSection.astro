@@ -100,8 +100,8 @@ const [featuredReview, ...secondaryReviews] = displayedReviews;
           </div>
         </div>
 
-        <!-- Desktop Button CTA -->
-        <div class="mt-8 hidden lg:block">
+        <!-- Desktop Button CTAs -->
+        <div class="mt-8 hidden lg:flex flex-col items-start gap-3">
           <Button
             variant="primary"
             size="md"
@@ -116,6 +116,24 @@ const [featuredReview, ...secondaryReviews] = displayedReviews;
           >
             {reviewsConfig.ctaText}
           </Button>
+
+          {reviewsConfig.writeReviewHref && (
+            <Button
+              variant="secondary"
+              size="md"
+              href={reviewsConfig.writeReviewHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              icon="star"
+              iconPosition="right"
+              iconClass="w-4 h-4 fill-amber-400 stroke-amber-400 shrink-0"
+              data-event="leave_review_click"
+              data-event-location="reviews_desktop_leave"
+              aria-label={`${reviewsConfig.writeReviewText || 'Dejar reseña'} en Google (abre en nueva pestaña)`}
+            >
+              {reviewsConfig.writeReviewText || 'Dejar reseña'}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -267,7 +285,7 @@ const [featuredReview, ...secondaryReviews] = displayedReviews;
           </div>
 
           <!-- Mobile Full-Width CTA -->
-          <div class="mt-3">
+          <div class="mt-3 flex flex-col gap-2.5">
             <Button
               variant="primary"
               size="md"
@@ -283,6 +301,25 @@ const [featuredReview, ...secondaryReviews] = displayedReviews;
             >
               {reviewsConfig.ctaText}
             </Button>
+
+            {reviewsConfig.writeReviewHref && (
+              <Button
+                variant="secondary"
+                size="md"
+                href={reviewsConfig.writeReviewHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                icon="star"
+                iconPosition="right"
+                iconClass="w-4 h-4 fill-amber-400 stroke-amber-400 shrink-0"
+                class="w-full justify-center"
+                data-event="leave_review_click"
+                data-event-location="reviews_mobile_leave"
+                aria-label={`${reviewsConfig.writeReviewText || 'Dejar reseña'} en Google (abre en nueva pestaña)`}
+              >
+                {reviewsConfig.writeReviewText || 'Dejar reseña'}
+              </Button>
+            )}
           </div>
         </div>
 

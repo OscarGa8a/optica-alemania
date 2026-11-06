@@ -61,6 +61,8 @@ export interface ReviewsSectionConfig {
   ratingLabel: string;
   ctaText: string;
   ctaHref: string;
+  writeReviewText?: string;
+  writeReviewHref?: string;
   reviews: ReviewItem[];
 }
 
@@ -822,7 +824,9 @@ export const siteConfig: SiteConfig = {
     reviewCount: 61,
     ratingLabel: "61 reseñas en Google",
     ctaText: "Ver todas las reseñas en Google",
-    ctaHref: "https://maps.app.goo.gl/uTtxshkghV5m1cUD7",
+    ctaHref: "https://search.google.com/local/reviews?placeid=ChIJv9-c7RktPo4R5jW3RQ2GPMs",
+    writeReviewText: "Dejar reseña",
+    writeReviewHref: "https://search.google.com/local/writereview?placeid=ChIJv9-c7RktPo4R5jW3RQ2GPMs",
     reviews: [
       {
         id: "maria-c-ac",
