@@ -44,12 +44,12 @@ const logoHref = '/';
       <a href={logoHref} class="flex items-center group transition-transform duration-200" aria-label="Óptica Alemania Villavicencio - Inicio">
         <img
           id="brand-logo"
-          src="/images/logo.webp"
-          srcset="/images/logo-sm.webp 280w, /images/logo.webp 500w"
+          src={siteConfig.footer.logo.src}
+          srcset={`${siteConfig.footer.logo.src.replace('.webp', '-sm.webp')} 280w, ${siteConfig.footer.logo.src} 500w`}
           sizes="(max-width: 640px) 132px, 168px"
-          alt="Óptica Alemania Villavicencio"
-          width="500"
-          height="182"
+          alt={siteConfig.footer.logo.alt}
+          width={siteConfig.footer.logo.width}
+          height={siteConfig.footer.logo.height}
           class="h-8 sm:h-10 lg:h-11 w-auto object-contain transition-opacity duration-200"
           loading="eager"
           decoding="async"
