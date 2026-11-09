@@ -1,11 +1,16 @@
 ---
 // Sección 7 — Monturas y Estilo
 // Óptica Alemania Villavicencio
-import { siteConfig } from '../data/siteConfig';
+import { siteConfig, type FrameCategory } from '../data/siteConfig';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
 
+interface Props {
+  categories?: FrameCategory[];
+}
+
+const { categories = siteConfig.frames.categories } = Astro.props;
 const { frames } = siteConfig;
 const whatsappFramesUrl = buildWhatsAppLink(
   frames.whatsappMessage,
@@ -62,7 +67,7 @@ const whatsappFramesUrl = buildWhatsAppLink(
 
     <!-- Cards Grid: Mujer, Hombre, Niños -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-      {frames.categories.map((category) => {
+      {categories.map((category) => {
         const categoryUrl = buildWhatsAppLink(
           category.whatsappMessage,
           siteConfig.contact.whatsappNumber
