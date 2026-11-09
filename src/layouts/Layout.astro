@@ -49,7 +49,7 @@ const defaultMobilePreload = currentPath === '/nosotros'
     : currentPath === '/procedimientos'
       ? '/images/procedimientos-hero-mobile.webp'
       : currentPath === '/contacto'
-        ? '/images/contact/assets-mobile.webp'
+        ? undefined
         : '/images/hero-mobile.webp';
 const defaultDesktopPreload = currentPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp?v=2'
@@ -58,7 +58,7 @@ const defaultDesktopPreload = currentPath === '/nosotros'
     : currentPath === '/procedimientos'
       ? '/images/procedimientos-hero-desktop.webp'
       : currentPath === '/contacto'
-        ? '/images/contact/assets.webp'
+        ? undefined
         : '/images/hero-desktop.webp';
 
 const resolvedMobilePreload = preloadMobileImage ?? defaultMobilePreload;
