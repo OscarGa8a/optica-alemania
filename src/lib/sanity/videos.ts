@@ -10,10 +10,18 @@ export interface VideoCMS {
 // Videos de la página Inicio
 export async function obtenerVideosInicio() {
   const datos = await sanityClient.fetch<{
+    atencion: VideoCMS | null;
     comoLlegar: VideoCMS | null;
     procedimientos: VideoCMS[] | null;
   } | null>(`
     *[_type == "inicioMultimedia"][0] {
+      "atencion": videoAtencionReferencia->{
+        _id,
+        titulo,
+        "url": archivo.asset->url,
+        "portada": portada.asset->url
+      },
+
       "comoLlegar": videoComoLlegarReferencia->{
         _id,
         titulo,
@@ -31,6 +39,7 @@ export async function obtenerVideosInicio() {
   `);
 
   return {
+    atencion: datos?.atencion ?? null,
     comoLlegar: datos?.comoLlegar ?? null,
     procedimientos:
       (datos?.procedimientos ?? []).filter(
