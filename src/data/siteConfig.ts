@@ -922,7 +922,7 @@ export const siteConfig: SiteConfig = {
   },
   footer: {
     logo: {
-      src: "/images/logo.webp",
+      src: "/images/logo.webp?v=2",
       alt: "Óptica Alemania Villavicencio",
       width: 500,
       height: 182,
