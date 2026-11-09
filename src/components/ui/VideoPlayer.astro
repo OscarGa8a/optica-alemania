@@ -16,6 +16,7 @@ interface Props {
   aspectRatio?: string;
   fit?: 'contain' | 'cover';
   showCenterPlay?: boolean;
+  theme?: 'dark' | 'light';
 }
 
 const {
@@ -30,14 +31,21 @@ const {
   class: className = '',
   aspectRatio = 'aspect-[4/5] sm:aspect-video',
   fit = 'contain',
-  showCenterPlay = false,
+  showCenterPlay = true,
+  theme = 'light',
 } = Astro.props;
+
+const themeClasses: Record<'dark' | 'light', string> = {
+  dark: 'border-2 border-white/95 shadow-2xl shadow-black/50',
+  light: 'border-2 border-brand-heading/15 shadow-2xl shadow-slate-900/10',
+};
 ---
 
 <div
   data-video-player-container={id}
   class:list={[
-    'relative rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden bg-slate-950 group border border-slate-100/10',
+    'relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-950 group',
+    themeClasses[theme] ?? themeClasses.light,
     aspectRatio,
     className,
   ]}
