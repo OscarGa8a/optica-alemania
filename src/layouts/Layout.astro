@@ -82,14 +82,14 @@ const defaultOgImagePath = currentPath === '/nosotros'
         : '/images/hero-desktop.webp';
 
 const defaultOgImageAlt = currentPath === '/nosotros'
-  ? 'Sobre Nosotros - Óptica Alemania en Villavicencio'
+  ? 'Sobre Nosotros - Óptica Alemania Villavicencio'
   : currentPath === '/servicios'
-    ? 'Servicios de optometría en Villavicencio - Óptica Alemania'
+    ? 'Servicios de optometría - Óptica Alemania Villavicencio'
     : currentPath === '/procedimientos'
-      ? 'Procedimientos visuales en Villavicencio - Óptica Alemania'
+      ? 'Procedimientos visuales - Óptica Alemania Villavicencio'
       : currentPath === '/contacto'
-        ? 'Contacto y ubicación de Óptica Alemania en Barzal, Villavicencio'
-        : 'Óptica Alemania en Villavicencio - Optometría y salud visual';
+        ? 'Contacto y ubicación de Óptica Alemania Villavicencio en Barzal'
+        : 'Óptica Alemania Villavicencio - Optometría y salud visual';
 
 const rawOgImage = ogImage || defaultOgImagePath;
 const resolvedOgImage = rawOgImage.startsWith('http')
@@ -100,14 +100,14 @@ const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
 
 // Mensaje contextual de WhatsApp para widget flotante
 const defaultWhatsAppMessage = currentPath === '/nosotros'
-  ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania y deseo solicitar información o agendar una cita.'
+  ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania Villavicencio y deseo solicitar información o agendar una cita.'
   : currentPath === '/servicios'
-    ? 'Hola, estuve viendo los servicios de Óptica Alemania y deseo solicitar información o agendar una consulta.'
+    ? 'Hola, estuve viendo los servicios de Óptica Alemania Villavicencio y deseo solicitar información o agendar una consulta.'
     : currentPath === '/procedimientos'
-      ? 'Hola, estuve viendo los procedimientos visuales de Óptica Alemania y deseo solicitar información o agendar una cita.'
+      ? 'Hola, estuve viendo los procedimientos visuales de Óptica Alemania Villavicencio y deseo solicitar información o agendar una cita.'
       : currentPath === '/contacto'
-        ? 'Hola, estuve revisando los canales de contacto de Óptica Alemania y deseo comunicarme con ustedes.'
-        : 'Hola, estoy visitando la web de Óptica Alemania y deseo solicitar atención o agendar una cita.';
+        ? 'Hola, estuve revisando los canales de contacto de Óptica Alemania Villavicencio y deseo comunicarme con ustedes.'
+        : 'Hola, estoy visitando la web de Óptica Alemania Villavicencio y deseo solicitar atención o agendar una cita.';
 
 const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessage;
 
@@ -130,7 +130,7 @@ const resolvedRobots = robots || defaultRobots;
 const homeFaqQuestions = [
   {
     "@type": "Question",
-    "name": "¿Dónde está ubicada Óptica Alemania en Villavicencio?",
+    "name": "¿Dónde está ubicada Óptica Alemania Villavicencio?",
     "acceptedAnswer": {
       "@type": "Answer",
       "text": "Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad."
