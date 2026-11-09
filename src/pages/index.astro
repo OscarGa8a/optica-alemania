@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import AboutSection from '../components/AboutSection.astro';
+import ArrivalSection from '../components/ArrivalSection.astro';
 import ServicesSection from '../components/ServicesSection.astro';
 import TechSection from '../components/TechSection.astro';
 import SpaceSection from '../components/SpaceSection.astro';
@@ -40,6 +41,10 @@ const videoFarnsworth = videosInicio.procedimientos.find((v) =>
 >
   <Hero />
   <AboutSection />
+  <ArrivalSection
+    videoUrl={videosInicio.comoLlegar?.url}
+    posterUrl={videosInicio.comoLlegar?.portada}
+  />
   <ServicesSection />
   <TechSection
     volkVideo={videoVolk}

@@ -72,6 +72,7 @@ async function run() {
       height: 900,
       heroScreenshot: '1_hero_desktop_actual.png',
       aboutScreenshot: '2_quienes_somos_desktop_actual.png',
+      arrivalScreenshot: '2.5_desde_que_llegas_desktop_actual.png',
       servicesScreenshot: '3_servicios_desktop_actual.png',
       techScreenshot: '4_tecnologia_desktop_actual.png',
       spaceScreenshot: '5_nuestro_espacio_desktop_actual.png',
@@ -88,6 +89,7 @@ async function run() {
       height: 844,
       heroScreenshot: '1_hero_mobile_actual.png',
       aboutScreenshot: '2_quienes_somos_mobile_actual.png',
+      arrivalScreenshot: '2.5_desde_que_llegas_mobile_actual.png',
       servicesScreenshot: '3_servicios_mobile_actual.png',
       techScreenshot: '4_tecnologia_mobile_actual.png',
       spaceScreenshot: '5_nuestro_espacio_mobile_actual.png',
@@ -244,6 +246,53 @@ async function run() {
       const aboutShotPath = path.join(SCREENSHOTS_DIR, vp.aboutScreenshot);
       await aboutSection.screenshot({ path: aboutShotPath });
       console.log(`📸 [${vp.name}] Quiénes Somos screenshot saved: ${path.relative(ROOT_DIR, aboutShotPath)}`);
+
+      // Restore header visibility
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = '';
+      });
+    }
+
+    // Section 2.5 — Conoce Nuestra Atención (#atencion) verification
+    const arrivalSection = page.locator('#atencion');
+    const arrivalCount = await arrivalSection.count();
+    if (arrivalCount === 0) {
+      console.error(`❌ [${vp.name}] Section #atencion not found!`);
+      failed = true;
+    } else {
+      console.log(`✅ [${vp.name}] Section #atencion exists`);
+      const h2Text = await arrivalSection.locator('h2').textContent();
+      if (!h2Text?.includes('Tu bienestar visual') || !h2Text?.includes('desde que llegas')) {
+        console.error(`❌ [${vp.name}] Expected H2 to contain 'Tu bienestar visual' and 'desde que llegas', got: '${h2Text}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] H2 contains 'Tu bienestar visual' and 'desde que llegas'`);
+      }
+
+      // Verify WhatsApp CTA link
+      const cta = arrivalSection.locator('a[data-event="whatsapp_cta"][data-event-location="arrival_section"]').first();
+      const ctaHref = await cta.getAttribute('href');
+      if (!ctaHref?.includes('wa.me')) {
+        console.error(`❌ [${vp.name}] Expected CTA href to include 'wa.me', got: '${ctaHref}'`);
+        failed = true;
+      } else {
+        console.log(`✅ [${vp.name}] WhatsApp CTA link verified`);
+      }
+
+      // Scroll into view and screenshot the section
+      await arrivalSection.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+
+      // Temporarily hide sticky header for clean section screenshot
+      await page.evaluate(() => {
+        const header = document.querySelector('header');
+        if (header) header.style.display = 'none';
+      });
+
+      const arrivalShotPath = path.join(SCREENSHOTS_DIR, vp.arrivalScreenshot);
+      await arrivalSection.screenshot({ path: arrivalShotPath });
+      console.log(`📸 [${vp.name}] Conoce Nuestra Atención screenshot saved: ${path.relative(ROOT_DIR, arrivalShotPath)}`);
 
       // Restore header visibility
       await page.evaluate(() => {

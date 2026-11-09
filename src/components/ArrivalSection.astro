@@ -1,0 +1,134 @@
+---
+// Sección — Conoce Nuestra Atención / Desde Que Llegas
+// Óptica Alemania Villavicencio
+import { siteConfig } from '../data/siteConfig';
+import { buildWhatsAppLink } from '../utils/whatsapp';
+import Icon from './ui/Icon.astro';
+import VideoPlayer from './ui/VideoPlayer.astro';
+
+interface Props {
+  videoUrl?: string | null;
+  posterUrl?: string | null;
+}
+
+const { videoUrl, posterUrl } = Astro.props;
+const { arrival, contact } = siteConfig;
+
+const whatsappUrl = buildWhatsAppLink(
+  arrival.whatsappMessage,
+  contact.whatsappNumber
+);
+
+const videoSrc = videoUrl || arrival.video.videoSrc;
+const videoPoster = posterUrl || arrival.video.poster;
+const videoPngFallback = posterUrl ? undefined : arrival.video.pngFallback;
+---
+
+<section
+  id="atencion"
+  class="relative bg-brand-midnight text-white py-14 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
+>
+  <!-- Stylized Decorative Eye Watermark from SVG asset (matches desktop mockup layout & proportions) -->
+  <div
+    class="absolute -right-20 sm:-right-28 lg:-right-36 -top-10 sm:-top-16 lg:-top-20 w-full max-w-lg sm:max-w-xl lg:max-w-3xl xl:max-w-4xl pointer-events-none opacity-20 select-none z-0"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/asset.svg"
+      alt=""
+      width="1774"
+      height="887"
+      loading="lazy"
+      decoding="async"
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <!-- Ambient blue soft radial glow for depth -->
+  <div
+    class="absolute -bottom-24 -left-20 w-96 sm:w-144 h-96 sm:h-144 bg-sky-500/10 rounded-full blur-3xl pointer-events-none z-0"
+    aria-hidden="true"
+  ></div>
+
+  <div class="w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 xl:gap-18 items-center">
+      
+      <!-- Text Column (Left on Desktop, Top on Mobile) -->
+      <div class="lg:col-span-6 flex flex-col justify-center">
+        <!-- Eyebrow with cyan vertical accent bar -->
+        <div class="flex items-center gap-2.5">
+          <span class="w-1 h-4 sm:h-5 bg-sky-400 rounded-full shrink-0" aria-hidden="true"></span>
+          <span class="font-sans text-xs sm:text-sm font-semibold uppercase tracking-widest text-sky-400">
+            {arrival.eyebrow}
+          </span>
+        </div>
+
+        <!-- Section Heading: Instrument Serif editorial display with cursive italic sky-blue accent -->
+        <h2 class="font-display text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[3.75rem] text-white leading-[1.12] tracking-tight mt-4 sm:mt-5">
+          <span class="block font-normal">{arrival.titlePart1}</span>
+          <span class="block italic font-normal text-sky-400 mt-1">{arrival.titleHighlight}</span>
+        </h2>
+
+        <!-- Description -->
+        <p class="text-base sm:text-lg text-slate-200/90 leading-relaxed font-normal mt-5 sm:mt-6 max-w-xl">
+          {arrival.description}
+        </p>
+
+        <!-- Desktop CTA -->
+        <div class="hidden lg:block mt-8 sm:mt-10">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-brand-primary hover:bg-brand-bright text-white font-semibold text-base shadow-lg shadow-blue-950/40 transition-all duration-200 ease-editorial hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-3 focus-visible:ring-sky-400"
+            data-event="whatsapp_cta"
+            data-event-location="arrival_section"
+          >
+            <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
+            <span class="h-4 w-[1px] bg-white/25" aria-hidden="true"></span>
+            <span>{arrival.whatsappButtonText}</span>
+            <Icon name="arrow-up-right" class="w-4 h-4 stroke-current stroke-2 shrink-0 ml-0.5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Video Column (Right on Desktop, Middle on Mobile) -->
+      <div class="lg:col-span-6 flex flex-col items-center">
+        <div class="w-full">
+          <VideoPlayer
+            id="home-arrival-video"
+            src={videoSrc}
+            poster={videoPoster}
+            pngFallback={videoPngFallback}
+            alt={arrival.video.label}
+            label={arrival.video.label}
+            initialTimestamp={`0:00 / ${arrival.video.duration}`}
+            initialProgress={0}
+            aspectRatio="aspect-[16/10]"
+            fit="cover"
+            showCenterPlay={true}
+            class="border-2 border-white/95 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/50"
+          />
+        </div>
+
+        <!-- Mobile CTA (Rendered below video matching mobile mockup) -->
+        <div class="w-full lg:hidden mt-6 sm:mt-8">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-brand-primary hover:bg-brand-bright text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-950/40 transition-all duration-200 ease-editorial active:scale-[0.98] focus:outline-none focus-visible:ring-3 focus-visible:ring-sky-400"
+            data-event="whatsapp_cta"
+            data-event-location="arrival_section"
+          >
+            <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
+            <span class="h-4 w-[1px] bg-white/25" aria-hidden="true"></span>
+            <span>{arrival.whatsappButtonText}</span>
+            <Icon name="arrow-up-right" class="w-4 h-4 stroke-current stroke-2 shrink-0 ml-0.5" />
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

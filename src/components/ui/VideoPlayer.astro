@@ -15,6 +15,7 @@ interface Props {
   class?: string;
   aspectRatio?: string;
   fit?: 'contain' | 'cover';
+  showCenterPlay?: boolean;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   class: className = '',
   aspectRatio = 'aspect-[4/5] sm:aspect-video',
   fit = 'contain',
+  showCenterPlay = false,
 } = Astro.props;
 ---
 
@@ -82,6 +84,18 @@ const {
       />
     </picture>
   </video>
+
+  <!-- Optional Central Big Play Button Overlay -->
+  {showCenterPlay && (
+    <div
+      id={`${id}-center-play`}
+      class="absolute inset-0 flex items-center justify-center pointer-events-none z-20 transition-opacity duration-300"
+    >
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl transition-transform duration-300 group-hover:scale-105">
+        <Icon name="play" class="w-7 h-7 sm:w-8 sm:h-8 fill-white ml-1" />
+      </div>
+    </div>
+  )}
 
   <!-- Interactive Video Controls Overlay Bar -->
   <div
@@ -191,10 +205,21 @@ const {
       const progressThumb = document.getElementById(`${id}-progress-thumb`);
       const progressBar = document.getElementById(`${id}-progress-bar`);
       const fullscreenToggle = document.getElementById(`${id}-fullscreen-toggle`);
+      const centerPlay = document.getElementById(`${id}-center-play`);
 
       let userManuallyPaused = false;
 
       function updatePlayState(isPlaying: boolean) {
+        if (centerPlay) {
+          if (isPlaying) {
+            centerPlay.classList.add('opacity-0', 'pointer-events-none');
+            centerPlay.classList.remove('opacity-100');
+          } else {
+            centerPlay.classList.remove('opacity-0');
+            centerPlay.classList.add('opacity-100');
+          }
+        }
+
         if (pauseIcon && playIcon) {
           if (isPlaying) {
             pauseIcon.classList.remove('hidden');

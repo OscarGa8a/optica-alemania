@@ -177,6 +177,22 @@ export interface TrajectoryConfig {
   organizations: TrajectoryOrganization[];
 }
 
+export interface ArrivalSectionConfig {
+  eyebrow: string;
+  titlePart1: string;
+  titleHighlight: string;
+  description: string;
+  whatsappButtonText: string;
+  whatsappMessage: string;
+  video: {
+    duration: string;
+    label: string;
+    videoSrc?: string;
+    poster: string;
+    pngFallback?: string;
+  };
+}
+
 export interface ContactSectionConfig {
   eyebrow: string;
   titlePart1: string;
@@ -492,6 +508,7 @@ export interface SiteConfig {
   };
   socialProof: SocialProof;
   nav: NavItem[];
+  arrival: ArrivalSectionConfig;
   services: ServiceItem[];
   technologies: TechnologyItem[];
   space: SpaceSectionConfig;
@@ -561,6 +578,21 @@ export const siteConfig: SiteConfig = {
     { label: "Procedimientos", href: "/procedimientos" },
     { label: "Contacto", href: "/contacto" },
   ],
+  arrival: {
+    eyebrow: "CONOCE NUESTRA ATENCIÓN",
+    titlePart1: "Tu bienestar visual comienza",
+    titleHighlight: "desde que llegas.",
+    description: "Desde el primer recibimiento hasta tu valoración visual, descubre cómo te acompañamos con una atención cercana y profesional en Óptica Alemania Villavicencio.",
+    whatsappButtonText: "Contáctanos por WhatsApp",
+    whatsappMessage: "Hola, me gustaría conocer más sobre su atención y servicios en Óptica Alemania Villavicencio.",
+    video: {
+      duration: "0:25",
+      label: "Video de atención y recorrido hacia Óptica Alemania Villavicencio",
+      videoSrc: "https://cdn.sanity.io/files/wlz1r3ue/production/cca4d2fa91ccc5ade90d3fb55fa248efaa67fe19.mp4",
+      poster: "/images/home-arrival-video-poster.webp",
+      pngFallback: "/images/home-arrival-video-poster.png",
+    },
+  },
   services: [
     {
       id: "optometria",
