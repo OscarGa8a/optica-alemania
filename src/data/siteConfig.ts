@@ -924,8 +924,8 @@ export const siteConfig: SiteConfig = {
     logo: {
       src: "/images/logo.webp",
       alt: "Óptica Alemania Villavicencio",
-      width: 420,
-      height: 140,
+      width: 500,
+      height: 182,
     },
     tagline: "Atención visual, evaluaciones optométricas y opciones de monturas en Villavicencio. Conoce nuestros servicios y visita nuestra sede en Barzal.",
     exploreTitle: "EXPLORA",

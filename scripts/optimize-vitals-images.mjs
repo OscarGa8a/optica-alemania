@@ -11,18 +11,22 @@ const OUT_DIR = path.resolve(ROOT_DIR, 'public', 'images');
 const jobs = [
   // 1. Logo
   {
-    src: path.join(ROOT_DIR, 'docs', 'logo.png'),
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'logo_v2.png'))
+      ? path.join(ROOT_DIR, 'docs', 'logo_v2.png')
+      : path.join(ROOT_DIR, 'docs', 'logo.png'),
     out: path.join(OUT_DIR, 'logo.webp'),
-    width: 420,
+    width: 500,
     fit: 'inside',
-    quality: 80,
+    quality: 85,
   },
   {
-    src: path.join(ROOT_DIR, 'docs', 'logo.png'),
+    src: fs.existsSync(path.join(ROOT_DIR, 'docs', 'logo_v2.png'))
+      ? path.join(ROOT_DIR, 'docs', 'logo_v2.png')
+      : path.join(ROOT_DIR, 'docs', 'logo.png'),
     out: path.join(OUT_DIR, 'logo-sm.webp'),
     width: 280,
     fit: 'inside',
-    quality: 80,
+    quality: 85,
   },
 
   // 2. Space Images (1-5 desktop + sm variants)

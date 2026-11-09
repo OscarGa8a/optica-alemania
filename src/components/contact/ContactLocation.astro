@@ -166,17 +166,17 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
             rel="noopener noreferrer"
             data-event="google_maps_click"
             data-event-location="contact_location_map"
-            class="group block relative w-full rounded-2xl lg:rounded-3xl overflow-hidden border border-brand-border shadow-md hover:shadow-xl transition-all duration-300 bg-brand-surface"
+            class="group block relative w-full rounded-2xl lg:rounded-3xl overflow-hidden border border-brand-border shadow-md hover:shadow-xl transition-all duration-300 hover:scale-102 bg-brand-surface"
             aria-label="Abrir mapa de ubicación de Óptica Alemania Villavicencio en Barzal en Google Maps"
           >
             <img
-              src="/images/contact/2_ubicacion_map.webp"
-              alt="Mapa ilustrado de ubicación de Óptica Alemania Villavicencio en Calle 35 #34-36, Barzal"
-              width="1200"
-              height="588"
+              src={contactSection.mapImage.src}
+              alt={contactSection.mapImage.alt}
+              width={contactSection.mapImage.width}
+              height={contactSection.mapImage.height}
               loading="lazy"
               decoding="async"
-              class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              class="w-full h-auto object-cover"
             />
           </a>
         </div>
