@@ -6,6 +6,8 @@ import sanity from '@sanity/astro';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://opticaalemania.co',
+  trailingSlash: 'always',
   devToolbar: {
     enabled: false,
   },

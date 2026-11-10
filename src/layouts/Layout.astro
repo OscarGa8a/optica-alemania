@@ -41,23 +41,30 @@ const {
 
 const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 
+// Normalización resiliente de ruta (Trailing Slash canonical)
+const rawCurrentPath = currentPath || Astro.url.pathname || '/';
+const cleanPath = (rawCurrentPath === '#inicio' || rawCurrentPath === '' || rawCurrentPath === '/')
+  ? '/'
+  : (rawCurrentPath.startsWith('/') ? rawCurrentPath : `/${rawCurrentPath}`).replace(/\/+$/, '');
+const normalizedCurrentPath = cleanPath === '/' ? '/' : `${cleanPath}/`;
+
 // Preload de Hero LCP adaptativo según página
-const defaultMobilePreload = currentPath === '/nosotros'
+const defaultMobilePreload = cleanPath === '/nosotros'
   ? '/images/nosotros-hero-mobile.webp?v=2'
-  : currentPath === '/servicios'
+  : cleanPath === '/servicios'
     ? '/images/services-hero-mobile.webp'
-    : currentPath === '/procedimientos'
+    : cleanPath === '/procedimientos'
       ? '/images/procedimientos-hero-mobile.webp'
-      : currentPath === '/contacto'
+      : cleanPath === '/contacto'
         ? undefined
         : '/images/hero-mobile.webp';
-const defaultDesktopPreload = currentPath === '/nosotros'
+const defaultDesktopPreload = cleanPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp?v=2'
-  : currentPath === '/servicios'
+  : cleanPath === '/servicios'
     ? '/images/services-hero-desktop.webp'
-    : currentPath === '/procedimientos'
+    : cleanPath === '/procedimientos'
       ? '/images/procedimientos-hero-desktop.webp'
-      : currentPath === '/contacto'
+      : cleanPath === '/contacto'
         ? undefined
         : '/images/hero-desktop.webp';
 
@@ -71,23 +78,23 @@ const ogBaseUrl = import.meta.env.PUBLIC_OG_IMAGE_BASE_URL
   || 'https://opticaalemania.co';
 const cleanOgBase = ogBaseUrl.replace(/\/$/, '');
 
-const defaultOgImagePath = currentPath === '/nosotros'
+const defaultOgImagePath = cleanPath === '/nosotros'
   ? '/images/nosotros-hero-desktop.webp?v=2'
-  : currentPath === '/servicios'
+  : cleanPath === '/servicios'
     ? '/images/services-hero-desktop.webp'
-    : currentPath === '/procedimientos'
+    : cleanPath === '/procedimientos'
       ? '/images/procedimientos-hero-desktop.webp'
-      : currentPath === '/contacto'
+      : cleanPath === '/contacto'
         ? '/images/contact-facade-route.webp'
         : '/images/hero-desktop.webp';
 
-const defaultOgImageAlt = currentPath === '/nosotros'
+const defaultOgImageAlt = cleanPath === '/nosotros'
   ? 'Sobre Nosotros - Óptica Alemania Villavicencio'
-  : currentPath === '/servicios'
+  : cleanPath === '/servicios'
     ? 'Servicios de optometría - Óptica Alemania Villavicencio'
-    : currentPath === '/procedimientos'
+    : cleanPath === '/procedimientos'
       ? 'Procedimientos visuales - Óptica Alemania Villavicencio'
-      : currentPath === '/contacto'
+      : cleanPath === '/contacto'
         ? 'Contacto y ubicación de Óptica Alemania Villavicencio en Barzal'
         : 'Óptica Alemania Villavicencio - Optometría y salud visual';
 
@@ -99,13 +106,13 @@ const resolvedOgImage = rawOgImage.startsWith('http')
 const resolvedOgImageAlt = ogImageAlt || defaultOgImageAlt;
 
 // Mensaje contextual de WhatsApp para widget flotante
-const defaultWhatsAppMessage = currentPath === '/nosotros'
+const defaultWhatsAppMessage = cleanPath === '/nosotros'
   ? 'Hola, estuve viendo la sección Nosotros de Óptica Alemania Villavicencio y deseo solicitar información o agendar una cita.'
-  : currentPath === '/servicios'
+  : cleanPath === '/servicios'
     ? 'Hola, estuve viendo los servicios de Óptica Alemania Villavicencio y deseo solicitar información o agendar una consulta.'
-    : currentPath === '/procedimientos'
+    : cleanPath === '/procedimientos'
       ? 'Hola, estuve viendo los procedimientos visuales de Óptica Alemania Villavicencio y deseo solicitar información o agendar una cita.'
-      : currentPath === '/contacto'
+      : cleanPath === '/contacto'
         ? 'Hola, estuve revisando los canales de contacto de Óptica Alemania Villavicencio y deseo comunicarme con ustedes.'
         : 'Hola, estoy visitando la web de Óptica Alemania Villavicencio y deseo solicitar atención o agendar una cita.';
 
@@ -113,7 +120,7 @@ const resolvedWhatsAppMessage = floatingWhatsAppMessage || defaultWhatsAppMessag
 
 // PLAYBOOK Fase 4: Arquitectura de Protección de Staging en Doble Capa
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://opticaalemania.co';
-const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${currentPath === '/' ? '/' : currentPath.startsWith('/') ? currentPath : `/${currentPath}`}`;
+const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${normalizedCurrentPath}`;
 const publicEnv = import.meta.env.PUBLIC_ENV || '';
 const publicNoindex = import.meta.env.PUBLIC_NOINDEX;
 const allowIndexing = import.meta.env.PUBLIC_ALLOW_INDEXING === 'true' || publicNoindex === 'false' || publicNoindex === false;
@@ -171,8 +178,8 @@ const servicesFaqQuestions = siteConfig.servicesPage.faq.items.map((item) => ({
   },
 }));
 
-const hasFaq = currentPath === '/' || currentPath === '/servicios';
-const activeFaqQuestions = currentPath === '/servicios' ? servicesFaqQuestions : homeFaqQuestions;
+const hasFaq = cleanPath === '/' || cleanPath === '/servicios';
+const activeFaqQuestions = cleanPath === '/servicios' ? servicesFaqQuestions : homeFaqQuestions;
 
 // PLAYBOOK Fase 4: Schema.org Multigrafo @graph
 const schemaGraph = {
@@ -246,7 +253,7 @@ const schemaGraph = {
         "mainEntity": activeFaqQuestions
       }
     ] : []),
-    ...(currentPath === '/nosotros' ? [
+    ...(cleanPath === '/nosotros' ? [
       {
         "@type": "AboutPage",
         "@id": `${canonicalUrl}#aboutpage`,
@@ -262,7 +269,7 @@ const schemaGraph = {
         }
       }
     ] : []),
-    ...(currentPath === '/servicios' ? [
+    ...(cleanPath === '/servicios' ? [
       {
         "@type": "MedicalWebPage",
         "@id": `${canonicalUrl}#servicespage`,
@@ -316,7 +323,7 @@ const schemaGraph = {
         }
       }
     ] : []),
-    ...(currentPath === '/procedimientos' ? [
+    ...(cleanPath === '/procedimientos' ? [
       {
         "@type": "MedicalWebPage",
         "@id": `${canonicalUrl}#procedimientospage`,
@@ -378,7 +385,7 @@ const schemaGraph = {
         }
       }
     ] : []),
-    ...(currentPath === '/contacto' ? [
+    ...(cleanPath === '/contacto' ? [
       {
         "@type": "ContactPage",
         "@id": `${canonicalUrl}#contactpage`,
@@ -597,7 +604,7 @@ const schemaGraph = {
         ></iframe>
       </noscript>
     )}
-    <Navbar currentPath={currentPath} theme={effectiveTheme} />
+    <Navbar currentPath={normalizedCurrentPath} theme={effectiveTheme} />
     <main id="main-content">
       <slot />
     </main>

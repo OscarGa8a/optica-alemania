@@ -7,36 +7,39 @@ interface Props {
 }
 
 const { currentPath = '' } = Astro.props;
-const isNosotros = currentPath === '/nosotros' || currentPath === 'nosotros';
-const isServicios = currentPath === '/servicios' || currentPath === 'servicios';
-const isContacto = currentPath === '/contacto' || currentPath === 'contacto';
-const isProcedimientos = currentPath === '/procedimientos' || currentPath === 'procedimientos';
+const cleanPath = (currentPath === '' || currentPath === '/')
+  ? '/'
+  : (currentPath.startsWith('/') ? currentPath : `/${currentPath}`).replace(/\/+$/, '');
+const isNosotros = cleanPath === '/nosotros' || cleanPath === 'nosotros';
+const isServicios = cleanPath === '/servicios' || cleanPath === 'servicios';
+const isContacto = cleanPath === '/contacto' || cleanPath === 'contacto';
+const isProcedimientos = cleanPath === '/procedimientos' || cleanPath === 'procedimientos';
 const isSubpage = isNosotros || isServicios || isContacto || isProcedimientos;
 const { footer, contact } = siteConfig;
 
 const navLinks = footer.navLinks.map((link) => {
   let href = link.href;
   if (isSubpage) {
-    if (href === '#nosotros' || href === '/nosotros') {
-      href = '/nosotros';
-    } else if (href === '#servicios' || href === '/servicios') {
-      href = '/servicios';
-    } else if (href === '#contacto' || href === '/contacto') {
-      href = '/contacto';
-    } else if (href === '#procedimientos' || href === '/procedimientos') {
-      href = '/procedimientos';
+    if (href === '#nosotros' || href === '/nosotros' || href === '/nosotros/') {
+      href = '/nosotros/';
+    } else if (href === '#servicios' || href === '/servicios' || href === '/servicios/') {
+      href = '/servicios/';
+    } else if (href === '#contacto' || href === '/contacto' || href === '/contacto/') {
+      href = '/contacto/';
+    } else if (href === '#procedimientos' || href === '/procedimientos' || href === '/procedimientos/') {
+      href = '/procedimientos/';
     } else if (href.startsWith('#')) {
       href = `/${href}`;
     }
   } else {
     if (href === '#nosotros') {
-      href = '/nosotros';
+      href = '/nosotros/';
     } else if (href === '#servicios') {
-      href = '/servicios';
+      href = '/servicios/';
     } else if (href === '#contacto') {
-      href = '/contacto';
+      href = '/contacto/';
     } else if (href === '#procedimientos') {
-      href = '/procedimientos';
+      href = '/procedimientos/';
     }
   }
   return { ...link, href };
