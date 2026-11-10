@@ -327,7 +327,7 @@ async function run() {
         return {
           canonical,
           robots,
-          isCanonicalOk: canonical === 'https://opticaalemania.co/nosotros',
+          isCanonicalOk: canonical === 'https://opticaalemania.co/nosotros/',
           isRobotsOk: robots === 'index, follow, max-image-preview:large',
         };
       });

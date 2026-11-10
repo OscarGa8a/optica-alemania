@@ -573,10 +573,10 @@ export const siteConfig: SiteConfig = {
   },
   nav: [
     { label: "Inicio", href: "/" },
-    { label: "Nosotros", href: "/nosotros" },
-    { label: "Servicios", href: "/servicios" },
-    { label: "Procedimientos", href: "/procedimientos" },
-    { label: "Contacto", href: "/contacto" },
+    { label: "Nosotros", href: "/nosotros/" },
+    { label: "Servicios", href: "/servicios/" },
+    { label: "Procedimientos", href: "/procedimientos/" },
+    { label: "Contacto", href: "/contacto/" },
   ],
   arrival: {
     eyebrow: "CONOCE NUESTRA ATENCIÓN",
@@ -642,7 +642,7 @@ export const siteConfig: SiteConfig = {
       image: "/images/tech-volk-inview.webp",
       alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania Villavicencio",
       actionText: "Conocer procedimiento",
-      actionHref: "/procedimientos",
+      actionHref: "/procedimientos/",
       whatsappMessage: "Hola, me gustaría conocer más sobre el procedimiento con Volk iNview en Óptica Alemania Villavicencio.",
     },
     {
@@ -655,7 +655,7 @@ export const siteConfig: SiteConfig = {
       image: "/images/tech-farnsworth-d15.webp",
       alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania Villavicencio",
       actionText: "Conocer procedimiento",
-      actionHref: "/procedimientos",
+      actionHref: "/procedimientos/",
       whatsappMessage: "Hola, deseo información sobre la prueba de visión del color Farnsworth D-15 en Óptica Alemania Villavicencio.",
     },
   ],
@@ -665,7 +665,7 @@ export const siteConfig: SiteConfig = {
     titlePart2: "cuidamos tu visión.",
     description: "Queremos que conozcas Óptica Alemania Villavicencio antes de visitarnos. Explora nuestra sede en Barzal y descubre los espacios donde recibimos a quienes llegan para consultar por su salud visual y sus gafas.",
     ctaText: "Cómo llegar",
-    ctaHref: "/contacto#ubicacion",
+    ctaHref: "/contacto/#ubicacion",
     images: [
       {
         src: "/images/space-1.webp",
@@ -1141,13 +1141,13 @@ export const siteConfig: SiteConfig = {
       titleHighlight: "de cerca.",
       description: "Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales en Óptica Alemania Villavicencio.",
       ctaText: "Explorar más procedimientos",
-      ctaHref: "/procedimientos",
+      ctaHref: "/procedimientos/",
       items: [
         {
           id: "evaluacion-retinal-volk-inview",
           title: "Evaluación retinal con Volk iNview",
           actionText: "Ver procedimiento",
-          actionHref: "/procedimientos#volk-inview",
+          actionHref: "/procedimientos/#volk-inview",
           image: {
             src: "/images/tech-volk-inview.webp",
             alt: "Especialista realizando evaluación retinal con dispositivo Volk iNview en Óptica Alemania Villavicencio",
@@ -1159,7 +1159,7 @@ export const siteConfig: SiteConfig = {
           id: "test-farnsworth-d15",
           title: "Test de Farnsworth D-15",
           actionText: "Ver procedimiento",
-          actionHref: "/procedimientos#farnsworth",
+          actionHref: "/procedimientos/#farnsworth",
           image: {
             src: "/images/tech-farnsworth-d15.webp",
             alt: "Paciente realizando el Test de Farnsworth D-15 para visión del color en Óptica Alemania Villavicencio",
@@ -1317,7 +1317,7 @@ export const siteConfig: SiteConfig = {
       whatsappMessage: "Hola, vi los procedimientos en la página web de Óptica Alemania Villavicencio y quisiera más información sobre las evaluaciones visuales.",
       secondaryLink: {
         text: "Explorar servicios",
-        href: "/servicios",
+        href: "/servicios/",
       },
     },
   },

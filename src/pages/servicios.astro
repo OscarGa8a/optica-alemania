@@ -19,7 +19,7 @@ const videoFarnsworth = videos.find((v) => /farnsworth/i.test(v.titulo)) ?? vide
 <Layout
   title="Servicios de optometría | Óptica Alemania Villavicencio"
   description="Conoce los servicios de Óptica Alemania Villavicencio: consulta de optometría, lentes de contacto y evaluaciones visuales especializadas."
-  currentPath="/servicios"
+  currentPath="/servicios/"
   navVariant="light"
 >
   <ServicesHero />
@@ -33,5 +33,5 @@ const videoFarnsworth = videos.find((v) => /farnsworth/i.test(v.titulo)) ?? vide
   />
   <ServicesFaq />
   <ServicesCta />
-  <Footer />
+  <Footer currentPath="/servicios/" />
 </Layout>
