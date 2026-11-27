@@ -66,3 +66,32 @@ body {
     display: none;
   }
 }
+
+/* Shared hero H1 scale: production Home clamp, common max-width on desktop
+   so longer titles wrap instead of shrinking. Stays in the left half (gradient
+   column / before the Contacto arc). Mobile keeps full content width. */
+.hero-title {
+  font-size: clamp(2.15rem, 1.25rem + 3.6vw, 5.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .hero-title {
+    max-width: min(100%, calc(50vw - 2.5rem));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-title {
+    max-width: min(100%, calc(50vw - 3.5rem));
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-title {
+    max-width: min(100%, calc(50vw - 5rem));
+  }
+}
+

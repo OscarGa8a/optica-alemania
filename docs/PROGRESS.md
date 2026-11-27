@@ -156,6 +156,16 @@ Se restauró el overlay de escritorio **exactamente** como en `b882a13`:
 
 Para que el H1 nuevo no invada la foto (sin volver a alargar el degradado): se limitó el `max-width` y se bajó un poco el tamaño en desktop. El H1 de Inicio puede ocupar 3 líneas; se mantienen el `&nbsp;` de «Barzal, Villavicencio» y la lectura a 390 px. En Nosotros, el H1 parte en escritorio tras «Óptica Alemania» para no cruzar la cara; en móvil sigue en una sola línea + la cursiva. En Procedimientos se topó el tamaño en `lg+` para que «Procedimientos visuales» no se parta ni se monte en el equipo. El resto de cambios (FAQ y su animación de `bae1607`, subtítulos, SEO, JSON-LD, gating de GTM) se mantiene. `pnpm build` y los 5 tests en verde. 1 H1 por página. Comparativas producción vs preview en `/workspace/optica-shots/hero-compare-*.jpg`.
 
+#### Escala unificada de los H1 del hero (27 nov 2026, ~12:27 p. m., America/Bogota)
+
+Oscar (vía NEXUS) pidió que los H1 del hero de Inicio, Nosotros, Servicios, Procedimientos y Contacto compartan la misma escala en cada ancho, porque al cambiar de página el tamaño se veía distinto. Se tomó como referencia el H1 de Inicio en producción (`main`, `b882a13`): `clamp(2.15rem, 1.25rem + 3.6vw, 5.5rem)`, que en pantalla da 34,4 px (390), 56,86 px (1024), 66,08 px (1280) y 71,84 px (1440). En producción esas cifras no eran iguales en todas las páginas (Contacto llegaba a 48/72/96 px; Procedimientos usaba otro clamp).
+
+Se añadió la clase compartida `.hero-title` en `src/styles/global.css` (tamaño, interlineado y un `max-width` común: 100% en móvil y, en escritorio, `min(100%, 50vw − padding)` para que el título largo baje de línea en vez de achicarse y se quede en la mitad izquierda). Se quitaron los topes por página de `abb5805` (`lg:text-[2.5rem]`, `3.25rem`, `2.85rem` y los de Procedimientos). No se tocó el degradado ni la foto. Se mantiene el `&nbsp;` de «Barzal, Villavicencio», «cada mirada», «cómo llegar», «Óptica Alemania» y «en Villavicencio».
+
+Nota: con la escala de producción de Inicio, en 1024 px la línea inseparable «Barzal, Villavicencio» (~396 px de ancho, borde derecho ~436 px) se monta sobre el pelo/rostro de la paciente (la zona segura termina antes, ~340–380 px). Un `max-width` común más estrecho no lo evita: esa cadena no parte y desbordaría el recuadro. No se inventó una excepción de tamaño ni de ancho. En 1280/1440 el solape es menor. En Contacto el H1 queda antes de la mitad y de la iris, aunque en 1024/1280 la primera línea aún roza el arranque izquierdo del arco.
+
+`pnpm build` y los 5 tests en verde. 1 H1 por página. Comparativas en `/workspace/optica-shots/hero-compare-*.jpg`.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
