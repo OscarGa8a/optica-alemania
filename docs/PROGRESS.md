@@ -4,7 +4,11 @@ Fecha de esta actualización: 27 nov 2026, 4:10 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
-Base prevista: `origin/main` (`b882a13`, ya incluye el merge del PR #68 / `fix/enlaces-barra-final`). Esta rama no se fusiona ni se despliega a producción hasta un OK de publicación de Oscar.
+Base: `origin/main` (`b882a13`, ya incluye el merge del PR #68 / `fix/enlaces-barra-final`).
+
+## Publicación aprobada por Oscar 2026-11-27 12:49
+
+Oscar aprobó, vía NEXUS («listos vamos a publicarlo por favor»), publicar `feat/seo-local` el 27 nov 2026 a las 12:49 p. m. (America/Bogota). Alcance exclusivo de este OK: abrir el PR hacia `main`, hacer el merge y dejar que Cloudflare Pages despliegue producción en opticaalemania.co. No se toca Cloudflare (ni el 522 de `www`, ni DNS, ni configuración), no se borra la rama `feat/seo-local` ni nada más, y no se crean tokens.
 
 ### Aprobación del plan (27 nov 2026, 1:41 a. m., America/Bogota)
 
@@ -177,12 +181,12 @@ Nota: con la escala de producción de Inicio, en 1024 px la línea inseparable �
 
 - Se siguió la v2, no el brief de páginas de servicio.
 - El copy de las páginas vive en el repo (`siteConfig` y componentes); no se escribió en Sanity.
-- No se tocó Cloudflare, no hay PR ni merge a `main`, ni despliegue a producción.
+- Durante la preparación de la preview no se tocó Cloudflare ni se fusionó a `main`. La publicación a producción quedó aprobada el 27 nov 2026 a las 12:49 p. m. (America/Bogota).
 
-### Pendiente de publicación
+### Publicación
 
-- OK de Oscar, vía NEXUS, para abrir PR / merge a `main` y publicar.
-- Hallazgo previo: `https://www.opticaalemania.co` responde **522**. Fuera de este encargo.
+- Aprobada por Oscar, vía NEXUS, el 27 nov 2026 a las 12:49 p. m. (America/Bogota): PR, merge a `main` y deploy de Cloudflare Pages a producción.
+- Hallazgo previo: `https://www.opticaalemania.co` responde **522**. Fuera de este encargo; no se toca.
 
 ---
 
