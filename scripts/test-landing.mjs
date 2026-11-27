@@ -226,8 +226,8 @@ async function run() {
       // Verify CTA link
       const cta = aboutSection.locator('a[data-event="history_click"]');
       const ctaHref = await cta.getAttribute('href');
-      if (ctaHref !== '/nosotros') {
-        console.error(`❌ [${vp.name}] Expected CTA href='/nosotros', got: '${ctaHref}'`);
+      if (ctaHref !== '/nosotros/') {
+        console.error(`❌ [${vp.name}] Expected CTA href='/nosotros/', got: '${ctaHref}'`);
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] CTA link verified (href: ${ctaHref}, data-event: history_click)`);
@@ -352,8 +352,8 @@ async function run() {
       // Verify CTA link
       const cta = servicesSection.locator('a[data-event="services_all_click"]');
       const ctaHref = await cta.getAttribute('href');
-      if (ctaHref !== '/servicios') {
-        console.error(`❌ [${vp.name}] Expected CTA href='/servicios', got: '${ctaHref}'`);
+      if (ctaHref !== '/servicios/') {
+        console.error(`❌ [${vp.name}] Expected CTA href='/servicios/', got: '${ctaHref}'`);
         failed = true;
       } else {
         console.log(`✅ [${vp.name}] Services CTA link verified (href: ${ctaHref})`);
