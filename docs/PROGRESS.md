@@ -1,6 +1,6 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 1:47 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 2:01 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -18,6 +18,18 @@ Oscar, vía NEXUS, recortó el encargo: el cliente no va a pagar programación e
 - **No:** páginas nuevas, secciones nuevas, columna «Servicios» en el footer, URLs nuevas en sitemap o llms, ni rediseño. No se creó `/servicios/[slug]/` ni `src/data/servicios.ts`.
 
 ### Hecho
+
+#### Encabezados y footer en un solo bloque (27 nov 2026, ~2:00 a. m., America/Bogota)
+
+Pedido de Oscar para la preview, sin publicar:
+
+- **H2 de `/procedimientos/`** («¿Quieres conocer más sobre nuestras evaluaciones?»): un solo `<h2>` con el texto completo dentro y solo «evaluaciones?» en un `<span>` de color. Los saltos de línea van con `max-w-xl` y `text-balance`, no con un span por línea ni con `hidden`/`sm:block`. En escritorio el corte de línea queda un poco distinto al de producción (antes «evaluaciones?» iba forzado a su propia línea; ahora «nuestras evaluaciones?» puede ir junto). En 375 px el ritmo visual es el mismo.
+- Se revisaron el resto de H1/H2/H3: no quedaba ningún otro encabezado con el patrón de spans duplicados por breakpoint (`hidden sm:block` + `block sm:hidden`). Hay H2 que parten la frase en `<span class="block">` para el diseño (una sola copia del texto); no se reescribieron.
+- **Footer unificado:** un solo bloque responsive (columna en móvil, grid de 12 en `lg+`). Títulos EXPLORA/CONTACTO en `<p>`. Se conservan enlaces, dirección, teléfonos, horario e iconos, y los `data-event` de navegación, `phone_call` y `footer_whatsapp_click` / `footer_social_click`. En móvil se mantienen chevrones (`lg:hidden` solo en el icono, no duplica el enlace). Comparación visual con producción a 375 px y 1280 px: el diseño se sostiene.
+- **No se tocó** la sección «TE MOSTRAMOS EL CAMINO» de `/contacto/` (los dos textos ya eran `<span>`; el único encabezado sigue siendo el H3 «¿Es tu primera visita?»; el título del modal ya iba en `<p>`).
+- El pie de la lightbox de imágenes era un `<footer>` adicional en home y `/nosotros/`. Se cambió a `<div>` con las mismas clases, para que en el DOM solo quede el `<footer id="footer">` de sitio. El diseño del lightbox no cambia.
+- Capturas de producción (antes) y del `dist` local (después), 375 y 1280 px, en `/workspace/optica-shots/`.
+- En el HTML generado: 1 `<footer>` y 1 H1 por página; ningún H2 repetido; 5 enlaces de nav y 1 WhatsApp en el footer (antes había el doble por la copia móvil).
 
 - Títulos, metas y `og:title`/`og:description` de las 5 páginas según la v2. H1 nuevos; la frase emocional deja de ser H1. En home y contacto, el `<p>` del hero se actualizó con el texto menor de la v2 (esas páginas ya tenían un lead; no se apiló un segundo párrafo). En `/nosotros/` y `/procedimientos/`, el H1 anterior quedó como subtítulo `<p>`.
 - H2 y textos menores de la v2 aplicados en las 5 páginas. Grafía unificada: «Volk iNview».
