@@ -115,6 +115,21 @@ Capturas a 390 px y 1280 px en `/workspace/optica-shots/after-visual-*-390.png` 
 
 Ajuste posterior (27 nov 2026, ~4:28–4:30 a. m., America/Bogota), todavía en `feat/seo-local` y sin cambiar textos: en el deploy de `3e5ca0d` el H1 del home a 1280 px se partía en tres líneas porque la segunda («tu óptica en el Barzal, Villavicencio») se pasaba por ~2 px del `max-w-3xl`. Se limitó el tamaño en `lg+` (`3.5rem` / `4rem` / `4.75rem`) para el corte de dos líneas que pedía la revisión. El H2 «Dirección y horarios…» en escritorio seguía partiendo «el Barzal» a renglón propio por el `xl:text-8xl` en una columna estrecha; en `lg+` baja a `2.9rem` / `text-6xl` y queda «Dirección y horarios:» / «nos vemos en el Barzal». En móvil (390 px) esos dos encabezados no cambian de corte. `pnpm build` y los 5 tests en verde. JSON-LD y la cuenta de H1 no se tocan.
 
+#### Ronda 2 de la revisión visual (NEXUS, 27 nov 2026, ~4:54–5:16 a. m., America/Bogota)
+
+Ajustes sobre `593c6ba`, solo en `feat/seo-local`. Sin PR, merge ni deploy a producción. No se cambiaron textos, fotos ni años. JSON-LD y la cuenta de H1 no se tocan.
+
+1. Contraste de heroes en escritorio: se amplió el degradado claro del Home (`w-[88%]` / `xl:w-[80%]` / `2xl:w-[70%]`, con paradas más opacas) para que la cursiva «tu óptica en el Barzal, Villavicencio» quede sobre zona clara a 1024 y 1280 px. En `/nosotros/` se alargó y se opaquizó el degradado, se limitó el ancho del bloque (`lg:max-w-xl xl:max-w-2xl`) y se topó el H1 en `xl+`, de modo que «cada mirada» baja a su línea y no queda sobre el portátil. El H1 del Home en escritorio se mantiene en dos líneas, sin palabras solas. A 1440 px el contraste, que ya era bueno, se conserva.
+2. Palabras solas en H2, unidas con `&nbsp;` a la anterior (sin cambiar el texto):
+   - Home «Nuestra óptica en el Barzal, Villavicencio»: se quitó el `span.block` de «Villavicencio» y quedó `Barzal,&nbsp;Villavicencio`.
+   - Nosotros «Nuestra historia en Villavicencio»: se quitó el `<br>` y quedó `en&nbsp;Villavicencio`.
+   - Cofrem a 1280: `lente&nbsp;oftálmico`. En el código y en pantalla el adjetivo es «oftálmico», no hay errata «olfálmico».
+   - Servicios «Consulta de optometría y adaptación de lentes de contacto»: `de&nbsp;contacto`.
+   - Servicios «Procedimientos en video: Volk iNview y Farnsworth D-15»: `Farnsworth&nbsp;D-15`.
+   - De paso, también se unieron wrap huérfanos reales: Home «cuidan de&nbsp;ti.» (aparecía a 1024) y el H2 de cierre de Procedimientos «nuestras&nbsp;evaluaciones?». Se dejaron cortes editoriales de dos líneas que no son un wrap accidental: «Preguntas» / «frecuentes» (decisión previa de Oscar), «Nuestra» / «misión.» y «Nuestra» / «visión.», «Hablemos.» y el H2 de cierre de Nosotros con `<br>` manual («escucharte.»).
+3. FAQ: en móvil, `pb-40` en la sección, `pb-24` en la respuesta del último ítem y `scroll-margin-bottom`, más un scroll al abrir si la respuesta queda detrás del botón flotante. Solo se tocó el componente de la FAQ, no el botón del sitio. «oftálmicos.» y «corresponda.» quedan por encima del botón.
+
+Se actualizó la aserción de diseño del H1 del Home en `scripts/test-landing.mjs`: el degradado de escritorio ya no mide la mitad exacta del hero. `pnpm build` y los 5 tests en verde. Capturas a 390, 1024, 1280 y 1440 px en `/workspace/optica-shots/after-visual2-*.jpg` (JPG recortados, < 400 KB).
 
 ### Pendiente del cliente
 

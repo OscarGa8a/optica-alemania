@@ -166,7 +166,12 @@ async function run() {
       return {
         gradient: innerWidth < 1024
           ? getComputedStyle(gradient).display === 'none'
-          : Math.abs(gradient.getBoundingClientRect().width - hero.getBoundingClientRect().width / 2) < 1,
+          : (() => {
+              const gw = gradient.getBoundingClientRect().width;
+              const hw = hero.getBoundingClientRect().width;
+              // Wider than half so the italic H1 stays on the light wash at 1024/1280.
+              return gw > hw * 0.6 && gw <= hw + 1;
+            })(),
         headingFont: getComputedStyle(about.querySelector('h2')).fontFamily === getComputedStyle(hero.querySelector('h1')).fontFamily,
         bodyFont: getComputedStyle(about.querySelector('p')).fontFamily === getComputedStyle(document.body).fontFamily,
         eyebrowColor: getComputedStyle(eyebrow).color === getComputedStyle(heroEyebrow).color,

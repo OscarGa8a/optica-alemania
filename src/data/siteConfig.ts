@@ -662,7 +662,7 @@ export const siteConfig: SiteConfig = {
   ],
   space: {
     eyebrow: "CONOCE NUESTRA SEDE",
-    titlePart1: "Nuestra óptica en el Barzal, ",
+    titlePart1: "Nuestra óptica en el Barzal,\u00A0",
     titlePart2: "Villavicencio",
     description: "Queremos que conozcas Óptica Alemania Villavicencio antes de visitarnos. Explora nuestra sede en Barzal y descubre los espacios donde recibimos a quienes llegan para consultar por su salud visual y sus gafas.",
     ctaText: "Cómo llegar",
@@ -763,7 +763,7 @@ export const siteConfig: SiteConfig = {
   cofrem: {
     eyebrow: "BENEFICIOS ESPECIALES",
     titlePart1: "Club Descuentos Cofrem: ",
-    titlePart2: "15% en montura y 10% en lente oftálmico",
+    titlePart2: "15% en montura y 10% en lente\u00A0oftálmico",
     description: "Si haces parte del Club Descuentos Cofrem, en Óptica Alemania Villavicencio puedes acceder a beneficios especiales en productos seleccionados.",
     ctaText: "Consultar beneficio",
     whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania Villavicencio.",
@@ -1028,7 +1028,7 @@ export const siteConfig: SiteConfig = {
       id: "atencion-visual",
       eyebrow: "01 / ATENCIÓN VISUAL",
       titlePart1: "Consulta de optometría y ",
-      titleHighlight: "adaptación de lentes de contacto",
+      titleHighlight: "adaptación de lentes de\u00A0contacto",
       description: "Cada persona tiene necesidades visuales distintas. Conoce las opciones de valoración y adaptación que puedes consultar con nuestro equipo.",
       items: [
         {
@@ -1139,7 +1139,7 @@ export const siteConfig: SiteConfig = {
       id: "procedimientos",
       eyebrow: "PROCEDIMIENTOS",
       titlePart1: "Procedimientos en video: ",
-      titleHighlight: "Volk iNview y Farnsworth D-15",
+      titleHighlight: "Volk iNview y Farnsworth\u00A0D-15",
       description: "Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales en Óptica Alemania Villavicencio.",
       ctaText: "Explorar más procedimientos",
       ctaHref: "/procedimientos/",
@@ -1309,7 +1309,7 @@ export const siteConfig: SiteConfig = {
       id: "contacto",
       eyebrow: "CONTINUEMOS CUIDANDO TU VISIÓN",
       titleLine1: "¿Quieres conocer más ",
-      titleLine2: "sobre nuestras ",
+      titleLine2: "sobre nuestras\u00A0",
       titleMobileLine1: "¿Quieres conocer más",
       titleMobileLine2: "sobre nuestras",
       titleHighlight: "evaluaciones?",

@@ -37,16 +37,15 @@ import Button from '../ui/Button.astro';
       />
     </picture>
 
-    <!-- Translucent gradient overlay: soft wash so background is visible, stops before the middle (50%) -->
-    <!-- Desktop: soft translucent gradient covering the text column up to 42%, fading out completely by 50% -->
-    <div class="hidden lg:block absolute inset-0 bg-gradient-to-r from-brand-ice/90 via-brand-mist/80 via-30% to-brand-mist/20 to-42% to-transparent to-50%"></div>
+    <!-- Desktop: degradado claro más largo y opaco para que «cada mirada» no quede sobre el portátil oscuro -->
+    <div class="hidden lg:block absolute inset-0 bg-gradient-to-r from-brand-ice from-0% via-brand-ice/95 via-[32%] via-brand-mist/85 via-[50%] via-brand-mist/55 via-[64%] to-transparent to-[78%]"></div>
     <!-- Mobile: soft gradient from top fading out before the specialist -->
     <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-brand-ice/90 via-brand-mist/75 via-45% to-transparent to-50%"></div>
   </div>
 
   <!-- Content Container: Sits on top of the full-bleed background with comfortable left spacing -->
   <div class="relative z-10 w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 pt-28 pb-12 sm:pt-32 lg:py-24">
-    <div class="max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl">
+    <div class="max-w-xl lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl">
       <!-- Eyebrow matching mockup -->
       <div>
         <span class="text-xs sm:text-sm uppercase font-semibold tracking-[0.2em] text-brand-primary">
@@ -55,7 +54,7 @@ import Button from '../ui/Button.astro';
       </div>
 
       <!-- Hero Heading H1: Fluid Instrument Serif scaling smoothly with screen width -->
-      <h1 class="font-display text-[clamp(2.25rem,1.25rem+3.6vw,5.5rem)] text-brand-heading font-normal tracking-tight leading-[1.06] mt-4 sm:mt-6">
+      <h1 class="font-display text-[clamp(2.25rem,1.25rem+3.6vw,5.5rem)] xl:text-[4.125rem] 2xl:text-[4.75rem] text-brand-heading font-normal tracking-tight leading-[1.06] mt-4 sm:mt-6">
         Óptica Alemania Villavicencio: <br />
         <span class="italic font-normal text-brand-primary">personas detrás de cada&nbsp;mirada</span>
       </h1>

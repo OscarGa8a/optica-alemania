@@ -28,7 +28,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
 <section
   id={faq.id}
-  class="relative bg-brand-cool text-brand-body pt-14 pb-32 sm:pt-20 sm:pb-24 lg:pt-28 lg:pb-28 scroll-mt-20 overflow-hidden"
+  class="relative bg-brand-cool text-brand-body pt-14 pb-40 sm:pt-20 sm:pb-28 lg:pt-28 lg:pb-28 scroll-mt-20 overflow-hidden"
   aria-labelledby={headingId}
 >
   <!-- Stylized Decorative Eye Watermark from assets.webp -->
@@ -102,7 +102,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
       <!-- Right Column: Interactive FAQ Accordion List -->
       <div class="lg:col-span-7">
-        <div class="space-y-3.5 lg:space-y-0" id={accordionId} data-faq-accordion>
+        <div class="space-y-3.5 lg:space-y-0 max-lg:[&_.faq-item]:scroll-mb-28 max-lg:[&_.faq-item:last-child_.faq-answer]:pb-24" id={accordionId} data-faq-accordion>
           {faq.items.map((item) => {
             const isOpen = item.defaultOpen;
             return (
@@ -200,6 +200,18 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 </section>
 
 <script>
+  function clearFloatingWidget(el: HTMLElement) {
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
+    const fab = document.querySelector<HTMLElement>('aside[aria-label="Canal directo de WhatsApp"]');
+    const fabTop = fab?.getBoundingClientRect().top;
+    const clearance = Math.ceil(window.innerHeight - (fabTop ?? window.innerHeight) + 12);
+    const overflow = el.getBoundingClientRect().bottom - (window.innerHeight - Math.max(clearance, 96));
+    if (overflow > 0) {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollBy({ top: overflow, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+  }
+
   function setupFaqAccordion(accordion: HTMLElement) {
     const items = accordion.querySelectorAll<HTMLElement>('.faq-item');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -228,6 +240,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
         if (prefersReducedMotion) {
           answer.classList.add('opacity-100');
+          clearFloatingWidget(answer);
           return;
         }
 
@@ -248,6 +261,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
           answer.style.overflow = '';
           answer.classList.add('opacity-100');
           currentAnimation = null;
+          clearFloatingWidget(answer);
         };
       }
 
