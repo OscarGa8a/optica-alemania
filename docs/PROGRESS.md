@@ -131,6 +131,10 @@ Ajustes sobre `593c6ba`, solo en `feat/seo-local`. Sin PR, merge ni deploy a pro
 
 Se actualizó la aserción de diseño del H1 del Home en `scripts/test-landing.mjs`: el degradado de escritorio ya no mide la mitad exacta del hero. `pnpm build` y los 5 tests en verde. Capturas a 390, 1024, 1280 y 1440 px en `/workspace/optica-shots/after-visual2-*.jpg` (JPG recortados, < 400 KB).
 
+#### Ajuste del vacío en la FAQ (27 nov 2026, ~5:23–5:26 a. m., America/Bogota)
+
+NEXUS aprobó el hero de `d3f0aa1` y pidió quitar el relleno interno (`pb-24`) que dejaba un hueco en la última tarjeta abierta de la FAQ. Se eliminó esa clase. La holgura frente al botón flotante de WhatsApp (56 px) queda en el `pb-40` de la sección en móvil, el `scroll-margin-bottom` de los ítems y el scroll al abrir que ya existía. El componente es compartido (home y `/servicios/`). No se tocó el botón flotante. `pnpm build` y los 5 tests en verde. Capturas en `/workspace/optica-shots/after-visual3-*-open-390.jpg`.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.

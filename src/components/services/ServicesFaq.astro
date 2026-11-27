@@ -102,7 +102,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
       <!-- Right Column: Interactive FAQ Accordion List -->
       <div class="lg:col-span-7">
-        <div class="space-y-3.5 lg:space-y-0 max-lg:[&_.faq-item]:scroll-mb-28 max-lg:[&_.faq-item:last-child_.faq-answer]:pb-24" id={accordionId} data-faq-accordion>
+        <div class="space-y-3.5 lg:space-y-0 max-lg:[&_.faq-item]:scroll-mb-28" id={accordionId} data-faq-accordion>
           {faq.items.map((item) => {
             const isOpen = item.defaultOpen;
             return (
