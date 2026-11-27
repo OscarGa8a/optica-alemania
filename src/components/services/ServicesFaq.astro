@@ -2,11 +2,25 @@
 // Sección 7: Preguntas frecuentes
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../../data/siteConfig';
+import type { ServicesFaqConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 
-const { faq } = siteConfig.servicesPage;
+interface Props {
+  faq?: ServicesFaqConfig;
+  accordionId?: string;
+  headingId?: string;
+  eventLocation?: string;
+}
+
+const {
+  faq = siteConfig.servicesPage.faq,
+  accordionId = 'faq-accordion',
+  headingId = 'faq-heading',
+  eventLocation = 'services_faq',
+} = Astro.props;
+
 const { contact } = siteConfig;
 
 const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whatsappNumber);
@@ -15,7 +29,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 <section
   id={faq.id}
   class="relative bg-brand-cool text-brand-body py-14 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
-  aria-labelledby="faq-heading"
+  aria-labelledby={headingId}
 >
   <!-- Stylized Decorative Eye Watermark from assets.webp -->
   <div
@@ -45,7 +59,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
         </div>
 
         <h2
-          id="faq-heading"
+          id={headingId}
           class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
         >
           <span class="block">{faq.titlePart1}</span>
@@ -74,7 +88,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                     rel="noopener noreferrer"
                     icon="arrow-right"
                     data-event="whatsapp_cta"
-                    data-event-location="services_faq"
+                    data-event-location={eventLocation}
                     aria-label={`${faq.contact.actionText} por WhatsApp para resolver tus dudas`}
                   >
                     {faq.contact.actionText}
@@ -88,7 +102,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
       <!-- Right Column: Interactive FAQ Accordion List -->
       <div class="lg:col-span-7">
-        <div class="space-y-3.5 lg:space-y-0" id="faq-accordion">
+        <div class="space-y-3.5 lg:space-y-0" id={accordionId} data-faq-accordion>
           {faq.items.map((item) => {
             const isOpen = item.defaultOpen;
             return (
@@ -170,7 +184,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                     rel="noopener noreferrer"
                     icon="arrow-right"
                     data-event="whatsapp_cta"
-                    data-event-location="services_faq"
+                    data-event-location={eventLocation}
                     aria-label={`${faq.contact.actionText} por WhatsApp para resolver tus dudas`}
                   >
                     {faq.contact.actionText}
@@ -186,10 +200,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 </section>
 
 <script>
-  function setupFaqAccordion() {
-    const accordion = document.getElementById('faq-accordion');
-    if (!accordion) return;
-
+  function setupFaqAccordion(accordion: HTMLElement) {
     const items = accordion.querySelectorAll<HTMLElement>('.faq-item');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -326,7 +337,11 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
     });
   }
 
+  function setupAllFaqAccordions() {
+    document.querySelectorAll<HTMLElement>('[data-faq-accordion]').forEach(setupFaqAccordion);
+  }
+
   // Initialize on initial page load and after view transitions
-  setupFaqAccordion();
-  document.addEventListener('astro:page-load', setupFaqAccordion);
+  setupAllFaqAccordions();
+  document.addEventListener('astro:page-load', setupAllFaqAccordions);
 </script>

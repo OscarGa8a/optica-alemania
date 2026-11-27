@@ -1,6 +1,6 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 2:01 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 2:27 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -40,17 +40,31 @@ Pedido de Oscar para la preview, sin publicar:
   - `hasMap` con el short link de Maps; `sameAs` solo Instagram, Facebook y TikTok. Facebook queda en `sameAs` con `https://www.facebook.com/opticaalemaniavillavicencio/` (Oscar confirmó que es la página oficial y está activa; ya no es pendiente).
   - Horario en dos tramos: lun–vie `09:00–12:00` y `14:00–18:00`; sábado `09:00–12:00` y `13:00–15:00`. Domingo omitido.
   - Sin `legalName`, `priceRange` ni `aggregateRating`.
-  - Home: se quitó el `FAQPage` (las preguntas no son visibles; este alcance no agrega secciones).
+  - Home: el `FAQPage` se mantiene (cambio aprobado por Oscar el 27 nov 2026, ~2:05 a. m., que reemplaza lo que decía la v2). Sale del mismo array que la sección visible (ver más abajo).
   - `/servicios/`: `MedicalWebPage` + `BreadcrumbList` + `FAQPage` con las 4 preguntas visibles.
   - Interiores: `AboutPage` / `MedicalWebPage` / `ContactPage` con `name`/`description` del title/meta, referencia al Optician por `@id`, y `BreadcrumbList`.
 - En los H1 y H2 que se reescribieron, se dejó un espacio al final de cada tramo partido en `<span>` o `<br />`, para que el texto concatenado (sin CSS) coincida con la frase de la v2. Visualmente las líneas no cambian. Los H2 que no se tocaban siguen el patrón anterior del sitio (p. ej. «Empresas que hanconfiado en nosotros.»).
 - Verificación local: `pnpm build` y los tests funcionales (`test`, `test:nosotros`, `test:services`, `test:contacto`, `test:procedimientos`) en verde. En `dist/`, el JSON-LD parsea, hay un solo `Optician` por página, no hay «POR CONFIRMAR» ni `legalName`/`priceRange`/`aggregateRating`, y el bloque global coincide con `schema_site.json`; el de `/servicios/` coincide con `schema_servicios.json`. No se pudo validar en Rich Results Test ni en validator.schema.org sin navegador: no hay API pública documentada (el validador de schema.org no está pensado para uso automatizado). Queda pendiente validarlos a mano sobre la preview cuando esté en línea.
 - `public/llms.txt` y `public/llms-full.txt`: «Barzal Bajo» → «Barzal». Las barras finales de los enlaces internos ya venían de `fix/enlaces-barra-final` (ahora en `main`). No se añadieron URLs nuevas. Se dejó «Más de 30 años» (ver pendiente).
 
+
+#### FAQ visible en la home (27 nov 2026, ~2:20 a. m., America/Bogota)
+
+Cambio aprobado por Oscar para la preview de `feat/seo-local`, sin publicar: no se quita el `FAQPage` de la home (reemplaza ese punto de la v2).
+
+- Se reutilizó el componente de `/servicios/` (`ServicesFaq.astro`), con el mismo estilo, acordeón y JS. El componente ahora puede recibir las preguntas por props; en `/servicios/` se sigue invocando sin props, con el mismo aspecto y comportamiento.
+- Las 4 preguntas y respuestas del JSON-LD original de la home viven en `src/data/homeFaq.ts`. La sección visible y el `FAQPage` (`@id` `https://opticaalemania.co/#faq`) salen de ese mismo array; en el HTML generado coinciden carácter por carácter. El HTML de la respuesta de Cofrem no lleva marcas (`<b>`, `<i>`, etc.).
+- Ubicación: entre `#resenas` (reseñas) y `#contacto` (bloque final de contacto), con `id="preguntas-frecuentes-inicio"`.
+- IDs del acordeón y del H2 propios de la home (`home-faq-accordion`, `home-faq-heading`, `home-ubicacion`…). El JS busca `[data-faq-accordion]` para no chocar con `/servicios/` ni en navegación con view transitions. `data-event-location` del WhatsApp de esta sección: `home_faq`.
+- Capturas de la sección a 375 px y 1280 px en `/workspace/optica-shots/after-home-faq-375.png` y `after-home-faq-1280.png`.
+- Verificación: `pnpm build` y los 5 tests funcionales en verde. Un solo `<footer>` y un solo H1 en la home; sin H2 repetidos ni IDs duplicados; 0 «POR CONFIRMAR» en `dist/`.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
 2. Facebook: **ya no es pendiente** (confirmado por Oscar; permanece en `sameAs`).
+3. **Convenio Cofrem en la FAQ de la home (confirmar con el cliente antes de publicar):** la pregunta «¿Tienen convenio con Cofrem?» y su respuesta («Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos.») quedan visibles en la preview y en el `FAQPage`, sin marcas en el HTML, tal como estaban en el JSON-LD. Pendiente de confirmación del cliente antes de publicar.
+4. **«Barzal Bajo» en la respuesta de ubicación de la FAQ de la home (no se cambió):** ver el reporte. El dato confirmado es «Barzal». El texto actual se dejó tal cual porque contradice un dato ya confirmado y no debía editarse de oficio.
 
 ### Decisiones
 

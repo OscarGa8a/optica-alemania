@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar.astro';
 import Analytics from '../components/Analytics.astro';
 import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
 import { siteConfig } from '../data/siteConfig';
+import { homeFaqItems, toFaqPageEntity } from '../data/homeFaq';
 
 interface Props {
   title?: string;
@@ -134,17 +135,11 @@ const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-imag
 const resolvedRobots = robots || defaultRobots;
 
 // Schema.org: un Optician global (schema_site.json) + tipos de página y BreadcrumbList en interiores.
-// La home no lleva FAQPage (las preguntas no son visibles). /servicios/ sí, con las 4 FAQ visibles.
+// FAQPage de la home y de /servicios/ sale del mismo array que la FAQ visible de cada página.
 const SITE_ORIGIN = 'https://opticaalemania.co';
 
-const servicesFaqQuestions = siteConfig.servicesPage.faq.items.map((item) => ({
-  "@type": "Question",
-  "name": item.question,
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": item.answer,
-  },
-}));
+const servicesFaqQuestions = toFaqPageEntity(siteConfig.servicesPage.faq.items);
+const homeFaqQuestions = toFaqPageEntity(homeFaqItems);
 
 const opticianEntity = {
   "@type": "Optician",
@@ -230,7 +225,13 @@ function buildBreadcrumb(pagePath: string, pageName: string) {
 
 const graph: Record<string, unknown>[] = [opticianEntity, websiteEntity];
 
-if (cleanPath === '/servicios') {
+if (cleanPath === '/') {
+  graph.push({
+    "@type": "FAQPage",
+    "@id": `${SITE_ORIGIN}/#faq`,
+    "mainEntity": homeFaqQuestions,
+  });
+} else if (cleanPath === '/servicios') {
   const pageUrl = `${SITE_ORIGIN}/servicios/`;
   graph.push(
     {
