@@ -1,6 +1,14 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 4:10 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 1:33 p. m., America/Bogota
+
+## Confirmación de trayectoria: 28 años (27 nov 2026, 1:33 p. m., America/Bogota)
+
+Oscar confirmó, vía NEXUS, que Óptica Alemania tiene 28 años de trayectoria, y aprobó publicar este cambio: PR a `main`, merge y deploy a producción. La aprobación cubre solo esta cifra. No se toca Cloudflare, no se borra nada (ni ramas) y no se crean tokens.
+
+- En el sitio, `/nosotros/` ya mostraba «+28 Años de experiencia». No había `foundingDate` ni año de fundación en el JSON-LD, ni otras cifras de trayectoria en las 5 páginas, metas o alts.
+- Se unificó el copy publicado que aún decía «Más de 30 años» en `public/llms.txt` (2 menciones) y `public/llms-full.txt` (2 menciones), pasando a «Más de 28 años», coherente con el +28 de `/nosotros/`.
+- No se inventó un año de fundación (28 años antes de 2026 sería 1998).
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -172,7 +180,7 @@ Nota: con la escala de producción de Inicio, en 1024 px la línea inseparable �
 
 ### Pendiente del cliente
 
-1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
+1. **Años de trayectoria: confirmado por Oscar (27 nov 2026, 1:33 p. m., America/Bogota).** Óptica Alemania tiene 28 años de trayectoria. `/nosotros/` mantiene «+28 Años de experiencia». `llms.txt` y `llms-full.txt` pasan de «Más de 30 años» a «Más de 28 años». Ya no es un pendiente.
 2. Facebook: **ya no es pendiente** (confirmado por Oscar; permanece en `sameAs`).
 3. **Convenio Cofrem: confirmado por Oscar (27 nov 2026, 2:52 a. m., America/Bogota).** El convenio está vigente. La pregunta y la respuesta de la FAQ del home se quedan tal cual («Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos.»). Ya no es un pendiente.
 4. «Barzal Bajo» en la FAQ del home: **ya no es pendiente** (pasó a «Barzal» en el texto visible y en el JSON-LD, 27 nov 2026, arreglo QA).
