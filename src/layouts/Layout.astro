@@ -194,7 +194,6 @@ const opticianEntity = {
       "closes": "15:00"
     }
   ],
-  "medicalSpecialty": "Optometric",
   "sameAs": [
     siteConfig.social.instagram,
     siteConfig.social.facebook,
@@ -413,43 +412,53 @@ const schemaGraph = {
     <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
     {gtmId && (
       <script is:inline define:vars={{ gtmId }}>
-        window._loadGTM = function() {
-          if (window._gtmLoaded) return;
-          window._gtmLoaded = true;
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer',gtmId);
-        };
+        (function() {
+          var allowedHosts = { 'opticaalemania.co': true, 'www.opticaalemania.co': true };
+          function isProductionHost() {
+            return allowedHosts[location.hostname] === true;
+          }
 
-        // Load GTM strictly on first user interaction for zero TBT and lean mobile performance
-        ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
-          window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
-        });
+          window._loadGTM = function() {
+            if (!isProductionHost()) return;
+            if (window._gtmLoaded) return;
+            window._gtmLoaded = true;
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',gtmId);
+          };
 
-        // Virtual pageview tracking on client navigation (Astro ClientRouter)
-        if (!window._gtmVirtualPageviewBound) {
-          window._gtmVirtualPageviewBound = true;
-          var isFirstLoad = true;
-          document.addEventListener('astro:page-load', function() {
-            if (isFirstLoad) {
-              isFirstLoad = false;
-              return;
-            }
-            if (typeof window._loadGTM === 'function') {
-              window._loadGTM();
-            }
-            window.dataLayer = window.dataLayer || [];
-            var pageData = {
-              page_path: window.location.pathname,
-              page_title: document.title,
-              page_location: window.location.href,
-            };
-            window.dataLayer.push(Object.assign({ event: 'page_view' }, pageData));
-            window.dataLayer.push(Object.assign({ event: 'virtual_pageview' }, pageData));
+          if (!isProductionHost()) return;
+
+          // Load GTM strictly on first user interaction for zero TBT and lean mobile performance
+          ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
+            window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
           });
-        }
+
+          // Virtual pageview tracking on client navigation (Astro ClientRouter)
+          if (!window._gtmVirtualPageviewBound) {
+            window._gtmVirtualPageviewBound = true;
+            var isFirstLoad = true;
+            document.addEventListener('astro:page-load', function() {
+              if (isFirstLoad) {
+                isFirstLoad = false;
+                return;
+              }
+              if (typeof window._loadGTM === 'function') {
+                window._loadGTM();
+              }
+              window.dataLayer = window.dataLayer || [];
+              var pageData = {
+                page_path: window.location.pathname,
+                page_title: document.title,
+                page_location: window.location.href,
+              };
+              window.dataLayer.push(Object.assign({ event: 'page_view' }, pageData));
+              window.dataLayer.push(Object.assign({ event: 'virtual_pageview' }, pageData));
+            });
+          }
+        })();
       </script>
     )}
   </head>

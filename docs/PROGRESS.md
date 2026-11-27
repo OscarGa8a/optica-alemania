@@ -1,6 +1,6 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 2:27 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 3:00 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -59,12 +59,35 @@ Cambio aprobado por Oscar para la preview de `feat/seo-local`, sin publicar: no 
 - Capturas de la sección a 375 px y 1280 px en `/workspace/optica-shots/after-home-faq-375.png` y `after-home-faq-1280.png`.
 - Verificación: `pnpm build` y los 5 tests funcionales en verde. Un solo `<footer>` y un solo H1 en la home; sin H2 repetidos ni IDs duplicados; 0 «POR CONFIRMAR» en `dist/`.
 
+
+#### Arreglos QA de la preview (27 nov 2026, ~2:40–3:00 a. m., America/Bogota)
+
+Marketing revisó https://feat-seo-local.optica-alemania-cth.pages.dev (`qa-preview-seo-v2.md`). Los arreglos van solo en `feat/seo-local`, sin PR, merge ni deploy a producción. Donde choca con Marketing, mandan las decisiones de Oscar (2:52 a. m.).
+
+Obligatorios:
+- Se quitó `"medicalSpecialty": "Optometric"` del `Optician` en el layout (no aplica a ese typo; validator.schema.org lo marcaba UNKNOWN_FIELD).
+- FAQ del home (mismo array para visible y JSON-LD): «Barzal Bajo» → «Barzal» en la respuesta 01; «a.m.»/«p.m.» → «a. m.»/«p. m.» en la 02.
+- Menú del footer: «Inicio» apunta a `/` y «Procedimientos» a `/procedimientos/` (antes `#inicio` / `#tecnologia` o `/#tecnologia`). Ese ancla en home era intencional para scroll en la misma página (y con ClientRouter); se corrigió igual. El menú del header ya iba a las URLs de página; no se cambió. El logo del footer sigue yendo a `#inicio` / `/#inicio` (no forma parte del menú EXPLORA).
+- `llms.txt` y `llms-full.txt`: `/#visual-infantil` → `/#infantil`. El ancla `#infantil` existe en el HTML de la home (`KidsVisionSection`).
+- GTM: el ID y la carga diferida no cambian. `_loadGTM` solo corre si `location.hostname` es `opticaalemania.co` o `www.opticaalemania.co`. En un probe del mismo `dist` con hostname `*.pages.dev` no hay petición a `googletagmanager.com`; en `opticaalemania.co` y `www.opticaalemania.co` sí carga `gtm.js?id=GTM-5GSR6FH7`. El iframe `noscript` sigue en el HTML (solo lo pide un cliente sin JS).
+
+Opcionales hechos:
+- H2 de la FAQ del home: «Preguntas frecuentes», exactamente así, por decisión de Oscar (no «sobre Óptica Alemania»). El componente parte el H2 en dos `<span class="block">`; la segunda va en cursiva y color primario. Se usó el patrón natural de dos palabras: «Preguntas» + «frecuentes». El texto concatenado (con espacio) es «Preguntas frecuentes». El H2 de `/servicios/` no cambia («Preguntas frecuentes sobre nuestros servicios»).
+- Se recuperaron como `<p>` de subtítulo, con el estilo que ya existía, las frases «Cuidamos tu visión con experiencia y tecnología.» (home) y «Hablemos de tu visión.» (`/contacto/`). Debajo se mantuvo el texto menor de la v2. No se tocó el H1 ni el subtítulo de `/nosotros/` (NEXUS agrupará después la revisión visual de las 5 páginas).
+
+Opcional no hecho:
+- Unificar el bloque «¿Tienes otra pregunta?» en un solo nodo. Hoy son dos variantes `lg:block` / `lg:hidden` (una visible). Dejarlo en un solo bloque sin cambiar el diseño no sale fácil: en escritorio va en la columna pegajosa izquierda y en móvil debajo del acordeón. No se tocó, ni en home ni en `/servicios/`.
+
+Capturas (375 y 1280 px) en `/workspace/optica-shots/`: `after-qa-home-faq-*.png`, `after-qa-home-hero-*.png`, `after-qa-contacto-hero-*.png`.
+
+`pnpm build` y los 5 tests funcionales en verde. Años de trayectoria no se tocaron.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
 2. Facebook: **ya no es pendiente** (confirmado por Oscar; permanece en `sameAs`).
-3. **Convenio Cofrem en la FAQ de la home (confirmar con el cliente antes de publicar):** la pregunta «¿Tienen convenio con Cofrem?» y su respuesta («Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos.») quedan visibles en la preview y en el `FAQPage`, sin marcas en el HTML, tal como estaban en el JSON-LD. Pendiente de confirmación del cliente antes de publicar.
-4. **«Barzal Bajo» en la respuesta de ubicación de la FAQ de la home (no se cambió):** ver el reporte. El dato confirmado es «Barzal». El texto actual se dejó tal cual porque contradice un dato ya confirmado y no debía editarse de oficio.
+3. **Convenio Cofrem: confirmado por Oscar (27 nov 2026, 2:52 a. m., America/Bogota).** El convenio está vigente. La pregunta y la respuesta de la FAQ del home se quedan tal cual («Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos.»). Ya no es un pendiente.
+4. «Barzal Bajo» en la FAQ del home: **ya no es pendiente** (pasó a «Barzal» en el texto visible y en el JSON-LD, 27 nov 2026, arreglo QA).
 
 ### Decisiones
 

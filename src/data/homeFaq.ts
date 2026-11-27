@@ -7,7 +7,7 @@ export const homeFaqItems: FaqItem[] = [
     number: '01',
     question: '¿Dónde está ubicada Óptica Alemania Villavicencio?',
     answer:
-      'Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad.',
+      'Estamos ubicados en Calle 35 #34-36, Barzal, Villavicencio, Meta, en la zona médica de la ciudad.',
     defaultOpen: true,
   },
   {
@@ -15,7 +15,7 @@ export const homeFaqItems: FaqItem[] = [
     number: '02',
     question: '¿Cuáles son los horarios de atención?',
     answer:
-      'Atendemos de lunes a viernes de 9:00 a.m. a 12:00 m. y de 2:00 p.m. a 6:00 p.m., y sábados de 9:00 a.m. a 12:00 m. y de 1:00 p.m. a 3:00 p.m.',
+      'Atendemos de lunes a viernes de 9:00 a. m. a 12:00 m. y de 2:00 p. m. a 6:00 p. m., y sábados de 9:00 a. m. a 12:00 m. y de 1:00 p. m. a 3:00 p. m.',
     defaultOpen: false,
   },
   {
@@ -39,8 +39,8 @@ export const homeFaqItems: FaqItem[] = [
 export const homeFaqConfig: ServicesFaqConfig = {
   id: 'preguntas-frecuentes-inicio',
   eyebrow: 'PREGUNTAS FRECUENTES',
-  titlePart1: 'Preguntas frecuentes sobre ',
-  titleHighlight: 'nuestros servicios',
+  titlePart1: 'Preguntas ',
+  titleHighlight: 'frecuentes',
   description:
     'Encuentra respuestas a algunas de las preguntas más habituales sobre nuestros servicios de atención visual.',
   contact: {

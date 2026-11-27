@@ -26,8 +26,10 @@ const navLinks = footer.navLinks.map((link) => {
       href = '/servicios/';
     } else if (href === '#contacto' || href === '/contacto' || href === '/contacto/') {
       href = '/contacto/';
-    } else if (href === '#procedimientos' || href === '/procedimientos' || href === '/procedimientos/') {
+    } else if (href === '#tecnologia' || href === '#procedimientos' || href === '/procedimientos' || href === '/procedimientos/') {
       href = '/procedimientos/';
+    } else if (href === '#inicio' || href === '/') {
+      href = '/';
     } else if (href.startsWith('#')) {
       href = `/${href}`;
     }
@@ -38,8 +40,10 @@ const navLinks = footer.navLinks.map((link) => {
       href = '/servicios/';
     } else if (href === '#contacto') {
       href = '/contacto/';
-    } else if (href === '#procedimientos') {
+    } else if (href === '#tecnologia' || href === '#procedimientos') {
       href = '/procedimientos/';
+    } else if (href === '#inicio') {
+      href = '/';
     }
   }
   return { ...link, href };

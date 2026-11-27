@@ -34,7 +34,7 @@
 3. **[Evaluaciones Visuales Especializadas](https://opticaalemania.co/servicios/#evaluaciones-especializadas)**: Tonometría de aplanación (presión intraocular), pruebas de superficie ocular (ojo seco) y discriminación cromática (Ishihara y Farnsworth D-15).
 4. **[Orientación y Triaje en Molestias Oculares](https://opticaalemania.co/servicios/#urgencias-oculares)**: Orientación clínica rápida sobre disponibilidad de atención ante molestias oculares y cuerpo extraño leve antes de acudir a la sede.
 5. **[Procedimientos y Tecnología Diagnóstica en Video](https://opticaalemania.co/procedimientos/)**: Demostraciones clínicas guiadas de oftalmoscopía digital con Volk iNview, evaluación cromática con test de Farnsworth D-15, atención infantil y refracción integral.
-6. **[Optometría Pediátrica (Salud Visual Infantil)](https://opticaalemania.co/#visual-infantil)**: Detección temprana de ojo perezoso (ambliopía), estrabismo y problemas de aprendizaje relacionados con la visión.
+6. **[Optometría Pediátrica (Salud Visual Infantil)](https://opticaalemania.co/#infantil)**: Detección temprana de ojo perezoso (ambliopía), estrabismo y problemas de aprendizaje relacionados con la visión.
 7. **Mantenimiento y Ajuste Anatómico**: Alineación computarizada, limpieza ultrasónica y calibración ergonómica de monturas.
 
 ## 3.1. Procedimientos y Tecnología en Acción (/procedimientos)

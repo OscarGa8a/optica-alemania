@@ -931,11 +931,11 @@ export const siteConfig: SiteConfig = {
     tagline: "Atención visual, evaluaciones optométricas y opciones de monturas en Villavicencio. Conoce nuestros servicios y visita nuestra sede en Barzal.",
     exploreTitle: "EXPLORA",
     navLinks: [
-      { label: "Inicio", href: "#inicio" },
-      { label: "Nosotros", href: "#nosotros" },
-      { label: "Servicios", href: "#servicios" },
-      { label: "Procedimientos", href: "#tecnologia" },
-      { label: "Contacto", href: "#contacto" },
+      { label: "Inicio", href: "/" },
+      { label: "Nosotros", href: "/nosotros/" },
+      { label: "Servicios", href: "/servicios/" },
+      { label: "Procedimientos", href: "/procedimientos/" },
+      { label: "Contacto", href: "/contacto/" },
     ],
     contactTitle: "CONTACTO",
     address: {
