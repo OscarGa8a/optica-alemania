@@ -703,8 +703,8 @@ export const siteConfig: SiteConfig = {
   kidsVision: {
     eyebrow: "ATENCIÓN VISUAL INFANTIL",
     titlePart1: "Atención visual infantil: ",
-    titlePart2: "su manera de descubrir el mundo ",
-    titlePart3: "también merece atención",
+    titlePart2: "su manera de descubrir\u00A0el\u00A0mundo ",
+    titlePart3: "también merece\u00A0atención",
     description: "Cada etapa de la infancia trae nuevas formas de aprender, jugar y explorar. Si tienes preguntas sobre la visión de tu hijo o hija, conoce cómo es la evaluación optométrica infantil que ofrece Óptica Alemania Villavicencio y consulta la atención disponible.",
     ctaText: "Consultar atención infantil",
     whatsappMessage: "Hola, quisiera información sobre la atención visual infantil de Óptica Alemania Villavicencio.",
@@ -898,7 +898,7 @@ export const siteConfig: SiteConfig = {
   contactSection: {
     eyebrow: "ENCUÉNTRANOS EN VILLAVICENCIO",
     titlePart1: "Dirección y horarios: ",
-    titlePart2: "nos vemos en el Barzal",
+    titlePart2: "nos vemos en el\u00A0Barzal",
     description: "Estamos en la Calle 35 #34-36, sector Barzal de Villavicencio. Revisa cómo llegar a nuestra sede y comunícate con nosotros si necesitas confirmar información antes de visitarnos.",
     whatsappMessage: "Hola, visité la página de Óptica Alemania Villavicencio y quisiera agendar una consulta o confirmar información.",
     mapImage: {
@@ -960,7 +960,7 @@ export const siteConfig: SiteConfig = {
       titlePart1: "Servicios de ",
       titlePart2: "optometría y óptica ",
       titleHighlight: "en Villavicencio",
-      description: "Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas en nuestra sede del Barzal, en Villavicencio.",
+      description: "Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas en nuestra sede del Barzal, en\u00A0Villavicencio.",
       exploreText: "Explorar servicios",
       exploreHref: "#explora-servicios",
       ctaWhatsAppText: "Escríbenos por WhatsApp",

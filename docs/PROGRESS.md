@@ -1,6 +1,6 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 3:17 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 4:10 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -90,6 +90,28 @@ Marketing cerró la ronda 2 de QA de la preview: todo pasa, y validator.schema.o
 - El `<noscript>` con `https://www.googletagmanager.com/ns.html?id=GTM-5GSR6FH7` (y, en el mismo flag, el script inline de GTM) ya no se genera en el HTML de las previews. Condición de build: `process.env.CF_PAGES_BRANCH === 'main'`. Es la opción más simple y robusta con Cloudflare Pages integrado a Git: `CF_PAGES_BRANCH` lo define CF, no hace falta una variable extra (`PUBLIC_ENABLE_GTM`) en el dashboard, y el build de `main` sigue emitiendo GTM igual que hoy (mismo ID `GTM-5GSR6FH7` y misma carga diferida).
 - Si `CF_PAGES_BRANCH` no está definido (build local, `pnpm build`), el HTML sí incluye GTM, para que un build local quede equivalente a `main`. La segunda barrera sigue siendo el chequeo de hostname en tiempo de ejecución (solo `opticaalemania.co` y `www.opticaalemania.co`).
 - Verificado: `CF_PAGES_BRANCH=main pnpm build` incluye noscript y script con `GTM-5GSR6FH7` en las 5 páginas; `CF_PAGES_BRANCH=feat/seo-local pnpm build` no contiene `googletagmanager` en ninguna. `pnpm build` (local, variable unset) y los 5 tests funcionales en verde.
+
+
+#### Revisión visual de la preview (NEXUS, 27 nov 2026, ~3:34–4:10 a. m., America/Bogota)
+
+Ajustes de la revisión visual hecha sobre el deploy de `137f633`, aplicados en `feat/seo-local` a partir de `2ef63a0`. Sin PR, merge ni deploy a producción. No se tocaron los años de trayectoria ni el JSON-LD (title/meta de las 5 páginas iguales).
+
+1. `/nosotros/`: el subtítulo volvió a «Conoce nuestra historia y el compromiso que nos mueve en el cuidado de tu salud visual.». En el H1, `cada&nbsp;mirada` evita que «mirada» quede sola.
+2. H1 del Home: se reorganizó el corte y el orden de las palabras (se informa en el reporte). Queda «Óptica Alemania:» / «tu óptica en el Barzal, Villavicencio», con las keywords Óptica, Villavicencio y Barzal. `Barzal,&nbsp;Villavicencio` evita que Villavicencio quede colgando. Title/meta/JSON-LD no cambian.
+3. Home y `/contacto/`: se mantienen los dos subtítulos; en pantallas pequeñas se redujo el tamaño (`text-xs`) y el interlineado/márgenes (`leading-snug`, menos `mt`). En `sm+` el ritmo anterior se conserva.
+4. Palabras solas: se usaron `&nbsp;` o `<br>` manual, sin un span por línea para forzar el wrap.
+   - Tech: `tu&nbsp;visión:` y `Farnsworth&nbsp;D-15`.
+   - Infantil: `descubrir&nbsp;el&nbsp;mundo` y `merece&nbsp;atención`; el H2 en `lg+` baja de `text-6xl` a `text-5xl` para que «también merece atención» quepa en la columna. Corte: «descubrir el mundo» / «también merece atención».
+   - Home «Dirección y horarios…»: `el&nbsp;Barzal` (el problema era en escritorio).
+   - Servicios, subtítulo del hero: `en&nbsp;Villavicencio`.
+   - Procedimientos, H2 de la galería: «Más evaluaciones» / «en video:» / «atención visual infantil» (con `<br>`).
+   - Contacto H1: «Contacto y cómo llegar» / «a Óptica Alemania» / «en Villavicencio» (con `<br>`). En móvil el H1 pasa a `text-3xl` para que las 3 líneas quepan.
+   - Contacto H2: «Dirección, horarios» / «y teléfonos en el Barzal»; en `lg+` el tamaño baja a `text-6xl` para que el corte quepa en la columna.
+5. Procedimientos, subtítulo: se restauró el texto de producción/main, «Descubre en video cómo realizamos algunos de nuestros procedimientos visuales en Óptica Alemania Villavicencio.» (`hero.description`). Ya no se repite el H1 viejo.
+6. El logo del footer ahora apunta a `/`. El del header ya iba a `/`.
+7. FAQ: se aumentó el padding inferior de la sección (`pb-32` en móvil, `sm:pb-24`, `lg:pb-28`) para que el botón flotante de WhatsApp no tape una respuesta abierta al final de la sección (vale para home y `/servicios/`, mismo componente). Si el usuario deja una respuesta a media página justo detrás del botón, el solapamiento genérico del FAB puede seguir ocurriendo, igual que en el resto del sitio.
+
+Capturas a 390 px y 1280 px en `/workspace/optica-shots/after-visual-*-390.png` y `after-visual-*-1280.png`. `pnpm build` y los 5 tests en verde (en `test-landing.mjs`, las aserciones de H2 normalizan `&nbsp;` a espacio). 1 H1 por página.
 
 ### Pendiente del cliente
 

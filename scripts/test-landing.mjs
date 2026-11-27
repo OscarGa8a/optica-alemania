@@ -390,7 +390,7 @@ async function run() {
       console.log(`✅ [${vp.name}] Section #tecnologia exists`);
 
       // Verify heading text
-      const headingText = await techSection.locator('h2').textContent();
+      const headingText = (await techSection.locator('h2').textContent() || '').replace(/\u00A0/g, ' ');
       if (!headingText || !headingText.includes('Tecnología para evaluar tu visión') || !headingText.includes('Volk iNview')) {
         console.error(`❌ [${vp.name}] Expected H2 to include 'Tecnología para evaluar tu visión: Volk iNview y Farnsworth D-15', got: '${headingText}'`);
         failed = true;
@@ -845,7 +845,7 @@ async function run() {
       console.log(`✅ [${vp.name}] Section #contacto exists`);
 
       // Verify heading text
-      const headingText = await contactSection.locator('h2').textContent();
+      const headingText = (await contactSection.locator('h2').textContent() || '').replace(/\u00A0/g, ' ');
       if (!headingText || !headingText.includes('Dirección y horarios') || !headingText.includes('nos vemos en el Barzal')) {
         console.error(`❌ [${vp.name}] Expected H2 to include 'Dirección y horarios: nos vemos en el Barzal', got: '${headingText}'`);
         failed = true;
