@@ -29,7 +29,7 @@ const {
   title = `${siteConfig.name} — ${siteConfig.tagline}`,
   description = siteConfig.description,
   robots,
-  gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-5GSR6FH7',
+  gtmId: requestedGtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-5GSR6FH7',
   currentPath = '/',
   headerTheme,
   navVariant,
@@ -39,6 +39,16 @@ const {
   ogImageAlt,
   floatingWhatsAppMessage,
 } = Astro.props;
+
+// GTM en el HTML solo en el build de producción de Pages.
+// CF Pages (Git) define CF_PAGES_BRANCH: en `main` se emite el script y el
+// noscript, igual que hoy; en cualquier otra rama (preview) no se emiten.
+// Si CF_PAGES_BRANCH no está definido (build local), sí se emiten, para que
+// `pnpm build` quede equivalente a main. La segunda barrera es el chequeo
+// de hostname en tiempo de ejecución (solo opticaalemania.co / www).
+const cfPagesBranch = process.env.CF_PAGES_BRANCH;
+const includeGtmInBuild = cfPagesBranch ? cfPagesBranch === 'main' : true;
+const gtmId = includeGtmInBuild ? requestedGtmId : '';
 
 const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 

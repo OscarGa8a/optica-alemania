@@ -1,6 +1,6 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 3:00 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 3:17 a. m., America/Bogota
 
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
@@ -69,7 +69,7 @@ Obligatorios:
 - FAQ del home (mismo array para visible y JSON-LD): «Barzal Bajo» → «Barzal» en la respuesta 01; «a.m.»/«p.m.» → «a. m.»/«p. m.» en la 02.
 - Menú del footer: «Inicio» apunta a `/` y «Procedimientos» a `/procedimientos/` (antes `#inicio` / `#tecnologia` o `/#tecnologia`). Ese ancla en home era intencional para scroll en la misma página (y con ClientRouter); se corrigió igual. El menú del header ya iba a las URLs de página; no se cambió. El logo del footer sigue yendo a `#inicio` / `/#inicio` (no forma parte del menú EXPLORA).
 - `llms.txt` y `llms-full.txt`: `/#visual-infantil` → `/#infantil`. El ancla `#infantil` existe en el HTML de la home (`KidsVisionSection`).
-- GTM: el ID y la carga diferida no cambian. `_loadGTM` solo corre si `location.hostname` es `opticaalemania.co` o `www.opticaalemania.co`. En un probe del mismo `dist` con hostname `*.pages.dev` no hay petición a `googletagmanager.com`; en `opticaalemania.co` y `www.opticaalemania.co` sí carga `gtm.js?id=GTM-5GSR6FH7`. El iframe `noscript` sigue en el HTML (solo lo pide un cliente sin JS).
+- GTM: el ID y la carga diferida no cambian. `_loadGTM` solo corre si `location.hostname` es `opticaalemania.co` o `www.opticaalemania.co`. En un probe del mismo `dist` con hostname `*.pages.dev` no hay petición a `googletagmanager.com`; en `opticaalemania.co` y `www.opticaalemania.co` sí carga `gtm.js?id=GTM-5GSR6FH7`. El iframe `noscript` quedó resuelto en la ronda 2 (ver abajo): ya no se emite en builds de rama.
 
 Opcionales hechos:
 - H2 de la FAQ del home: «Preguntas frecuentes», exactamente así, por decisión de Oscar (no «sobre Óptica Alemania»). El componente parte el H2 en dos `<span class="block">`; la segunda va en cursiva y color primario. Se usó el patrón natural de dos palabras: «Preguntas» + «frecuentes». El texto concatenado (con espacio) es «Preguntas frecuentes». El H2 de `/servicios/` no cambia («Preguntas frecuentes sobre nuestros servicios»).
@@ -81,6 +81,15 @@ Opcional no hecho:
 Capturas (375 y 1280 px) en `/workspace/optica-shots/`: `after-qa-home-faq-*.png`, `after-qa-home-hero-*.png`, `after-qa-contacto-hero-*.png`.
 
 `pnpm build` y los 5 tests funcionales en verde. Años de trayectoria no se tocaron.
+
+
+#### Ronda 2 de QA y GTM solo en el build de main (27 nov 2026, ~3:13–3:17 a. m., America/Bogota)
+
+Marketing cerró la ronda 2 de QA de la preview: todo pasa, y validator.schema.org da 0 errores en las 5 URLs. Quedaba un detalle de GTM, solo en `feat/seo-local` (sin PR, merge ni deploy a producción).
+
+- El `<noscript>` con `https://www.googletagmanager.com/ns.html?id=GTM-5GSR6FH7` (y, en el mismo flag, el script inline de GTM) ya no se genera en el HTML de las previews. Condición de build: `process.env.CF_PAGES_BRANCH === 'main'`. Es la opción más simple y robusta con Cloudflare Pages integrado a Git: `CF_PAGES_BRANCH` lo define CF, no hace falta una variable extra (`PUBLIC_ENABLE_GTM`) en el dashboard, y el build de `main` sigue emitiendo GTM igual que hoy (mismo ID `GTM-5GSR6FH7` y misma carga diferida).
+- Si `CF_PAGES_BRANCH` no está definido (build local, `pnpm build`), el HTML sí incluye GTM, para que un build local quede equivalente a `main`. La segunda barrera sigue siendo el chequeo de hostname en tiempo de ejecución (solo `opticaalemania.co` y `www.opticaalemania.co`).
+- Verificado: `CF_PAGES_BRANCH=main pnpm build` incluye noscript y script con `GTM-5GSR6FH7` en las 5 páginas; `CF_PAGES_BRANCH=feat/seo-local pnpm build` no contiene `googletagmanager` en ninguna. `pnpm build` (local, variable unset) y los 5 tests funcionales en verde.
 
 ### Pendiente del cliente
 
