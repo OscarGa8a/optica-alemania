@@ -6,6 +6,14 @@ Fecha: 27 nov 2026, America/Bogota
 
 NEXUS transmitió OK de Oscar (27 nov 2026, 12:16 a. m., America/Bogota) para corregir enlaces internos sin barra final que redirigen (308) y, según Marketing, impiden que Google indexe 3 páginas.
 
+## Aprobación para merge (27 nov 2026, 1:04 a. m., America/Bogota)
+
+Oscar aprobó, transmitido por NEXUS, fusionar `fix/enlaces-barra-final` en `main` y desplegar a producción. Alcance exclusivo de este OK:
+
+- Solo esta rama y este cambio (commit de partida `a2c962f` sobre `main` `57c6100`).
+- No se toca Cloudflare ni el 522 de `www`.
+- No se publica ni se fusiona `feat/seo-local`.
+
 ## Hecho
 
 ### Diagnóstico en producción (https://opticaalemania.co)
@@ -30,7 +38,7 @@ El PR #66 no actualizó los dossieres para crawlers/IA ni el `url` del JSON-LD d
 
 ## Pendiente
 
-- Esperar OK de Oscar, vía NEXUS, para abrir PR / merge a `main` y desplegar a producción. Esta rama no se fusiona ni se despliega a prod sin ese OK.
+- Con el OK de Oscar (27 nov 2026, 1:04 a. m., America/Bogota, vía NEXUS), abrir PR, fusionar `fix/enlaces-barra-final` en `main` y verificar el despliegue en producción. Las notas de la verificación en vivo irán en una rama posterior `docs/progress-barras-prod`.
 - Marketing podría enviar después cambios de SEO local (fuera de este alcance).
 - Confirmar en Search Console, cuando haya acceso o detalle de Marketing, cuáles son exactamente las 3 URLs no indexadas y si el recrawl ya las tomó con barra (el HTML del menú lleva barra desde el 10 nov).
 
