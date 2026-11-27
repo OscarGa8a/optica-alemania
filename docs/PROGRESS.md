@@ -10,6 +10,13 @@ Oscar confirmó, vía NEXUS, que Óptica Alemania tiene 28 años de trayectoria,
 - Se unificó el copy publicado que aún decía «Más de 30 años» en `public/llms.txt` (2 menciones) y `public/llms-full.txt` (2 menciones), pasando a «Más de 28 años», coherente con el +28 de `/nosotros/`.
 - No se inventó un año de fundación (28 años antes de 2026 sería 1998).
 
+### Resultado de la publicación (27 nov 2026, 1:37–1:40 p. m., America/Bogota)
+
+- PR: https://github.com/OscarGa8a/optica-alemania/pull/70. Merge con `gh pr merge --merge` (sin squash). Rama `fix/anios-28` no eliminada.
+- Commit de merge: `7a79f8dcf92f8351c92bd2a6be8ae90eff66f288` (1:37 p. m., America/Bogota).
+- Deploy de Cloudflare Pages: ID `75b591fd-18f6-46f9-b107-42407d57e14f`, check run `140682309834`, conclusión **success** a las 1:39 p. m. (America/Bogota). No se reintentó ni se tocó nada en Cloudflare.
+- Verificación en vivo (`?v=1795804792`): `/`, `/servicios/`, `/nosotros/`, `/procedimientos/`, `/contacto/`, `/llms.txt` y `/llms-full.txt` responden 200. Las 5 páginas no tienen `noindex` (meta `index, follow, max-image-preview:large`; sin `x-robots-tag`). JSON-LD parsea; validator.schema.org: 0 errores y 0 advertencias. Grep de cifras viejas de trayectoria en el HTML y los txt: 0 coincidencias. En vivo se ve «+28» en `/nosotros/` y «Más de 28 años» en los llms.
+
 ## Rama actual: `feat/seo-local` (plan SEO on-page v2)
 
 Base: `origin/main` (`b882a13`, ya incluye el merge del PR #68 / `fix/enlaces-barra-final`).
