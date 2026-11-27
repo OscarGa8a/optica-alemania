@@ -1,14 +1,36 @@
 # PROGRESS — Óptica Alemania
 
-Fecha de esta actualización: 27 nov 2026, 4:10 a. m., America/Bogota
+Fecha de esta actualización: 27 nov 2026, 12:57 p. m., America/Bogota
 
-## Rama actual: `feat/seo-local` (plan SEO on-page v2)
+## Rama actual: `main` (SEO on-page v2 publicado)
 
-Base: `origin/main` (`b882a13`, ya incluye el merge del PR #68 / `fix/enlaces-barra-final`).
+El plan SEO on-page v2 entró a `main` con el PR #69 (merge `082f848`, 27 nov 2026, 12:52 p. m., America/Bogota). Esta rama `docs/progress-seo-local-prod` solo documenta el resultado de la verificación en producción; no se hace push directo a `main`. La rama `feat/seo-local` se conserva en `dc52a91`.
+
 
 ## Publicación aprobada por Oscar 2026-11-27 12:49
 
 Oscar aprobó, vía NEXUS («listos vamos a publicarlo por favor»), publicar `feat/seo-local` el 27 nov 2026 a las 12:49 p. m. (America/Bogota). Alcance exclusivo de este OK: abrir el PR hacia `main`, hacer el merge y dejar que Cloudflare Pages despliegue producción en opticaalemania.co. No se toca Cloudflare (ni el 522 de `www`, ni DNS, ni configuración), no se borra la rama `feat/seo-local` ni nada más, y no se crean tokens.
+
+### Resultado de la publicación (27 nov 2026, 12:52–12:57 p. m., America/Bogota)
+
+- PR: https://github.com/OscarGa8a/optica-alemania/pull/69 (título: «SEO local on-page v2 para las 5 páginas»). Mergeable, sin conflictos. Merge con `gh pr merge --merge` (sin squash). Rama `feat/seo-local` no eliminada.
+- Commit de merge: `082f84811bf7703dd9c6e2213cf4658e5ec65411` (12:52 p. m., America/Bogota).
+- Deploy de Cloudflare Pages: ID `2d510694-5da3-4378-b70f-05a939930209`, check run `140663438321`, conclusión **success** a las 12:54 p. m. (America/Bogota). URL del check: https://dash.cloudflare.com/?to=/e1bcce6d4150f38efb1c8e1e39a62c9b/pages/view/optica-alemania/2d510694-5da3-4378-b70f-05a939930209. Alias del deploy: https://2d510694.optica-alemania-cth.pages.dev. No se reintentó ni se tocó nada en Cloudflare.
+
+#### Verificación en vivo
+
+Apex `https://opticaalemania.co`: las 5 páginas (`/`, `/servicios/`, `/nosotros/`, `/procedimientos/`, `/contacto/`) responden 200. Sin `noindex` (no hay `x-robots-tag`; meta robots es `index, follow, max-image-preview:large`). 1 H1 por página. Title, meta description, canonical y JSON-LD coinciden con la preview `https://feat-seo-local.optica-alemania-cth.pages.dev`. Canonicals apuntan al apex con barra final.
+
+GTM-5GSR6FH7 está en el HTML de producción (script diferido y noscript). En Playwright, en el apex, `gtm.js?id=GTM-5GSR6FH7` no se pidió al cargar; sí se cargó tras el scroll (`https://www.googletagmanager.com/gtm.js?id=GTM-5GSR6FH7`). En la preview, como se esperaba, GTM no se emite y hay `x-robots-tag: noindex`.
+
+JSON-LD parsea en las 5 páginas (Optician + WebSite en todas; FAQPage en Inicio y Servicios). Validado en https://validator.schema.org/validate: 0 errores y 0 advertencias en las 5 URLs de producción.
+
+`/robots.txt` (200) declara `Sitemap: https://opticaalemania.co/sitemap.xml`. `/sitemap.xml` (200) lista las 5 URLs del apex; `/sitemap-index.xml` no existe (404), es el comportamiento esperado.
+
+`https://www.opticaalemania.co` ya no respondió 522 en esta comprobación: las 5 páginas, `robots.txt` y `sitemap.xml` devolvieron **301** a la URL equivalente del apex, sin `x-robots-tag`. No se tocó DNS ni Cloudflare; solo se reporta.
+
+Heros a 1280 y 390 px: preview (izquierda) vs producción (derecha) son idénticos (MAE 0.00). Capturas en `/workspace/optica-shots/prod-vs-preview-<pagina>-<ancho>.jpg` (todas < 400 KB). Representativas: `prod-vs-preview-home-1280.jpg` y `prod-vs-preview-contacto-390.jpg`.
+
 
 ### Aprobación del plan (27 nov 2026, 1:41 a. m., America/Bogota)
 
@@ -185,8 +207,8 @@ Nota: con la escala de producción de Inicio, en 1024 px la línea inseparable �
 
 ### Publicación
 
-- Aprobada por Oscar, vía NEXUS, el 27 nov 2026 a las 12:49 p. m. (America/Bogota): PR, merge a `main` y deploy de Cloudflare Pages a producción.
-- Hallazgo previo: `https://www.opticaalemania.co` responde **522**. Fuera de este encargo; no se toca.
+- Publicada el 27 nov 2026: PR #69 mergeado a `main` (`082f848`) a las 12:52 p. m.; Cloudflare Pages desplegó con éxito a las 12:54 p. m. (America/Bogota). Detalle en «Resultado de la publicación» arriba.
+- En la verificación de las 12:55 p. m., `https://www.opticaalemania.co` respondió **301** al apex (ya no 522). No se interviene en Cloudflare ni en DNS.
 
 ---
 
