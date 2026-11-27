@@ -505,6 +505,7 @@ export interface SiteConfig {
   social: {
     instagram: string;
     facebook: string;
+    tiktok: string;
   };
   socialProof: SocialProof;
   nav: NavItem[];
@@ -598,7 +599,7 @@ export const siteConfig: SiteConfig = {
       id: "optometria",
       number: "01",
       title: "Optometría especializada",
-      description: "Consulta por nuestras evaluaciones optométricas y conoce las opciones de atención según tus necesidades visuales.",
+      description: "Evaluamos tu agudeza visual, si necesitas corrección óptica y el estado de tus ojos, y te explicamos los resultados.",
       image: "/images/service-optometry.webp",
       alt: "Equipo de foróptero para consulta de optometría especializada en Óptica Alemania Villavicencio",
       whatsappMessage: "Hola, quisiera consultar por una evaluación de optometría especializada en Óptica Alemania Villavicencio.",
@@ -661,8 +662,8 @@ export const siteConfig: SiteConfig = {
   ],
   space: {
     eyebrow: "CONOCE NUESTRA SEDE",
-    titlePart1: "Conoce dónde",
-    titlePart2: "cuidamos tu visión.",
+    titlePart1: "Nuestra óptica en el Barzal,\u00A0",
+    titlePart2: "Villavicencio",
     description: "Queremos que conozcas Óptica Alemania Villavicencio antes de visitarnos. Explora nuestra sede en Barzal y descubre los espacios donde recibimos a quienes llegan para consultar por su salud visual y sus gafas.",
     ctaText: "Cómo llegar",
     ctaHref: "/contacto/#ubicacion",
@@ -701,9 +702,9 @@ export const siteConfig: SiteConfig = {
   },
   kidsVision: {
     eyebrow: "ATENCIÓN VISUAL INFANTIL",
-    titlePart1: "Su manera de",
-    titlePart2: "descubrir el mundo",
-    titlePart3: "también merece atención.",
+    titlePart1: "Atención visual infantil: ",
+    titlePart2: "su manera de descubrir\u00A0el\u00A0mundo ",
+    titlePart3: "también merece\u00A0atención",
     description: "Cada etapa de la infancia trae nuevas formas de aprender, jugar y explorar. Si tienes preguntas sobre la visión de tu hijo o hija, conoce cómo es la evaluación optométrica infantil que ofrece Óptica Alemania Villavicencio y consulta la atención disponible.",
     ctaText: "Consultar atención infantil",
     whatsappMessage: "Hola, quisiera información sobre la atención visual infantil de Óptica Alemania Villavicencio.",
@@ -718,9 +719,9 @@ export const siteConfig: SiteConfig = {
   },
   frames: {
     eyebrow: "MONTURAS Y ESTILO",
-    titlePart1: "Una montura que",
-    titlePart2: "va contigo.",
-    description: "Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las opciones de monturas disponibles en Óptica Alemania Villavicencio y encuentra orientación para elegir la que más te guste.",
+    titlePart1: "Monturas para mujer, ",
+    titlePart2: "hombre y niños",
+    description: "Tus gafas te acompañan todos los días y también pueden reflejar tu estilo. Consulta por las monturas para mujer, hombre y niños disponibles en Óptica Alemania Villavicencio y encuentra orientación para elegir la que más te guste.",
     ctaText: "Consultar monturas",
     whatsappMessage: "Hola, quisiera conocer las monturas disponibles en Óptica Alemania Villavicencio.",
     categories: [
@@ -761,8 +762,8 @@ export const siteConfig: SiteConfig = {
   },
   cofrem: {
     eyebrow: "BENEFICIOS ESPECIALES",
-    titlePart1: "Club descuentos",
-    titlePart2: "Cofrem.",
+    titlePart1: "Club Descuentos Cofrem: ",
+    titlePart2: "15% en montura y 10% en lente\u00A0oftálmico",
     description: "Si haces parte del Club Descuentos Cofrem, en Óptica Alemania Villavicencio puedes acceder a beneficios especiales en productos seleccionados.",
     ctaText: "Consultar beneficio",
     whatsappMessage: "Hola, hago parte del Club Descuentos Cofrem y quisiera consultar por los beneficios disponibles en Óptica Alemania Villavicencio.",
@@ -850,9 +851,9 @@ export const siteConfig: SiteConfig = {
   },
   reviews: {
     eyebrow: "RESEÑAS EN GOOGLE",
-    titlePart1: "La confianza se",
-    titlePart2: "construye con",
-    titlePart3: "cada experiencia.",
+    titlePart1: "Reseñas en Google: ",
+    titlePart2: "la confianza se construye con ",
+    titlePart3: "cada experiencia",
     description: "Las opiniones de quienes nos visitan son parte de nuestra historia. Conoce sus experiencias en Óptica Alemania Villavicencio y descubre lo que comparten sobre nuestra atención.",
     rating: "5.0",
     reviewCount: 61,
@@ -896,9 +897,9 @@ export const siteConfig: SiteConfig = {
   },
   contactSection: {
     eyebrow: "ENCUÉNTRANOS EN VILLAVICENCIO",
-    titlePart1: "Nos vemos",
-    titlePart2: "en Barzal.",
-    description: "Estamos en el sector Barzal de Villavicencio. Revisa cómo llegar a nuestra sede y comunícate con nosotros si necesitas confirmar información antes de visitarnos.",
+    titlePart1: "Dirección y horarios: ",
+    titlePart2: "nos vemos en el\u00A0Barzal",
+    description: "Estamos en la Calle 35 #34-36, sector Barzal de Villavicencio. Revisa cómo llegar a nuestra sede y comunícate con nosotros si necesitas confirmar información antes de visitarnos.",
     whatsappMessage: "Hola, visité la página de Óptica Alemania Villavicencio y quisiera agendar una consulta o confirmar información.",
     mapImage: {
       src: "/images/contact-map.webp",
@@ -930,11 +931,11 @@ export const siteConfig: SiteConfig = {
     tagline: "Atención visual, evaluaciones optométricas y opciones de monturas en Villavicencio. Conoce nuestros servicios y visita nuestra sede en Barzal.",
     exploreTitle: "EXPLORA",
     navLinks: [
-      { label: "Inicio", href: "#inicio" },
-      { label: "Nosotros", href: "#nosotros" },
-      { label: "Servicios", href: "#servicios" },
-      { label: "Procedimientos", href: "#tecnologia" },
-      { label: "Contacto", href: "#contacto" },
+      { label: "Inicio", href: "/" },
+      { label: "Nosotros", href: "/nosotros/" },
+      { label: "Servicios", href: "/servicios/" },
+      { label: "Procedimientos", href: "/procedimientos/" },
+      { label: "Contacto", href: "/contacto/" },
     ],
     contactTitle: "CONTACTO",
     address: {
@@ -956,10 +957,10 @@ export const siteConfig: SiteConfig = {
   servicesPage: {
     hero: {
       eyebrow: "NUESTROS SERVICIOS",
-      titlePart1: "Servicios de",
-      titlePart2: "optometría",
-      titleHighlight: "en Villavicencio.",
-      description: "Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas para el cuidado de tu salud visual.",
+      titlePart1: "Servicios de ",
+      titlePart2: "optometría y óptica ",
+      titleHighlight: "en Villavicencio",
+      description: "Conoce nuestras consultas de optometría, adaptación de lentes de contacto y evaluaciones especializadas en nuestra sede del Barzal, en\u00A0Villavicencio.",
       exploreText: "Explorar servicios",
       exploreHref: "#explora-servicios",
       ctaWhatsAppText: "Escríbenos por WhatsApp",
@@ -1026,15 +1027,15 @@ export const siteConfig: SiteConfig = {
     visualCare: {
       id: "atencion-visual",
       eyebrow: "01 / ATENCIÓN VISUAL",
-      titlePart1: "Atención visual",
-      titleHighlight: "a tu medida.",
+      titlePart1: "Consulta de optometría y ",
+      titleHighlight: "adaptación de lentes de\u00A0contacto",
       description: "Cada persona tiene necesidades visuales distintas. Conoce las opciones de valoración y adaptación que puedes consultar con nuestro equipo.",
       items: [
         {
           serviceNumber: "SERVICIO 01",
           titleLine1: "Consulta de",
           titleLine2: "optometría especializada.",
-          description: "En nuestra consulta de optometría evaluamos tu agudeza visual, determinamos si necesitas corrección óptica y examinamos las estructuras externas e internas de tus ojos mediante pruebas manuales y digitales. Al finalizar, te explicamos los resultados y las recomendaciones para cuidar tu salud visual.",
+          description: "En nuestra consulta de optometría en Villavicencio evaluamos tu agudeza visual, determinamos si necesitas corrección óptica y examinamos las estructuras externas e internas de tus ojos mediante pruebas manuales y digitales. Al finalizar, te explicamos los resultados y las recomendaciones para cuidar tu salud visual.",
           ctaText: "Consultar este servicio",
           whatsappMessage: "Hola, visité la página de Servicios de Óptica Alemania Villavicencio y quisiera información sobre la consulta de optometría especializada.",
           image: {
@@ -1065,8 +1066,8 @@ export const siteConfig: SiteConfig = {
     specializedTests: {
       id: "evaluaciones-especializadas",
       eyebrow: "02 / EVALUACIONES ESPECIALIZADAS",
-      titlePart1: "Conoce nuestras evaluaciones",
-      titleHighlight: "especializadas.",
+      titlePart1: "Evaluaciones especializadas: ",
+      titleHighlight: "presión intraocular, ojo seco y visión del color",
       description: "Conoce algunas pruebas que pueden aportar información durante una evaluación visual. La indicación de cada una depende de las necesidades del paciente y del criterio profesional.",
       tests: [
         {
@@ -1137,8 +1138,8 @@ export const siteConfig: SiteConfig = {
     procedures: {
       id: "procedimientos",
       eyebrow: "PROCEDIMIENTOS",
-      titlePart1: "Nuestros procedimientos,",
-      titleHighlight: "de cerca.",
+      titlePart1: "Procedimientos en video: ",
+      titleHighlight: "Volk iNview y Farnsworth\u00A0D-15",
       description: "Conoce en video cómo realizamos algunas de nuestras evaluaciones visuales en Óptica Alemania Villavicencio.",
       ctaText: "Explorar más procedimientos",
       ctaHref: "/procedimientos/",
@@ -1172,8 +1173,8 @@ export const siteConfig: SiteConfig = {
     faq: {
       id: "preguntas-frecuentes",
       eyebrow: "PREGUNTAS FRECUENTES",
-      titlePart1: "Resolvemos tus",
-      titleHighlight: "dudas.",
+      titlePart1: "Preguntas frecuentes sobre ",
+      titleHighlight: "nuestros servicios",
       description: "Encuentra respuestas a algunas de las preguntas más habituales sobre nuestros servicios de atención visual.",
       contact: {
         title: "¿Tienes otra pregunta?",
@@ -1223,14 +1224,14 @@ export const siteConfig: SiteConfig = {
     },
   },
   procedimientosPage: {
-    metaTitle: "Procedimientos visuales | Óptica Alemania Villavicencio",
-    metaDescription: "Conoce cómo se realizan algunas evaluaciones visuales en Óptica Alemania Villavicencio, como la evaluación retinal y el test de Farnsworth D-15.",
+    metaTitle: "Procedimientos visuales en Villavicencio | Óptica Alemania",
+    metaDescription: "Mira en video cómo hacemos la evaluación retinal con Volk iNview, el test de color Farnsworth D-15 y la atención visual infantil en Villavicencio.",
     hero: {
       id: "inicio",
       eyebrow: "CONOCE NUESTROS PROCEDIMIENTOS",
-      titleLine1: "Así realizamos",
-      titleLine2: "nuestras evaluaciones,",
-      titleHighlight: "paso a paso.",
+      titleLine1: "Procedimientos visuales ",
+      titleLine2: "en video: así evaluamos ",
+      titleHighlight: "tu visión",
       description: "Descubre en video cómo realizamos algunos de nuestros procedimientos visuales en Óptica Alemania Villavicencio.",
       exploreText: "Explorar procedimientos",
       exploreHref: "#volk-inview",
@@ -1253,15 +1254,15 @@ export const siteConfig: SiteConfig = {
       id: "volk-inview",
       videoId: "volk-video",
       eyebrow: "01 / TECNOLOGÍA EN ACCIÓN",
-      titleLine1: "Evaluación retinal",
+      titleLine1: "Evaluación retinal ",
       titleLine2: "",
-      titleHighlight: "de cerca.",
-      description: "Descubre cómo realizamos este procedimiento mediante tecnología Volk InView y conoce parte del proceso de evaluación de la retina en Óptica Alemania Villavicencio.",
+      titleHighlight: "con Volk iNview",
+      description: "Descubre cómo realizamos este procedimiento mediante tecnología Volk iNview y conoce parte del proceso de evaluación de la retina en Óptica Alemania Villavicencio.",
       ctaText: "Consultar esta evaluación",
       whatsappMessage: "Hola, quisiera información sobre la evaluación retinal en Óptica Alemania Villavicencio.",
       video: {
         poster: "/images/tech-volk-inview.webp",
-        alt: "Evaluación retinal mediante tecnología Volk InView en Óptica Alemania Villavicencio",
+        alt: "Evaluación retinal mediante tecnología Volk iNview en Óptica Alemania Villavicencio",
         initialTimestamp: "0:00 / 0:19",
         initialProgress: 0,
       },
@@ -1270,8 +1271,8 @@ export const siteConfig: SiteConfig = {
       id: "farnsworth",
       videoId: "farnsworth-video",
       eyebrow: "02 / VISIÓN DEL COLOR",
-      titleLine1: "Test de",
-      titleLine2: "Farnsworth D-15.",
+      titleLine1: "Test de visión del color ",
+      titleLine2: "Farnsworth D-15",
       titleHighlight: "Cada color cuenta una historia.",
       titleHighlightLine1: "Cada color cuenta",
       titleHighlightLine2: "una historia.",
@@ -1288,8 +1289,8 @@ export const siteConfig: SiteConfig = {
     gallery: {
       id: "nuestro-trabajo",
       eyebrow: "MÁS DE NUESTRO TRABAJO",
-      titlePart1: "La atención está en",
-      titleHighlight: "cada detalle.",
+      titlePart1: "Más evaluaciones en video:",
+      titleHighlight: "atención visual infantil",
       description: "Conoce otros momentos de las evaluaciones visuales que realizamos en Óptica Alemania Villavicencio.",
       cards: [
         {
@@ -1307,10 +1308,10 @@ export const siteConfig: SiteConfig = {
     cta: {
       id: "contacto",
       eyebrow: "CONTINUEMOS CUIDANDO TU VISIÓN",
-      titleLine1: "¿Quieres conocer más",
-      titleLine2: "sobre nuestras",
-      titleMobileLine1: "¿Quieres conocer",
-      titleMobileLine2: "más sobre nuestras",
+      titleLine1: "¿Quieres conocer más ",
+      titleLine2: "sobre nuestras\u00A0",
+      titleMobileLine1: "¿Quieres conocer más",
+      titleMobileLine2: "sobre nuestras",
       titleHighlight: "evaluaciones?",
       description: "Nuestro equipo puede orientarte sobre los servicios disponibles y ayudarte a consultar la disponibilidad de atención en Óptica Alemania Villavicencio.",
       ctaText: "Hablar por WhatsApp",

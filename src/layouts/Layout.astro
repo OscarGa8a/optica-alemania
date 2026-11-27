@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar.astro';
 import Analytics from '../components/Analytics.astro';
 import FloatingWhatsApp from '../components/ui/FloatingWhatsApp.astro';
 import { siteConfig } from '../data/siteConfig';
+import { homeFaqItems, toFaqPageEntity } from '../data/homeFaq';
 
 interface Props {
   title?: string;
@@ -28,7 +29,7 @@ const {
   title = `${siteConfig.name} — ${siteConfig.tagline}`,
   description = siteConfig.description,
   robots,
-  gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-5GSR6FH7',
+  gtmId: requestedGtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-5GSR6FH7',
   currentPath = '/',
   headerTheme,
   navVariant,
@@ -38,6 +39,16 @@ const {
   ogImageAlt,
   floatingWhatsAppMessage,
 } = Astro.props;
+
+// GTM en el HTML solo en el build de producción de Pages.
+// CF Pages (Git) define CF_PAGES_BRANCH: en `main` se emite el script y el
+// noscript, igual que hoy; en cualquier otra rama (preview) no se emiten.
+// Si CF_PAGES_BRANCH no está definido (build local), sí se emiten, para que
+// `pnpm build` quede equivalente a main. La segunda barrera es el chequeo
+// de hostname en tiempo de ejecución (solo opticaalemania.co / www).
+const cfPagesBranch = process.env.CF_PAGES_BRANCH;
+const includeGtmInBuild = cfPagesBranch ? cfPagesBranch === 'main' : true;
+const gtmId = includeGtmInBuild ? requestedGtmId : '';
 
 const effectiveTheme: 'dark-hero' | 'light' = headerTheme || (navVariant === 'light' ? 'light' : 'dark-hero');
 
@@ -133,320 +144,178 @@ const isStaging = !allowIndexing && (isStagingDomain || isStagingEnv || isExplic
 const defaultRobots = isStaging ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const resolvedRobots = robots || defaultRobots;
 
-// PLAYBOOK Fase 4: FAQPage dinámico según página (Home vs Servicios)
-const homeFaqQuestions = [
-  {
-    "@type": "Question",
-    "name": "¿Dónde está ubicada Óptica Alemania Villavicencio?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Estamos ubicados en Calle 35 #34-36, Barzal Bajo, Villavicencio, Meta, en la zona médica de la ciudad."
-    }
-  },
-  {
-    "@type": "Question",
-    "name": "¿Cuáles son los horarios de atención?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Atendemos de lunes a viernes de 9:00 a.m. a 12:00 m. y de 2:00 p.m. a 6:00 p.m., y sábados de 9:00 a.m. a 12:00 m. y de 1:00 p.m. a 3:00 p.m."
-    }
-  },
-  {
-    "@type": "Question",
-    "name": "¿Cómo puedo agendar una consulta de optometría?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Puedes agendar tu cita directamente a través de nuestro canal de WhatsApp (+57 311 201 7302) o comunicándote al 322 712 8828."
-    }
-  },
-  {
-    "@type": "Question",
-    "name": "¿Tienen convenio con Cofrem?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Sí, como afiliados al Club Descuentos Cofrem ofrecemos 15% de descuento en monturas y 10% en lentes oftálmicos."
-    }
-  }
-];
+// Schema.org: un Optician global (schema_site.json) + tipos de página y BreadcrumbList en interiores.
+// FAQPage de la home y de /servicios/ sale del mismo array que la FAQ visible de cada página.
+const SITE_ORIGIN = 'https://opticaalemania.co';
 
-const servicesFaqQuestions = siteConfig.servicesPage.faq.items.map((item) => ({
-  "@type": "Question",
-  "name": item.question,
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": item.answer,
+const servicesFaqQuestions = toFaqPageEntity(siteConfig.servicesPage.faq.items);
+const homeFaqQuestions = toFaqPageEntity(homeFaqItems);
+
+const opticianEntity = {
+  "@type": "Optician",
+  "@id": `${SITE_ORIGIN}/#optician`,
+  "name": "Óptica Alemania Villavicencio",
+  "alternateName": "Óptica Alemania",
+  "url": `${SITE_ORIGIN}/`,
+  "logo": `${SITE_ORIGIN}/images/logo.webp`,
+  "image": `${SITE_ORIGIN}/images/hero-desktop.webp`,
+  "description": "Óptica y consulta de optometría en el Barzal, Villavicencio: consulta de optometría, adaptación de lentes de contacto, evaluaciones visuales especializadas, atención visual infantil y monturas.",
+  "telephone": "+573112017302",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Calle 35 #34-36, Barzal",
+    "addressLocality": "Villavicencio",
+    "addressRegion": "Meta",
+    "addressCountry": "CO"
   },
-}));
-
-const hasFaq = cleanPath === '/' || cleanPath === '/servicios';
-const activeFaqQuestions = cleanPath === '/servicios' ? servicesFaqQuestions : homeFaqQuestions;
-
-// PLAYBOOK Fase 4: Schema.org Multigrafo @graph
-const schemaGraph = {
-  "@context": "https://schema.org",
-  "@graph": [
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 4.1480008,
+    "longitude": -73.6381595
+  },
+  "hasMap": "https://maps.app.goo.gl/uTtxshkghV5m1cUD7",
+  "areaServed": {
+    "@type": "City",
+    "name": "Villavicencio"
+  },
+  "openingHoursSpecification": [
     {
-      "@type": "Optician",
-      "@id": "https://opticaalemania.co/#optician",
-      "name": siteConfig.name,
-      "legalName": siteConfig.legalName,
-      "url": "https://opticaalemania.co/",
-      "telephone": siteConfig.contact.phoneTel,
-      "priceRange": "$$",
-      "image": "https://opticaalemania.co/images/hero-desktop.webp",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": siteConfig.contact.address,
-        "addressLocality": siteConfig.contact.city,
-        "addressRegion": siteConfig.contact.department,
-        "addressCountry": "CO"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 4.1420,
-        "longitude": -73.6266
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "12:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "14:00",
-          "closes": "18:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday"],
-          "opens": "09:00",
-          "closes": "12:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday"],
-          "opens": "13:00",
-          "closes": "15:00"
-        }
-      ],
-      "sameAs": [
-        siteConfig.social.instagram,
-        siteConfig.social.facebook,
-        siteConfig.social.tiktok,
-        siteConfig.contact.googleMapsUrl
-      ]
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "12:00"
     },
     {
-      "@type": "WebSite",
-      "@id": "https://opticaalemania.co/#website",
-      "url": "https://opticaalemania.co/",
-      "name": siteConfig.name,
-      "inLanguage": "es-CO"
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "14:00",
+      "closes": "18:00"
     },
-    ...(hasFaq ? [
-      {
-        "@type": "FAQPage",
-        "@id": `${canonicalUrl}#faq`,
-        "mainEntity": activeFaqQuestions
-      }
-    ] : []),
-    ...(cleanPath === '/nosotros' ? [
-      {
-        "@type": "AboutPage",
-        "@id": `${canonicalUrl}#aboutpage`,
-        "url": canonicalUrl,
-        "name": title,
-        "description": description,
-        "inLanguage": "es-CO",
-        "isPartOf": {
-          "@id": "https://opticaalemania.co/#website"
-        },
-        "about": {
-          "@id": "https://opticaalemania.co/#optician"
-        }
-      }
-    ] : []),
-    ...(cleanPath === '/servicios' ? [
-      {
-        "@type": "MedicalWebPage",
-        "@id": `${canonicalUrl}#servicespage`,
-        "url": canonicalUrl,
-        "name": title,
-        "description": description,
-        "inLanguage": "es-CO",
-        "isPartOf": {
-          "@id": "https://opticaalemania.co/#website"
-        },
-        "about": {
-          "@id": "https://opticaalemania.co/#optician"
-        },
-        "mainEntity": {
-          "@type": "OfferCatalog",
-          "name": "Servicios de Optometría y Salud Ocular",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "MedicalProcedure",
-                "name": "Consulta de optometría especializada",
-                "description": "Examen refractivo integral, agudeza visual, prescripción óptica y valoración preliminar de salud ocular en Barzal, Villavicencio."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "MedicalProcedure",
-                "name": "Adaptación de lentes de contacto",
-                "description": "Evaluación corneal, prueba y adaptación personalizada de lentes de contacto blandos, tóricos y multifocales."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "MedicalTest",
-                "name": "Evaluaciones visuales especializadas",
-                "description": "Tonometría de aplanación para presión intraocular, pruebas de ojo seco y evaluación cromática de Ishihara y Farnsworth D-15."
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "MedicalService",
-                "name": "Orientación y triaje en molestias oculares",
-                "description": "Evaluación rápida de disponibilidad y orientación clínica ante molestias o cuerpos extraños leves antes de acudir a la sede."
-              }
-            }
-          ]
-        }
-      }
-    ] : []),
-    ...(cleanPath === '/procedimientos' ? [
-      {
-        "@type": "MedicalWebPage",
-        "@id": `${canonicalUrl}#procedimientospage`,
-        "url": canonicalUrl,
-        "name": title,
-        "description": description,
-        "inLanguage": "es-CO",
-        "isPartOf": {
-          "@id": "https://opticaalemania.co/#website"
-        },
-        "about": {
-          "@id": "https://opticaalemania.co/#optician"
-        },
-        "mainEntity": {
-          "@type": "ItemList",
-          "name": "Procedimientos y Evaluaciones Visuales en Video",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@type": "MedicalProcedure",
-                "name": "Evaluación retinal con Volk iNview",
-                "description": "Visualización de retina y fondo de ojo en alta definición mediante óptica Volk y dispositivo móvil para registro clínico.",
-                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@type": "MedicalTest",
-                "name": "Test de visión del color Farnsworth D-15",
-                "description": "Evaluación cuantitativa y cualitativa de discromatopsias (protanopia, deuteranopia, tritanopia) mediante discos cromáticos calibrados.",
-                "usedToDiagnose": "Discromatopsias y deficiencias en la visión cromática"
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "item": {
-                "@type": "MedicalProcedure",
-                "name": "Atención visual infantil",
-                "description": "Examen optométrico lúdico y adaptado para niños, enfocado en agudeza visual, motilidad ocular y prevención de ambliopía.",
-                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 4,
-              "item": {
-                "@type": "MedicalProcedure",
-                "name": "Evaluación optométrica integral",
-                "description": "Examen refractivo completo con foróptero, medición de agudeza visual y prescripción personalizada de lentes oftálmicos.",
-                "procedureType": "https://health-lifesci.schema.org/DiagnosticProcedure"
-              }
-            }
-          ]
-        }
-      }
-    ] : []),
-    ...(cleanPath === '/contacto' ? [
-      {
-        "@type": "ContactPage",
-        "@id": `${canonicalUrl}#contactpage`,
-        "url": canonicalUrl,
-        "name": title,
-        "description": description,
-        "inLanguage": "es-CO",
-        "isPartOf": {
-          "@id": "https://opticaalemania.co/#website"
-        },
-        "about": {
-          "@id": "https://opticaalemania.co/#optician"
-        },
-        "mainEntity": {
-          "@type": "Optician",
-          "@id": "https://opticaalemania.co/#optician",
-          "name": siteConfig.name,
-          "telephone": `+57${siteConfig.contact.phonePrimary.replace(/\s+/g, '')}`,
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": siteConfig.contact.address,
-            "addressLocality": siteConfig.contact.city,
-            "addressRegion": "Meta",
-            "addressCountry": "CO"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "4.1438",
-            "longitude": "-73.6376"
-          },
-          "openingHoursSpecification": [
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              "opens": "09:00",
-              "closes": "12:00"
-            },
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              "opens": "14:00",
-              "closes": "18:00"
-            },
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Saturday"],
-              "opens": "09:00",
-              "closes": "12:00"
-            },
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Saturday"],
-              "opens": "13:00",
-              "closes": "15:00"
-            }
-          ]
-        }
-      }
-    ] : [])
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "12:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "13:00",
+      "closes": "15:00"
+    }
+  ],
+  "sameAs": [
+    siteConfig.social.instagram,
+    siteConfig.social.facebook,
+    siteConfig.social.tiktok
   ]
 };
+
+const websiteEntity = {
+  "@type": "WebSite",
+  "@id": `${SITE_ORIGIN}/#website`,
+  "url": `${SITE_ORIGIN}/`,
+  "name": "Óptica Alemania Villavicencio",
+  "inLanguage": "es-CO",
+  "publisher": { "@id": `${SITE_ORIGIN}/#optician` }
+};
+
+function buildBreadcrumb(pagePath: string, pageName: string) {
+  const pageUrl = `${SITE_ORIGIN}${pagePath}`;
+  return {
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": `${SITE_ORIGIN}/` },
+      { "@type": "ListItem", "position": 2, "name": pageName, "item": pageUrl },
+    ],
+  };
+}
+
+const graph: Record<string, unknown>[] = [opticianEntity, websiteEntity];
+
+if (cleanPath === '/') {
+  graph.push({
+    "@type": "FAQPage",
+    "@id": `${SITE_ORIGIN}/#faq`,
+    "mainEntity": homeFaqQuestions,
+  });
+} else if (cleanPath === '/servicios') {
+  const pageUrl = `${SITE_ORIGIN}/servicios/`;
+  graph.push(
+    {
+      "@type": "MedicalWebPage",
+      "@id": `${pageUrl}#webpage`,
+      "url": pageUrl,
+      "name": title,
+      "description": description,
+      "inLanguage": "es-CO",
+      "isPartOf": { "@id": `${SITE_ORIGIN}/#website` },
+      "about": { "@id": `${SITE_ORIGIN}/#optician` },
+      "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+    },
+    buildBreadcrumb('/servicios/', 'Servicios'),
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      "mainEntity": servicesFaqQuestions,
+    }
+  );
+} else if (cleanPath === '/nosotros') {
+  const pageUrl = `${SITE_ORIGIN}/nosotros/`;
+  graph.push(
+    {
+      "@type": "AboutPage",
+      "@id": `${pageUrl}#webpage`,
+      "url": pageUrl,
+      "name": title,
+      "description": description,
+      "inLanguage": "es-CO",
+      "isPartOf": { "@id": `${SITE_ORIGIN}/#website` },
+      "about": { "@id": `${SITE_ORIGIN}/#optician` },
+      "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+    },
+    buildBreadcrumb('/nosotros/', 'Nosotros')
+  );
+} else if (cleanPath === '/procedimientos') {
+  const pageUrl = `${SITE_ORIGIN}/procedimientos/`;
+  graph.push(
+    {
+      "@type": "MedicalWebPage",
+      "@id": `${pageUrl}#webpage`,
+      "url": pageUrl,
+      "name": title,
+      "description": description,
+      "inLanguage": "es-CO",
+      "isPartOf": { "@id": `${SITE_ORIGIN}/#website` },
+      "about": { "@id": `${SITE_ORIGIN}/#optician` },
+      "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+    },
+    buildBreadcrumb('/procedimientos/', 'Procedimientos')
+  );
+} else if (cleanPath === '/contacto') {
+  const pageUrl = `${SITE_ORIGIN}/contacto/`;
+  graph.push(
+    {
+      "@type": "ContactPage",
+      "@id": `${pageUrl}#webpage`,
+      "url": pageUrl,
+      "name": title,
+      "description": description,
+      "inLanguage": "es-CO",
+      "isPartOf": { "@id": `${SITE_ORIGIN}/#website` },
+      "mainEntity": { "@id": `${SITE_ORIGIN}/#optician` },
+      "breadcrumb": { "@id": `${pageUrl}#breadcrumb` },
+    },
+    buildBreadcrumb('/contacto/', 'Contacto')
+  );
+}
+
+const schemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": graph,
+};
+
 ---
 
 <!doctype html>
@@ -553,43 +422,53 @@ const schemaGraph = {
     <!-- PLAYBOOK Fase 7: Deferred High-Performance GTM (Zero-TBT) -->
     {gtmId && (
       <script is:inline define:vars={{ gtmId }}>
-        window._loadGTM = function() {
-          if (window._gtmLoaded) return;
-          window._gtmLoaded = true;
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer',gtmId);
-        };
+        (function() {
+          var allowedHosts = { 'opticaalemania.co': true, 'www.opticaalemania.co': true };
+          function isProductionHost() {
+            return allowedHosts[location.hostname] === true;
+          }
 
-        // Load GTM strictly on first user interaction for zero TBT and lean mobile performance
-        ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
-          window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
-        });
+          window._loadGTM = function() {
+            if (!isProductionHost()) return;
+            if (window._gtmLoaded) return;
+            window._gtmLoaded = true;
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',gtmId);
+          };
 
-        // Virtual pageview tracking on client navigation (Astro ClientRouter)
-        if (!window._gtmVirtualPageviewBound) {
-          window._gtmVirtualPageviewBound = true;
-          var isFirstLoad = true;
-          document.addEventListener('astro:page-load', function() {
-            if (isFirstLoad) {
-              isFirstLoad = false;
-              return;
-            }
-            if (typeof window._loadGTM === 'function') {
-              window._loadGTM();
-            }
-            window.dataLayer = window.dataLayer || [];
-            var pageData = {
-              page_path: window.location.pathname,
-              page_title: document.title,
-              page_location: window.location.href,
-            };
-            window.dataLayer.push(Object.assign({ event: 'page_view' }, pageData));
-            window.dataLayer.push(Object.assign({ event: 'virtual_pageview' }, pageData));
+          if (!isProductionHost()) return;
+
+          // Load GTM strictly on first user interaction for zero TBT and lean mobile performance
+          ['pointerdown', 'touchstart', 'scroll', 'keydown', 'click'].forEach(function(evt) {
+            window.addEventListener(evt, window._loadGTM, { once: true, passive: true });
           });
-        }
+
+          // Virtual pageview tracking on client navigation (Astro ClientRouter)
+          if (!window._gtmVirtualPageviewBound) {
+            window._gtmVirtualPageviewBound = true;
+            var isFirstLoad = true;
+            document.addEventListener('astro:page-load', function() {
+              if (isFirstLoad) {
+                isFirstLoad = false;
+                return;
+              }
+              if (typeof window._loadGTM === 'function') {
+                window._loadGTM();
+              }
+              window.dataLayer = window.dataLayer || [];
+              var pageData = {
+                page_path: window.location.pathname,
+                page_title: document.title,
+                page_location: window.location.href,
+              };
+              window.dataLayer.push(Object.assign({ event: 'page_view' }, pageData));
+              window.dataLayer.push(Object.assign({ event: 'virtual_pageview' }, pageData));
+            });
+          }
+        })();
       </script>
     )}
   </head>

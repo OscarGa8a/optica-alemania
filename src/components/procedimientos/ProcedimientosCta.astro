@@ -47,16 +47,10 @@ const whatsappUrl = buildWhatsAppLink(
 
         <h2
           id="contacto-heading"
-          class="font-display text-[2.6rem] sm:text-5xl lg:text-6xl xl:text-[4rem] text-brand-heading leading-[1.04] tracking-tight mt-3 sm:mt-5 max-w-xl"
+          class="font-display text-[2.6rem] sm:text-5xl lg:text-6xl xl:text-[4rem] text-brand-heading leading-[1.04] tracking-tight mt-3 sm:mt-5 max-w-xl text-balance"
         >
-          <!-- Desktop Line Breaks -->
-          <span class="hidden sm:block font-normal">{cta.titleLine1}</span>
-          <span class="hidden sm:block font-normal">{cta.titleLine2}</span>
-          <!-- Mobile Line Breaks matching Figma -->
-          <span class="block sm:hidden font-normal">{cta.titleMobileLine1 || cta.titleLine1}</span>
-          <span class="block sm:hidden font-normal">{cta.titleMobileLine2 || cta.titleLine2}</span>
-          <!-- Highlighted Keyword -->
-          <span class="block italic font-normal text-brand-primary">{cta.titleHighlight}</span>
+          {`${cta.titleLine1}${cta.titleLine2}`}
+          <span class="italic font-normal text-brand-primary">{cta.titleHighlight}</span>
         </h2>
       </div>
 

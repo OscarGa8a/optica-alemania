@@ -300,11 +300,11 @@ async function run() {
 
       const rawH2 = await visualCareElement.locator('h2').textContent();
       const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
-      if (!h2Text.includes('Atención visual') || !h2Text.includes('a tu medida')) {
+      if (!h2Text.includes('Consulta de optometría') || !h2Text.includes('adaptación de lentes de contacto')) {
         console.error(`❌ [${vp.name}] H2 title text mismatch: ${h2Text}`);
         hasErrors = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Atención visual a tu medida'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Consulta de optometría y adaptación de lentes de contacto'`);
       }
 
       // Check both services exist
@@ -414,11 +414,11 @@ async function run() {
 
       const rawH2 = await specTestsElement.locator('h2').textContent();
       const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
-      if (!h2Text.includes('Conoce nuestras') || !h2Text.includes('evaluaciones') || !h2Text.includes('especializadas')) {
+      if (!h2Text.includes('Evaluaciones especializadas') || !h2Text.includes('presión intraocular') || !h2Text.includes('ojo seco') || !h2Text.includes('visión del color')) {
         console.error(`❌ [${vp.name}] H2 title text mismatch: ${h2Text}`);
         hasErrors = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Conoce nuestras evaluaciones especializadas'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Evaluaciones especializadas: presión intraocular, ojo seco y visión del color'`);
       }
 
       // Check all 5 test items exist
@@ -579,11 +579,11 @@ async function run() {
       // Check H2 Title
       const rawH2 = await proceduresElement.locator('h2').textContent();
       const h2Text = (rawH2 || '').replace(/\s+/g, ' ');
-      if (!h2Text.includes('Nuestros procedimientos') || !h2Text.includes('de cerca')) {
+      if (!h2Text.includes('Procedimientos en video') || !h2Text.includes('Volk iNview') || !h2Text.includes('Farnsworth D-15')) {
         console.error(`❌ [${vp.name}] Procedimientos H2 mismatch: ${h2Text}`);
         hasErrors = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Nuestros procedimientos, de cerca.'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Procedimientos en video: Volk iNview y Farnsworth D-15'`);
       }
 
       // Check Description
@@ -672,11 +672,11 @@ async function run() {
       // Check Title
       const rawH2 = await faqElement.locator('#faq-heading').textContent();
       const h2Text = (rawH2 || '').replace(/\s+/g, ' ').trim();
-      if (!h2Text.includes('Resolvemos tus') || !h2Text.includes('dudas.')) {
+      if (!h2Text.includes('Preguntas frecuentes sobre') || !h2Text.includes('nuestros servicios')) {
         console.error(`❌ [${vp.name}] FAQ H2 title mismatch: ${h2Text}`);
         hasErrors = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 title verified: 'Resolvemos tus dudas.'`);
+        console.log(`✅ [${vp.name}] H2 title verified: 'Preguntas frecuentes sobre nuestros servicios'`);
       }
 
       // Check Description

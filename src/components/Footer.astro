@@ -26,8 +26,10 @@ const navLinks = footer.navLinks.map((link) => {
       href = '/servicios/';
     } else if (href === '#contacto' || href === '/contacto' || href === '/contacto/') {
       href = '/contacto/';
-    } else if (href === '#procedimientos' || href === '/procedimientos' || href === '/procedimientos/') {
+    } else if (href === '#tecnologia' || href === '#procedimientos' || href === '/procedimientos' || href === '/procedimientos/') {
       href = '/procedimientos/';
+    } else if (href === '#inicio' || href === '/') {
+      href = '/';
     } else if (href.startsWith('#')) {
       href = `/${href}`;
     }
@@ -38,14 +40,16 @@ const navLinks = footer.navLinks.map((link) => {
       href = '/servicios/';
     } else if (href === '#contacto') {
       href = '/contacto/';
-    } else if (href === '#procedimientos') {
+    } else if (href === '#tecnologia' || href === '#procedimientos') {
       href = '/procedimientos/';
+    } else if (href === '#inicio') {
+      href = '/';
     }
   }
   return { ...link, href };
 });
 
-const logoHref = isSubpage ? '/#inicio' : '#inicio';
+const logoHref = '/';
 ---
 
 <footer id="footer" class="relative bg-brand-midnight text-white overflow-hidden border-t border-white/10">
@@ -66,9 +70,9 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
   </div>
 
   <div class="relative z-10 w-full px-6 sm:px-8 lg:px-10 xl:px-14 2xl:px-20 pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-16">
-    <!-- Desktop Layout (3 Columns with Vertical Dividers) -->
-    <div class="hidden lg:grid lg:grid-cols-12 lg:gap-0">
-      <!-- Col 1: Brand & Tagline -->
+    <!-- Single responsive layout: stacked on mobile, 12-col grid from lg up -->
+    <div class="flex flex-col gap-10 lg:grid lg:grid-cols-12 lg:gap-0">
+      <!-- Brand & Tagline -->
       <div class="lg:col-span-5 lg:border-r lg:border-white/10 lg:pr-10 flex flex-col justify-start">
         <a href={logoHref} class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania Villavicencio - Volver al inicio">
           <img
@@ -80,178 +84,31 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
             height={footer.logo.height}
             loading="lazy"
             decoding="async"
-            class="h-16 sm:h-20 w-auto object-contain"
+            class="h-14 sm:h-16 lg:h-20 w-auto object-contain"
           />
         </a>
-        <p class="mt-6 text-sm sm:text-base leading-relaxed text-slate-300 max-w-sm">
+        <p class="mt-4 lg:mt-6 text-sm sm:text-base leading-relaxed text-slate-300 max-w-sm">
           {footer.tagline}
         </p>
       </div>
 
-      <!-- Col 2: EXPLORA Navigation -->
+      <!-- EXPLORA -->
       <div class="lg:col-span-3 lg:border-r lg:border-white/10 lg:px-10">
-        <h3 class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-6">
+        <p class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-3 lg:mb-6">
           {footer.exploreTitle}
-        </h3>
-        <ul class="space-y-4">
-          {navLinks.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                class="text-sm sm:text-base text-white/90 hover:text-white hover:translate-x-1 transition-all duration-150 inline-block py-0.5"
-                data-event="footer_nav_click"
-                data-event-label={link.label}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Col 3: CONTACTO -->
-      <div class="lg:col-span-4 lg:pl-10">
-        <h3 class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-6">
-          {footer.contactTitle}
-        </h3>
-        <ul class="space-y-5">
-          <!-- Address -->
-          <li class="flex items-start gap-3.5 text-sm text-white/90">
-            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
-              <Icon name="map-pin" class="w-4.5 h-4.5 stroke-current stroke-2" />
-            </span>
-            <div class="pt-1.5 leading-snug">
-              <p>{footer.address.line1}</p>
-              <p class="text-slate-300">{footer.address.line2}</p>
-            </div>
-          </li>
-
-          <!-- Phones -->
-          <li class="flex items-center gap-3.5 text-sm text-white/90">
-            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
-              <Icon name="phone" class="w-4.5 h-4.5 stroke-current stroke-2" />
-            </span>
-            <span class="tracking-wide">
-              <a
-                href={`tel:${contact.phonePrimary.replace(/\s+/g, '')}`}
-                class="hover:text-white transition-colors"
-                data-event="phone_call"
-                data-event-location="footer"
-                data-event-label={contact.phonePrimary}
-              >{contact.phonePrimary}</a>
-              <span class="text-white/40 mx-1.5" aria-hidden="true">|</span>
-              <a
-                href={`tel:${contact.phoneSecondary.replace(/\s+/g, '')}`}
-                class="hover:text-white transition-colors"
-                data-event="phone_call"
-                data-event-location="footer"
-                data-event-label={contact.phoneSecondary}
-              >{contact.phoneSecondary}</a>
-            </span>
-          </li>
-
-          <!-- Business Hours -->
-          <li class="flex items-start gap-3.5 text-sm text-white/90">
-            <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25 mt-0.5">
-              <Icon name="clock" class="w-4.5 h-4.5 stroke-current stroke-2" />
-            </span>
-            <div class="pt-0.5 leading-snug min-w-0">
-              <p class="font-medium text-white/90">Horario de atención</p>
-              <div class="mt-2 space-y-2 text-xs text-slate-300">
-                {contact.scheduleItems.map((item) => (
-                  <div>
-                    <span class="block font-semibold text-slate-400 text-xs uppercase tracking-wider">
-                      {item.days}
-                    </span>
-                    <div class="mt-0.5 space-y-0.5 text-slate-200 tabular-nums">
-                      {item.shifts.map((shift) => (
-                        <p class="whitespace-nowrap">{shift}</p>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <!-- Social Outlined Buttons (Instagram & WhatsApp) -->
-        <div class="flex items-center gap-3.5 mt-8 pt-1">
-          <a
-            href={footer.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram de Óptica Alemania Villavicencio"
-            class="w-12 h-12 rounded-full border border-white/20 hover:border-brand-primary hover:bg-brand-primary text-white transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-            data-event="footer_social_click"
-            data-event-network="instagram_icon"
-          >
-            <Icon name="instagram" class="w-5 h-5 stroke-current stroke-2" />
-          </a>
-          <a
-            href={footer.tiktokUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="TikTok de Óptica Alemania Villavicencio"
-            class="w-12 h-12 rounded-full border border-white/20 hover:border-brand-primary hover:bg-brand-primary text-white transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-            data-event="footer_social_click"
-            data-event-network="tiktok_icon"
-          >
-            <Icon name="tiktok" class="w-5 h-5 fill-current shrink-0" />
-          </a>
-          <a
-            href={footer.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp de Óptica Alemania Villavicencio"
-            class="w-12 h-12 rounded-full border border-white/20 hover:border-brand-primary hover:bg-brand-primary text-white transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-            data-event="footer_whatsapp_click"
-          >
-            <Icon name="whatsapp" class="w-5 h-5 fill-current shrink-0" />
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile Layout (Vertical Stack with Accordion-like Nav) -->
-    <div class="lg:hidden flex flex-col space-y-10">
-      <!-- Brand & Tagline -->
-      <div>
-        <a href={logoHref} class="inline-block transition-opacity hover:opacity-90" aria-label="Óptica Alemania Villavicencio - Volver al inicio">
-          <img
-            src={footer.logo.src}
-            srcset={`${footer.logo.src.replace('.webp', '-sm.webp')} 280w, ${footer.logo.src} 500w`}
-            sizes="(max-width: 640px) 200px, 240px"
-            alt={footer.logo.alt}
-            width={footer.logo.width}
-            height={footer.logo.height}
-            loading="lazy"
-            decoding="async"
-            class="h-14 sm:h-16 w-auto object-contain"
-          />
-        </a>
-        <p class="mt-4 text-sm leading-relaxed text-slate-300 max-w-sm">
-          {footer.tagline}
         </p>
-      </div>
-
-      <!-- EXPLORA Navigation (Mobile List with Chevrons) -->
-      <div>
-        <h3 class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-3">
-          {footer.exploreTitle}
-        </h3>
         <nav aria-label="Navegación pie de página">
-          <ul class="divide-y divide-white/10 border-t border-b border-white/10">
+          <ul class="divide-y divide-white/10 border-t border-b border-white/10 lg:divide-y-0 lg:border-0 lg:space-y-4">
             {navLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
-                  class="flex items-center justify-between py-4 text-sm sm:text-base text-white/90 hover:text-white transition-colors"
+                  class="flex items-center justify-between py-4 text-sm sm:text-base text-white/90 hover:text-white transition-all duration-150 lg:inline-flex lg:py-0.5 lg:hover:translate-x-1"
                   data-event="footer_nav_click"
                   data-event-label={link.label}
                 >
                   <span>{link.label}</span>
-                  <Icon name="chevron-right" class="w-4.5 h-4.5 text-slate-400" />
+                  <Icon name="chevron-right" class="w-4.5 h-4.5 text-slate-400 lg:hidden" />
                 </a>
               </li>
             ))}
@@ -259,13 +116,12 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
         </nav>
       </div>
 
-      <!-- CONTACTO (Mobile List & Socials) -->
-      <div>
-        <h3 class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-4">
+      <!-- CONTACTO -->
+      <div class="lg:col-span-4 lg:pl-10">
+        <p class="text-xs font-semibold tracking-widest text-blue-400 uppercase mb-4 lg:mb-6">
           {footer.contactTitle}
-        </h3>
-        <ul class="space-y-4">
-          <!-- Address -->
+        </p>
+        <ul class="space-y-4 lg:space-y-5">
           <li class="flex items-start gap-3.5 text-sm text-white/90">
             <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
               <Icon name="map-pin" class="w-4.5 h-4.5 stroke-current stroke-2" />
@@ -275,8 +131,6 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
               <p class="text-slate-300">{footer.address.line2}</p>
             </div>
           </li>
-
-          <!-- Phones -->
           <li class="flex items-center gap-3.5 text-sm text-white/90">
             <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25">
               <Icon name="phone" class="w-4.5 h-4.5 stroke-current stroke-2" />
@@ -299,8 +153,6 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
               >{contact.phoneSecondary}</a>
             </span>
           </li>
-
-          <!-- Business Hours -->
           <li class="flex items-start gap-3.5 text-sm text-white/90">
             <span class="w-11 h-11 rounded-full bg-brand-primary text-white flex items-center justify-center shrink-0 shadow-sm shadow-brand-primary/25 mt-0.5">
               <Icon name="clock" class="w-4.5 h-4.5 stroke-current stroke-2" />
@@ -325,8 +177,7 @@ const logoHref = isSubpage ? '/#inicio' : '#inicio';
           </li>
         </ul>
 
-        <!-- Mobile Social Circles (Instagram & WhatsApp) -->
-        <div class="flex items-center gap-3.5 mt-6 pt-1">
+        <div class="flex items-center gap-3.5 mt-6 lg:mt-8 pt-1">
           <a
             href={footer.instagramUrl}
             target="_blank"

@@ -2,11 +2,25 @@
 // Sección 7: Preguntas frecuentes
 // Óptica Alemania Villavicencio
 import { siteConfig } from '../../data/siteConfig';
+import type { ServicesFaqConfig } from '../../data/siteConfig';
 import { buildWhatsAppLink } from '../../utils/whatsapp';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 
-const { faq } = siteConfig.servicesPage;
+interface Props {
+  faq?: ServicesFaqConfig;
+  accordionId?: string;
+  headingId?: string;
+  eventLocation?: string;
+}
+
+const {
+  faq = siteConfig.servicesPage.faq,
+  accordionId = 'faq-accordion',
+  headingId = 'faq-heading',
+  eventLocation = 'services_faq',
+} = Astro.props;
+
 const { contact } = siteConfig;
 
 const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whatsappNumber);
@@ -14,8 +28,8 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
 <section
   id={faq.id}
-  class="relative bg-brand-cool text-brand-body py-14 sm:py-20 lg:py-28 scroll-mt-20 overflow-hidden"
-  aria-labelledby="faq-heading"
+  class="relative bg-brand-cool text-brand-body pt-14 pb-40 sm:pt-20 sm:pb-28 lg:pt-28 lg:pb-28 scroll-mt-20 overflow-hidden"
+  aria-labelledby={headingId}
 >
   <!-- Stylized Decorative Eye Watermark from assets.webp -->
   <div
@@ -45,7 +59,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
         </div>
 
         <h2
-          id="faq-heading"
+          id={headingId}
           class="font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-normal text-brand-heading leading-[1.06] tracking-tight mt-3 sm:mt-5"
         >
           <span class="block">{faq.titlePart1}</span>
@@ -74,7 +88,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                     rel="noopener noreferrer"
                     icon="arrow-right"
                     data-event="whatsapp_cta"
-                    data-event-location="services_faq"
+                    data-event-location={eventLocation}
                     aria-label={`${faq.contact.actionText} por WhatsApp para resolver tus dudas`}
                   >
                     {faq.contact.actionText}
@@ -88,7 +102,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
 
       <!-- Right Column: Interactive FAQ Accordion List -->
       <div class="lg:col-span-7">
-        <div class="space-y-3.5 lg:space-y-0" id="faq-accordion">
+        <div class="space-y-3.5 lg:space-y-0 max-lg:[&_.faq-item]:scroll-mb-28" id={accordionId} data-faq-accordion>
           {faq.items.map((item) => {
             const isOpen = item.defaultOpen;
             return (
@@ -133,18 +147,19 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                   </div>
                 </button>
 
-                <!-- Expandable Answer -->
+                <!-- Expandable Answer: grid 0fr→1fr so height animates continuously (no max-height, no WAAPI jump) -->
                 <div
                   id={`faq-answer-${item.id}`}
-                  class:list={[
-                    'faq-answer',
-                    isOpen ? 'block opacity-100' : 'hidden opacity-0',
-                  ]}
+                  class:list={['faq-answer', isOpen && 'is-open']}
                   role="region"
                   aria-labelledby={`faq-toggle-${item.id}`}
+                  aria-hidden={isOpen ? 'false' : 'true'}
+                  inert={!isOpen}
                 >
-                  <div class="mt-3 lg:mt-4 p-3.5 sm:p-4 lg:p-0 rounded-xl lg:rounded-none bg-brand-mist/60 lg:bg-transparent lg:pl-[calc(2.5rem+1px+1.25rem)] text-brand-body text-sm sm:text-base leading-relaxed font-normal">
-                    {item.answer}
+                  <div class="faq-answer-clip">
+                    <div class="faq-answer-body mt-3 lg:mt-4 p-3.5 sm:p-4 lg:p-0 rounded-xl lg:rounded-none bg-brand-mist/60 lg:bg-transparent lg:pl-[calc(2.5rem+1px+1.25rem)] text-brand-body text-sm sm:text-base leading-relaxed font-normal">
+                      {item.answer}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -170,7 +185,7 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
                     rel="noopener noreferrer"
                     icon="arrow-right"
                     data-event="whatsapp_cta"
-                    data-event-location="services_faq"
+                    data-event-location={eventLocation}
                     aria-label={`${faq.contact.actionText} por WhatsApp para resolver tus dudas`}
                   >
                     {faq.contact.actionText}
@@ -185,148 +200,155 @@ const whatsappUrl = buildWhatsAppLink(faq.contact.whatsappMessage, contact.whats
   </div>
 </section>
 
-<script>
-  function setupFaqAccordion() {
-    const accordion = document.getElementById('faq-accordion');
-    if (!accordion) return;
+<style>
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 280ms ease;
+  }
 
+  .faq-answer.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .faq-answer-clip {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-answer {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const OPEN_ITEM_CLASSES = [
+    'is-open',
+    'bg-brand-mist/80',
+    'border-brand-steel/40',
+    'lg:rounded-2xl',
+    'lg:border',
+    'lg:my-2',
+    'lg:p-7',
+  ];
+  const CLOSED_ITEM_CLASSES = [
+    'bg-white',
+    'border-brand-border',
+    'lg:border-0',
+    'lg:border-b',
+    'lg:border-brand-border',
+    'lg:rounded-none',
+    'lg:bg-transparent',
+    'lg:p-6',
+    'lg:hover:bg-brand-mist/30',
+  ];
+
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function clearFloatingWidget(el: HTMLElement) {
+    if (window.matchMedia('(min-width: 1024px)').matches) return;
+    const fab = document.querySelector<HTMLElement>('aside[aria-label="Canal directo de WhatsApp"]');
+    const fabTop = fab?.getBoundingClientRect().top;
+    const clearance = Math.ceil(window.innerHeight - (fabTop ?? window.innerHeight) + 12);
+    const overflow = el.getBoundingClientRect().bottom - (window.innerHeight - Math.max(clearance, 96));
+    if (overflow > 0) {
+      window.scrollBy({ top: overflow, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    }
+  }
+
+  function afterOpenTransition(answer: HTMLElement, callback: () => void) {
+    if (prefersReducedMotion()) {
+      callback();
+      return;
+    }
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      answer.removeEventListener('transitionend', onEnd);
+      callback();
+    };
+    const onEnd = (event: TransitionEvent) => {
+      if (event.target !== answer) return;
+      if (event.propertyName !== 'grid-template-rows') return;
+      finish();
+    };
+    answer.addEventListener('transitionend', onEnd);
+    window.setTimeout(finish, 450);
+  }
+
+  function setExpanded(
+    item: HTMLElement,
+    toggle: HTMLButtonElement,
+    answer: HTMLElement,
+    expanded: boolean,
+  ) {
+    toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    answer.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+    answer.inert = !expanded;
+    const plus = item.querySelector<HTMLElement>('.faq-plus');
+    const minus = item.querySelector<HTMLElement>('.faq-minus');
+    if (expanded) {
+      plus?.classList.add('hidden');
+      minus?.classList.remove('hidden');
+      item.classList.add(...OPEN_ITEM_CLASSES);
+      item.classList.remove(...CLOSED_ITEM_CLASSES);
+      answer.classList.add('is-open');
+    } else {
+      plus?.classList.remove('hidden');
+      minus?.classList.add('hidden');
+      item.classList.remove(...OPEN_ITEM_CLASSES);
+      item.classList.add(...CLOSED_ITEM_CLASSES);
+      answer.classList.remove('is-open');
+    }
+  }
+
+  function setupFaqAccordion(accordion: HTMLElement) {
     const items = accordion.querySelectorAll<HTMLElement>('.faq-item');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     items.forEach((item) => {
       const toggle = item.querySelector<HTMLButtonElement>('.faq-toggle');
       const answer = item.querySelector<HTMLElement>('.faq-answer');
-      const plusWrapper = item.querySelector<HTMLElement>('.faq-plus');
-      const minusWrapper = item.querySelector<HTMLElement>('.faq-minus');
-
       if (!toggle || !answer) return;
       if (toggle.dataset.listenerAttached) return;
       toggle.dataset.listenerAttached = 'true';
 
-      let currentAnimation: Animation | null = null;
-
-      function openItem() {
-        toggle.setAttribute('aria-expanded', 'true');
-        plusWrapper?.classList.add('hidden');
-        minusWrapper?.classList.remove('hidden');
-        item.classList.add('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
-        item.classList.remove('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
-
-        answer.classList.remove('hidden', 'opacity-0');
-        answer.classList.add('block');
-
-        if (prefersReducedMotion) {
-          answer.classList.add('opacity-100');
-          return;
-        }
-
-        if (currentAnimation) currentAnimation.cancel();
-        const endHeight = answer.scrollHeight;
-        answer.style.overflow = 'hidden';
-
-        currentAnimation = answer.animate(
-          [
-            { height: '0px', opacity: 0 },
-            { height: `${endHeight}px`, opacity: 1 }
-          ],
-          { duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
-        );
-
-        currentAnimation.onfinish = () => {
-          answer.style.height = 'auto';
-          answer.style.overflow = '';
-          answer.classList.add('opacity-100');
-          currentAnimation = null;
-        };
-      }
-
-      function closeItem() {
-        toggle.setAttribute('aria-expanded', 'false');
-        plusWrapper?.classList.remove('hidden');
-        minusWrapper?.classList.add('hidden');
-        item.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
-        item.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
-
-        if (prefersReducedMotion) {
-          answer.classList.add('hidden', 'opacity-0');
-          answer.classList.remove('block', 'opacity-100');
-          return;
-        }
-
-        if (currentAnimation) currentAnimation.cancel();
-        const startHeight = answer.offsetHeight;
-        answer.style.overflow = 'hidden';
-
-        currentAnimation = answer.animate(
-          [
-            { height: `${startHeight}px`, opacity: 1 },
-            { height: '0px', opacity: 0 }
-          ],
-          { duration: 180, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
-        );
-
-        currentAnimation.onfinish = () => {
-          answer.classList.add('hidden', 'opacity-0');
-          answer.classList.remove('block', 'opacity-100');
-          answer.style.height = '';
-          answer.style.overflow = '';
-          currentAnimation = null;
-        };
-      }
-
       toggle.addEventListener('click', () => {
         const isCurrentlyExpanded = toggle.getAttribute('aria-expanded') === 'true';
-
-        // Close all other items
+        if (isCurrentlyExpanded) {
+          setExpanded(item, toggle, answer, false);
+          return;
+        }
         items.forEach((otherItem) => {
-          if (otherItem !== item) {
-            const otherToggle = otherItem.querySelector<HTMLButtonElement>('.faq-toggle');
-            if (otherToggle && otherToggle.getAttribute('aria-expanded') === 'true') {
-              const otherAnswer = otherItem.querySelector<HTMLElement>('.faq-answer');
-              const otherPlus = otherItem.querySelector<HTMLElement>('.faq-plus');
-              const otherMinus = otherItem.querySelector<HTMLElement>('.faq-minus');
-              if (otherAnswer) {
-                otherToggle.setAttribute('aria-expanded', 'false');
-                otherPlus?.classList.remove('hidden');
-                otherMinus?.classList.add('hidden');
-                otherItem.classList.remove('is-open', 'bg-brand-mist/80', 'border-brand-steel/40', 'lg:rounded-2xl', 'lg:border', 'lg:my-2', 'lg:p-7');
-                otherItem.classList.add('bg-white', 'border-brand-border', 'lg:border-0', 'lg:border-b', 'lg:border-brand-border', 'lg:rounded-none', 'lg:bg-transparent', 'lg:p-6', 'lg:hover:bg-brand-mist/30');
-
-                if (prefersReducedMotion) {
-                  otherAnswer.classList.add('hidden', 'opacity-0');
-                  otherAnswer.classList.remove('block', 'opacity-100');
-                } else {
-                  const sHeight = otherAnswer.offsetHeight;
-                  otherAnswer.style.overflow = 'hidden';
-                  const a = otherAnswer.animate(
-                    [
-                      { height: `${sHeight}px`, opacity: 1 },
-                      { height: '0px', opacity: 0 }
-                    ],
-                    { duration: 180, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }
-                  );
-                  a.onfinish = () => {
-                    otherAnswer.classList.add('hidden', 'opacity-0');
-                    otherAnswer.classList.remove('block', 'opacity-100');
-                    otherAnswer.style.height = '';
-                    otherAnswer.style.overflow = '';
-                  };
-                }
-              }
-            }
+          if (otherItem === item) return;
+          const otherToggle = otherItem.querySelector<HTMLButtonElement>('.faq-toggle');
+          const otherAnswer = otherItem.querySelector<HTMLElement>('.faq-answer');
+          if (
+            otherToggle &&
+            otherAnswer &&
+            otherToggle.getAttribute('aria-expanded') === 'true'
+          ) {
+            setExpanded(otherItem, otherToggle, otherAnswer, false);
           }
         });
-
-        if (isCurrentlyExpanded) {
-          closeItem();
-        } else {
-          openItem();
-        }
+        setExpanded(item, toggle, answer, true);
+        afterOpenTransition(answer, () => clearFloatingWidget(answer));
       });
     });
   }
 
-  // Initialize on initial page load and after view transitions
-  setupFaqAccordion();
-  document.addEventListener('astro:page-load', setupFaqAccordion);
+  function setupAllFaqAccordions() {
+    document.querySelectorAll<HTMLElement>('[data-faq-accordion]').forEach(setupFaqAccordion);
+  }
+
+  setupAllFaqAccordions();
+  document.addEventListener('astro:page-load', setupAllFaqAccordions);
 </script>
