@@ -135,6 +135,16 @@ Se actualizó la aserción de diseño del H1 del Home en `scripts/test-landing.m
 
 NEXUS aprobó el hero de `d3f0aa1` y pidió quitar el relleno interno (`pb-24`) que dejaba un hueco en la última tarjeta abierta de la FAQ. Se eliminó esa clase. La holgura frente al botón flotante de WhatsApp (56 px) queda en el `pb-40` de la sección en móvil, el `scroll-margin-bottom` de los ítems y el scroll al abrir que ya existía. El componente es compartido (home y `/servicios/`). No se tocó el botón flotante. `pnpm build` y los 5 tests en verde. Capturas en `/workspace/optica-shots/after-visual3-*-open-390.jpg`.
 
+#### Animación del acordeón FAQ (27 nov 2026, ~11:24–11:30 a. m., America/Bogota)
+
+Oscar (vía NEXUS) reportó que, al abrir una pregunta frecuente, la animación se frenaba y la tarjeta se abría de golpe. El acordeón solo existe en Inicio y `/servicios/` (componente compartido `ServicesFaq.astro`); en `/nosotros/` no hay FAQ.
+
+Causa: la apertura medía `scrollHeight` y animaba `height` con Web Animations después de quitar `hidden` (`display: none`) y poner `block`, sin fijar `height: 0` en el mismo frame. Eso podía pintar el panel ya abierto, interrumpir o desalinear la animación, y al terminar se pasaba a `height: auto` (salto). El scroll al abrir, si se disparaba mal, también podía pelear con la transición.
+
+Solución: la altura se anima con CSS `grid-template-rows: 0fr → 1fr` (el hijo `.faq-answer-clip` lleva `overflow: hidden` y `min-height: 0`; el padding/margen queda en el nieto `.faq-answer-body`, para que no salte). Nada de `max-height` fijo ni WAAPI sobre `height`. El scroll que aparta el botón flotante de WhatsApp en móvil corre en `transitionend` (con fallback), no a mitad de la animación. Se mantienen el `pb-40` de la sección y el `scroll-margin-bottom`. `prefers-reduced-motion` deja la apertura/cierre instantáneos. Se re-inicializa en `astro:page-load` (ClientRouter) y `aria-expanded` / `aria-hidden` / `inert` se actualizan al abrir y cerrar.
+
+`pnpm build` y los 5 tests en verde. JSON-LD y el gating de GTM no se tocaron. 1 H1 por página. Tiras de la animación (tras el deploy) en `/workspace/optica-shots/faq-anim-*.jpg`.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
