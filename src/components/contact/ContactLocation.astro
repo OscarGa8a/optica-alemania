@@ -43,8 +43,8 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
 
           <!-- H2 Heading -->
           <h2 class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-normal text-brand-heading tracking-tight leading-none mt-4 sm:mt-6">
-            <span class="block font-normal">Nos vemos en</span>
-            <span class="block italic font-normal text-brand-primary">Barzal.</span>
+            <span class="block font-normal">Dirección, horarios y teléfonos </span>
+            <span class="block italic font-normal text-brand-primary">en el Barzal</span>
           </h2>
 
           <!-- Description -->
@@ -68,11 +68,11 @@ const routeVideoPoster = routeVideo?.portada || contactSection.facadeImage.src;
                     target="_blank"
                     rel="noopener noreferrer"
                     class="hover:text-brand-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-xs"
-                    aria-label={`Ver dirección de Óptica Alemania Villavicencio en Google Maps: ${contact.address}, ${contact.city}`}
+                    aria-label={`Ver dirección de Óptica Alemania Villavicencio en Google Maps: ${contact.address}, ${contact.city}, ${contact.department}`}
                     data-event="google_maps_click"
                     data-event-location="contact_address_text"
                   >
-                    {contact.address}, {contact.city}
+                    {contact.address}, {contact.city}, {contact.department}
                   </a>
                 </p>
               </div>

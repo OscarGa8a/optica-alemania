@@ -312,11 +312,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await servicesSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Atención visual')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Atención visual', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Servicios de optometría')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Servicios de optometría', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Atención visual'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Servicios de optometría en Villavicencio'`);
       }
 
       // Verify services list items count (4 services)
@@ -391,11 +391,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await techSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('La tecnología detrás')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'La tecnología detrás', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Tecnología para evaluar tu visión') || !headingText.includes('Volk iNview')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Tecnología para evaluar tu visión: Volk iNview y Farnsworth D-15', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'La tecnología detrás'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Tecnología para evaluar tu visión: Volk iNview y Farnsworth D-15'`);
       }
 
       // Verify 2 technology showcase articles
@@ -462,11 +462,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await spaceSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Conoce dónde')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Conoce dónde', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Nuestra óptica en el Barzal')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Nuestra óptica en el Barzal', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Conoce dónde'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Nuestra óptica en el Barzal, Villavicencio'`);
       }
 
       // Verify 5 showcase images loaded properly
@@ -546,11 +546,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await kidsSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Su manera de')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Su manera de', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Atención visual infantil')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Atención visual infantil', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Su manera de'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Atención visual infantil'`);
       }
 
       // Verify image loaded properly
@@ -605,11 +605,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await framesSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Una montura que')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Una montura que', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Monturas para mujer')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Monturas para mujer', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Una montura que'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Monturas para mujer, hombre y niños'`);
       }
 
       // Verify 3 categories exist
@@ -682,11 +682,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await cofremSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Club descuentos')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Club descuentos', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Club Descuentos Cofrem')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Club Descuentos Cofrem', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Club descuentos'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Club Descuentos Cofrem'`);
       }
 
       // Verify 2 discount benefit cards exist
@@ -846,11 +846,11 @@ async function run() {
 
       // Verify heading text
       const headingText = await contactSection.locator('h2').textContent();
-      if (!headingText || !headingText.includes('Nos vemos')) {
-        console.error(`❌ [${vp.name}] Expected H2 to include 'Nos vemos', got: '${headingText}'`);
+      if (!headingText || !headingText.includes('Dirección y horarios') || !headingText.includes('nos vemos en el Barzal')) {
+        console.error(`❌ [${vp.name}] Expected H2 to include 'Dirección y horarios: nos vemos en el Barzal', got: '${headingText}'`);
         failed = true;
       } else {
-        console.log(`✅ [${vp.name}] H2 contains 'Nos vemos'`);
+        console.log(`✅ [${vp.name}] H2 contains 'Dirección y horarios: nos vemos en el Barzal'`);
       }
 
       // Verify visible images loaded properly
