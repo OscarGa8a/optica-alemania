@@ -113,6 +113,9 @@ Ajustes de la revisión visual hecha sobre el deploy de `137f633`, aplicados en 
 
 Capturas a 390 px y 1280 px en `/workspace/optica-shots/after-visual-*-390.png` y `after-visual-*-1280.png`. `pnpm build` y los 5 tests en verde (en `test-landing.mjs`, las aserciones de H2 normalizan `&nbsp;` a espacio). 1 H1 por página.
 
+Ajuste posterior (27 nov 2026, ~4:28–4:30 a. m., America/Bogota), todavía en `feat/seo-local` y sin cambiar textos: en el deploy de `3e5ca0d` el H1 del home a 1280 px se partía en tres líneas porque la segunda («tu óptica en el Barzal, Villavicencio») se pasaba por ~2 px del `max-w-3xl`. Se limitó el tamaño en `lg+` (`3.5rem` / `4rem` / `4.75rem`) para el corte de dos líneas que pedía la revisión. El H2 «Dirección y horarios…» en escritorio seguía partiendo «el Barzal» a renglón propio por el `xl:text-8xl` en una columna estrecha; en `lg+` baja a `2.9rem` / `text-6xl` y queda «Dirección y horarios:» / «nos vemos en el Barzal». En móvil (390 px) esos dos encabezados no cambian de corte. `pnpm build` y los 5 tests en verde. JSON-LD y la cuenta de H1 no se tocan.
+
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
