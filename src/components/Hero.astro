@@ -41,8 +41,8 @@ const whatsappHeroUrl = buildWhatsAppLink(
       />
     </picture>
 
-    <!-- Desktop gradient: se extiende más allá del 50% para que el H1 en cursiva quede sobre zona clara a 1024/1280 -->
-    <div class="hidden lg:block absolute inset-y-0 left-0 w-[88%] xl:w-[80%] 2xl:w-[70%] bg-gradient-to-r from-white from-0% via-white/95 via-[52%] via-white/80 via-[74%] to-transparent to-100% pointer-events-none"></div>
+    <!-- Desktop gradient: cubre la mitad izquierda (w-1/2) para máxima legibilidad del bloque editorial -->
+    <div class="hidden lg:block absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
 
     <!-- Mobile gradient: de arriba hacia abajo para legibilidad total del texto y botón conocer servicios -->
     <div class="block lg:hidden absolute inset-0 bg-gradient-to-b from-white/95 via-white/85 via-[52%] to-transparent to-[60%] pointer-events-none"></div>
@@ -60,16 +60,16 @@ const whatsappHeroUrl = buildWhatsAppLink(
       </div>
 
       <!-- Hero Heading H1: Fluid Instrument Serif scaling smoothly with screen width -->
-      <h1 class="font-display text-[clamp(2.15rem,1.25rem+3.6vw,5.5rem)] lg:text-[3.5rem] xl:text-[4rem] 2xl:text-[4.75rem] text-brand-heading leading-tight tracking-tight mt-3 sm:mt-6">
+      <h1 class="font-display text-[clamp(2.15rem,1.25rem+3.6vw,5.5rem)] lg:text-[2.5rem] xl:text-[3.25rem] 2xl:text-[3.75rem] text-brand-heading leading-tight tracking-tight mt-3 sm:mt-6 max-w-md lg:max-w-[26rem] xl:max-w-lg 2xl:max-w-xl">
         <span class="block">Óptica Alemania: </span>
         <span class="block italic text-brand-primary font-normal">tu óptica en el Barzal,&nbsp;Villavicencio</span>
       </h1>
 
       <!-- Former H1 kept as subtitle, plus the v2 lead; tighter on small screens -->
-      <p class="mt-2 sm:mt-6 text-xs sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-snug sm:leading-relaxed max-w-md sm:max-w-lg xl:max-w-xl">
+      <p class="mt-2 sm:mt-6 text-xs sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-snug sm:leading-relaxed max-w-md sm:max-w-lg lg:max-w-md xl:max-w-lg">
         Cuidamos tu visión con experiencia y tecnología.
       </p>
-      <p class="mt-1.5 sm:mt-3 text-xs sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-snug sm:leading-relaxed max-w-md sm:max-w-lg xl:max-w-xl">
+      <p class="mt-1.5 sm:mt-3 text-xs sm:text-base lg:text-lg xl:text-xl text-slate-800 font-medium sm:font-normal leading-snug sm:leading-relaxed max-w-md sm:max-w-lg lg:max-w-md xl:max-w-lg">
         Atención optométrica, evaluaciones especializadas y monturas en nuestra óptica del Barzal, en Villavicencio.
       </p>
 

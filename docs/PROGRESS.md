@@ -145,6 +145,17 @@ Solución: la altura se anima con CSS `grid-template-rows: 0fr → 1fr` (el hijo
 
 `pnpm build` y los 5 tests en verde. JSON-LD y el gating de GTM no se tocaron. 1 H1 por página. Tiras de la animación (tras el deploy) en `/workspace/optica-shots/faq-anim-*.jpg`.
 
+#### Restauración del degradado del hero (27 nov 2026, ~12:14 p. m., America/Bogota)
+
+Oscar (vía NEXUS) pidió revertir el degradado blanco que se amplió en `d3f0aa1` (y los ajustes de overlay de `3e5ca0d`/`593c6ba`): en el hero de Inicio cubría a la paciente y dejaba la mitad izquierda de la foto lavada. En producción (`main`, `b882a13`) el degradado solo aclara la zona del texto.
+
+Se restauró el overlay de escritorio **exactamente** como en `b882a13`:
+- Home (`Hero.astro`): `w-1/2 bg-gradient-to-r from-white via-white/80 to-transparent`.
+- Nosotros (`AboutHero.astro`): `from-brand-ice/90 via-brand-mist/80 via-30% to-brand-mist/20 to-42% to-transparent to-50%`.
+- Servicios, Procedimientos y Contacto no tenían cambios de overlay, imagen, `object-position` ni recorte frente a producción; no se tocó su foto ni su degradado. La aserción de `scripts/test-landing.mjs` volvió a exigir que el degradado de escritorio mida la mitad del hero.
+
+Para que el H1 nuevo no invada la foto (sin volver a alargar el degradado): se limitó el `max-width` y se bajó un poco el tamaño en desktop. El H1 de Inicio puede ocupar 3 líneas; se mantienen el `&nbsp;` de «Barzal, Villavicencio» y la lectura a 390 px. En Nosotros, el H1 parte en escritorio tras «Óptica Alemania» para no cruzar la cara; en móvil sigue en una sola línea + la cursiva. En Procedimientos se topó el tamaño en `lg+` para que «Procedimientos visuales» no se parta ni se monte en el equipo. El resto de cambios (FAQ y su animación de `bae1607`, subtítulos, SEO, JSON-LD, gating de GTM) se mantiene. `pnpm build` y los 5 tests en verde. 1 H1 por página. Comparativas producción vs preview en `/workspace/optica-shots/hero-compare-*.jpg`.
+
 ### Pendiente del cliente
 
 1. **Años de trayectoria (sigue sin confirmar):** `/nosotros/` conserva «+28 Años de experiencia» y el H2 pasó a la fórmula de respaldo de la v2, «Nuestra historia en Villavicencio». `llms.txt` y `llms-full.txt` conservan «Más de 30 años». No se cambió el número en ningún lado.
